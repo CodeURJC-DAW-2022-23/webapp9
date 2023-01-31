@@ -21,6 +21,8 @@ Here you can see the features of our webapp TripScanner.
 
 We'll have the followin entities **users**, **places**, **destinations** and **itineraries**.
 
+![DAW_Relationships_Diagram](https://user-images.githubusercontent.com/102818341/215725341-230eb5bf-a057-4bba-bb4d-dfab198adbce.svg)
+
 ### User privileges
 
 Our web app will have the following types of users:
