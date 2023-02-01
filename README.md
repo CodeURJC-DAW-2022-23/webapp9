@@ -15,7 +15,7 @@ Here you can find information about the members that form the developer team for
 
 ## App features
 
-Here you can see the features of our webapp TripScanner.
+Here you can see the features of our web application TripScanner.
 
 ### Entities
 
