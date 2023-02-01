@@ -6,12 +6,12 @@
 
 Here you can find information about the members that form the developer team for TripScanner
 
-| Name        | Surname        | URJC Mail                        | Github                            |
-| -           | -              | -                                | -                                 |
-| Marcos      | Ferrer Zalve   | m.ferrer.2020@alumnos.urjc.es    | https://github.com/LovetheFrogs   |
-| Anna        | Trofimova      | a.trofimova.2020@alumnos.urjc.es | https://github.com/anna-trofimova |
-| Iván        | Penedo Ventosa | i.penedo.2020@alumnos.urjc.es    | https://github.com/xIvqn          |
-| Adaya María | Ruíz Mayoral   | a.ruiz.2020@alumnos.urjc.es      | https://github.com/AdayaUwU       |
+| Name        | Surname        | URJC Mail                        | Github                                               |
+| -           | -              | -                                | -                                                    |
+| Marcos      | Ferrer Zalve   | m.ferrer.2020@alumnos.urjc.es    | [@LovetheFrogs](https://github.com/LovetheFrogs)     |
+| Anna        | Trofimova      | a.trofimova.2020@alumnos.urjc.es | [@anna-trofimova](https://github.com/anna-trofimova) |
+| Iván        | Penedo Ventosa | i.penedo.2020@alumnos.urjc.es    | [@xIvqn](https://github.com/xIvqn)                   |
+| Adaya María | Ruíz Mayoral   | a.ruiz.2020@alumnos.urjc.es      | [@AdayaUwU](https://github.com/AdayaUwU)             |
 
 ## App features
 
