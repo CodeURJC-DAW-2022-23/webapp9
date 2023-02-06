@@ -39,7 +39,7 @@ Out of our four entities, three of them will have images asociated to them. User
 
 ### Graphs
 
-Inside each destination, users will be able to see a bar graph containing the most popular places inside them.
+Inside each destination, users will be able to see a bar graph containing the most popular places inside them. There will also be a graph in the main page where you can see the most popular destinations.
 
 ### Aditional technologies
 
