@@ -13,6 +13,10 @@ Here you can find information about the members that form the developer team for
 | Iván        | Penedo Ventosa | i.penedo.2020@alumnos.urjc.es    | [@xIvqn](https://github.com/xIvqn)                   |
 | Adaya María | Ruíz Mayoral   | a.ruiz.2020@alumnos.urjc.es      | [@AdayaUwU](https://github.com/AdayaUwU)             |
 
+## Team Organization
+
+The team will be organized using the intregration with the native GitHub Projects. That way, team members can use GitHub Issues and other GitHub options to automate the workflow of the web application development. GitHub Project can be accessed through the following link.
+
 ## App features
 
 Here you can see the features of our web application TripScanner.
@@ -21,7 +25,8 @@ Here you can see the features of our web application TripScanner.
 
 We'll have the followin entities **users**, **places**, **destinations** and **itineraries**.
 
-![DAW_Relationships_Diagram](https://user-images.githubusercontent.com/102818341/215725341-230eb5bf-a057-4bba-bb4d-dfab198adbce.svg)
+![DAW_Relationships_Diagram](https://user-images.githubusercontent.com/72264031/216968255-32aef1b5-eaf1-45b7-acb8-776c2c00c8fc.svg)
+
 
 ### User privileges
 
