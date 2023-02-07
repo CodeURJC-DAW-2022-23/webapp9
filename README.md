@@ -25,8 +25,12 @@ Here you can see the features of our web application TripScanner.
 
 We'll have the followin entities **users**, **places**, **destinations** and **itineraries**.
 
-![DAW_Relationships_Diagram](https://user-images.githubusercontent.com/72264031/216968255-32aef1b5-eaf1-45b7-acb8-776c2c00c8fc.svg)
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/72264031/217202549-74b12ef3-274f-477a-935e-f8d553fb5e04.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/72264031/216968255-32aef1b5-eaf1-45b7-acb8-776c2c00c8fc.svg">
+  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
+</picture>
 
 ### User privileges
 
