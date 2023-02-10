@@ -18,7 +18,7 @@
     </script>
 
     <!-- Header Item Data -->
-    <div class="container-fluid p-4">
+    <div class="container p-4">
         <section class="p-5 mb-4 bg-dark rounded-3 text-light" id="header-item-bg">
             <div class="row">
                 <!-- Item Image -->
@@ -27,10 +27,10 @@
                         class="rounded-3">
                 </div>
                 <!-- Item Data -->
-                <div class="col-12 col-md-7 p-4 p-md-0" id="header-data">
+                <div class="col-12 col-md-7 py-4 p-md-0" id="header-data">
                     <div class="row pb-2 justify-content-between">
                         <!-- Item Name -->
-                        <h1 class="col-10 display-5 fw-bold" id="header-item-name">{{item-name}}</h1>
+                        <h1 class="col-10 display-5 fw-bold ps-4 p-md-0" id="header-item-name">{{item-name}}</h1>
 
                         <!-- Edit Button -->
                         <div class="col-2" id="header-edit-button">
@@ -48,10 +48,72 @@
 
                     <!-- Item Description -->
                     <div class="row">
-                        <p class="fs-5">{{item-desctiption}}</p>
+                        <p class="fs-5 ps-4 p-md-0">{{item-desctiption}}</p>
                     </div>
                 </div>
             </div>
+        </section>
+    </div>
+
+    <!-- Destination Information -->
+    <div class="container p-4">
+        <section class="p-4 mb-4 bg-dark rounded-3 text-light" id="info-item-bg">
+            <h3 class="text-center pb-3">Related Information</h3>
+
+            <!--Item 1 -->
+            <div class="row info-item p-3" id="info-item-1">
+                <div class="col-1 align-items-center d-none d-lg-block" id="info-item-1-flag-aux">
+                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Spain" class="rounded-3 item-flag">
+                </div>
+                <div class="col-11 row justify-content-between">
+                    <div class="col-12 col-lg-7">
+                        <p class="fs-3">{{item-1-name}}</p>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="col-2 align-items-center float-start align-bottom d-float d-lg-none" id="info-item-1-flag">
+                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Spain" class="rounded-3 item-flag me-3">
+                        </div>
+                        <p class="fs-6 float-lg-end">{{item-1-type}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!--Item 2 -->
+            <div class="row info-item p-3" id="info-item-1">
+                <div class="col-1 align-items-center d-none d-lg-block" id="info-item-1-flag-aux">
+                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Spain" class="rounded-3 item-flag">
+                </div>
+                <div class="col-11 row justify-content-between">
+                    <div class="col-12 col-lg-7">
+                        <p class="fs-3">{{item-2-name}}</p>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="col-2 align-items-center float-start align-bottom d-float d-lg-none" id="info-item-1-flag">
+                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Spain" class="rounded-3 item-flag me-3">
+                        </div>
+                        <p class="fs-6 float-lg-end">{{item-2-type}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!--Item 3 -->
+            <div class="row info-item p-3" id="info-item-1">
+                <div class="col-1 align-items-center d-none d-lg-block" id="info-item-1-flag-aux">
+                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Spain" class="rounded-3 item-flag">
+                </div>
+                <div class="col-11 row justify-content-between">
+                    <div class="col-12 col-lg-7">
+                        <p class="fs-3">{{item-3-name}}</p>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="col-2 align-items-center float-start align-bottom d-float d-lg-none" id="info-item-1-flag">
+                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Spain" class="rounded-3 item-flag me-3">
+                        </div>
+                        <p class="fs-6 float-lg-end mb-0 align-bottom">{{item-3-type}}</p>
+                    </div>
+                </div>
+            </div>
+            
         </section>
     </div>
 
