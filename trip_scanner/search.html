@@ -29,12 +29,14 @@
     </div>
 
     <div class="container bg-secondary p-4 rounded-3">
-        <div class="justify-content-between">
-            <h2 class="text-center">RESULTS
-                <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample" aria-expanded="false"
-                    aria-controls="collapseExample">Filters</button>
-            </h2>
+        <div class="justify-content-between row">
+            <div class="col"></div>
+            <h2 class="text-center col-10">RESULTS</h2>
+            <div class="col">
+                <button type="button" class="btn btn-dark" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">Filters</button>
+            </div>
+
         </div>
         <div class="collapse container" id="collapseExample">
             <div class="card card-body">
@@ -50,20 +52,20 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="checkboxDestination">
+                            <label class="form-check-label" for="checkboxDestination">
                                 Destinations
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="checkboxPlace">
+                            <label class="form-check-label" for="checkboxPlace">
                                 Places
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="checkboxItinerary">
+                            <label class="form-check-label" for="checkboxItinerary">
                                 Itineraries
                             </label>
                         </div>
@@ -73,6 +75,7 @@
 
             </div>
         </div>
+        
 
     </div>
 
