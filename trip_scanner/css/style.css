@@ -8,3 +8,7 @@ img#header-item-image {
     height: 100%;
     width: 100%;
 }
+
+img.item-flag {
+    max-width: 3em;
+}
