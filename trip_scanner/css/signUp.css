@@ -1,0 +1,51 @@
+html,
+body {
+    height: 100%;
+}
+
+img#header-item-image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+img.item-flag {
+    max-width: 3em;
+}
+
+.switch-toggle {
+    float: left;
+    background: #242729;
+ }
+ .switch-toggle input {
+   position: absolute;
+   opacity: 0;
+ }
+ .switch-toggle input + label {
+   padding: 7px;
+   float:left;
+   color: #fff;
+   cursor: pointer;
+ }
+ .switch-toggle input:checked + label {
+   background: rgb(255, 255, 255);
+   color: black;
+   border-radius: 0.10rem;
+ }
+
+ .padded {
+    padding: 30px;
+ }
+
+.container {
+    display: flex;
+}
+
+.photoInfo {
+    height: 200px;
+    width: 200px;
+}
+
+#profilePhoto {
+    height: 100px;
+}
