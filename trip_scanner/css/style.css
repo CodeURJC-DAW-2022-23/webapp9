@@ -8,6 +8,10 @@ img#header-item-image {
     width: 100%;
 }
 
+.carousel-item {
+    max-height: 35em !important;
+}
+
 img.item-flag {
     max-width: 3em;
 }
