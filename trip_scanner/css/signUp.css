@@ -33,19 +33,18 @@ img.item-flag {
    border-radius: 0.10rem;
  }
 
- .padded {
-    padding: 30px;
- }
 
-.container {
-    display: flex;
+.photoCard{
+    display: grid;
+    margin-top: 80px;
+    margin-left: 100px;
+    padding-right: 180px;
 }
 
-.photoInfo {
-    height: 200px;
-    width: 200px;
+.btn-submit{
+    padding-top: 15px;
+    padding-left: 30px;
 }
 
-#profilePhoto {
-    height: 100px;
-}
+
+
