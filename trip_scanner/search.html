@@ -17,50 +17,51 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 
-        <div class="navbar sticky-top navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand mr-xl-2" href="index.html"><img src="img/logo-placeholder-image.png"
-                        alt="Placeholder logo" widht="80px" height="80px"></a>
-    
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <img type="button" src="img/magnify.svg.png" alt="search" width="40px" height="40px"
-                        onclick="location.href='search.html'" />
-                </form>
-    
-                <form class="form-inline">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Log
-                        In</button>
-                </form>
-            </div>
+    <div class="navbar sticky-top navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand mr-xl-2" href="index.html"><img src="img/logo-placeholder-image.png"
+                    alt="Placeholder logo" widht="80px" height="80px"></a>
+
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <img type="button" src="img/magnify.svg.png" alt="search" width="40px" height="40px"
+                    onclick="location.href='search.html'" />
+            </form>
+
+            <form class="form-inline">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Log
+                    In</button>
+            </form>
         </div>
-    
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Log In</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label required">UserName</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label required">Password</label>
-                                <input type="email" class="form-control">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" onclick="location.href='index.html'">Log In</button>
-                        <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet? Sign Up!</button>
-                    </div>
+    </div>
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Log In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label required">UserName</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">Password</label>
+                            <input type="email" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onclick="location.href='index.html'">Log In</button>
+                    <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet?
+                        Sign Up!</button>
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="container bg-secondary p-4 rounded-3">
         <div class="justify-content-between row">
@@ -69,19 +70,20 @@
 
                     <input id="on" name="state-d" type="radio" checked="" />
                     <label for="on" onclick="">All</label>
-                  
+
                     <input id="na" name="state-d" type="radio" checked="checked" />
                     <label for="na" class="disabled" onclick="">Public</label>
-                  
+
                     <input id="off" name="state-d" type="radio" />
                     <label for="off" onclick="">Private</label>
-                  
-                  </div>
+
+                </div>
             </div>
             <h2 class="text-center col-8">RESULTS</h2>
             <div class="col">
-                <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                    aria-expanded="false" aria-controls="collapseExample">Filters</button>
+                <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false"
+                    aria-controls="collapseExample">Filters</button>
             </div>
 
         </div>
@@ -138,10 +140,12 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag" alt="...">
+                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
+                                alt="...">
                             <h5 class="card-title">{{name-result}}</h5>
                             <p class="card-text">{{description-result}}</p>
                             <p class="card-text"><small class="text-muted">{{type-result}}</small></p>
+                            <a href='details.html' class="btn btn-secondary">Details</a>
                         </div>
                     </div>
                 </div>
@@ -154,10 +158,12 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag" alt="...">
+                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
+                                alt="...">
                             <h5 class="card-title">{{name-result}}</h5>
                             <p class="card-text">{{description-result}}</p>
                             <p class="card-text"><small class="text-muted">{{type-result}}</small></p>
+                            <a href='details.html' class="btn btn-secondary">Details</a>
                         </div>
                     </div>
                 </div>
