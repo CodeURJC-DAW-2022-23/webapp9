@@ -48,3 +48,19 @@ img.item-flag {
   content: "*";
   color: red;
 }
+
+.bg-primary {
+  background: #587D71 !important;
+}
+
+.bg-secondary {
+  background: #A1C6EA !important;
+}
+
+.bg-dark {
+  background-color: #273043 !important;
+}
+
+.bg-light {
+  background-color: #F6FAEF !important;
+}
