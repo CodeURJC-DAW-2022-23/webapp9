@@ -53,30 +53,68 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" onclick="location.href='index.html'">Log In</button>
-                    <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet? Sign Up!</button>
+                    <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet?
+                        Sign Up!</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container bg-secondary p-2 rounded-3 mt-2">
-        <div class="col text-center">
-            <div class="btn-group btn-group-lg gap-2 col-12 padded" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary big" onclick="location.href='#dest'">Destinations</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='#place'">Places to visit</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='#ite'">Popular
-                    itineraries</button>
+    <div class="container-fluid p-0 my-4">
+
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
             </div>
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <a href="#destinations">
+                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{top-destination-name}}">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Destinations</h5>
+                        <p>Click to view our most liked destinations!</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="#places">
+                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{top-place-name}}">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Places to visit</h5>
+                        <p>Click to view our most liked places to visit!</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="#itineraries">
+                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{top-itinerary-name}}">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Itineraries</h5>
+                        <p>Click to view our most liked itineraries!</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+
     </div>
 
-    <div class="container padded">
-        <form class="d-flex">
-            <input class="form-control me-2 rounded-5" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-lg btn-outline-secondary rounded-5" type="button"
-                onclick="location.href='search.html'">Search</button>
-        </form>
-    </div>
 
     <div class="container bg-secondary rounded-3 padded mb-2">
         <div class="row">
@@ -135,10 +173,10 @@
         </div>
     </div>
 
-    <div class="container bg-secondary rounded-3 padded mt-2">
+    <div class="container bg-secondary rounded-3 padded mt-2" id="destinations">
         <div class="row">
             <div class="col-2"></div>
-            <h2 class="text-center col-8" id="dest">Destinations</h2>
+            <h2 class="text-center col-8">Destinations</h2>
             <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more destinations</a>
         </div>
 
@@ -170,10 +208,10 @@
         </div>
     </div>
 
-    <div class="container bg-secondary rounded-3 padded mt-2">
+    <div class="container bg-secondary rounded-3 padded mt-2" id="places">
         <div class="row">
             <div class="col-2"></div>
-            <h2 class="text-center col-8" id="dest">Places to visit</h2>
+            <h2 class="text-center col-8">Places to visit</h2>
             <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more places</a>
         </div>
         <hr class="text-light">
@@ -204,10 +242,10 @@
         </div>
     </div>
 
-    <div class="container bg-secondary rounded-3 padded mt-2">
+    <div class="container bg-secondary rounded-3 padded mt-2" id="itineraries">
         <div class="row">
             <div class="col-2"></div>
-            <h2 class="text-center col-8" id="dest">Popular itineraries</h2>
+            <h2 class="text-center col-8">Popular itineraries</h2>
             <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more itineraries</a>
         </div>
         <hr class="text-light">
@@ -238,8 +276,8 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
