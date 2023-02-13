@@ -64,3 +64,42 @@ TripScanner will have a selection of algorithms. These are:
 
 - An algorithm to search for the shortest path between places of an itinerary.
 - A search algorithm with different search criteria, for both places and destinations.
+
+## Phase 1 aditions
+
+## Webpage screenshots
+
+Here you can see screenshots of the webpage developed during phase 1.
+
+![image](https://user-images.githubusercontent.com/102818341/218514617-db631ba1-2f02-4f34-8a24-52230c3a11cf.png)
+
+The main page will show popular itineraries, destinations and places. Those are the ones most seen by the users. It will also allow for manual search using the search bar, and login into your account.
+
+![image](https://user-images.githubusercontent.com/102818341/218514955-bb821902-daf1-4766-a1d1-510619b4bf83.png)
+
+The login popup allows users to log into their account or create an account if they don't have one.
+
+![image](https://user-images.githubusercontent.com/102818341/218515154-eb5aa2c4-0f4b-4ba8-a12d-54fe4da58ce8.png)
+
+The registration page allows for unregistered users to create a new account to get all the features of TripScanner.
+
+![image](https://user-images.githubusercontent.com/102818341/218515601-bed69071-20ea-440f-a1e4-00f3b87c5f17.png)
+
+Results are shown after using the search bar and can be filtered by public results or private ones you have created as a registered user. You also have a number of filters to narrow down the search results.
+
+![image](https://user-images.githubusercontent.com/102818341/218515651-1c54e6c2-a9b2-4128-9c1a-ce9a791aafe1.png)
+
+The details of an item are shown when you click on it and show some more information about it.
+
+![image](https://user-images.githubusercontent.com/102818341/218515826-f186e9b9-468a-47bb-bed1-9478158bb611.png)
+
+Registered users can see their profile information here, as well as editing it.
+
+![image](https://user-images.githubusercontent.com/102818341/218516008-544dcf44-6d10-4189-9659-755c6bab7a6e.png)
+
+At last, administrators can see a panel with the options they have. This panel (as well as the user information one) is not accesible yet by navigating through the webpage.
+
+### Navigation diagram
+
+![Diagrama DAW-3-1](https://user-images.githubusercontent.com/102818341/218516781-fdaf6302-f9dd-4d04-948e-cc64230ff477.png)
+
