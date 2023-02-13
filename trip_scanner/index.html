@@ -15,20 +15,29 @@
 <body>
 
     <div class="navbar sticky-top navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand mr-xl-2" href="index.html"><img src="img/logo-placeholder-image.png"
+        <div class="container-fluid justify-content-between">
+            <a class="navbar-brand float-start" href="index.html"><img src="img/logo-placeholder-image.png"
                     alt="Placeholder logo" widht="80px" height="80px"></a>
 
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <img type="button" src="img/magnify.svg.png" alt="search" width="40px" height="40px"
-                    onclick="location.href='search.html'" />
-            </form>
+            <div>
 
-            <form class="form-inline">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Log
-                    In</button>
-            </form>
+                <form class="form-inline float-end m-3">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Log
+                        In</button>
+                </form>
+
+                <form class="form-inline float-end my-3 ms-3">
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='index.html'">My
+                        itineraries</button>
+                </form>
+
+                <form class="d-flex float-end m-3">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <img type="button" src="img/magnify.svg.png" alt="search" width="35px" height="35px"
+                        onclick="location.href='search.html'" />
+                </form>
+
+            </div>
         </div>
     </div>
 
@@ -64,12 +73,10 @@
 
         <div id="carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true"
+                    aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
 
@@ -101,13 +108,11 @@
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel"
-                data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel"
-                data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
