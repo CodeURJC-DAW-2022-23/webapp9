@@ -91,11 +91,11 @@ Results are shown after using the search bar and can be filtered by public resul
 
 The details of an item are shown when you click on it and show some more information about it.
 
-![image](https://user-images.githubusercontent.com/102818341/218515826-f186e9b9-468a-47bb-bed1-9478158bb611.png)
+![image](https://user-images.githubusercontent.com/72264031/218572147-eb1ee025-adb0-480e-bf65-70b62e403fb0.png)
 
-Registered users can see their profile information here, as well as editing it.
+Registered users can see their profile information here, as well as editing it, and their itineraries.
 
-![image](https://user-images.githubusercontent.com/102818341/218516008-544dcf44-6d10-4189-9659-755c6bab7a6e.png)
+![image](https://user-images.githubusercontent.com/72264031/218571911-a75a0a10-7461-4631-a2e8-dff7bf44f2e4.png)
 
 At last, administrators can see a panel with the options they have. This panel (as well as the user information one) is not accesible yet by navigating through the webpage.
 
