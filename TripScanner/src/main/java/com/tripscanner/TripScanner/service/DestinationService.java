@@ -19,6 +19,10 @@ public class DestinationService implements AbstractService<Destination> {
         return repository.findById(id);
     }
 
+    public Optional<Destination> findByName(String name) {
+        return repository.findByName(name);
+    }
+
     public boolean exist(long id) {
         return repository.existsById(id);
     }

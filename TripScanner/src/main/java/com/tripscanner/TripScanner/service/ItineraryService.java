@@ -3,7 +3,6 @@ package com.tripscanner.TripScanner.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.tripscanner.TripScanner.model.Destination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,10 @@ public class ItineraryService implements AbstractService<Itinerary> {
 
     public Optional<Itinerary> findById(long id) {
         return repository.findById(id);
+    }
+
+    public Optional<Itinerary> findByName(String name) {
+        return repository.findByName(name);
     }
 
     public boolean exist(long id) {
