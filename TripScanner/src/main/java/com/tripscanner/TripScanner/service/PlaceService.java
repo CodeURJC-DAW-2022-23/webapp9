@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.tripscanner.TripScanner.model.Destination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.repository.PlaceRepository;
 
 @Service
-public class PlaceService {
+public class PlaceService implements AbstractService<Place> {
 
     @Autowired
     private PlaceRepository repository;

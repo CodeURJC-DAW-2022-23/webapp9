@@ -10,7 +10,7 @@ import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.repository.DestinationRepository;
 
 @Service
-public class DestinationService {
+public class DestinationService implements AbstractService<Destination> {
 
     @Autowired
     private DestinationRepository repository;
