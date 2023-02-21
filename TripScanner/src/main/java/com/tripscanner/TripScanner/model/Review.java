@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +22,10 @@ public class Review {
     private String description;
 
     private Long views;
+
+    private int points;
+
+    private Date date;
 
     @ManyToOne
     private Itinerary itinerary;
@@ -67,6 +73,22 @@ public class Review {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Itinerary getItinerary() {
