@@ -10,7 +10,7 @@ import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.repository.UserRepository;
 
 @Service
-public class ReviewService {
+public class UserService {
 
     @Autowired
     private UserRepository repository;
