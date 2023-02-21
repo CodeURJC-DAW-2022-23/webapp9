@@ -88,16 +88,15 @@
             <h3 class="text-center mb-3">Related Information</h3>
 
             <!--Item 1 -->
-            <div class="card m-3" id="item-1">
+            <div class="card m-3" id="item">
                 <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
+                    <img src="flag" class="rounded float-end item-flag"
                         alt="{{item-1-name}}">
-                    <h5 class="card-title">{{item-1-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{item-1-type}}</small></p>
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text"><small class="text-muted">{{type}}</small></p>
                 </div>
             </div>
-
-            <!--Item 1 -->
+<!--
             <div class="card m-3" id="item-2">
                 <div class="card-body g-0 text-black bg-light">
                     <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
@@ -107,7 +106,6 @@
                 </div>
             </div>
 
-            <!--Item 1 -->
             <div class="card m-3" id="item-3">
                 <div class="card-body g-0 text-black bg-light">
                     <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
@@ -116,6 +114,7 @@
                     <p class="card-text"><small class="text-muted">{{item-3-type}}</small></p>
                 </div>
             </div>
+-->
 
         </section>
     </div>
@@ -124,26 +123,27 @@
     <div class="container p-4">
         <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-review-bg">
             <h3 class="text-center mb-3">Reviews</h3>
-
+            {{#review}}
             <!--Review 1 -->
             <div class="card m-3" id="review-1">
                 <div class="card-body g-0 text-black bg-light row">
                     <div class="col-1">
-                        <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt="{{item-name}}"
+                        <img class="img-fluid rounded-start" src="user-img" alt="{{item-name}}"
                               width="75" height="75">
                     </div>
                     <div class="col-11">
                         <p class="float-end">{{score}}</p>
-                        <h5 class="card-title">{{review-1-name}}</h5>
-                        <p class="card-text"><small class="text-muted">{{review-1-user}}</small></p>
+                        <h5 class="card-title">{{review-name}}</h5>
+                        <p class="card-text"><small class="text-muted">{{review-user}}</small></p>
                         <p class="float-end"><small class="text-muted">{{date}}</small></p>
-                        <p class="card-text">{{review-1-comment}}</p>
+                        <p class="card-text">{{review-comment}}</p>
                     </div>
 
                 </div>
             </div>
+            {{/review}}
 
-            <!--Review 1 -->
+            <!--
             <div class="card m-3" id="review-2">
                 <div class="card-body g-0 text-black bg-light row">
                     <div class="col-1">
@@ -161,7 +161,6 @@
                 </div>
             </div>
 
-            <!--Review 1 -->
             <div class="card m-3" id="review-3">
                 <div class="card-body g-0 text-black bg-light row">
                     <div class="col-1">
@@ -178,6 +177,7 @@
 
                 </div>
             </div>
+            -->
 
         </section>
     </div>
