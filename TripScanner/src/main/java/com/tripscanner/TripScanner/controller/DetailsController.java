@@ -37,7 +37,7 @@ public class DetailsController {
         for (int i = 0; i < Math.min(10, destination.get().getPlaces().size()); i++){
             model.addAttribute("name", destination.get().getPlaces().get(i).getName());
             model.addAttribute("type", "Place");
-            //model.addAttribute("item-1-flag", destination.get().getFlag();
+            model.addAttribute("flag", destination.get().getFlagFile());
         }
 
         return "details";
@@ -53,7 +53,7 @@ public class DetailsController {
         for (int i = 0; i < Math.min(10, place.get().getItineraries().size()); i++) {
             model.addAttribute("name", place.get().getItineraries().get(i).getName());
             model.addAttribute("type", "Itinerary");
-            //model.addAttribute("item-1-flag", destination.get().getFlag();
+            model.addAttribute("flag", place.get().getDestination().getFlagFile());
         }
 
         return "details";
@@ -69,15 +69,15 @@ public class DetailsController {
         for (int i = 0; i < Math.min(10, itinerary.get().getPlaces().size()); i++){
             model.addAttribute("name", itinerary.get().getPlaces().get(i).getName());
             model.addAttribute("type", "Place");
-            //model.addAttribute("flag", destination.get().getFlag();
+            model.addAttribute("flag", itinerary.get().getPlaces().get(i).getDestination().getFlagFile());
         }
 
         for (int i = 0; i < Math.min(10, itinerary.get().getReviews().size()); i++){
             model.addAttribute("user-img", itinerary.get().getReviews().get(i).getUser().getImageFile());
-            //model.addAttribute("score", itinerary.get().getReviews().get(i).getPoints())
+            model.addAttribute("score", itinerary.get().getReviews().get(i).getPoints());
             model.addAttribute("review-name", itinerary.get().getReviews().get(i).getTitle());
             model.addAttribute("review-user", itinerary.get().getReviews().get(i).getUser());
-            //model.addAttribute("date", itinerary.get().getReviews().get(i).getDate());
+            model.addAttribute("date", itinerary.get().getReviews().get(i).getDate());
             model.addAttribute("review-comment", itinerary.get().getReviews().get(i).getDescription());
         }
 
