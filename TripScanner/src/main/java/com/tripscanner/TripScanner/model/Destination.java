@@ -30,6 +30,11 @@ public class Destination {
 
     private boolean image;
 
+    @Lob
+    private Blob flagFile;
+
+    private boolean flag;
+
     @OneToMany
     private List<Place> places;
 
@@ -89,6 +94,22 @@ public class Destination {
 
     public void setImage(boolean image) {
         this.image = image;
+    }
+
+    public Blob getFlagFile() {
+        return flagFile;
+    }
+
+    public void setFlagFile(Blob flagFile) {
+        this.flagFile = flagFile;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public List<Place> getPlaces() {
