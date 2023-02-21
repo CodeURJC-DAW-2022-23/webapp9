@@ -9,7 +9,7 @@ import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.repository.DestinationRepository;
-import com.tripscanner.TripScanner.repository.ItinerarRepositoryy;
+import com.tripscanner.TripScanner.repository.ItineraryRepository;
 import com.tripscanner.TripScanner.repository.PlaceRepository;
 import com.tripscanner.TripScanner.repository.ReviewRepository;
 import com.tripscanner.TripScanner.repository.UserRepository;
