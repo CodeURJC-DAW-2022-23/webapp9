@@ -88,21 +88,13 @@
                 <div class="col">
                     <div class="card">
                         <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
+                        {{#destinations}}
                         <div class="card-body">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{description}}</p>
                             <a href="details.html" class="btn btn-primary">More details</a>
                         </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
-                            <a href="details.html" class="btn btn-primary">More details</a>
-                        </div>
+                        {{/destinations}}
                     </div>
                 </div>
                 <div class="col"></div>
@@ -123,19 +115,11 @@
                     <div class="card">
                         <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
                         <div class="card-body">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
+                            {{#place}}
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{description}}</p>
                             <a href="details.html" class="btn btn-primary">More details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
-                            <a href="details.html" class="btn btn-primary">More details</a>
+                            {{/place}}
                         </div>
                     </div>
                 </div>
@@ -157,19 +141,11 @@
                     <div class="card">
                         <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
                         <div class="card-body">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
+                            {{#itinerary}}
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{description}}</p>
                             <a href="details.html" class="btn btn-primary">More details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
-                            <a href="details.html" class="btn btn-primary">More details</a>
+                            {{/itinerary}}
                         </div>
                     </div>
                 </div>

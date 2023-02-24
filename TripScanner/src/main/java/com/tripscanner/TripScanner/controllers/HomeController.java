@@ -1,6 +1,8 @@
 package com.tripscanner.TripScanner.controllers;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ItineraryService;
@@ -44,12 +46,27 @@ public class HomeController {
         });
         // Show the most visited destinations
         for (int i = 0; i < 5; i++) {
-            model.addAttribute("popularDestination", destinations.get(i));
+            model.addAttribute("popularDestination", destinations.get(i).getName());
         }
 
-        model.addAttribute("destination", destinationService.findAll());
-        model.addAttribute("place", placeService.findAll());
-        model.addAttribute("itinerary", itineraryService.findAll());
+        // Show 3 cards with possible destinations
+        ArrayList<Destination> dest = (ArrayList<Destination>) destinationService.findAll();
+        for (int i = 0; i < 5; i++) {
+            model.addAttribute("destinations", dest.get(i));
+        }
+
+        //Show 3 cards with possible places
+        ArrayList<Place> place = (ArrayList<Place>) placeService.findAll();
+        for (int i = 0; i < 5; i++) {
+            model.addAttribute("place", place.get(i));
+        }
+
+        //Show 3 cards with possible itinerary
+        ArrayList<Itinerary> itinerary = (ArrayList<Itinerary>) itineraryService.findAll();
+        for (int i = 0; i < 5; i++) {
+            model.addAttribute("itinerary", itinerary.get(i));
+        }
+
 
         return "home";
     }
