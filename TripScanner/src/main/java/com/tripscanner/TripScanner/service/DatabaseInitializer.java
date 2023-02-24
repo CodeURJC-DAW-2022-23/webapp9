@@ -72,4 +72,13 @@ public class DatabaseInitializer {
 
     }
 
+    public void setFlag(Destination destination, String classpathResource) throws IOException {
+
+        Resource flag = new ClassPathResource(classpathResource);
+
+        destination.setFlagFile(BlobProxy.generateProxy(flag.getInputStream(), flag.contentLength()));
+        destination.setFlag(true);
+
+    }
+
 }
