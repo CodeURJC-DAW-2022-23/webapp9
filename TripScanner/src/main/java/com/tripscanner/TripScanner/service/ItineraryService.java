@@ -3,7 +3,9 @@ package com.tripscanner.TripScanner.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.tripscanner.TripScanner.model.Destination;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tripscanner.TripScanner.model.Itinerary;
@@ -29,6 +31,10 @@ public class ItineraryService implements AbstractService<Itinerary> {
 
     public List<Itinerary> findAll() {
         return repository.findAll();
+    }
+
+    public List<Itinerary> findAll(Sort sort) {
+        return repository.findAll(sort);
     }
 
     public void save(Itinerary itinerary) {
