@@ -1,11 +1,17 @@
 package com.tripscanner.TripScanner.controller;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.*;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,60 +33,77 @@ public class DetailsController {
     @Autowired
     private ItineraryService itineraryService;
 
-    @GetMapping("/details/{dest-id}")
+    @GetMapping("/details/dest-{id}")
     public String showDestination(Model model, @PathVariable long id){
         Optional<Destination> destination = destinationService.findById(id);
         model.addAttribute("item-name", destination.get().getName());
         model.addAttribute("item-description", destination.get().getDescription());
         model.addAttribute("item-img", destination.get().getImageFile());
 
+        List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(10, destination.get().getPlaces().size()); i++){
-            model.addAttribute("name", destination.get().getPlaces().get(i).getName());
-            model.addAttribute("type", "Place");
-            model.addAttribute("flag", destination.get().getFlagFile());
+            places.add(new Information(destination.get().getFlagFile(), destination.get().getPlaces().get(i).getName(), "Place"));
         }
+        model.addAttribute("information", places);
 
         return "details";
     }
 
-    @GetMapping("/details/{place-id}")
+    @GetMapping("/details/place-{id}")
     public String showPlace(Model model, @PathVariable long id){
         Optional<Place> place = placeService.findById(id);
         model.addAttribute("item-name", place.get().getName());
         model.addAttribute("item-description", place.get().getDescription());
         model.addAttribute("item-img", place.get().getImageFile());
 
-        for (int i = 0; i < Math.min(10, place.get().getItineraries().size()); i++) {
-            model.addAttribute("name", place.get().getItineraries().get(i).getName());
-            model.addAttribute("type", "Itinerary");
-            model.addAttribute("flag", place.get().getDestination().getFlagFile());
+        List<Information> itineraries = new ArrayList<>();
+        for (int i = 0; i < Math.min(10, place.get().getItineraries().size()); i++){
+            itineraries.add(new Information(place.get().getDestination().getFlagFile(), place.get().getItineraries().get(i).getName(), "Itinerary"));
         }
+        model.addAttribute("information", itineraries);
 
         return "details";
     }
 
-    @GetMapping("/details/{itin-id}")
+    @GetMapping("/details/itin-{id}")
     public String showItinerary(Model model, @PathVariable long id){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item-name", itinerary.get().getName());
         model.addAttribute("item-description", itinerary.get().getDescription());
         model.addAttribute("item-img", itinerary.get().getPlaces().get(0).getImageFile());
 
+        List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(10, itinerary.get().getPlaces().size()); i++){
-            model.addAttribute("name", itinerary.get().getPlaces().get(i).getName());
-            model.addAttribute("type", "Place");
-            model.addAttribute("flag", itinerary.get().getPlaces().get(i).getDestination().getFlagFile());
+            places.add(new Information(itinerary.get().getPlaces().get(i).getDestination().getFlagFile(), itinerary.get().getPlaces().get(i).getName(), "Place"));
         }
+        model.addAttribute("information", places);
 
-        for (int i = 0; i < Math.min(10, itinerary.get().getReviews().size()); i++){
-            model.addAttribute("user-img", itinerary.get().getReviews().get(i).getUser().getImageFile());
-            model.addAttribute("score", itinerary.get().getReviews().get(i).getPoints());
-            model.addAttribute("review-name", itinerary.get().getReviews().get(i).getTitle());
-            model.addAttribute("review-user", itinerary.get().getReviews().get(i).getUser());
-            model.addAttribute("date", itinerary.get().getReviews().get(i).getDate());
-            model.addAttribute("review-comment", itinerary.get().getReviews().get(i).getDescription());
+        List<Review> reviews = new ArrayList<>();
+        for (int i = 0; i < Math.min(10, itinerary.get().getPlaces().size()); i++){
+            reviews.add(itinerary.get().getReviews().get(i));
         }
+        model.addAttribute("review", reviews);
 
         return "itinerary-details";
+    }
+
+    //sample for executing with no database information
+    @GetMapping("/details/")
+    public String showDetails(Model model) throws IOException {
+        model.addAttribute("item-name", "nombre");
+        model.addAttribute("item-description", "descripcion");
+        model.addAttribute("item-img", "img");
+
+        List<Information> places = new ArrayList<>();
+        Resource image = new ClassPathResource("templates/img/userPhoto.png");
+
+        Blob blob = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
+
+        for (int i = 0; i < 10; i++){
+            places.add(new Information(blob, "Nombre-"+i, "Place"));
+        }
+        model.addAttribute("information", places);
+
+        return "details";
     }
 }

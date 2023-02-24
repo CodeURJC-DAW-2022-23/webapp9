@@ -75,7 +75,7 @@
 
                     <!-- Item Description -->
                     <div class="row">
-                        <p class="fs-5 ps-4 p-md-0">{{item-desctiption}}</p>
+                        <p class="fs-5 ps-4 p-md-0">{{item-description}}</p>
                     </div>
                 </div>
             </div>
@@ -87,34 +87,17 @@
         <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
             <h3 class="text-center mb-3">Related Information</h3>
 
+            {{#information}}
             <!--Item 1 -->
             <div class="card m-3" id="item">
                 <div class="card-body g-0 text-black bg-light">
                     <img src="flag" class="rounded float-end item-flag"
-                        alt="{{item-1-name}}">
+                        alt="{{name}}">
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text"><small class="text-muted">{{type}}</small></p>
                 </div>
             </div>
-<!--
-            <div class="card m-3" id="item-2">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-2-name}}">
-                    <h5 class="card-title">{{item-2-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{item-2-type}}</small></p>
-                </div>
-            </div>
-
-            <div class="card m-3" id="item-3">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-3-name}}">
-                    <h5 class="card-title">{{item-3-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{item-3-type}}</small></p>
-                </div>
-            </div>
--->
+            {{/information}}
 
         </section>
     </div>
@@ -142,42 +125,6 @@
                 </div>
             </div>
             {{/review}}
-
-            <!--
-            <div class="card m-3" id="review-2">
-                <div class="card-body g-0 text-black bg-light row">
-                    <div class="col-1">
-                        <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt="{{item-name}}"
-                             width="75" height="75">
-                    </div>
-                    <div class="col-11">
-                        <p class="float-end">{{score}}</p>
-                        <h5 class="card-title">{{review-2-name}}</h5>
-                        <p class="card-text"><small class="text-muted">{{review-2-user}}</small></p>
-                        <p class="float-end"><small class="text-muted">{{date}}</small></p>
-                        <p class="card-text">{{review-2-comment}}</p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="card m-3" id="review-3">
-                <div class="card-body g-0 text-black bg-light row">
-                    <div class="col-1">
-                        <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt="{{item-name}}"
-                             width="75" height="75">
-                    </div>
-                    <div class="col-11">
-                        <p class="float-end">{{score}}</p>
-                        <h5 class="card-title">{{review-3-name}}</h5>
-                        <p class="card-text"><small class="text-muted">{{review-3-user}}</small></p>
-                        <p class="float-end"><small class="text-muted">{{date}}</small></p>
-                        <p class="card-text">{{review-3-comment}}</p>
-                    </div>
-
-                </div>
-            </div>
-            -->
 
         </section>
     </div>
