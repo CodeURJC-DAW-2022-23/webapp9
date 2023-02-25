@@ -42,7 +42,7 @@ public class DetailsController {
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(10, destination.get().getPlaces().size()); i++){
-            places.add(new Information(destination.get().getFlagFile(), destination.get().getPlaces().get(i).getName(), "Place"));
+            //places.add(new Information(destination.get().getFlagFile(), destination.get().getPlaces().get(i).getName(), "Place"));
         }
         model.addAttribute("information", places);
 
@@ -58,7 +58,7 @@ public class DetailsController {
 
         List<Information> itineraries = new ArrayList<>();
         for (int i = 0; i < Math.min(10, place.get().getItineraries().size()); i++){
-            itineraries.add(new Information(place.get().getDestination().getFlagFile(), place.get().getItineraries().get(i).getName(), "Itinerary"));
+            //itineraries.add(new Information(place.get().getDestination().getFlagFile(), place.get().getItineraries().get(i).getName(), "Itinerary"));
         }
         model.addAttribute("information", itineraries);
 
@@ -74,7 +74,7 @@ public class DetailsController {
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(10, itinerary.get().getPlaces().size()); i++){
-            places.add(new Information(itinerary.get().getPlaces().get(i).getDestination().getFlagFile(), itinerary.get().getPlaces().get(i).getName(), "Place"));
+            //places.add(new Information(itinerary.get().getPlaces().get(i).getDestination().getFlagFile(), itinerary.get().getPlaces().get(i).getName(), "Place"));
         }
         model.addAttribute("information", places);
 
@@ -95,13 +95,16 @@ public class DetailsController {
         model.addAttribute("item-img", "img");
 
         List<Information> places = new ArrayList<>();
-        Resource image = new ClassPathResource("templates/img/userPhoto.png");
-
-        Blob blob = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
+        Destination destination = new Destination(1000L, "dest", "dest-desc");
+        destination.setFlagCode("es");
 
         for (int i = 0; i < 10; i++){
-            places.add(new Information(blob, "Nombre-"+i, "Place"));
+            Place p = new Place((long) i, "Nombre-"+i, "Description");
+            p.setDestination(destination);
+
+            places.add(p);
         }
+
         model.addAttribute("information", places);
 
         return "details";
