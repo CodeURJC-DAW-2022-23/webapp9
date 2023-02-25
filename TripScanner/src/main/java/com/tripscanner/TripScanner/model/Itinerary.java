@@ -1,10 +1,5 @@
 package com.tripscanner.TripScanner.model;
 
-import org.hibernate.engine.jdbc.BlobProxy;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-
-import java.sql.Blob;
 import java.util.List;
 
 import javax.persistence.Column;
