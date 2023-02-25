@@ -1,5 +1,10 @@
 package com.tripscanner.TripScanner.model;
 
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import java.sql.Blob;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Itinerary {
+public class Itinerary implements Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,6 +67,20 @@ public class Itinerary {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getType() {
+        return "Itinerary";
+    }
+
+    @Override
+    public String getFlag() {
+        if (places.isEmpty()) {
+            return "https://flagicons.lipis.dev/flags/4x3/xx.svg";
+        } else {
+            return places.get(0).getFlag();
+        }
     }
 
     public void setDescription(String description) {

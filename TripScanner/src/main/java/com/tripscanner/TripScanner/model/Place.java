@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Place {
+public class Place implements Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +38,7 @@ public class Place {
     private List<Itinerary> itineraries;
 
     public Place() {
+        super();
     }
 
     public Place(Long id, String name, String description) {
@@ -111,4 +112,12 @@ public class Place {
         this.itineraries = itineraries;
     }
 
+    @Override
+    public String getFlag() {
+        return destination.getFlag();
+    }
+
+    public String getType() {
+        return "Place";
+    }
 }

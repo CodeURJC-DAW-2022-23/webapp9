@@ -12,7 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Destination {
+public class Destination implements Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,10 +30,7 @@ public class Destination {
 
     private boolean image;
 
-    @Lob
-    private Blob flagFile;
-
-    private boolean flag;
+    private String flagCode;
 
     @OneToMany
     private List<Place> places;
@@ -68,6 +65,16 @@ public class Destination {
         return description;
     }
 
+    @Override
+    public String getType() {
+        return "Destination";
+    }
+
+    @Override
+    public String getFlag() {
+        return "https://flagicons.lipis.dev/flags/4x3/" + getFlagCode() + ".svg";
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -96,20 +103,12 @@ public class Destination {
         this.image = image;
     }
 
-    public Blob getFlagFile() {
-        return flagFile;
+    public String getFlagCode() {
+        return flagCode;
     }
 
-    public void setFlagFile(Blob flagFile) {
-        this.flagFile = flagFile;
-    }
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setFlagCode(String flagCode) {
+        this.flagCode = flagCode;
     }
 
     public List<Place> getPlaces() {

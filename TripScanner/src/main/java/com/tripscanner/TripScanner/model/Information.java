@@ -2,27 +2,16 @@ package com.tripscanner.TripScanner.model;
 
 import java.sql.Blob;
 
-public class Information {
+public interface Information {
 
-    private String name;
-    private String type;
-    private Blob flag;
+    Long getId();
 
-    public Information(Blob flag, String name, String type) {
-        this.name = name;
-        this.type = type;
-        this.flag = flag;
-    }
+    String getName();
 
-    public String getName() {
-        return name;
-    }
+    String getDescription();
 
-    public String getType() {
-        return type;
-    }
+    String getType();
 
-    public Blob getFlag() {
-        return flag;
-    }
+    String getFlag();
+
 }
