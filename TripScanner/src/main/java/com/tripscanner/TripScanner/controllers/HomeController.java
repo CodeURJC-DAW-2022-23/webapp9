@@ -26,7 +26,7 @@ public class HomeController {
     @Autowired
     private ItineraryService itineraryService;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String showHomePage(Model model) {
 
         ArrayList<Destination> destinations = (ArrayList<Destination>) destinationService.findAll();
@@ -67,8 +67,7 @@ public class HomeController {
             model.addAttribute("itinerary", itinerary.get(i));
         }
 
-
-        return "home";
+        return "index";
     }
 
 
