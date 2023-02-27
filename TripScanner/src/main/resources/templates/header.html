@@ -22,14 +22,22 @@
         <div>
 
             <form class="form-inline float-end m-3">
+                {{#logIn}}
+                <a class="navbar-brand float-start" href="perfil.html"><img src="{{imageFile}}"
+                   alt="Placeholder userImage" widht="80px" height="80px"></a>
+                {{/logIn}}
+                {{^logIn}}
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Log
                     In</button>
+                {{/logIn}}
             </form>
 
+            {{#logIn}}
             <form class="form-inline float-end my-3 ms-3">
                 <button type="button" class="btn btn-outline-secondary" onclick="location.href='index.html'">My
                     itineraries</button>
             </form>
+            {{/logIn}}
 
             <form class="d-flex float-end m-3">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -41,6 +49,7 @@
     </div>
 </div>
 
+{{^logIn}}
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -68,3 +77,4 @@
         </div>
     </div>
 </div>
+{{/logIn}}
