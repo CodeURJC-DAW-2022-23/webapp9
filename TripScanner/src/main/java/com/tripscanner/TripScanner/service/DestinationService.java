@@ -44,4 +44,8 @@ public class DestinationService implements AbstractService<Destination> {
         repository.deleteById(id);
     }
 
+    public List<Optional<Destination>> findByQuery(String query) {
+        return repository.findByNameOrDescriptionLikeIgnoreCase(query);
+    }
+
 }
