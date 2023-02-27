@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tripscanner.TripScanner.model.Destination;
@@ -29,6 +30,10 @@ public class DestinationService implements AbstractService<Destination> {
 
     public List<Destination> findAll() {
         return repository.findAll();
+    }
+
+    public List<Destination> findAll(Sort sort) {
+        return repository.findAll(sort);
     }
 
     public void save(Destination destination) {
