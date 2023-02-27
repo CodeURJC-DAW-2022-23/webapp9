@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import javax.annotation.PostConstruct;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.repository.DestinationRepository;
@@ -41,7 +42,39 @@ public class DatabaseInitializer {
     @PostConstruct
     public void init() throws IOException, URISyntaxException {
 
-        // To-Do: Add samples for all models
+        // Sample destination
+
+        Destination destination1 = new Destination(1L, "Madrid", "Capital de España");
+        setImage(destination1, "/img-samples/madrid.jpg");
+        destinationRepository.save(destination1);
+
+        Destination destination2 = new Destination(0L, "Sevilla", "Provincia de Andalucía");
+        setImage(destination1, "/img-samples/sevilla.jpg");
+        destinationRepository.save(destination2);
+
+        // Sample places
+
+        Place place1 = new Place(1L, "Puerta del Sol", "Descripción Puerta del Sol");
+        setImage(place1, "/img-samples/madrid-sol.jpeg");
+        placeRepository.save(place1);
+
+        Place place2 = new Place(2L, "Torre del Oro", "Descripción Torre del Oro");
+        setImage(place2, "/img-samples/sevilla-torre-oro.jpeg");
+        placeRepository.save(place2);
+
+        Place place3 = new Place(3L, "Puerta del Sol", "Descripción Puerta del Sol");
+        setImage(place3, "/img-samples/sevilla-catedral.jpeg");
+        placeRepository.save(place3);
+
+        // Sample itineraries
+
+        Itinerary itinerary = new Itinerary(1L, "Ruta por España", "Incluyendo lugares de Madrid y Sevilla");
+        itineraryRepository.save(itinerary);
+
+        // Sample users
+
+        userRepository.save(new User("user", "pass", "USER"));
+        userRepository.save(new User("admin", "adminpass", "USER", "ADMIN"));
 
     }
 
