@@ -33,7 +33,7 @@ public class DetailsController {
     @Autowired
     private ItineraryService itineraryService;
 
-    @GetMapping("/details/dest-{id}")
+    @GetMapping("/details/dest/{id}")
     public String showDestination(Model model, @PathVariable long id){
         Optional<Destination> destination = destinationService.findById(id);
         model.addAttribute("item-name", destination.get().getName());
@@ -45,11 +45,12 @@ public class DetailsController {
             //places.add(new Information(destination.get().getFlagFile(), destination.get().getPlaces().get(i).getName(), "Place"));
         }
         model.addAttribute("information", places);
+        model.addAttribute("hide", true);
 
         return "details";
     }
 
-    @GetMapping("/details/place-{id}")
+    @GetMapping("/details/place/{id}")
     public String showPlace(Model model, @PathVariable long id){
         Optional<Place> place = placeService.findById(id);
         model.addAttribute("item-name", place.get().getName());
@@ -61,11 +62,12 @@ public class DetailsController {
             //itineraries.add(new Information(place.get().getDestination().getFlagFile(), place.get().getItineraries().get(i).getName(), "Itinerary"));
         }
         model.addAttribute("information", itineraries);
+        model.addAttribute("hide", true);
 
         return "details";
     }
 
-    @GetMapping("/details/itin-{id}")
+    @GetMapping("/details/itin/{id}")
     public String showItinerary(Model model, @PathVariable long id){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item-name", itinerary.get().getName());
@@ -78,13 +80,15 @@ public class DetailsController {
         }
         model.addAttribute("information", places);
 
+        model.addAttribute("hide", false);
+
         List<Review> reviews = new ArrayList<>();
         for (int i = 0; i < Math.min(10, itinerary.get().getPlaces().size()); i++){
             reviews.add(itinerary.get().getReviews().get(i));
         }
         model.addAttribute("review", reviews);
 
-        return "itinerary-details";
+        return "details";
     }
 
     //sample for executing with no database information
@@ -106,6 +110,7 @@ public class DetailsController {
         }
 
         model.addAttribute("information", places);
+        model.addAttribute("hide", true);
 
         return "details";
     }
