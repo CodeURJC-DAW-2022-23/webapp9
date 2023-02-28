@@ -73,8 +73,9 @@ public class DatabaseInitializer {
 
         // Sample users
 
-        userRepository.save(new User("user", "pass", "USER"));
-        userRepository.save(new User("admin", "adminpass", "USER", "ADMIN"));
+        userRepository.save(new User("user1", "1name", "2name", "jiji@gmail.com", "pass", "USER"));
+        userRepository.save(new User("usernombre", "nombre1", "nombre2", "random@gmail.com", "pass",  "USER", "ADMIN"));
+        userRepository.save(new User("ola", "tu", "mama", "tumama@gmail.com", "pass", "USER"));
 
     }
 
