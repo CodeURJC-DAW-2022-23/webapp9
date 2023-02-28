@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,9 @@ public class ItineraryService implements AbstractService<Itinerary> {
         return repository.findAll(sort);
     }
 
+    public Page<Itinerary> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
     public void save(Itinerary itinerary) {
         repository.save(itinerary);
     }
