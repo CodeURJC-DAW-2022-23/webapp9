@@ -69,6 +69,11 @@ public class Itinerary implements Information {
     }
 
     @Override
+    public String getTypeLowercase() {
+        return getType().toLowerCase();
+    }
+
+    @Override
     public String getFlag() {
         if (places.isEmpty()) {
             return "https://flagicons.lipis.dev/flags/4x3/xx.svg";

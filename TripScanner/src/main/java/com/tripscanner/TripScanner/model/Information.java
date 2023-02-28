@@ -10,6 +10,8 @@ public interface Information {
 
     String getType();
 
+    String getTypeLowercase();
+
     String getFlag();
 
 }

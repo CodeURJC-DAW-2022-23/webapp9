@@ -48,7 +48,7 @@ public class DetailsController {
         model.addAttribute("item-img", destination.get().getImageFile());
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < Math.min(3, destination.get().getPlaces().size()); i++){
             places.add(destination.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);
@@ -65,7 +65,7 @@ public class DetailsController {
         model.addAttribute("item-img", place.get().getImageFile());
 
         List<Information> itineraries = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < Math.min(3, place.get().getItineraries().size()); i++){
             itineraries.add(place.get().getItineraries().get(i));
         }
         model.addAttribute("information", itineraries);
@@ -82,7 +82,7 @@ public class DetailsController {
         model.addAttribute("item-img", itinerary.get().getPlaces().get(0).getImageFile());
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){
             places.add(itinerary.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);
@@ -91,30 +91,6 @@ public class DetailsController {
 
         Page<Review> reviews = reviewService.getItinReviews(itinerary, PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
-
-        return "details";
-    }
-
-    //sample for executing with no database information
-    @GetMapping("/details/")
-    public String showDetails(Model model) throws IOException {
-        model.addAttribute("item-name", "nombre");
-        model.addAttribute("item-description", "descripcion");
-        model.addAttribute("item-img", "img");
-
-        List<Information> places = new ArrayList<>();
-        Destination destination = new Destination("dest", "dest-desc");
-        destination.setFlagCode("es");
-
-        for (int i = 0; i < 10; i++){
-            Place p = new Place("Nombre-"+i, "Description");
-            p.setDestination(destination);
-
-            places.add(p);
-        }
-
-        model.addAttribute("information", places);
-        model.addAttribute("hide", true);
 
         return "details";
     }

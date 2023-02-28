@@ -70,6 +70,11 @@ public class Destination implements Information {
     }
 
     @Override
+    public String getTypeLowercase() {
+        return getType().toLowerCase();
+    }
+
+    @Override
     public String getFlag() {
         return "https://flagicons.lipis.dev/flags/4x3/" + getFlagCode() + ".svg";
     }

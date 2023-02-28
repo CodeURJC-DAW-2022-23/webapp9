@@ -119,4 +119,9 @@ public class Place implements Information {
     public String getType() {
         return "Place";
     }
+
+    @Override
+    public String getTypeLowercase() {
+        return getType().toLowerCase();
+    }
 }
