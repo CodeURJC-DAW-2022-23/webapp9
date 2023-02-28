@@ -19,6 +19,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,6 +39,9 @@ public class DatabaseInitializer {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() throws IOException, URISyntaxException {
@@ -83,8 +87,8 @@ public class DatabaseInitializer {
 
         // Sample users
 
-        userRepository.save(new User("user", "pass", "USER"));
-        userRepository.save(new User("admin", "adminpass", "USER", "ADMIN"));
+        userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
+        userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
 
     }
 
