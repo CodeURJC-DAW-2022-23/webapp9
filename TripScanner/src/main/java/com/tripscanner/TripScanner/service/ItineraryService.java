@@ -45,8 +45,8 @@ public class ItineraryService implements AbstractService<Itinerary> {
         repository.deleteById(id);
     }
 
-    public List<Itinerary> findByQuery(String name, String description) {
-        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description);
+    public List<Itinerary> findByQuery(String name, String description, Sort sort) {
+        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, sort);
     }
 
 }

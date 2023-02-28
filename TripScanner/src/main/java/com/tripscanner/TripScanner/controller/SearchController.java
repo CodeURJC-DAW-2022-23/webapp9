@@ -1,4 +1,4 @@
-package com.tripscanner.TripScanner.controlller;
+package com.tripscanner.TripScanner.controller;
 
 import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
@@ -7,10 +7,12 @@ import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class SearchController {
@@ -24,22 +26,22 @@ public class SearchController {
     @Autowired
     private ItineraryService itineraryService;
 
-    @GetMapping("/search/dest-{id}")
+    @GetMapping("/search")
     public Object showSearchResultDest(Model model, @PathVariable String name){
-        Optional<Destination> destination = destinationService.findByName(name);
-        if (destination.isPresent()) {
-            model.addAttribute("destination", destination.get().getId());
+        List<Destination> destination = destinationService.findByQuery(name, name, Sort.by("name"));
+        if (!destination.isEmpty()) {
+            model.addAttribute("destination", destination);
             return "search";
         } else {
             return "This destination is not found";
         }
     }
 
-    @GetMapping("/search/place-{id}")
+    @GetMapping("/search")
     public Object showSearchResultPlace(Model model, @PathVariable String name) {
-        Optional<Place> place = placeService.findByName(name);
-        if (place.isPresent()) {
-            model.addAttribute("place", place.get().getId());
+        List<Place> place = placeService.findByQuery(name, name, Sort.by("name"));
+        if (!place.isEmpty()) {
+            model.addAttribute("place", place);
             return "search";
         } else {
             return "This place is not found";
@@ -47,12 +49,11 @@ public class SearchController {
     }
 
 
-
-    @GetMapping("/search/itinerary-{id}")
+    @GetMapping("/search")
     public Object showSearchResultItinerary(Model model, @PathVariable String name) {
-        Optional<Itinerary> itinerary = itineraryService.findByName(name);
-        if (itinerary.isPresent()) {
-            model.addAttribute("itinerary", itinerary.get().getId());
+        List<Itinerary> itinerary = itineraryService.findByQuery(name, name, Sort.by("name"));
+        if (!itinerary.isEmpty()) {
+            model.addAttribute("itinerary", itinerary);
             return "search";
         } else {
             return "This itinerary is not found";
