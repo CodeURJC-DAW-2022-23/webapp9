@@ -41,18 +41,17 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
-    @OneToMany
+    @OneToMany(mappedBy="user")
     private List<Itinerary> itineraries;
 
-    @OneToMany
+    @OneToMany(mappedBy="user")
     private List<Review> reviews;
 
     public User() {
     }
 
-    public User(Long id, String username, String firstName, String lastName, String email, String passwordHash) {
+    public User(String username, String firstName, String lastName, String email, String passwordHash) {
         super();
-        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;

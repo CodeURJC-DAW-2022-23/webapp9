@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Itinerary {
+public class Itinerary implements Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,15 +31,14 @@ public class Itinerary {
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy="itinerary")
     private List<Review> reviews;
 
     public Itinerary() {
     }
 
-    public Itinerary(Long id, String name, String description) {
+    public Itinerary(String name, String description) {
         super();
-        this.id = id;
         this.name = name;
         this.description = description;
     }
@@ -62,6 +61,25 @@ public class Itinerary {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getType() {
+        return "Itinerary";
+    }
+
+    @Override
+    public String getTypeLowercase() {
+        return getType().toLowerCase();
+    }
+
+    @Override
+    public String getFlag() {
+        if (places.isEmpty()) {
+            return "https://flagicons.lipis.dev/flags/4x3/xx.svg";
+        } else {
+            return places.get(0).getFlag();
+        }
     }
 
     public void setDescription(String description) {

@@ -6,7 +6,7 @@
             <div class="row">
                 <!-- Item Image -->
                 <div class="col-12 col-md-5 pe-0 pe-md-5" id="header-graph">
-                    <img src="https://picsum.photos/1920/1080" alt="{{item-name}}" id="header-item-image"
+                    <img src="{{item-img}}" alt="{{item-name}}" id="header-item-image"
                         class="rounded-3">
                 </div>
                 <!-- Item Data -->
@@ -16,6 +16,7 @@
                         <h1 class="col-10 display-5 fw-bold ps-4 p-md-0" id="header-item-name">{{item-name}}</h1>
 
                         <!-- Edit Button -->
+                        <!--
                         <div class="col-2" id="header-edit-button">
                             <button type="button" class="btn btn-primary float-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
@@ -27,11 +28,12 @@
                                 </svg>
                             </button>
                         </div>
+                        -->
                     </div>
 
                     <!-- Item Description -->
                     <div class="row">
-                        <p class="fs-5 ps-4 p-md-0">{{item-desctiption}}</p>
+                        <p class="fs-5 ps-4 p-md-0">{{item-description}}</p>
                     </div>
                 </div>
             </div>
@@ -43,37 +45,55 @@
         <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
             <h3 class="text-center mb-3">Related Information</h3>
 
+            {{#information}}
             <!--Item 1 -->
             <div class="card m-3" id="item-1">
                 <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-1-name}}">
-                    <h5 class="card-title">{{item-1-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{item-1-type}}</small></p>
+                    <img src="{{flag}}" class="rounded float-end item-flag"
+                        alt="{{name}}">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text"><small class="text-muted">{{type}}</small></p>
+                    <a href="/details/{{typeLowercase}}/{{id}}" class="btn btn-primary">See more</a>
                 </div>
             </div>
-
-            <!--Item 1 -->
-            <div class="card m-3" id="item-2">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-2-name}}">
-                    <h5 class="card-title">{{item-2-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{item-2-type}}</small></p>
-                </div>
-            </div>
-
-            <!--Item 1 -->
-            <div class="card m-3" id="item-3">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-3-name}}">
-                    <h5 class="card-title">{{item-3-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{item-3-type}}</small></p>
-                </div>
-            </div>
+            {{/information}}
 
         </section>
     </div>
+
+{{^hide}}
+    <!-- Reviews -->
+    <div class="container p-4">
+        <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-review-bg">
+            <h3 class="text-center mb-3">Reviews</h3>
+
+            {{#review}}
+            <!--Review 1 -->
+            <div class="card m-3" id="review-1">
+                <div class="card-body g-0 text-black bg-light row">
+                    <div class="col-1">
+                        {{#user}}
+                        <img class="img-fluid rounded-start" src="{{image}}" alt="{{username}}"
+                             width="75" height="75">
+                        {{/user}}
+                    </div>
+                    <div class="col-11">
+                        <p class="float-end">{{score}}</p>
+                        <h5 class="card-title">{{title}}</h5>
+                        {{#user}}
+                        <p class="card-text"><small class="text-muted">{{firstName}} {{lastName}}</small></p>
+                        {{/user}}
+                        <p class="float-end"><small class="text-muted">{{dateToString}}</small></p>
+                        <p class="card-text">{{description}}</p>
+                    </div>
+
+                </div>
+            </div>
+            {{/review}}
+
+        </section>
+    </div>
+    {{/hide}}
+
 
 </body>
