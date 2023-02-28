@@ -31,15 +31,14 @@ public class Itinerary implements Information {
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy="itinerary")
     private List<Review> reviews;
 
     public Itinerary() {
     }
 
-    public Itinerary(Long id, String name, String description) {
+    public Itinerary(String name, String description) {
         super();
-        this.id = id;
         this.name = name;
         this.description = description;
     }

@@ -40,7 +40,7 @@ public class DetailsController {
     @Autowired
     private ReviewService reviewService;
 
-    @GetMapping("/details/dest/{id}")
+    @GetMapping("/details/destination/{id}")
     public String showDestination(Model model, @PathVariable long id){
         Optional<Destination> destination = destinationService.findById(id);
         model.addAttribute("item-name", destination.get().getName());
@@ -74,7 +74,7 @@ public class DetailsController {
         return "details";
     }
 
-    @GetMapping("/details/itin/{id}")
+    @GetMapping("/details/itinerary/{id}")
     public String showItinerary(Model model, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item-name", itinerary.get().getName());
@@ -89,9 +89,7 @@ public class DetailsController {
 
         model.addAttribute("hide", false);
 
-
         Page<Review> reviews = reviewService.getItinReviews(itinerary, PageRequest.of(0, 10));
-
         model.addAttribute("review", reviews);
 
         return "details";
@@ -105,11 +103,11 @@ public class DetailsController {
         model.addAttribute("item-img", "img");
 
         List<Information> places = new ArrayList<>();
-        Destination destination = new Destination(1000L, "dest", "dest-desc");
+        Destination destination = new Destination("dest", "dest-desc");
         destination.setFlagCode("es");
 
         for (int i = 0; i < 10; i++){
-            Place p = new Place((long) i, "Nombre-"+i, "Description");
+            Place p = new Place("Nombre-"+i, "Description");
             p.setDestination(destination);
 
             places.add(p);

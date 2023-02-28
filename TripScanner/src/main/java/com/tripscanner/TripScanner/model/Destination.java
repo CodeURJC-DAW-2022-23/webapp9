@@ -32,15 +32,14 @@ public class Destination implements Information {
 
     private String flagCode;
 
-    @OneToMany
+    @OneToMany(mappedBy="destination")
     private List<Place> places;
 
     public Destination() {
     }
 
-    public Destination(Long id, String name, String description) {
+    public Destination(String name, String description) {
         super();
-        this.id = id;
         this.name = name;
         this.description = description;
     }

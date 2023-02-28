@@ -34,16 +34,15 @@ public class Place implements Information {
     @ManyToOne
     private Destination destination;
 
-    @ManyToMany
+    @ManyToMany(mappedBy="places")
     private List<Itinerary> itineraries;
 
     public Place() {
         super();
     }
 
-    public Place(Long id, String name, String description) {
+    public Place(String name, String description) {
         super();
-        this.id = id;
         this.name = name;
         this.description = description;
     }
