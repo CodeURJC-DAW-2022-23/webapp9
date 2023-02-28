@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.tripscanner.TripScanner.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,9 @@ public class ReviewService implements AbstractService<Review> {
         return repository.findAll(sort);
     }
 
+    public Page<Review> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
     public void save(Review review) {
         repository.save(review);
     }
