@@ -8,10 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tripscanner.TripScanner.model.*;
+import com.tripscanner.TripScanner.service.ReviewService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +37,9 @@ public class DetailsController {
     @Autowired
     private ItineraryService itineraryService;
 
+    @Autowired
+    private ReviewService reviewService;
+
     @GetMapping("/details/dest/{id}")
     public String showDestination(Model model, @PathVariable long id){
         Optional<Destination> destination = destinationService.findById(id);
@@ -41,8 +48,8 @@ public class DetailsController {
         model.addAttribute("item-img", destination.get().getImageFile());
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < Math.min(10, destination.get().getPlaces().size()); i++){
-            //places.add(new Information(destination.get().getFlagFile(), destination.get().getPlaces().get(i).getName(), "Place"));
+        for (int i = 0; i < 3; i++){
+            places.add(destination.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);
         model.addAttribute("hide", true);
@@ -58,8 +65,8 @@ public class DetailsController {
         model.addAttribute("item-img", place.get().getImageFile());
 
         List<Information> itineraries = new ArrayList<>();
-        for (int i = 0; i < Math.min(10, place.get().getItineraries().size()); i++){
-            //itineraries.add(new Information(place.get().getDestination().getFlagFile(), place.get().getItineraries().get(i).getName(), "Itinerary"));
+        for (int i = 0; i < 3; i++){
+            itineraries.add(place.get().getItineraries().get(i));
         }
         model.addAttribute("information", itineraries);
         model.addAttribute("hide", true);
@@ -68,24 +75,23 @@ public class DetailsController {
     }
 
     @GetMapping("/details/itin/{id}")
-    public String showItinerary(Model model, @PathVariable long id){
+    public String showItinerary(Model model, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item-name", itinerary.get().getName());
         model.addAttribute("item-description", itinerary.get().getDescription());
         model.addAttribute("item-img", itinerary.get().getPlaces().get(0).getImageFile());
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < Math.min(10, itinerary.get().getPlaces().size()); i++){
-            //places.add(new Information(itinerary.get().getPlaces().get(i).getDestination().getFlagFile(), itinerary.get().getPlaces().get(i).getName(), "Place"));
+        for (int i = 0; i < 3; i++){
+            places.add(itinerary.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);
 
         model.addAttribute("hide", false);
 
-        List<Review> reviews = new ArrayList<>();
-        for (int i = 0; i < Math.min(10, itinerary.get().getPlaces().size()); i++){
-            reviews.add(itinerary.get().getReviews().get(i));
-        }
+
+        Page<Review> reviews = reviewService.getItinReviews(itinerary, PageRequest.of(0, 10));
+
         model.addAttribute("review", reviews);
 
         return "details";
