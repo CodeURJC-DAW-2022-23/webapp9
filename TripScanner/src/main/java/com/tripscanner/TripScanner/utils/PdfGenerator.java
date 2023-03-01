@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.utils;
 
+import java.awt.*;
 import java.io.IOException;
 
 import com.tripscanner.TripScanner.model.Itinerary;
@@ -25,21 +26,47 @@ public class PdfGenerator {
         PdfWriter.getInstance(document, response.getOutputStream());
         document.open();
 
-        Font fontTiltle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        fontTiltle.setSize(20);
-        Paragraph paragraph1 = new Paragraph(itinerary.getName() + " [Itinerary]", fontTiltle);
-        paragraph1.setAlignment(Paragraph.ALIGN_CENTER);
-        document.add(paragraph1);
+        // Title
+        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setSize(12);
+        Paragraph paragraph = new Paragraph("Intinerary generated with", font);
+        paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(paragraph);
+
+        font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setSize(20);
+        paragraph = new Paragraph("TripScanner", font);
+        paragraph.setSpacingAfter(10f);
+        paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(paragraph);
+
+        // Itinerary deatils
+        font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        paragraph = new Paragraph("Name: " + itinerary.getName(), font);
+        paragraph.setAlignment(Paragraph.ALIGN_LEFT);
+        document.add(paragraph);
+
+        font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        paragraph = new Paragraph("Description: " + itinerary.getDescription(), font);
+        paragraph.setAlignment(Paragraph.ALIGN_LEFT);
+        document.add(paragraph);
+
+        font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        paragraph = new Paragraph("Created by: @" + itinerary.getUser().getUsername() + " (" + itinerary.getUser().getFirstName() + " " + itinerary.getUser().getLastName() + ")", font);
+        paragraph.setSpacingAfter(10f);
+        paragraph.setAlignment(Paragraph.ALIGN_LEFT);
+        document.add(paragraph);
 
         PdfPTable table = new PdfPTable(itinerary.getPlaces().size());
         table.setWidthPercentage(100f);
         table.setWidths(new int[] {3,3,3});
         table.setSpacingBefore(5);
 
+        // Itinerary places
         PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(CMYKColor.BLUE);
+        cell.setBackgroundColor(new Color(0xA1C6EA));
         cell.setPadding(5);
-        Font font = FontFactory.getFont(FontFactory.HELVETICA);
+        font = FontFactory.getFont(FontFactory.HELVETICA);
         font.setColor(CMYKColor.WHITE);
         cell.setPhrase(new Phrase("Place name", font));
         table.addCell(cell);
