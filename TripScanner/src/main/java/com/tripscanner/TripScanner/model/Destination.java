@@ -12,7 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Destination {
+public class Destination implements Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,20 +30,16 @@ public class Destination {
 
     private boolean image;
 
-    @Lob
-    private Blob flagFile;
+    private String flagCode;
 
-    private boolean flag;
-
-    @OneToMany
+    @OneToMany(mappedBy="destination")
     private List<Place> places;
 
     public Destination() {
     }
 
-    public Destination(Long id, String name, String description) {
+    public Destination(String name, String description) {
         super();
-        this.id = id;
         this.name = name;
         this.description = description;
     }
@@ -66,6 +62,21 @@ public class Destination {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getType() {
+        return "Destination";
+    }
+
+    @Override
+    public String getTypeLowercase() {
+        return getType().toLowerCase();
+    }
+
+    @Override
+    public String getFlag() {
+        return "https://flagicons.lipis.dev/flags/4x3/" + getFlagCode() + ".svg";
     }
 
     public void setDescription(String description) {
@@ -96,20 +107,12 @@ public class Destination {
         this.image = image;
     }
 
-    public Blob getFlagFile() {
-        return flagFile;
+    public String getFlagCode() {
+        return flagCode;
     }
 
-    public void setFlagFile(Blob flagFile) {
-        this.flagFile = flagFile;
-    }
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setFlagCode(String flagCode) {
+        this.flagCode = flagCode;
     }
 
     public List<Place> getPlaces() {

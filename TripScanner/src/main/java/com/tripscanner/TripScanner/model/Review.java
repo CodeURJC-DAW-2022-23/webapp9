@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ public class Review {
 
     private Long views;
 
-    private int points;
+    private int score;
 
     private Date date;
 
@@ -36,11 +37,12 @@ public class Review {
     public Review() {
     }
 
-    public Review(Long id, String title, String description) {
+    public Review(String title, String description, int score) {
         super();
-        this.id = id;
         this.title = title;
         this.description = description;
+        this.score = score;
+        this.date = new Date();
     }
 
     public Long getId() {
@@ -75,16 +77,20 @@ public class Review {
         this.views = views;
     }
 
-    public int getPoints() {
-        return points;
+    public int getScore() {
+        return score;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public Date getDate() {
         return date;
+    }
+
+    public String getDateToString() {
+        return new SimpleDateFormat("dd/MM/yyyy, H:m").format(this.date);
     }
 
     public void setDate(Date date) {

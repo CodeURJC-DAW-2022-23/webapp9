@@ -41,10 +41,10 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
-    @OneToMany
+    @OneToMany(mappedBy="user")
     private List<Itinerary> itineraries;
 
-    @OneToMany
+    @OneToMany(mappedBy="user")
     private List<Review> reviews;
 
     public User() {
