@@ -43,9 +43,7 @@ public class DetailsController {
     @GetMapping("/details/destination/{id}")
     public String showDestination(Model model, @PathVariable long id){
         Optional<Destination> destination = destinationService.findById(id);
-        model.addAttribute("item-name", destination.get().getName());
-        model.addAttribute("item-description", destination.get().getDescription());
-        model.addAttribute("item-img", destination.get().getImageFile());
+        model.addAttribute("item", destination.get());
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(3, destination.get().getPlaces().size()); i++){
@@ -60,9 +58,7 @@ public class DetailsController {
     @GetMapping("/details/place/{id}")
     public String showPlace(Model model, @PathVariable long id){
         Optional<Place> place = placeService.findById(id);
-        model.addAttribute("item-name", place.get().getName());
-        model.addAttribute("item-description", place.get().getDescription());
-        model.addAttribute("item-img", place.get().getImageFile());
+        model.addAttribute("item", place.get());
 
         List<Information> itineraries = new ArrayList<>();
         for (int i = 0; i < Math.min(3, place.get().getItineraries().size()); i++){
@@ -77,9 +73,7 @@ public class DetailsController {
     @GetMapping("/details/itinerary/{id}")
     public String showItinerary(Model model, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
-        model.addAttribute("item-name", itinerary.get().getName());
-        model.addAttribute("item-description", itinerary.get().getDescription());
-        model.addAttribute("item-img", itinerary.get().getPlaces().get(0).getImageFile());
+        model.addAttribute("item", itinerary.get());
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){

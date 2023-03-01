@@ -1,19 +1,20 @@
     {{>header}}
 
     <!-- Header Item Data -->
+    {{#item}}
     <div class="container p-4">
         <section class="p-5 mb-4 bg-secondary rounded-3 text-dark" id="header-item-bg">
             <div class="row">
                 <!-- Item Image -->
                 <div class="col-12 col-md-5 pe-0 pe-md-5" id="header-graph">
-                    <img src="{{item-img}}" alt="{{item-name}}" id="header-item-image"
+                    <img src="/{{typeLowercase}}/{{id}}/image" alt="{{name}}" id="header-item-image"
                         class="rounded-3">
                 </div>
                 <!-- Item Data -->
                 <div class="col-12 col-md-7 py-4 p-md-0" id="header-data">
                     <div class="row pb-2 justify-content-between">
                         <!-- Item Name -->
-                        <h1 class="col-10 display-5 fw-bold ps-4 p-md-0" id="header-item-name">{{item-name}}</h1>
+                        <h1 class="col-10 display-5 fw-bold ps-4 p-md-0" id="header-item-name">{{name}}</h1>
 
                         <!-- Edit Button -->
                         <!--
@@ -33,12 +34,13 @@
 
                     <!-- Item Description -->
                     <div class="row">
-                        <p class="fs-5 ps-4 p-md-0">{{item-description}}</p>
+                        <p class="fs-5 ps-4 p-md-0">{{description}}</p>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+    {{/item}}
 
     <!-- Destination Information -->
     <div class="container p-4">
