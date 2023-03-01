@@ -37,10 +37,11 @@ public class Itinerary implements Information {
     public Itinerary() {
     }
 
-    public Itinerary(String name, String description) {
+    public Itinerary(String name, String description, User user) {
         super();
         this.name = name;
         this.description = description;
+        this.user = user;
     }
 
     public Long getId() {

@@ -69,9 +69,15 @@ public class DatabaseInitializer {
         place3.setDestination(destination2);
         placeRepository.save(place3);
 
+        // Sample users
+
+        userRepository.save(new User("user", "pass", "USER"));
+        User admin = new User("admin", "adminpass", "USER", "ADMIN");
+        userRepository.save(admin);
+
         // Sample itineraries
 
-        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla");
+        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", admin);
         itinerary.setPlaces(Arrays.asList(place1, place2, place3));
         itineraryRepository.save(itinerary);
 
@@ -80,11 +86,6 @@ public class DatabaseInitializer {
         Review review = new Review("Review", "Descipción de review", 5);
         review.setItinerary(itinerary);
         reviewRepository.save(review);
-
-        // Sample users
-
-        userRepository.save(new User("user", "pass", "USER"));
-        userRepository.save(new User("admin", "adminpass", "USER", "ADMIN"));
 
     }
 
