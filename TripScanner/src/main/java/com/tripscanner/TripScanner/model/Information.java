@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import java.sql.Blob;
+
 public interface Information {
 
     Long getId();
@@ -11,6 +13,10 @@ public interface Information {
     String getType();
 
     String getTypeLowercase();
+
+    boolean isImage();
+
+    Blob getImageFile();
 
     String getFlag();
 

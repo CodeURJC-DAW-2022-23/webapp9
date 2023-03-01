@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.model;
 
+import java.sql.Blob;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,6 +25,10 @@ public class Itinerary implements Information {
     private String description;
 
     private Long views;
+
+    private boolean image;
+
+    private Blob imageFile;
 
     @ManyToMany
     private List<Place> places;
@@ -93,6 +98,24 @@ public class Itinerary implements Information {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    @Override
+    public boolean isImage() {
+        return image;
+    }
+
+    public void setImage(boolean image) {
+        this.image = image;
+    }
+
+    @Override
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
     }
 
     public List<Place> getPlaces() {

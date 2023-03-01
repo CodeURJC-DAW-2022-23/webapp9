@@ -38,10 +38,11 @@ public class Destination implements Information {
     public Destination() {
     }
 
-    public Destination(String name, String description) {
+    public Destination(String name, String description, String flagCode) {
         super();
         this.name = name;
         this.description = description;
+        this.flagCode = flagCode.toLowerCase();
     }
 
     public Long getId() {
