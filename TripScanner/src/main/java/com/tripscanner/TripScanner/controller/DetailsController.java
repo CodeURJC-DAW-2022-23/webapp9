@@ -80,6 +80,7 @@ public class DetailsController {
     public String showItinerary(Model model, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item", itinerary.get());
+        model.addAttribute("isItinerary", true);
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){
@@ -96,12 +97,14 @@ public class DetailsController {
     }
 
     @GetMapping("/details/itinerary/{id}/export")
-    public void generatePdfFile(HttpServletResponse response, @PathVariable long id) throws DocumentException, IOException {
+    public String generatePdfFile(HttpServletResponse response, @PathVariable long id) throws DocumentException, IOException {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=itinerary-" + id + ".pdf");
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         PdfGenerator generator = new PdfGenerator();
         generator.generate(itinerary.get(), response);
+
+        return "redirect:/deatils/itinerary/" + id;
     }
 
 }
