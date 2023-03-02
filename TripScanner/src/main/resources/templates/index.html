@@ -13,7 +13,7 @@
 
                 <div class="carousel-item active">
                     <a href="#destinations">
-                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{top-destination-name}}">
+                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="">
                     </a>
                     <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                         <h5>Destinations</h5>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="carousel-item">
                     <a href="#places">
-                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{top-place-name}}">
+                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="">
                     </a>
                     <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                         <h5>Places to visit</h5>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="carousel-item">
                     <a href="#itineraries">
-                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{top-itinerary-name}}">
+                        <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="">
                     </a>
                     <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                         <h5>Itineraries</h5>
@@ -87,7 +87,7 @@
             <div class="row row-cols-md-3">
                 <div class="col">
                     <div class="card">
-                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
+                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="">
                         {{#destinations}}
                         <div class="card-body">
                             <h5 class="card-title">{{name}}</h5>
@@ -111,19 +111,24 @@
         <hr class="text-light">
         <div id="search-results">
             <div class="row row-cols-md-3">
+                {{#place}}
                 <div class="col">
+
                     <div class="card">
-                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
-                        {{#place}}
+                        <img src="/place/{{id}}/image" class="card-img-top" alt="{{name}}">
+
                         <div class="card-body">
                             <h5 class="card-title">{{name}}</h5>
                             <p class="card-text">{{description}}</p>
                             <a href="details.html" class="btn btn-primary">More details</a>
+
                         </div>
-                        {{/place}}
                     </div>
+
+
                 </div>
-                <div class="col"></div>
+                {{/place}}
+
             </div>
         </div>
     </div>
@@ -139,7 +144,7 @@
             <div class="row row-cols-md-3">
                 <div class="col">
                     <div class="card">
-                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="{{item-name}}">
+                        <img src="https://picsum.photos/1920/1080" class="card-img-top" alt="">
                         {{#itinerary}}
                         <div class="card-body">
                             <h5 class="card-title">{{name}}</h5>
