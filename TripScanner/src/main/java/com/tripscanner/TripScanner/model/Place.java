@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Place {
+public class Place implements Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,15 +34,15 @@ public class Place {
     @ManyToOne
     private Destination destination;
 
-    @ManyToMany
+    @ManyToMany(mappedBy="places")
     private List<Itinerary> itineraries;
 
     public Place() {
+        super();
     }
 
-    public Place(Long id, String name, String description) {
+    public Place(String name, String description) {
         super();
-        this.id = id;
         this.name = name;
         this.description = description;
     }
@@ -111,4 +111,17 @@ public class Place {
         this.itineraries = itineraries;
     }
 
+    @Override
+    public String getFlag() {
+        return destination.getFlag();
+    }
+
+    public String getType() {
+        return "Place";
+    }
+
+    @Override
+    public String getTypeLowercase() {
+        return getType().toLowerCase();
+    }
 }
