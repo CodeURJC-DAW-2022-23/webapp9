@@ -8,14 +8,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="post" action="login">
                         <div class="mb-3">
                             <label class="form-label required">UserName</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="username">
                         </div>
                         <div class="mb-3">
                             <label class="form-label required">Password</label>
-                            <input type="email" class="form-control">
+                            <input type="email" class="form-control" name="password">
                         </div>
                     </form>
                 </div>
@@ -48,51 +48,53 @@
 
                         </div>
                         <div class="col-xl-6">
-                            <div class="card-body p-md-5 text-black">
-                                <h3 class="mb-5 text-uppercase">Registration form</h3>
+                            <form method="post" action="signUp">
+                                <div class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 text-uppercase">Registration form</h3>
 
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
-                                            <input type="text" id="form3Example1m" class="form-control form-control-lg"
-                                                placeholder="First Name" />
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" id="form3Example1m" class="form-control form-control-lg"
+                                                    placeholder="First Name" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" id="form3Example1n" class="form-control form-control-lg"
+                                                    placeholder="Last Name" />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
-                                            <input type="text" id="form3Example1n" class="form-control form-control-lg"
-                                                placeholder="Last Name" />
-                                        </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example8" class="form-control form-control-lg"
+                                            placeholder="User Name" />
                                     </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example8" class="form-control form-control-lg"
+                                            placeholder="Nationality" />
+                                    </div>
+
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example9" class="form-control form-control-lg"
+                                            placeholder="Email" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example90" class="form-control form-control-lg"
+                                            placeholder="Password" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example99" class="form-control form-control-lg"
+                                            placeholder="Repeat your password" />
+                                    </div>
+
                                 </div>
-
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                        placeholder="User Name" />
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                        placeholder="Nationality" />
-                                </div>
-
-
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example9" class="form-control form-control-lg"
-                                        placeholder="Email" />
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example90" class="form-control form-control-lg"
-                                        placeholder="Password" />
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example99" class="form-control form-control-lg"
-                                        placeholder="Repeat your password" />
-                                </div>
-
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
