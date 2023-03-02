@@ -1,7 +1,7 @@
 package com.tripscanner.TripScanner.controller;
 
 import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.repository.DestinationRepository;
+import com.tripscanner.TripScanner.service.DestinationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -19,12 +19,12 @@ import java.util.Optional;
 public class DestinationWebController {
 
     @Autowired
-    private DestinationRepository destinationRepository;
+    private DestinationService destinationService;
 
     @GetMapping("/destination/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 
-        Optional<Destination> destination = destinationRepository.findById(id);
+        Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent() && destination.get().getImageFile() != null) {
 
             Resource file = new InputStreamResource(destination.get().getImageFile().getBinaryStream());
