@@ -50,16 +50,12 @@ public class User {
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String email, String passwordHash) {
+    public User(String username, String firstName, String lastName, String email, String passwordHash, String... roles) {
         super();
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.passwordHash = passwordHash;
-    }
-    public User(String username, String passwordHash, String... roles) {
-        this.username = username;
         this.passwordHash = passwordHash;
         this.roles = List.of(roles);
     }

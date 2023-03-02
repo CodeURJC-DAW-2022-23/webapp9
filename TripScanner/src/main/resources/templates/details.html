@@ -70,18 +70,29 @@
             <h3 class="text-center mb-3">Reviews</h3>
 
             <div class="card m-3" id="new-review-form">
-                <form class="card-body g-0 text-black bg-light row">
+                {{#item}}
+                <form action="/reviews/add/{{id}}/" method="post" class="card-body g-0 text-black bg-light row">
+                {{/item}}
 
                     <h5 class="mb-3">Add your review!</h5>
 
-                    <div class="mb-3">
-                        <label for="review-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="review-title">
+                    <div class="mb-3 row">
+                        <div class="col-9">
+                            <label for="review-title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="review-title" name="title">
+                        </div>
+                        <div class="col-3">
+                            <label for="review-score" class="form-label">Score</label>
+                            <input type="text" class="form-control" id="review-score" name="score">
+                            <div id="score-review-help" class="form-text">Write a score from 0-5</div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="review-title" class="form-label">Body</label>
-                        <textarea class="form-control" id="review-body"></textarea>
+                    <div class="mb-3 row">
+                        <div class="col-12">
+                            <label for="review-title" class="form-label">Body</label>
+                            <textarea class="form-control" id="review-body" name="description"></textarea>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

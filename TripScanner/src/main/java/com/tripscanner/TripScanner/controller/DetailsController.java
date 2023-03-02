@@ -85,6 +85,10 @@ public class DetailsController {
 
         Page<Review> reviews = reviewService.getItinReviews(itinerary, PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
+        /* Replace at security merge
+         * model.addAttribute("isLogged", request.getUserPrincipal() != null);
+         */
+        model.addAttribute("isLogged", true);
 
         return "details";
     }
