@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.model;
 
+import java.sql.Blob;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Itinerary {
+public class Itinerary implements Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,23 +26,27 @@ public class Itinerary {
 
     private Long views;
 
+    private boolean image;
+
+    private Blob imageFile;
+
     @ManyToMany
     private List<Place> places;
 
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy="itinerary")
     private List<Review> reviews;
 
     public Itinerary() {
     }
 
-    public Itinerary(Long id, String name, String description) {
+    public Itinerary(String name, String description, User user) {
         super();
-        this.id = id;
         this.name = name;
         this.description = description;
+        this.user = user;
     }
 
     public Long getId() {
@@ -64,6 +69,25 @@ public class Itinerary {
         return description;
     }
 
+    @Override
+    public String getType() {
+        return "Itinerary";
+    }
+
+    @Override
+    public String getTypeLowercase() {
+        return getType().toLowerCase();
+    }
+
+    @Override
+    public String getFlag() {
+        if (places.isEmpty()) {
+            return "https://flagicons.lipis.dev/flags/4x3/xx.svg";
+        } else {
+            return places.get(0).getFlag();
+        }
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -74,6 +98,24 @@ public class Itinerary {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    @Override
+    public boolean isImage() {
+        return image;
+    }
+
+    public void setImage(boolean image) {
+        this.image = image;
+    }
+
+    @Override
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
     }
 
     public List<Place> getPlaces() {
