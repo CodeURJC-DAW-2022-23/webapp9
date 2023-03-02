@@ -42,6 +42,7 @@
           </div>
         </form>
         <form action="/sign" method="get">
+          <input type="hidden" name="_csrf" value="{{token}}"/>
           <button type="submit" class="btn btn-danger">Not a member yet? Sign Up!</button>
         </form>
       </div>
