@@ -1,35 +1,26 @@
     {{>header}}
 
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Log In</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="login">
-                        <div class="mb-3">
-                            <label class="form-label required">UserName</label>
-                            <input type="text" class="form-control" name="username">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required">Password</label>
-                            <input type="email" class="form-control" name="password">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="location.href='index.html'">Log In</button>
-                    <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet?
-                        Sign Up!</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
+
+            {{^correct}}
+            <div class="col-md-12">
+                <h3><span class="badge bg-danger">Password and repeated password fields were not equal</span></h3>
+            </div>
+            {{/correct}}
+
+            {{^noEmptyFields}}
+            <div class="col-md-12">
+                <h3><span class="badge bg-danger">Fields marked with "*" must be filled</span></h3>
+            </div>
+            {{/noEmptyFields}}
+
+            {{^goodEmail}}
+            <div class="col-md-12">
+                <h3><span class="badge bg-danger">Email was not valid</span></h3>
+            </div>
+            {{/goodEmail}}
+
             <div class="col">
                 <div class="card card-registration my-4">
                     <div class="row g-0" style="background-color: #A1C6EA">
@@ -40,15 +31,12 @@
                                      width="200px" />
                                 <input type="file" id="file">
                                 <label rel="stylesheet" href="css/signUp.css">Choose photo</label>
-                                <div class="btn-submit">
-                                    <button type="button" class="btn btn-warning btn-lg ms-2"
-                                        onclick="location.href='index.html'">Register</button>
-                                </div>
+
                             </div>
 
                         </div>
                         <div class="col-xl-6">
-                            <form method="post" action="signUp">
+                            <form method="post" action="/sign">
                                 <div class="card-body p-md-5 text-black">
                                     <h3 class="mb-5 text-uppercase">Registration form</h3>
 
@@ -56,41 +44,45 @@
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
                                                 <input type="text" id="form3Example1m" class="form-control form-control-lg"
-                                                    placeholder="First Name" />
+                                                    placeholder="First Name*" name="firstName"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
                                                 <input type="text" id="form3Example1n" class="form-control form-control-lg"
-                                                    placeholder="Last Name" />
+                                                    placeholder="Last Name*" name="lastName"/>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                            placeholder="User Name" />
+                                            placeholder="User Name*" name="userName"/>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                            placeholder="Nationality" />
+                                            placeholder="Nationality" name="nationality"/>
                                     </div>
 
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example9" class="form-control form-control-lg"
-                                            placeholder="Email" />
+                                            placeholder="Email*" name="email"/>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example90" class="form-control form-control-lg"
-                                            placeholder="Password" />
+                                            placeholder="Password*" name="password"/>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example99" class="form-control form-control-lg"
-                                            placeholder="Repeat your password" />
+                                            placeholder="Repeat your password*" name="repeatedPassword"/>
+                                    </div>
+
+                                    <div class="btn-submit">
+                                        <button type="submit" class="btn btn-warning btn-lg ms-2">Register</button>
                                     </div>
 
                                 </div>

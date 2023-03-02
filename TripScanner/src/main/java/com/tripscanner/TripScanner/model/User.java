@@ -33,6 +33,8 @@ public class User {
 
     private String passwordHash;
 
+    private String nationality;
+
     @Lob
     private Blob imageFile;
 
@@ -50,17 +52,14 @@ public class User {
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String email, String passwordHash) {
+    public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String... roles) {
         super();
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
-    }
-    public User(String username, String passwordHash, String... roles) {
-        this.username = username;
-        this.passwordHash = passwordHash;
+        this.nationality = nationality;
         this.roles = List.of(roles);
     }
 
