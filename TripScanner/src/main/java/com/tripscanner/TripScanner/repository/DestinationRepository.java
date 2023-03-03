@@ -16,7 +16,7 @@ public interface DestinationRepository extends JpaRepository<Destination, Long> 
     Optional<Destination> findByName(String name);
 
     List<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description);
-    List<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Sort sort);
+    List<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
     Page<Destination> findAll(Pageable pageable);
 

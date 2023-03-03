@@ -15,7 +15,7 @@ public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
 
     Optional<Itinerary> findByName(String name);
 
-    List<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Sort sort);
+    List<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
     Page<Itinerary> findAll(Pageable pageable);
 

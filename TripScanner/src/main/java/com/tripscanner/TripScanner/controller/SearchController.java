@@ -33,7 +33,7 @@ public class SearchController {
 
     // Search methods for "view more details" link in main page
     @GetMapping("/search/{destination}")
-    public Object showSearchResultDestination(Model model){
+    public Object showSearchResultDestination(Model model) {
         Pageable destinationsPaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Destination> destination = destinationService.findAll(destinationsPaged);
         model.addAttribute("information", destination);
@@ -41,7 +41,7 @@ public class SearchController {
     }
 
     @GetMapping("/search/{place}")
-    public Object showSearchResultPlace(Model model){
+    public Object showSearchResultPlace(Model model) {
         Pageable placePaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Place> place = placeService.findAll(placePaged);
         model.addAttribute("information", place);
@@ -49,7 +49,7 @@ public class SearchController {
     }
 
     @GetMapping("/search/{itinerary}")
-    public Object showSearchResultItinerary(Model model){
+    public Object showSearchResultItinerary(Model model) {
         Pageable itineraryPaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
         model.addAttribute("information", itinerary);
@@ -59,37 +59,27 @@ public class SearchController {
 
     // Global search by word
     @GetMapping("/search")
-    public Object showSearchResultDest(Model model, @PathVariable String name){
-        //Pageable pageable = PageRequest.of(0, 10);
-        List<Destination> destination = destinationService.findByQuery(name, name, Sort.by("name"));
+    public Object showSearchResultDest(Model model, @PathVariable String name) {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("name"));
+        List<Destination> destination = destinationService.findByQuery(name, name, pageable);
+        List<Place> place = placeService.findByQuery(name, name, pageable);
+        List<Itinerary> itinerary = itineraryService.findByQuery(name, name, pageable);
         if (!destination.isEmpty()) {
             model.addAttribute("information", destination);
             return "search";
-        } else {
-            return "This destination is not found";
-        }
-    }
-
-    @GetMapping("/search")
-    public Object showSearchResultPlace(Model model, @PathVariable String name) {
-        List<Place> place = placeService.findByQuery(name, name, Sort.by("name"));
-        if (!place.isEmpty()) {
+        } else if (!place.isEmpty()) {
             model.addAttribute("information", place);
             return "search";
-        } else {
-            return "This place is not found";
-        }
-    }
-
-
-    @GetMapping("/search")
-    public Object showSearchResultItinerary(Model model, @PathVariable String name) {
-        List<Itinerary> itinerary = itineraryService.findByQuery(name, name, Sort.by("name"));
-        if (!itinerary.isEmpty()) {
+        } else if (!itinerary.isEmpty()) {
             model.addAttribute("information", itinerary);
             return "search";
         } else {
-            return "This itinerary is not found";
+            return "Not found";
         }
     }
 }
+
+
+
+
+
