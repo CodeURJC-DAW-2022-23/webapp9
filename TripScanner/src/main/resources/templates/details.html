@@ -38,6 +38,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row mb-2 mt-5">
+                <div class="col-12 text-center">
+                    <h5>Add to your itinerary</h5>
+                </div>
+            </div>
+            <form action="/itinerary/add/place/{{id}}" class="row text-center justify-content-between">
+                <div class="col-9 col-md-10 col-xxl-11">
+                    <select class="form-select">
+                        {{#ownedItineraries}}
+                        <option value="{{id}}">{{name}}</option>
+                        {{/ownedItineraries}}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary col-3 col-md-2 col-xxl-1 text-center">Add</button>
+            </form>
         </section>
     </div>
     {{/item}}
