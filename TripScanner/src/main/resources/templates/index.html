@@ -79,9 +79,8 @@
     <div class="row">
         <div class="col-2"></div>
         <h2 class="text-center col-8">Destinations</h2>
-        <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more destinations</a>
+        <a href='/search/destinations' role="button" class="btn btn-secondary col-2 float-end">View more destinations</a>
     </div>
-
     <hr class="text-light">
     <div id="search-results">
         <div class="row row-cols-md-3">
@@ -92,7 +91,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{description}}</p>
-                        <a href="/search" class="btn btn-primary">More details</a>
+                        <a href="/details/{{id}}" class="btn btn-primary">More details</a>
                     </div>
                 </div>
             </div>
@@ -105,7 +104,7 @@
     <div class="row">
         <div class="col-2"></div>
         <h2 class="text-center col-8">Places to visit</h2>
-        <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more places</a>
+        <a href='/search/places' role="button" class="btn btn-secondary col-2 float-end">View more places</a>
     </div>
     <hr class="text-light">
     <div id="search-results">
@@ -117,7 +116,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{description}}</p>
-                        <a href="details.html" class="btn btn-primary">More details</a>
+                        <a href="/search/{{id}}" class="btn btn-primary">More details</a>
                     </div>
                 </div>
             </div>
@@ -130,7 +129,7 @@
     <div class="row">
         <div class="col-2"></div>
         <h2 class="text-center col-8">Popular itineraries</h2>
-        <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more itineraries</a>
+        <a href='/search/itinerary' role="button" class="btn btn-secondary col-2 float-end">View more itineraries</a>
     </div>
     <hr class="text-light">
     <div id="search-results">
@@ -142,7 +141,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{description}}</p>
-                        <a href="details.html" class="btn btn-primary">More details</a>
+                        <a href="/details/{{id}}" class="btn btn-primary">More details</a>
                     </div>
                 </div>
             </div>
