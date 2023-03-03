@@ -36,7 +36,7 @@ public class Itinerary implements Information {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy="itinerary")
+    @OneToMany
     private List<Review> reviews;
 
     public Itinerary() {

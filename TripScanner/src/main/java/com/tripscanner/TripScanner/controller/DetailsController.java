@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tripscanner.TripScanner.model.*;
-import com.tripscanner.TripScanner.service.ReviewService;
+import com.tripscanner.TripScanner.service.*;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -21,10 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.tripscanner.TripScanner.service.DestinationService;
-import com.tripscanner.TripScanner.service.PlaceService;
-import com.tripscanner.TripScanner.service.ItineraryService;
-
 @Controller
 public class DetailsController {
 
@@ -36,6 +32,9 @@ public class DetailsController {
 
     @Autowired
     private ItineraryService itineraryService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ReviewService reviewService;
@@ -66,6 +65,8 @@ public class DetailsController {
         }
         model.addAttribute("information", itineraries);
         model.addAttribute("hide", true);
+        model.addAttribute("ownedItineraries", userService.findByUsername("admin").get().getItineraries());
+        model.addAttribute("isPlace", true);
 
         return "details";
     }
