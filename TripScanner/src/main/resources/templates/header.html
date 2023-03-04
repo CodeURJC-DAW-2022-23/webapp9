@@ -40,10 +40,9 @@
             </form>
             {{/logIn}}
 
-            <form class="d-flex float-end m-3" action="/search">
+            <form class="d-flex float-end m-3" method="get" action="/search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <img type="button" src="/img/magnify.svg.png" alt="search" width="35px" height="35px"
-                     onclick="location.href='/search'" />
+                <input type='submit' value='Search'/>
             </form>
 
         </div>

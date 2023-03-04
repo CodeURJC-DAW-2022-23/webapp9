@@ -36,13 +36,13 @@ public class SearchController {
     // Search methods for "view more details" link in main page
     @GetMapping("/search/destination")
     public String showSearchResultDestination(Model model, Pageable pageable) {
-        Page<Destination> destination = destinationService.findAll(PageRequest.of(0, 3, Sort.by("name")));
-        model.addAttribute("destination", destination);
+        Page<Destination> destination = destinationService.findAll(PageRequest.of(0, 10, Sort.by("name")));
+        model.addAttribute("information", destination);
         return "search";
     }
 
-/*    @GetMapping("/search/place")
-    public Object showSearchResultPlace(Model model) {
+   @GetMapping("/search/place")
+    public String showSearchResultPlace(Model model) {
         Pageable placePaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Place> place = placeService.findAll(placePaged);
         model.addAttribute("information", place);
@@ -50,17 +50,25 @@ public class SearchController {
     }
 
     @GetMapping("/search/itinerary")
-    public Object showSearchResultItinerary(Model model) {
+    public String showSearchResultItinerary(Model model) {
         Pageable itineraryPaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
         model.addAttribute("information", itinerary);
         return "search";
     }
 
+    @GetMapping("/search")
+    public String showResult(Model model, @PathVariable String name){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("name"));
+        List<Destination> destination = destinationService.findByQuery(name, name, pageable);
+        model.addAttribute("information", destination);
+        return "search";
+
+    }
 
     // Global search by word
-    @GetMapping("/search")
-    public Object showSearchResultDest(Model model, @PathVariable String name) {
+   /* @GetMapping("/search")
+    public String showSearchResultDest(Model model, @PathVariable String name) {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("name"));
         List<Destination> destination = destinationService.findByQuery(name, name, pageable);
         List<Place> place = placeService.findByQuery(name, name, pageable);
