@@ -77,4 +77,27 @@ public class UserWebController {
         userService.save(user.get());
         return "redirect:/management/user/";
     }
+
+    @GetMapping("/management/user/add")
+    public String addUserIni(Model model){
+        model.addAttribute("mode", "add");
+        model.addAttribute("id", "");
+        model.addAttribute("add", true);
+        model.addAttribute("edit", false);
+        model.addAttribute("type", "User");
+        model.addAttribute("user", true);
+        model.addAttribute("username", "");
+        model.addAttribute("firstName", "");
+        model.addAttribute("lastName", "");
+        model.addAttribute("email", "");
+        model.addAttribute("password", "");
+        return "addEditItem";
+    }
+
+    @PostMapping("/management/user/add")
+    public String addUser(Model model, @RequestParam String username, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password){
+        User user = new User(username, firstName, lastName, email, password);
+        userService.save(user);
+        return "redirect:/management/user/";
+    }
 }

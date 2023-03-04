@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.controller;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
@@ -89,6 +90,27 @@ public class PlaceWebController {
         place.get().setDestination(dest.get());
 
         placeService.save(place.get());
+        return "redirect:/management/place/";
+    }
+
+    @GetMapping("/management/place/add")
+    public String addPlaceIni(Model model){
+        model.addAttribute("mode", "add");
+        model.addAttribute("id", "");
+        model.addAttribute("add", true);
+        model.addAttribute("edit", false);
+        model.addAttribute("type", "Place");
+        model.addAttribute("place", true);
+        model.addAttribute("name", "");
+        model.addAttribute("description", "");
+        model.addAttribute("dest", "");
+        return "addEditItem";
+    }
+
+    @PostMapping("/management/place/add")
+    public String addPlace(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String destination){
+        Place place = new Place(name, description, destinationService.findByName(destination).get());
+        placeService.save(place);
         return "redirect:/management/place/";
     }
 

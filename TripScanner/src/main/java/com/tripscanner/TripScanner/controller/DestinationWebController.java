@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.controller;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
@@ -88,4 +89,24 @@ public class DestinationWebController {
         return "redirect:/management/destination/";
     }
 
+    @GetMapping("/management/destination/add")
+    public String addDestinationIni(Model model){
+        model.addAttribute("mode", "add");
+        model.addAttribute("id", "");
+        model.addAttribute("add", true);
+        model.addAttribute("edit", false);
+        model.addAttribute("type", "Destination");
+        model.addAttribute("destination", true);
+        model.addAttribute("name", "");
+        model.addAttribute("description", "");
+        model.addAttribute("flagCode", "");
+        return "addEditItem";
+    }
+
+    @PostMapping("/management/destination/add")
+    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode){
+        Destination destination = new Destination(name, description, flagCode);
+        destinationService.save(destination);
+        return "redirect:/management/destination/";
+    }
 }

@@ -82,4 +82,26 @@ public class ItineraryWebController {
         return "redirect:/management/itinerary/";
     }
 
+    @GetMapping("/management/itinerary/add")
+    public String addItineraryIni(Model model){
+        model.addAttribute("mode", "add");
+        model.addAttribute("id", "");
+        model.addAttribute("add", true);
+        model.addAttribute("edit", false);
+        model.addAttribute("type", "Itinerary");
+        model.addAttribute("itinerary", true);
+        model.addAttribute("name", "");
+        model.addAttribute("description", "");
+        model.addAttribute("username", "");
+        return "addEditItem";
+    }
+
+    @PostMapping("/management/itinerary/add")
+    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username){
+        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get());
+        itineraryService.save(itinerary);
+        return "redirect:/management/itinerary/";
+    }
+
+
 }
