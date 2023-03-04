@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Controller
 public class SearchController {
 
     @Autowired
@@ -33,9 +35,8 @@ public class SearchController {
 
     // Search methods for "view more details" link in main page
     @GetMapping("/search/destination")
-    public Object showSearchResultDestination(Model model) {
-        Pageable destinationsPaged = PageRequest.of(0, 3, Sort.by("name"));
-        Page<Destination> destination = destinationService.findAll(destinationsPaged);
+    public String showSearchResultDestination(Model model, Pageable pageable) {
+        Page<Destination> destination = destinationService.findAll(PageRequest.of(0, 3, Sort.by("name")));
         model.addAttribute("destination", destination);
         return "search";
     }
