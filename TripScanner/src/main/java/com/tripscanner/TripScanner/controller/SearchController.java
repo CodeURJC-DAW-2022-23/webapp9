@@ -32,7 +32,7 @@ public class SearchController {
     private ItineraryService itineraryService;
 
     // Search methods for "view more details" link in main page
-    @GetMapping("/search/{destination}")
+    @GetMapping("/search/destination")
     public Object showSearchResultDestination(Model model) {
         Pageable destinationsPaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Destination> destination = destinationService.findAll(destinationsPaged);
@@ -40,7 +40,7 @@ public class SearchController {
         return "search";
     }
 
-    @GetMapping("/search/{place}")
+    @GetMapping("/search/place")
     public Object showSearchResultPlace(Model model) {
         Pageable placePaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Place> place = placeService.findAll(placePaged);
@@ -48,7 +48,7 @@ public class SearchController {
         return "search";
     }
 
-    @GetMapping("/search/{itinerary}")
+    @GetMapping("/search/itinerary")
     public Object showSearchResultItinerary(Model model) {
         Pageable itineraryPaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
