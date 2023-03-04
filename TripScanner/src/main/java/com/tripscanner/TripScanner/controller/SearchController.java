@@ -34,13 +34,13 @@ public class SearchController {
     // Search methods for "view more details" link in main page
     @GetMapping("/search/destination")
     public Object showSearchResultDestination(Model model) {
-        Pageable destinationsPaged = PageRequest.of(0, 10, Sort.by("name"));
+        Pageable destinationsPaged = PageRequest.of(0, 3, Sort.by("name"));
         Page<Destination> destination = destinationService.findAll(destinationsPaged);
-        model.addAttribute("information", destination);
+        model.addAttribute("destination", destination);
         return "search";
     }
 
-    @GetMapping("/search/place")
+/*    @GetMapping("/search/place")
     public Object showSearchResultPlace(Model model) {
         Pageable placePaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Place> place = placeService.findAll(placePaged);
@@ -76,7 +76,7 @@ public class SearchController {
         } else {
             return "Not found";
         }
-    }
+    }*/
 }
 
 
