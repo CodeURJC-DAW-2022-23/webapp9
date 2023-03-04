@@ -34,10 +34,11 @@ public class Place implements Information {
         super();
     }
 
-    public Place(String name, String description) {
+    public Place(String name, String description, Destination destination) {
         super();
         this.name = name;
         this.description = description;
+        this.destination = destination;
     }
 
     public Long getId() {

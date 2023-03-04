@@ -1,8 +1,10 @@
 package com.tripscanner.TripScanner.controller;
 
 import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.repository.DestinationRepository;
-
+import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.service.DestinationService;
+import com.tripscanner.TripScanner.service.PlaceService;
+import com.tripscanner.TripScanner.service.ItineraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -11,6 +13,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -19,12 +25,18 @@ import java.util.Optional;
 public class DestinationWebController {
 
     @Autowired
-    private DestinationRepository destinationRepository;
+    private DestinationService destinationService;
+
+    @Autowired
+    private PlaceService placeService;
+
+    @Autowired
+    private ItineraryService itineraryService;
 
     @GetMapping("/destination/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 
-        Optional<Destination> destination = destinationRepository.findById(id);
+        Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent() && destination.get().getImageFile() != null) {
 
             Resource file = new InputStreamResource(destination.get().getImageFile().getBinaryStream());
@@ -35,6 +47,45 @@ public class DestinationWebController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/management/destination/delete/{id}")
+    public String deleteDestination(Model model, @PathVariable long id){
+        Optional<Destination> dest = destinationService.findById(id);
+        for(int i = 0; i < dest.get().getPlaces().size(); i++){
+            Place place = dest.get().getPlaces().get(i);
+            for(int j = 0; j < place.getItineraries().size(); j++){
+                place.getItineraries().get(j).getPlaces().remove(place);
+                itineraryService.findById(place.getItineraries().get(j).getId()).get().getPlaces().remove(place);
+                if (itineraryService.findById(place.getItineraries().get(j).getId()).get().getPlaces().isEmpty()){
+                    itineraryService.delete(place.getItineraries().get(j).getId());
+                }
+            }
+        }
+        destinationService.delete(id);
+        return "redirect:/management/destination/";
+    }
+
+    @GetMapping("/management/destination/edit/{id}")
+    public String editDestinationIni(Model model, @PathVariable long id){
+        Optional<Destination> destination = destinationService.findById(id);
+        model.addAttribute("mode", "edit");
+        model.addAttribute("edit", true);
+        model.addAttribute("type", "Destination");
+        model.addAttribute("add", false);
+        model.addAttribute("destination", destination.get());
+        return "addEditItem";
+    }
+
+    @PostMapping("/management/destination/edit/{id}")
+    public String editDestination(Model model, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode){
+        Optional<Destination> destination = destinationService.findById(id);
+        destination.get().setName(name);
+        destination.get().setDescription(description);
+        destination.get().setFlagCode(flagCode);
+
+        destinationService.save(destination.get());
+        return "redirect:/management/destination/";
     }
 
 }
