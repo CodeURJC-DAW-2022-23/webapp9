@@ -113,6 +113,7 @@ public class DestinationWebController {
     @PostMapping("/management/destination/add")
     public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode, @RequestParam MultipartFile imageFile) throws IOException {
         Destination destination = new Destination(name, description, flagCode);
+        destination.setViews(0L);
         destination.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         destinationService.save(destination);
         return "redirect:/management/destination/";

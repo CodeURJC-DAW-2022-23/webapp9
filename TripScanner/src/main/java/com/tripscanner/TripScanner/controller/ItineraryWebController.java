@@ -104,6 +104,7 @@ public class ItineraryWebController {
     @PostMapping("/management/itinerary/add")
     public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile) throws IOException {
         Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get());
+        itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
         return "redirect:/management/itinerary/";

@@ -115,6 +115,7 @@ public class PlaceWebController {
     @PostMapping("/management/place/add")
     public String addPlace(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String destination, @RequestParam MultipartFile imageFile) throws IOException {
         Place place = new Place(name, description, destinationService.findByName(destination).get());
+        place.setViews(0L);
         place.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         placeService.save(place);
         return "redirect:/management/place/";
