@@ -75,8 +75,6 @@ public class DatabaseInitializer {
 
         // Sample users
 
-        // Encrypted password so user and admin can be loged in.
-
         userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
         User admin = new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN");
         userRepository.save(admin);
