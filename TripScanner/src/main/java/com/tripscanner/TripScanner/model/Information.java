@@ -20,4 +20,6 @@ public interface Information {
 
     String getFlag();
 
+   // String getSearchResult();
+
 }

@@ -15,6 +15,8 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     Optional<Place> findByName(String name);
 
+
+    List<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description);
     List<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
     Page<Place> findAll(Pageable pageable);

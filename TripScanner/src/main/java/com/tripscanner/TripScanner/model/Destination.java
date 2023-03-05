@@ -70,6 +70,8 @@ public class Destination implements Information {
         return "Destination";
     }
 
+    //public String getSearchResult(){ return "Destination";}
+
     @Override
     public String getTypeLowercase() {
         return getType().toLowerCase();

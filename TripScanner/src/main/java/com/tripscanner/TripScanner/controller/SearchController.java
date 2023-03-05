@@ -1,12 +1,10 @@
 package com.tripscanner.TripScanner.controller;
 
-import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.Information;
-import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.*;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
+import com.tripscanner.TripScanner.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class SearchController {
@@ -34,6 +33,9 @@ public class SearchController {
     @Autowired
     private ItineraryService itineraryService;
 
+    @Autowired
+    private SearchService searchService;
+
     // Search methods for "view more details" link in main page
     @GetMapping("/search/destination")
     public String showSearchResultDestination(Model model, Pageable pageable) {
@@ -42,7 +44,7 @@ public class SearchController {
         return "search";
     }
 
-   @GetMapping("/search/place")
+    @GetMapping("/search/place")
     public String showSearchResultPlace(Model model) {
         Pageable placePaged = PageRequest.of(0, 10, Sort.by("name"));
         Page<Place> place = placeService.findAll(placePaged);
@@ -58,18 +60,19 @@ public class SearchController {
         return "search";
     }
 
-  /*  @GetMapping("/search")
-    public String showResult(@RequestParam("name") String name, Model model){
-        Pageable pageable = PageRequest.of(0, 1, Sort.by("name"));
-        List<Destination> destination = destinationService.findByQuery(name, name, pageable);
-        model.addAttribute("information", destination);
-        return "search";
-
-    }*/
+    @GetMapping("/search/filters")
+    public String searchByType(@RequestParam(name = "type", required = false) String type, Model model, String name) {
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Information> results = searchService.searchInfo(name, name, pageable, type);
+        model.addAttribute("information", results.stream()
+                .map(Information::getType)
+                .collect(Collectors.toList()));
+        return"search";
+}
 
     // Global search by word
     @GetMapping("/search")
-    public String showSearchResultDest(@RequestParam("name") String name, Model model) {
+    public String showSearchResult(@RequestParam("name") String name, Model model) {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("name"));
         List<Destination> destination = destinationService.findByQuery(name, name, pageable);
         List<Place> place = placeService.findByQuery(name, name, pageable);

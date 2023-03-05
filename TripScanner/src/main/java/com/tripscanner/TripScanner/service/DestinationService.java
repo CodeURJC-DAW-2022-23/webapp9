@@ -2,6 +2,7 @@ package com.tripscanner.TripScanner.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.tripscanner.TripScanner.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,6 @@ public class DestinationService implements AbstractService<Destination> {
     public List<Destination> findByQuery(String name, String description, Pageable pageable) {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
+
 
 }
