@@ -22,11 +22,7 @@ public class ProfileController {
     public String profile(Model model, HttpServletRequest request) {
         Optional<User> currentUser = userService.findByUsername(request.getUserPrincipal().getName());
 
-        model.addAttribute("firstName", currentUser.get().getFirstName());
-        model.addAttribute("lastName", currentUser.get().getLastName());
-        model.addAttribute("userName", currentUser.get().getUsername());
-        model.addAttribute("nationality", currentUser.get().getNationality());
-        model.addAttribute("email", currentUser.get().getEmail());
+        model.addAttribute("userInfo", currentUser.get());
 
         return "profile";
     }
