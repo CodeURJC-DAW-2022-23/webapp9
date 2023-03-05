@@ -103,23 +103,23 @@
     <div id="search-results">
 
         <div class="card mb-3">
-
+            {{#information}}
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt=""
+                    <img class="img-fluid rounded-start" src="{{typeLowercase}}/{{id}}/image" alt=""
                          id="header-item-image">
                 </div>
-
                 <div class="col-md-8">
                     <div class="card-body">
-                        {{#information}}
+                        <img src="{{typeLowercase}}/{{id}}/image" class="rounded float-end item-flag"
+                             alt="...">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{description}}</p>
                         <p class="card-text"><small class="text-muted">{{type}}</small></p>
-                        <a href='details.html' class="btn btn-secondary">Details</a>
-                        {{/information}}
+                        <a href='/details/{{typeLowercase}}/{{id}}' class="btn btn-secondary">Details</a>
                     </div>
                 </div>
+                {{/information}}
 
             </div>
 
