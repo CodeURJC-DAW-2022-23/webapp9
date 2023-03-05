@@ -36,23 +36,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Public pages
         http.authorizeRequests().antMatchers("/").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests().antMatchers("/loginerror").permitAll();
         http.authorizeRequests().antMatchers("/sign").permitAll();
 
         // Private pages
-        http.authorizeRequests().antMatchers("/newbook").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/editbook/*").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/removebook/*").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
+        // LEFT TO ADD MORE WHEN MERGE TO DEV
 
         // Login form
         http.formLogin().loginPage("/login");
         http.formLogin().usernameParameter("username");
         http.formLogin().passwordParameter("password");
-        http.formLogin().defaultSuccessUrl("/deatils/destination/1");
+        http.formLogin().defaultSuccessUrl("/");
         http.formLogin().failureUrl("/login");
 
         // Logout
-        http.logout().logoutUrl("/logout");
+        http.logout().logoutUrl("/");
         http.logout().logoutSuccessUrl("/");
 
         // Allow H2 console
