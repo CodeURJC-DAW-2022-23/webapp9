@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().failureUrl("/login");
 
         // Logout
-        http.logout().logoutUrl("/");
+        http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
 
         // Allow H2 console
