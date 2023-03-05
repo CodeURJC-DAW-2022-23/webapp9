@@ -110,6 +110,7 @@ public class PlaceWebController {
     @PostMapping("/management/place/add")
     public String addPlace(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String destination){
         Place place = new Place(name, description, destinationService.findByName(destination).get());
+        place.setViews(0L);
         placeService.save(place);
         return "redirect:/management/place/";
     }

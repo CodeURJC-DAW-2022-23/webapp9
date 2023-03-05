@@ -99,6 +99,7 @@ public class ItineraryWebController {
     @PostMapping("/management/itinerary/add")
     public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username){
         Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get());
+        itinerary.setViews(0L);
         itineraryService.save(itinerary);
         return "redirect:/management/itinerary/";
     }

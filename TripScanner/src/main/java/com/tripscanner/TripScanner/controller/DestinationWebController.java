@@ -106,6 +106,7 @@ public class DestinationWebController {
     @PostMapping("/management/destination/add")
     public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode){
         Destination destination = new Destination(name, description, flagCode);
+        destination.setViews(0L);
         destinationService.save(destination);
         return "redirect:/management/destination/";
     }
