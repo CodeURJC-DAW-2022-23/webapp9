@@ -50,6 +50,14 @@ public class User {
     public User() {
     }
 
+    public User(String username, String firstName, String lastName, String email, String passwordHash) {
+        super();
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+
     public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String... roles) {
         super();
         this.username = username;
