@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,18 +58,18 @@ public class SearchController {
         return "search";
     }
 
-    @GetMapping("/search")
-    public String showResult(Model model, @PathVariable String name){
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("name"));
+  /*  @GetMapping("/search")
+    public String showResult(@RequestParam("name") String name, Model model){
+        Pageable pageable = PageRequest.of(0, 1, Sort.by("name"));
         List<Destination> destination = destinationService.findByQuery(name, name, pageable);
         model.addAttribute("information", destination);
         return "search";
 
-    }
+    }*/
 
     // Global search by word
-   /* @GetMapping("/search")
-    public String showSearchResultDest(Model model, @PathVariable String name) {
+    @GetMapping("/search")
+    public String showSearchResultDest(@RequestParam("name") String name, Model model) {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("name"));
         List<Destination> destination = destinationService.findByQuery(name, name, pageable);
         List<Place> place = placeService.findByQuery(name, name, pageable);
@@ -85,7 +86,7 @@ public class SearchController {
         } else {
             return "Not found";
         }
-    }*/
+    }
 }
 
 
