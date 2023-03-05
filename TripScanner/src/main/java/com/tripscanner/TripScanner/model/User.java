@@ -57,6 +57,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.nationality = " ";
     }
 
     public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String role) {
@@ -75,6 +76,10 @@ public class User {
         this.username = username;
         this.passwordHash = passwordHash;
         this.roles = List.of(roles);
+        this.firstName = " ";
+        this.lastName = " ";
+        this.email = " ";
+        this.nationality = " ";
     }
 
     public Long getId() {
