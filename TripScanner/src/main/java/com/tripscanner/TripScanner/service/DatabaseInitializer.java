@@ -48,11 +48,11 @@ public class DatabaseInitializer {
 
         // Sample destination
 
-        Destination destination1 = new Destination("Madrid", "Capital de España");
+        Destination destination1 = new Destination("Madrid", "Capital de España", "es");
         setImage(destination1, "/img-samples/madrid.jpg");
         destinationRepository.save(destination1);
 
-        Destination destination2 = new Destination("Sevilla", "Provincia de Andalucía");
+        Destination destination2 = new Destination("Sevilla", "Provincia de Andalucía", "es");
         setImage(destination2, "/img-samples/sevilla.jpg");
         destinationRepository.save(destination2);
 
@@ -73,9 +73,17 @@ public class DatabaseInitializer {
         place3.setDestination(destination2);
         placeRepository.save(place3);
 
+        // Sample users
+
+        userRepository.save(new User("user", "pass", "USER"));
+        User admin = new User("admin", "adminpass", "USER", "ADMIN");
+        userRepository.save(admin);
+
         // Sample itineraries
 
         Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla");
+        setImage(itinerary, "/img-samples/madrid-sol.jpeg");
+
         itinerary.setPlaces(Arrays.asList(place1, place2, place3));
         itineraryRepository.save(itinerary);
 
@@ -84,12 +92,11 @@ public class DatabaseInitializer {
         Review review = new Review("Review", "Descipción de review", 5);
         review.setItinerary(itinerary);
         reviewRepository.save(review);
-
+        
         // Sample users
 
         userRepository.save(new User("user", "Pepe", "Villuela", "pepe@villuela.org", passwordEncoder.encode("pass"), "Espanya", "USER"));
         userRepository.save(new User("admin", "Pedro", "Sanchez", "perrosanxe@moncloa.gov", passwordEncoder.encode("adminpass"), "Espanya", "USER", "ADMIN"));
-
     }
 
     public void setImage(Destination destination, String classpathResource) throws IOException {
@@ -107,6 +114,15 @@ public class DatabaseInitializer {
 
         place.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
         place.setImage(true);
+
+    }
+
+    public void setImage(Itinerary itinerary, String classpathResource) throws IOException {
+
+        Resource image = new ClassPathResource(classpathResource);
+
+        itinerary.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+        itinerary.setImage(true);
 
     }
 
