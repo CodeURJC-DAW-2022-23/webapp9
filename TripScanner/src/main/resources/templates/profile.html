@@ -11,7 +11,7 @@
                                      style="border-top-left-radius: .55rem; border-bottom-left-radius: .25rem;"
                                      width="200px" />
                             </div>
-                            <form action="/" method="post">
+                            <form action="/logout" method="post">
                                 <input type="hidden" name="_csrf" value="{{token}}"/>
                                 <input type="submit" value="Log Out" class="btn btn-warning btn-lg ms-2"/>
                             </form>
@@ -19,6 +19,7 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="card-body p-md-5 text-black">
+                                {{#userInfo}}
                                 <h3 class="mb-5 text-uppercase">Your profile </h3>
 
                                 <div class="row">
@@ -41,7 +42,7 @@
                                 <div class="form-outline mb-4">
                                     <label class="form-label required">Username</label>
                                     <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                           value="{{userName}}" readonly />
+                                           value="{{username}}" readonly />
                                 </div>
 
                                 <div class="form-outline mb-4">
@@ -56,6 +57,7 @@
                                     <input type="text" id="form3Example9" class="form-control form-control-lg"
                                            value="{{email}}" readonly />
                                 </div>
+                                {{/userInfo}}
                             </div>
                         </div>
                     </div>

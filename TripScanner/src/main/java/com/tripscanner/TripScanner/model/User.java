@@ -57,8 +57,10 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.nationality = " ";
+    }
 
-    public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String... roles) {
+    public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String role) {
         super();
         this.username = username;
         this.firstName = firstName;
@@ -66,7 +68,18 @@ public class User {
         this.email = email;
         this.passwordHash = passwordHash;
         this.nationality = nationality;
+        this.roles = List.of(role);
+    }
+
+    public User(String username, String passwordHash, String... roles) {
+        super();
+        this.username = username;
+        this.passwordHash = passwordHash;
         this.roles = List.of(roles);
+        this.firstName = " ";
+        this.lastName = " ";
+        this.email = " ";
+        this.nationality = " ";
     }
 
     public Long getId() {

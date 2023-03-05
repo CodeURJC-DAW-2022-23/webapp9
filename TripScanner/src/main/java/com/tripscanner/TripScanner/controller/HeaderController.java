@@ -8,6 +8,7 @@ import com.tripscanner.TripScanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +23,13 @@ public class HeaderController {
         private UserService userService;
 
         @ModelAttribute("logIn")
-        public Boolean logIn(HttpServletRequest request) {
+        @GetMapping()
+        public Boolean logIn(HttpServletRequest request, Model model) {
                 Principal user = request.getUserPrincipal();
                 if (user != null){
                         return true;
                 }else{
+                        model.addAttribute("imageFile", userService.findByUsername(user.getName()).get().getImageFile());
                         return false;
                 }
         }

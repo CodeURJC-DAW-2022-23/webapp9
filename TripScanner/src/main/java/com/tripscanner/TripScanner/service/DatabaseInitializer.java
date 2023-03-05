@@ -75,13 +75,13 @@ public class DatabaseInitializer {
 
         // Sample users
 
-        userRepository.save(new User("user", "pass", "USER"));
-        User admin = new User("admin", "adminpass", "USER", "ADMIN");
+        userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
+        User admin = new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN");
         userRepository.save(admin);
 
         // Sample itineraries
 
-        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla");
+        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", userRepository.findByUsername("user").get());
         setImage(itinerary, "/img-samples/madrid-sol.jpeg");
 
         itinerary.setPlaces(Arrays.asList(place1, place2, place3));
@@ -95,8 +95,7 @@ public class DatabaseInitializer {
         
         // Sample users
 
-        userRepository.save(new User("user", "Pepe", "Villuela", "pepe@villuela.org", passwordEncoder.encode("pass"), "Espanya", "USER"));
-        userRepository.save(new User("admin", "Pedro", "Sanchez", "perrosanxe@moncloa.gov", passwordEncoder.encode("adminpass"), "Espanya", "USER", "ADMIN"));
+        userRepository.save(new User("pepe", "Pepe", "Villuela", "pepe@villuela.org", passwordEncoder.encode("pass"), "Espanya", "USER"));
     }
 
     public void setImage(Destination destination, String classpathResource) throws IOException {

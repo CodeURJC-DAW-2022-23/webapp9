@@ -24,6 +24,7 @@ public class SignController {
         model.addAttribute("correct", true);
         model.addAttribute("noEmptyFields", true);
         model.addAttribute("goodEmail", true);
+        model.addAttribute("uniqueUsername", true);
 
         return "sign";
     }
@@ -43,6 +44,7 @@ public class SignController {
             model.addAttribute("correct", false);
             model.addAttribute("noEmptyFields", true);
             model.addAttribute("goodEmail", true);
+            model.addAttribute("uniqueUsername", true);
             return "sign";
         }
 
@@ -50,6 +52,7 @@ public class SignController {
             model.addAttribute("correct", true);
             model.addAttribute("noEmptyFields", false);
             model.addAttribute("goodEmail", true);
+            model.addAttribute("uniqueUsername", true);
             return "sign";
         }
 
@@ -57,6 +60,15 @@ public class SignController {
             model.addAttribute("correct", true);
             model.addAttribute("noEmptyFields", true);
             model.addAttribute("goodEmail", false);
+            model.addAttribute("uniqueUsername", true);
+            return "sign";
+        }
+
+        if (!userService.findByUsername(userName).isEmpty()) {
+            model.addAttribute("correct", true);
+            model.addAttribute("noEmptyFields", true);
+            model.addAttribute("goodEmail", true);
+            model.addAttribute("uniqueUsername", false);
             return "sign";
         }
 
