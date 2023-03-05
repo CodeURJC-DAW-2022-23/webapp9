@@ -7,6 +7,7 @@ import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import org.hibernate.engine.jdbc.BlobProxy;
+import com.tripscanner.TripScanner.service.DestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
