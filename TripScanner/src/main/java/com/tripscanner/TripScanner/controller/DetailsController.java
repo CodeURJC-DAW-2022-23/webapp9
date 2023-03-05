@@ -89,7 +89,7 @@ public class DetailsController {
 
         model.addAttribute("hide", false);
 
-        Page<Review> reviews = reviewService.getItinReviews(itinerary, PageRequest.of(0, 10));
+        Page<Review> reviews = reviewService.getItinReviews(itinerary.get(), PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
 
         itinerary.get().setViews(itinerary.get().getViews() + 1);

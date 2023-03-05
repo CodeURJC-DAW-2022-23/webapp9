@@ -6,6 +6,7 @@ import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ItineraryService;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -79,11 +83,14 @@ public class DestinationWebController {
     }
 
     @PostMapping("/management/destination/edit/{id}")
-    public String editDestination(Model model, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode){
+    public String editDestination(Model model, MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode) throws IOException {
         Optional<Destination> destination = destinationService.findById(id);
         destination.get().setName(name);
         destination.get().setDescription(description);
         destination.get().setFlagCode(flagCode);
+        if (imageFile != null){
+            destination.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
 
         destinationService.save(destination.get());
         return "redirect:/management/destination/";
@@ -104,9 +111,10 @@ public class DestinationWebController {
     }
 
     @PostMapping("/management/destination/add")
-    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode){
+    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String flagCode, @RequestParam MultipartFile imageFile) throws IOException {
         Destination destination = new Destination(name, description, flagCode);
         destination.setViews(0L);
+        destination.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         destinationService.save(destination);
         return "redirect:/management/destination/";
     }
