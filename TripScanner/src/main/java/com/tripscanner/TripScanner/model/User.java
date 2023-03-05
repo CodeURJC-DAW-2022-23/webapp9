@@ -27,8 +27,6 @@ public class User {
 
     private String lastName;
 
-    private String country;
-
     private String email;
 
     private String passwordHash;
@@ -95,12 +93,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getCountry() {
-        return country;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public String getEmail() {
