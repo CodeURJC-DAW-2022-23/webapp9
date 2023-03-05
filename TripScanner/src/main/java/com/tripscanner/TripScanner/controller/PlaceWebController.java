@@ -6,6 +6,7 @@ import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ItineraryService;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -82,13 +85,15 @@ public class PlaceWebController {
     }
 
     @PostMapping("/management/place/edit/{id}")
-    public String editPlace(Model model, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String destination){
+    public String editPlace(Model model, MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String destination) throws IOException {
         Optional<Place> place = placeService.findById(id);
         place.get().setName(name);
         place.get().setDescription(description);
         Optional<Destination> dest = destinationService.findByName(destination);
         place.get().setDestination(dest.get());
-
+        if (imageFile != null){
+            place.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
         placeService.save(place.get());
         return "redirect:/management/place/";
     }
@@ -108,8 +113,9 @@ public class PlaceWebController {
     }
 
     @PostMapping("/management/place/add")
-    public String addPlace(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String destination){
+    public String addPlace(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String destination, @RequestParam MultipartFile imageFile) throws IOException {
         Place place = new Place(name, description, destinationService.findByName(destination).get());
+        place.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         placeService.save(place);
         return "redirect:/management/place/";
     }
