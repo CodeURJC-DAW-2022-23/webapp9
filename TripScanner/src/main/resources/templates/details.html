@@ -17,7 +17,7 @@
                         <h1 class="col-10 display-5 fw-bold ps-4 p-md-0" id="header-item-name">{{name}}</h1>
 
                         <div class="col-2" id="header-buttons">
-                            {{#isItinerary}}
+                            {{#isItinerary}}{{#isLogged}}
                             {{#item}}
                             <button type="button" class="btn btn-primary float-end" onclick="location.href='/export/{{typeLowercase}}/{{id}}'">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
@@ -26,7 +26,7 @@
                                 </svg>
                             </button>
                             {{/item}}
-                            {{/isItinerary}}
+                            {{/isLogged}}{{/isItinerary}}
                             <!-- Edit Button -->
                             <!--
                             <button type="button" class="btn btn-primary float-end">
