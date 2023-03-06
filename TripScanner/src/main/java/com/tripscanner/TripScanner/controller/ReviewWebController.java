@@ -31,10 +31,7 @@ public class ReviewWebController {
 
         if (review.getScore() > 5 || review.getScore() < 0) return "redirect:/details/itinerary/"+id;
 
-        /* Replace at security merge
-         * userService.findByName(request.getUserPrincipal().getName()).get()
-         */
-        review.setUser(userService.findByUsername("admin").get());
+        review.setUser(userService.findByUsername(request.getUserPrincipal().getName()).get());
         review.setViews(0L);
         review.setItinerary(itineraryService.findById(id).get());
         review.setDate(new Date());

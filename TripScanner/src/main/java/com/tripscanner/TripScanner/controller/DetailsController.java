@@ -27,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -86,7 +87,7 @@ public class DetailsController {
     }
 
     @GetMapping("/details/itinerary/{id}")
-    public String showItinerary(Model model, @PathVariable long id, Pageable pageable){
+    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item", itinerary.get());
         model.addAttribute("isItinerary", true);
@@ -101,10 +102,7 @@ public class DetailsController {
 
         Page<Review> reviews = reviewService.getItinReviews(itinerary.get(), PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
-        /* Replace at security merge
-         * model.addAttribute("isLogged", request.getUserPrincipal() != null);
-         */
-        model.addAttribute("isLogged", true);
+        model.addAttribute("isLogged", request.getUserPrincipal() != null);
 
         itinerary.get().setViews(itinerary.get().getViews() + 1);
         itineraryService.save(itinerary.get());
