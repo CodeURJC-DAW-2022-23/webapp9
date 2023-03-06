@@ -72,9 +72,10 @@ public class DatabaseInitializer {
 
         // Sample users
 
-        User user = userRepository.save(new User("user", "1name", "2name", "jiji@gmail.com", passwordEncoder.encode("pass"), "USER"));
-        userRepository.save(new User("admin", "nombre1", "nombre2", "random@gmail.com", passwordEncoder.encode("adminpass"),  "USER", "ADMIN"));
-        userRepository.save(new User("ola", "tu", "mama", "tumama@gmail.com", "pass", "USER"));
+        userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
+        User admin = new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN");
+        setImage(admin, "/img-samples/madrid-sol.jpeg");
+        userRepository.save(admin);
 
         // Sample itineraries
 

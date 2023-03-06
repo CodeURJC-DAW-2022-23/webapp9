@@ -19,11 +19,11 @@ public class HeaderController {
         @GetMapping()
         public Boolean logIn(HttpServletRequest request, Model model) {
                 Principal user = request.getUserPrincipal();
-                if (user != null){
-                        return true;
-                }else{
-                        model.addAttribute("imageFile", userService.findByUsername(user.getName()).get().getImageFile());
+                if (user == null){
                         return false;
+                }else{
+                        model.addAttribute("id", userService.findByUsername(user.getName()).get().getId());
+                        return true;
                 }
         }
 
