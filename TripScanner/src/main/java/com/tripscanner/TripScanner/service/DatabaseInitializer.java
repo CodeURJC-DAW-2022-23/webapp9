@@ -19,6 +19,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,6 +40,9 @@ public class DatabaseInitializer {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void init() throws IOException, URISyntaxException {
 
@@ -54,25 +58,23 @@ public class DatabaseInitializer {
 
         // Sample places
 
-        Place place1 = new Place("Puerta del Sol", "Descripción Puerta del Sol");
+        Place place1 = new Place("Puerta del Sol", "Descripción Puerta del Sol", destination1);
         setImage(place1, "/img-samples/madrid-sol.jpeg");
-        place1.setDestination(destination1);
         placeRepository.save(place1);
 
-        Place place2 = new Place("Torre del Oro", "Descripción Torre del Oro");
+        Place place2 = new Place("Torre del Oro", "Descripción Torre del Oro", destination2);
         setImage(place2, "/img-samples/sevilla-torre-oro.jpeg");
-        place2.setDestination(destination2);
         placeRepository.save(place2);
 
-        Place place3 = new Place("Catedral de Sevilla", "Descripción Catedral de Sevillaz");
+        Place place3 = new Place("Catedral de Sevilla", "Descripción Catedral de Sevilla", destination2);
         setImage(place3, "/img-samples/sevilla-catedral.jpeg");
-        place3.setDestination(destination2);
         placeRepository.save(place3);
 
         // Sample users
 
-        userRepository.save(new User("user", "pass", "USER"));
-        User admin = new User("admin", "adminpass", "USER", "ADMIN");
+        userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
+        User admin = new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN");
+        setImage(admin, "/img-samples/madrid-sol.jpeg");
         userRepository.save(admin);
 
         // Sample itineraries
@@ -88,7 +90,6 @@ public class DatabaseInitializer {
         Review review = new Review("Review", "Descipción de review", 5);
         review.setItinerary(itinerary);
         reviewRepository.save(review);
-
     }
 
     public void setImage(Destination destination, String classpathResource) throws IOException {
