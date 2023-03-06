@@ -3,15 +3,7 @@ package com.tripscanner.TripScanner.model;
 import java.sql.Blob;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="UserTable")
@@ -41,16 +33,16 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Itinerary> itineraries;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Review> reviews;
 
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String email, String passwordHash) {
+    public User(String username, String firstName, String lastName, String email, String passwordHash, String role) {
         super();
         this.username = username;
         this.firstName = firstName;
@@ -58,6 +50,7 @@ public class User {
         this.email = email;
         this.passwordHash = passwordHash;
         this.nationality = " ";
+        this.roles = List.of(role);
     }
 
     public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String role) {

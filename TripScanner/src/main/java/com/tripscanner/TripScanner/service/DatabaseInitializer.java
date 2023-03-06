@@ -58,30 +58,27 @@ public class DatabaseInitializer {
 
         // Sample places
 
-        Place place1 = new Place("Puerta del Sol", "Descripción Puerta del Sol");
+        Place place1 = new Place("Puerta del Sol", "Descripción Puerta del Sol", destination1);
         setImage(place1, "/img-samples/madrid-sol.jpeg");
-        place1.setDestination(destination1);
         placeRepository.save(place1);
 
-        Place place2 = new Place("Torre del Oro", "Descripción Torre del Oro");
+        Place place2 = new Place("Torre del Oro", "Descripción Torre del Oro", destination2);
         setImage(place2, "/img-samples/sevilla-torre-oro.jpeg");
-        place2.setDestination(destination2);
         placeRepository.save(place2);
 
-        Place place3 = new Place("Catedral de Sevilla", "Descripción Catedral de Sevillaz");
+        Place place3 = new Place("Catedral de Sevilla", "Descripción Catedral de Sevilla", destination2);
         setImage(place3, "/img-samples/sevilla-catedral.jpeg");
-        place3.setDestination(destination2);
         placeRepository.save(place3);
 
         // Sample users
 
-        userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
-        User admin = new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN");
-        userRepository.save(admin);
+        User user = userRepository.save(new User("user", "1name", "2name", "jiji@gmail.com", passwordEncoder.encode("pass"), "USER"));
+        userRepository.save(new User("admin", "nombre1", "nombre2", "random@gmail.com", passwordEncoder.encode("adminpass"),  "USER", "ADMIN"));
+        userRepository.save(new User("ola", "tu", "mama", "tumama@gmail.com", "pass", "USER"));
 
         // Sample itineraries
 
-        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", userRepository.findByUsername("user").get());
+        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", user);
         setImage(itinerary, "/img-samples/madrid-sol.jpeg");
 
         itinerary.setPlaces(Arrays.asList(place1, place2, place3));
@@ -92,10 +89,6 @@ public class DatabaseInitializer {
         Review review = new Review("Review", "Descipción de review", 5);
         review.setItinerary(itinerary);
         reviewRepository.save(review);
-        
-        // Sample users
-
-        userRepository.save(new User("pepe", "Pepe", "Villuela", "pepe@villuela.org", passwordEncoder.encode("pass"), "Espanya", "USER"));
     }
 
     public void setImage(Destination destination, String classpathResource) throws IOException {
