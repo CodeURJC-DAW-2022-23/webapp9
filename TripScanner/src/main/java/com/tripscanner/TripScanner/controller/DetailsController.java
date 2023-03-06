@@ -27,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -66,7 +67,7 @@ public class DetailsController {
     }
 
     @GetMapping("/details/place/{id}")
-    public String showPlace(Model model, @PathVariable long id){
+    public String showPlace(Model model, HttpServletRequest request, @PathVariable long id){
         Optional<Place> place = placeService.findById(id);
         model.addAttribute("item", place.get());
 
@@ -76,8 +77,15 @@ public class DetailsController {
         }
         model.addAttribute("information", itineraries);
         model.addAttribute("hide", true);
-        model.addAttribute("ownedItineraries", userService.findByUsername("admin").get().getItineraries());
         model.addAttribute("isPlace", true);
+        model.addAttribute("isLogged", request.getUserPrincipal() != null);
+
+        if (request.getUserPrincipal() != null) {
+            List<Itinerary> ownedItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
+            System.out.println(ownedItineraries);
+            if (ownedItineraries.isEmpty()) model.addAttribute("ownedItineraries", false);
+            else model.addAttribute("ownedItineraries", ownedItineraries);
+        }
 
         place.get().setViews(place.get().getViews() + 1);
         placeService.save(place.get());
@@ -86,7 +94,7 @@ public class DetailsController {
     }
 
     @GetMapping("/details/itinerary/{id}")
-    public String showItinerary(Model model, @PathVariable long id, Pageable pageable){
+    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item", itinerary.get());
         model.addAttribute("isItinerary", true);
@@ -101,26 +109,9 @@ public class DetailsController {
 
         Page<Review> reviews = reviewService.getItinReviews(itinerary.get(), PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
-        /* Replace at security merge
-         * model.addAttribute("isLogged", request.getUserPrincipal() != null);
-         */
-        model.addAttribute("isLogged", true);
-
-        itinerary.get().setViews(itinerary.get().getViews() + 1);
-        itineraryService.save(itinerary.get());
+        model.addAttribute("isLogged", request.getUserPrincipal() != null);
 
         return "details";
-    }
-
-    @GetMapping("/details/itinerary/{id}/export")
-    public String generatePdfFile(HttpServletResponse response, @PathVariable long id) throws DocumentException, IOException {
-        response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment; filename=itinerary-" + id + ".pdf");
-        Optional<Itinerary> itinerary = itineraryService.findById(id);
-        PdfGenerator generator = new PdfGenerator();
-        generator.generate(itinerary.get(), response);
-
-        return "redirect:/deatils/itinerary/" + id;
     }
 
 }

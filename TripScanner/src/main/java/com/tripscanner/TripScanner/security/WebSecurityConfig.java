@@ -39,12 +39,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/sign").permitAll();
         http.authorizeRequests().antMatchers("/details/**").permitAll();
+        http.authorizeRequests().antMatchers("/destination/*/image").permitAll();
+        http.authorizeRequests().antMatchers("/itinerary/*/image").permitAll();
+        http.authorizeRequests().antMatchers("/place/*/image").permitAll();
+        http.authorizeRequests().antMatchers("/user/*/image").permitAll();
 
         // Private pages
         http.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/itinerary/add/place/**").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/management/**").hasAnyRole("ADMIN");
         http.authorizeRequests().antMatchers("/myItineraries/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/export/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/reviews/add/*").hasAnyRole("USER");
+
+        // Private pages
+
         // LEFT TO ADD MORE WHEN MERGE TO DEV
 
         // Login form
