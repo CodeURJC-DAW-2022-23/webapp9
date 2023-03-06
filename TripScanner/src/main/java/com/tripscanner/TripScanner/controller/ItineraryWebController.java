@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -110,5 +111,20 @@ public class ItineraryWebController {
         return "redirect:/management/itinerary/";
     }
 
+    @GetMapping("/myItineraries")
+    public String myItineraries(Model model, HttpServletRequest request){
+        Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
+        model.addAttribute("item", user.get().getItineraries());
+        return "myItineraries";
+    }
+    @PostMapping("/myItineraries/add")
+    public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile) throws IOException {
+        Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
+        Itinerary itinerary = new Itinerary(name, description, user.get());
+        itinerary.setViews(0L);
+        itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        itineraryService.save(itinerary);
+        return "redirect:/myItineraries";
+    }
 
 }
