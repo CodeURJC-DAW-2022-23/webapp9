@@ -22,9 +22,9 @@
         <div>
 
             {{#logIn}}
-            <a class="navbar-brand float-start" href="/profile"><img src="/user/{{id}}//image"
-            alt="Placeholder userImage" widht="80px" height="80px"></a>
-            <a class="navbar-brand float-start" href="/profile"></a>
+            <a class="navbar-brand float-end" href="/profile">
+                <img src="/user/{{id}}/image" alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 ">
+            </a>
             {{/logIn}}
 
             {{^logIn}}
