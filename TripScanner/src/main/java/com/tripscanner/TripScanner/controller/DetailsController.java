@@ -109,9 +109,6 @@ public class DetailsController {
         itinerary.get().setViews(itinerary.get().getViews() + 1);
         itineraryService.save(itinerary.get());
 
-        itinerary.get().setViews(itinerary.get().getViews() + 1);
-        itineraryService.save(itinerary.get());
-
         return "details";
     }
 
