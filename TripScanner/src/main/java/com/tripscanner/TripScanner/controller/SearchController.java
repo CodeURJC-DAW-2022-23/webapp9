@@ -68,7 +68,7 @@ public class SearchController {
                 .map(Information::getType)
                 .collect(Collectors.toList()));
         return"search";
-}
+    }
 
     // Global search by word
     @GetMapping("/search")
@@ -91,7 +91,6 @@ public class SearchController {
         }
     }
 }
-
 
 
 
