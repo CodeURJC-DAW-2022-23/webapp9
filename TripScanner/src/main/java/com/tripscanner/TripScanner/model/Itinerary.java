@@ -40,6 +40,7 @@ public class Itinerary implements Information {
         this.name = name;
         this.description = description;
         this.user = user;
+        this.setImage(false);
         this.setViews(0L);
     }
 

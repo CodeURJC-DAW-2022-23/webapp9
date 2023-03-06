@@ -43,6 +43,7 @@ public class Review {
         this.description = description;
         this.score = score;
         this.date = new Date();
+        this.setViews(0L);
     }
 
     public Long getId() {
