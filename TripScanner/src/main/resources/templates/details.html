@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            {{#isPlace}}
+            {{#isPlace}}{{#isLogged}}
             <div class="row mb-2 mt-5">
                 <div class="col-12 text-center">
                     <h5>Add to your itinerary</h5>
@@ -56,15 +56,18 @@
             </div>
             <form action="/itinerary/add/place/{{id}}" method="post" class="row text-center justify-content-between">
                 <div class="col-9 col-md-10 col-xxl-11">
-                    <select class="form-select" name="itineraryList">
-                        {{#ownedItineraries}}
-                        <option value="{{id}}">{{name}}</option>
-                        {{/ownedItineraries}}
+                    <select class="form-select" name="itineraryList"{{^ownedItineraries}} disabled{{/ownedItineraries}}>
+                    {{#ownedItineraries}}
+                    <option value="{{id}}">{{name}}</option>
+                    {{/ownedItineraries}}
+                    {{^ownedItineraries}}
+                    <option value="No itineraries">No itineraries</option>
+                    {{/ownedItineraries}}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary col-3 col-md-2 col-xxl-1 text-center">Add</button>
+                <button type="submit" class="btn btn-primary col-3 col-md-2 col-xxl-1 text-center"{{^ownedItineraries}} disabled{{/ownedItineraries}}>Add</button>
             </form>
-            {{/isPlace}}
+            {{/isLogged}}{{/isPlace}}
         </section>
     </div>
     {{/item}}

@@ -67,7 +67,7 @@ public class DetailsController {
     }
 
     @GetMapping("/details/place/{id}")
-    public String showPlace(Model model, @PathVariable long id){
+    public String showPlace(Model model, HttpServletRequest request, @PathVariable long id){
         Optional<Place> place = placeService.findById(id);
         model.addAttribute("item", place.get());
 
@@ -77,8 +77,15 @@ public class DetailsController {
         }
         model.addAttribute("information", itineraries);
         model.addAttribute("hide", true);
-        model.addAttribute("ownedItineraries", userService.findByUsername("admin").get().getItineraries());
         model.addAttribute("isPlace", true);
+        model.addAttribute("isLogged", request.getUserPrincipal() != null);
+
+        if (request.getUserPrincipal() != null) {
+            List<Itinerary> ownedItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
+            System.out.println(ownedItineraries);
+            if (ownedItineraries.isEmpty()) model.addAttribute("ownedItineraries", false);
+            else model.addAttribute("ownedItineraries", ownedItineraries);
+        }
 
         place.get().setViews(place.get().getViews() + 1);
         placeService.save(place.get());
