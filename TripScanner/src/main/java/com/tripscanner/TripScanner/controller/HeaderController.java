@@ -24,4 +24,10 @@ public class HeaderController {
                 }
         }
 
+        @ModelAttribute("admin")
+        public Boolean admin(HttpServletRequest request) {
+                Boolean isAdmin = request.isUserInRole("ADMIN");
+                return isAdmin;
+        }
+
 }
