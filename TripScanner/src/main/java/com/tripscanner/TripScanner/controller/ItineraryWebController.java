@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.controller;
 
+import com.lowagie.text.DocumentException;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.ItineraryService;
@@ -7,6 +8,7 @@ import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.UserService;
+import com.tripscanner.TripScanner.utils.PdfGenerator;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -134,6 +138,17 @@ public class ItineraryWebController {
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
         return "redirect:/management/itinerary/";
+    }
+
+    @GetMapping("/export/itinerary/{id}")
+    public String generatePdfFile(HttpServletResponse response, @PathVariable long id) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=itinerary-" + id + ".pdf");
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        PdfGenerator generator = new PdfGenerator();
+        generator.generate(itinerary.get(), response);
+
+        return "redirect:/deatils/itinerary/" + id;
     }
 
 }

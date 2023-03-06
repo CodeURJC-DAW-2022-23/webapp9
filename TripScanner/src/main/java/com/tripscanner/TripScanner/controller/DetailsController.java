@@ -109,21 +109,7 @@ public class DetailsController {
         itinerary.get().setViews(itinerary.get().getViews() + 1);
         itineraryService.save(itinerary.get());
 
-        itinerary.get().setViews(itinerary.get().getViews() + 1);
-        itineraryService.save(itinerary.get());
-
         return "details";
-    }
-
-    @GetMapping("/details/itinerary/{id}/export")
-    public String generatePdfFile(HttpServletResponse response, @PathVariable long id) throws DocumentException, IOException {
-        response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment; filename=itinerary-" + id + ".pdf");
-        Optional<Itinerary> itinerary = itineraryService.findById(id);
-        PdfGenerator generator = new PdfGenerator();
-        generator.generate(itinerary.get(), response);
-
-        return "redirect:/deatils/itinerary/" + id;
     }
 
 }
