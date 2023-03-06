@@ -69,7 +69,7 @@
                     {{/itinerary}}
 
                     {{#place}}
-                            <form class="row g-3" method="post" action="/management/place/{{mode}}/{{id}}" enctype="multipart/form-data">
+                    <form class="row g-3" method="post" action="/management/place/{{mode}}/{{id}}" enctype="multipart/form-data">
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend7">Name</span>
                         <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
@@ -136,7 +136,11 @@
 
                     <div class="col-12">
                         <input class="btn btn-primary" type='submit' value='Submit'>
-                      </div>                    
+                    </div>
                 </form>
             </section>
         </div>
+
+</body>
+
+</html>
