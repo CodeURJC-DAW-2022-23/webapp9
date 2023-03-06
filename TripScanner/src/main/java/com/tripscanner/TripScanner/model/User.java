@@ -63,6 +63,7 @@ public class User {
         this.nationality = nationality;
         this.roles = List.of(role);
     }
+
     public User(String username, String passwordHash, String... roles) {
         super();
         this.username = username;
