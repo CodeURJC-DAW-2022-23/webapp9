@@ -3,14 +3,7 @@ package com.tripscanner.TripScanner.model;
 import java.sql.Blob;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 @Entity
 public class Itinerary implements Information {
@@ -36,7 +29,7 @@ public class Itinerary implements Information {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy="itinerary")
+    @OneToMany(mappedBy="itinerary", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Review> reviews;
 
     public Itinerary() {

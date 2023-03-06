@@ -3,14 +3,7 @@ package com.tripscanner.TripScanner.model;
 import java.sql.Blob;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 @Entity
 public class Place implements Information {
@@ -41,10 +34,11 @@ public class Place implements Information {
         super();
     }
 
-    public Place(String name, String description) {
+    public Place(String name, String description, Destination destination) {
         super();
         this.name = name;
         this.description = description;
+        this.destination = destination;
     }
 
     public Long getId() {
