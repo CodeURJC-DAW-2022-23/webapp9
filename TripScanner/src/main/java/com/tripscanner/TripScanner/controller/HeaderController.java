@@ -1,13 +1,16 @@
 package com.tripscanner.TripScanner.controller;
 
+import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Optional;
 
 @ControllerAdvice
 public class HeaderController {
@@ -16,9 +19,9 @@ public class HeaderController {
         private UserService userService;
 
         @ModelAttribute("logIn")
-        @GetMapping()
-        public Boolean logIn(HttpServletRequest request, Model model) {
+        public Boolean logIn(Model model, HttpServletRequest request) {
                 Principal user = request.getUserPrincipal();
+
                 if (user == null){
                         return false;
                 }else{
