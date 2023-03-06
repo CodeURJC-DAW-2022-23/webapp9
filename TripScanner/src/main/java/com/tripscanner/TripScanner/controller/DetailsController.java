@@ -58,6 +58,9 @@ public class DetailsController {
         model.addAttribute("information", places);
         model.addAttribute("hide", true);
 
+        destination.get().setViews(destination.get().getViews() + 1);
+        destinationService.save(destination.get());
+
         return "details";
     }
 
@@ -72,6 +75,9 @@ public class DetailsController {
         }
         model.addAttribute("information", itineraries);
         model.addAttribute("hide", true);
+
+        place.get().setViews(place.get().getViews() + 1);
+        placeService.save(place.get());
 
         return "details";
     }
@@ -90,8 +96,11 @@ public class DetailsController {
 
         model.addAttribute("hide", false);
 
-        Page<Review> reviews = reviewService.getItinReviews(itinerary, PageRequest.of(0, 10));
+        Page<Review> reviews = reviewService.getItinReviews(itinerary.get(), PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
+
+        itinerary.get().setViews(itinerary.get().getViews() + 1);
+        itineraryService.save(itinerary.get());
 
         return "details";
     }
