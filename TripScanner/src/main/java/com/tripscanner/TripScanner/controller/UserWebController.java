@@ -12,6 +12,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,9 @@ public class UserWebController {
 
     @Autowired
     private DestinationService destinationService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/user/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
@@ -101,7 +105,7 @@ public class UserWebController {
 
     @PostMapping("/management/user/add")
     public String addUser(Model model, @RequestParam String username, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password, @RequestParam MultipartFile imageFile) throws IOException {
-        User user = new User(username, firstName, lastName, email, password, "USER");
+        User user = new User(username, firstName, lastName, email, passwordEncoder.encode(password), "Española", "USER");
         user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         userService.save(user);
         return "redirect:/management/user/";
