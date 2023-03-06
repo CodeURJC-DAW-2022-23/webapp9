@@ -39,6 +39,7 @@ public class Place implements Information {
         this.name = name;
         this.description = description;
         this.destination = destination;
+        this.setImage(false);
         this.setViews(0L);
     }
 
