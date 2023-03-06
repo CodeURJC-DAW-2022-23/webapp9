@@ -39,6 +39,7 @@ public class Place implements Information {
         this.name = name;
         this.description = description;
         this.destination = destination;
+        this.setViews(0L);
     }
 
     public Long getId() {
