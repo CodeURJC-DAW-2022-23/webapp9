@@ -16,29 +16,37 @@
 
 <div class="navbar sticky-top navbar-light bg-white bg-opacity-75">
     <div class="container-fluid justify-content-between">
-        <a class="navbar-brand float-start" href="index.html"><img src="/img/logo-placeholder-image.png"
+        <a class="navbar-brand float-start" href="/"><img src="/img/logo-placeholder-image.png"
                                                                    alt="Placeholder logo" widht="80px" height="80px"></a>
 
         <div>
 
             {{#logIn}}
-            <a class="navbar-brand float-start" href="perfil.html"><img src="{{imageFile}}"
-                alt="Placeholder userImage" widht="80px" height="80px"></a>
+            <a class="navbar-brand float-end" href="/profile">
+                <img src="/user/{{id}}/image" alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 ">
+            </a>
             {{/logIn}}
 
             {{^logIn}}
             <form class="form-inline float-end m-3">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Log
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="location.href='/login'">Log
                     In</button>
             </form>
             {{/logIn}}
 
             {{#logIn}}
             <form class="form-inline float-end my-3 ms-3">
-                <button type="button" class="btn btn-outline-secondary" onclick="location.href='index.html'">My
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='/'">My
                     itineraries</button>
             </form>
             {{/logIn}}
+            {{#admin}}
+            <form class="form-inline float-end my-3 ms-3">
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='/management/itinerary'">
+                    Management
+                </button>
+            </form>
+            {{/admin}}
 
             <form class="d-flex float-end m-3">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -50,35 +58,7 @@
     </div>
 </div>
 
-{{^logIn}}
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Log In</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label required">UserName</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label required">Password</label>
-                        <input type="email" class="form-control">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" onclick="location.href='index.html'">Log In</button>
-                <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet?
-                    Sign Up!</button>
-            </div>
-        </div>
-    </div>
-</div>
-{{/logIn}}
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
