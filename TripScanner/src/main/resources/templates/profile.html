@@ -11,94 +11,59 @@
                                      style="border-top-left-radius: .55rem; border-bottom-left-radius: .25rem;"
                                      width="200px" />
                             </div>
+                            <form action="/logout" method="post">
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                <input type="submit" value="Log Out" class="btn btn-warning btn-lg ms-2"/>
+                            </form>
 
                         </div>
                         <div class="col-xl-6">
                             <div class="card-body p-md-5 text-black">
+                                {{#userInfo}}
                                 <h3 class="mb-5 text-uppercase">Your profile </h3>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
+                                            <label class="form-label required">First Name</label>
                                             <input type="text" id="form3Example1m" class="form-control form-control-lg"
-                                                placeholder="First Name" />
+                                                value="{{firstName}}" readonly />
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
+                                            <label class="form-label required">Last Name</label>
                                             <input type="text" id="form3Example1n" class="form-control form-control-lg"
-                                                placeholder="Last Name" />
+                                                   value="{{lastName}}" readonly />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-outline mb-4">
+                                    <label class="form-label required">Username</label>
                                     <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                        placeholder="User Name" />
+                                           value="{{username}}" readonly />
                                 </div>
 
                                 <div class="form-outline mb-4">
+                                    <label class="form-label required">Nationality</label>
                                     <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                        placeholder="Nationality" />
+                                           value="{{nationality}}" readonly />
                                 </div>
 
 
                                 <div class="form-outline mb-4">
+                                    <label class="form-label required">Email</label>
                                     <input type="text" id="form3Example9" class="form-control form-control-lg"
-                                        placeholder="Email" />
+                                           value="{{email}}" readonly />
                                 </div>
-
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example90" class="form-control form-control-lg"
-                                        placeholder="Password" />
-                                </div>
-
+                                {{/userInfo}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container p-4">
-        <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
-            <h3 class="text-center mb-3">My Itineraries</h3>
-
-            <!--Item 1 -->
-            <div class="card m-3" id="item-1">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-1-name}}">
-                    <h5 class="card-title">{{itinerary-1-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{itinerary-1-description}}</small></p>
-                    <a href="details.html" class="btn btn-primary">More details</a>
-                </div>
-            </div>
-
-            <!--Item 1 -->
-            <div class="card m-3" id="item-2">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-2-name}}">
-                    <h5 class="card-title">{{itinerary-2-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{itinerary-2-description}}</small></p>
-                    <a href="details.html" class="btn btn-primary">More details</a>
-                </div>
-            </div>
-
-            <!--Item 1 -->
-            <div class="card m-3" id="item-3">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                        alt="{{item-3-name}}">
-                    <h5 class="card-title">{{itinerary-3-name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{itinerary-3-description}}</small></p>
-                    <a href="details.html" class="btn btn-primary">More details</a>
-                </div>
-            </div>
-
-        </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
