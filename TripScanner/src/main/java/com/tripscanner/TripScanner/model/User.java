@@ -3,15 +3,7 @@ package com.tripscanner.TripScanner.model;
 import java.sql.Blob;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="UserTable")
@@ -41,25 +33,21 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Itinerary> itineraries;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Review> reviews;
 
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String email, String passwordHash) {
+    public User(String username, String firstName, String lastName, String email, String passwordHash, String... roles) {
         super();
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.passwordHash = passwordHash;
-    }
-    public User(String username, String passwordHash, String... roles) {
-        this.username = username;
         this.passwordHash = passwordHash;
         this.roles = List.of(roles);
     }

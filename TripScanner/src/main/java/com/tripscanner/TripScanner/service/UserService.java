@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.tripscanner.TripScanner.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,10 @@ public class UserService implements AbstractService<User> {
 
     public List<User> findAll(Sort sort) {
         return repository.findAll(sort);
+    }
+
+    public Page<User> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public void save(User user) {
