@@ -40,6 +40,13 @@
                     itineraries</button>
             </form>
             {{/logIn}}
+            {{#admin}}
+            <form class="form-inline float-end my-3 ms-3">
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='/management/itinerary'">
+                    Management
+                </button>
+            </form>
+            {{/admin}}
 
             <form class="d-flex float-end m-3">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
