@@ -16,27 +16,27 @@
 
 <div class="navbar sticky-top navbar-light bg-white bg-opacity-75">
     <div class="container-fluid justify-content-between">
-        <a class="navbar-brand float-start" href="index.html"><img src="/img/logo-placeholder-image.png"
+        <a class="navbar-brand float-start" href="/"><img src="/img/logo-placeholder-image.png"
                                                                    alt="Placeholder logo" widht="80px" height="80px"></a>
 
         <div>
 
             {{#logIn}}
-            <a class="navbar-brand float-start" href="perfil.html"><img src="{{imageFile}}"
+            <a class="navbar-brand float-start" href="/profile"><img src="{{imageFile}}"
             alt="Placeholder userImage" widht="80px" height="80px"></a>
-            <a class="navbar-brand float-start" href="perfil.html"></a>
+            <a class="navbar-brand float-start" href="/profile"></a>
             {{/logIn}}
 
             {{^logIn}}
             <form class="form-inline float-end m-3">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Log
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="location.href='/login'">Log
                     In</button>
             </form>
             {{/logIn}}
 
             {{#logIn}}
             <form class="form-inline float-end my-3 ms-3">
-                <button type="button" class="btn btn-outline-secondary" onclick="location.href='index.html'">My
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='/'">My
                     itineraries</button>
             </form>
             {{/logIn}}
