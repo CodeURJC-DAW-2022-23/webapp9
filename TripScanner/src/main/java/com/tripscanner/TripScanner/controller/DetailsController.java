@@ -98,6 +98,13 @@ public class DetailsController {
 
         Page<Review> reviews = reviewService.getItinReviews(itinerary.get(), PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
+        /* Replace at security merge
+         * model.addAttribute("isLogged", request.getUserPrincipal() != null);
+         */
+        model.addAttribute("isLogged", true);
+
+        itinerary.get().setViews(itinerary.get().getViews() + 1);
+        itineraryService.save(itinerary.get());
 
         itinerary.get().setViews(itinerary.get().getViews() + 1);
         itineraryService.save(itinerary.get());
