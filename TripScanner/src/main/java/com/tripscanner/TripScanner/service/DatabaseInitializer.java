@@ -72,8 +72,8 @@ public class DatabaseInitializer {
 
         // Sample users
 
-        userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
-        User admin = new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN");
+        userRepository.save(new User("user", "User1", "User2", "user@example.org", "pass", "USER"));
+        User admin = new User("admin", "Admin2", "Admin2", "admin@example.org", "adminpass", "USER", "ADMIN");
         setImage(admin, "/img-samples/madrid-sol.jpeg");
         userRepository.save(admin);
 

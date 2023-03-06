@@ -2,14 +2,20 @@ package com.tripscanner.TripScanner.controller;
 
 import java.io.IOException;
 import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.lowagie.text.DocumentException;
 import com.tripscanner.TripScanner.model.*;
-import com.tripscanner.TripScanner.service.ReviewService;
+import com.tripscanner.TripScanner.service.*;
+import com.tripscanner.TripScanner.utils.PdfGenerator;
+
 import org.hibernate.engine.jdbc.BlobProxy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -21,9 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.tripscanner.TripScanner.service.DestinationService;
-import com.tripscanner.TripScanner.service.PlaceService;
-import com.tripscanner.TripScanner.service.ItineraryService;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class DetailsController {
@@ -36,6 +40,9 @@ public class DetailsController {
 
     @Autowired
     private ItineraryService itineraryService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ReviewService reviewService;
@@ -69,6 +76,8 @@ public class DetailsController {
         }
         model.addAttribute("information", itineraries);
         model.addAttribute("hide", true);
+        model.addAttribute("ownedItineraries", userService.findByUsername("admin").get().getItineraries());
+        model.addAttribute("isPlace", true);
 
         place.get().setViews(place.get().getViews() + 1);
         placeService.save(place.get());
@@ -80,6 +89,7 @@ public class DetailsController {
     public String showItinerary(Model model, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("item", itinerary.get());
+        model.addAttribute("isItinerary", true);
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){
@@ -91,10 +101,29 @@ public class DetailsController {
 
         Page<Review> reviews = reviewService.getItinReviews(itinerary.get(), PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
+        /* Replace at security merge
+         * model.addAttribute("isLogged", request.getUserPrincipal() != null);
+         */
+        model.addAttribute("isLogged", true);
+
+        itinerary.get().setViews(itinerary.get().getViews() + 1);
+        itineraryService.save(itinerary.get());
 
         itinerary.get().setViews(itinerary.get().getViews() + 1);
         itineraryService.save(itinerary.get());
 
         return "details";
     }
+
+    @GetMapping("/details/itinerary/{id}/export")
+    public String generatePdfFile(HttpServletResponse response, @PathVariable long id) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=itinerary-" + id + ".pdf");
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        PdfGenerator generator = new PdfGenerator();
+        generator.generate(itinerary.get(), response);
+
+        return "redirect:/deatils/itinerary/" + id;
+    }
+
 }
