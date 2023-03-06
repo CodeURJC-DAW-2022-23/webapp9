@@ -2,6 +2,7 @@ package com.tripscanner.TripScanner.controller;
 
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.UserService;
+import com.tripscanner.TripScanner.utils.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ public class SignController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    EmailService emailService;
 
     @GetMapping("/sign")
     public String sign(Model model) {
@@ -72,7 +76,7 @@ public class SignController {
             return "sign";
         }
 
-        userService.save(new User(
+        User user = new User(
                 userName,
                 firstName,
                 lastName,
@@ -80,7 +84,10 @@ public class SignController {
                 passwordEncoder.encode(password),
                 nationality,
                 "USER"
-        ));
+        );
+
+        userService.save(user);
+        emailService.sendRegistrationEmail(user);
 
         return "login";
     }
