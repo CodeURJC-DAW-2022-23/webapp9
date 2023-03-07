@@ -30,9 +30,24 @@ public class HomeController {
     @GetMapping("/")
     public String showHomePage(Model model) {
 
+        // Set id of most visited destination
+        Page<Destination> topDestination = destinationService.findAll(
+                PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "views")));
+        model.addAttribute("destination-id", topDestination.get().findFirst().get().getId());
+
+        // Set id of most visited place
+        Page<Place> topPlace = placeService.findAll(
+                PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "views")));
+        model.addAttribute("place-id", topPlace.get().findFirst().get().getId());
+
+        // Set id of most visited itinerary
+        Page<Itinerary> topItinerary = itineraryService.findAll(
+                PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "views")));
+        model.addAttribute("itinerary-id", topItinerary.get().findFirst().get().getId());
+
+
         // Show 5 the most visited destinations
-        Pageable destinationsPagedPop = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"));
-        Page<Destination> popularDestination = destinationService.findAll(destinationsPagedPop);
+        Page<Destination> popularDestination = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views")));
         model.addAttribute("popularDestination", popularDestination);
 
         // Show 3 cards with possible destinations
