@@ -55,6 +55,7 @@
                 </div>
             </div>
             <form action="/itinerary/add/place/{{id}}" method="post" class="row text-center justify-content-between">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <div class="col-9 col-md-10 col-xxl-11">
                     <select class="form-select" name="itineraryList"{{^ownedItineraries}} disabled{{/ownedItineraries}}>
                     {{#ownedItineraries}}

@@ -111,9 +111,6 @@ public class DetailsController {
         model.addAttribute("review", reviews);
         model.addAttribute("isLogged", request.getUserPrincipal() != null);
 
-        itinerary.get().setViews(itinerary.get().getViews() + 1);
-        itineraryService.save(itinerary.get());
-
         return "details";
     }
 
