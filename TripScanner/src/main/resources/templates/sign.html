@@ -1,0 +1,114 @@
+    {{>header}}
+
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+
+            {{^correct}}
+            <div class="col-md-12">
+                <h3><span class="badge bg-danger">Password and repeated password fields were not equal</span></h3>
+            </div>
+            {{/correct}}
+
+            {{^noEmptyFields}}
+            <div class="col-md-12">
+                <h3><span class="badge bg-danger">Fields marked with "*" must be filled</span></h3>
+            </div>
+            {{/noEmptyFields}}
+
+            {{^goodEmail}}
+            <div class="col-md-12">
+                <h3><span class="badge bg-danger">Email was not valid</span></h3>
+            </div>
+            {{/goodEmail}}
+
+            {{^uniqueUsername}}
+            <div class="col-md-12">
+                <h3><span class="badge bg-danger">Username already taken</span></h3>
+            </div>
+            {{/uniqueUsername}}
+
+            <div class="col">
+                <form action="/sign" method="post" enctype="multipart/form-data">
+                <div class="card card-registration my-4">
+                    <div class="row g-0" style="background-color: #A1C6EA">
+                        <div class="col-xl-6 d-none d-xl-block">
+
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                <div class="photoCard">
+                                    <img src="/img/userPhoto.png" alt="Sample photo" class="img-fluid"
+                                         style="border-top-left-radius: .55rem; border-bottom-left-radius: .25rem;"
+                                         width="200px" />
+                                    <input type="file" id="file" name="userImage">
+                                    <label rel="stylesheet" href="css/signUp.css">Choose photo</label>
+
+                                </div>
+
+
+                        </div>
+                        <div class="col-xl-6">
+
+                                <div class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 text-uppercase">Registration form</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                                <input type="text" id="form3Example1m" class="form-control form-control-lg"
+                                                    placeholder="First Name*" name="firstName"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" id="form3Example1n" class="form-control form-control-lg"
+                                                    placeholder="Last Name*" name="lastName" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example8" class="form-control form-control-lg"
+                                            placeholder="User Name*" name="userName" required/>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example8" class="form-control form-control-lg"
+                                            placeholder="Nationality" name="nationality"/>
+                                    </div>
+
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example9" class="form-control form-control-lg"
+                                            placeholder="Email*" name="email" required/>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example90" class="form-control form-control-lg"
+                                            placeholder="Password*" name="password" required/>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example99" class="form-control form-control-lg"
+                                            placeholder="Repeat your password*" name="repeatedPassword" required/>
+                                    </div>
+
+                                    <div class="btn-submit">
+                                        <button type="submit" class="btn btn-warning btn-lg ms-2">Register</button>
+                                    </div>
+
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+    </script>
+
+</body>
+
+</html>

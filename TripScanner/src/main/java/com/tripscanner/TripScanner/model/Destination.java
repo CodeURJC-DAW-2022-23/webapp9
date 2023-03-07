@@ -38,6 +38,7 @@ public class Destination implements Information {
         this.description = description;
         this.flagCode = flagCode.toLowerCase();
         this.setViews(0L);
+        this.setImage(false);
     }
 
     public Long getId() {

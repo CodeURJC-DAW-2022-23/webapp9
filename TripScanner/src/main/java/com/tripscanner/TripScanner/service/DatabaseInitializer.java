@@ -19,6 +19,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,6 +39,9 @@ public class DatabaseInitializer {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() throws IOException, URISyntaxException {
@@ -67,14 +71,14 @@ public class DatabaseInitializer {
         placeRepository.save(place3);
 
         // Sample users
-
-        User user = userRepository.save(new User("user1", "1name", "2name", "jiji@gmail.com", "pass", "USER"));
-        userRepository.save(new User("usernombre", "nombre1", "nombre2", "random@gmail.com", "pass",  "USER", "ADMIN"));
-        userRepository.save(new User("ola", "tu", "mama", "tumama@gmail.com", "pass", "USER"));
+        userRepository.save(new User("user", "User1", "User2", "user@example.org", passwordEncoder.encode("pass"), "Española", "USER"));
+        User admin = new User("admin", "Admin2", "Admin2", "admin@example.org", passwordEncoder.encode("adminpass"), "Española", "USER", "ADMIN");
+        setImage(admin, "/img-samples/madrid-sol.jpeg");
+        userRepository.save(admin);
 
         // Sample itineraries
 
-        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", user);
+        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", admin);
         setImage(itinerary, "/img-samples/madrid-sol.jpeg");
 
         itinerary.setPlaces(Arrays.asList(place1, place2, place3));
@@ -85,7 +89,6 @@ public class DatabaseInitializer {
         Review review = new Review("Review", "Descipción de review", 5);
         review.setItinerary(itinerary);
         reviewRepository.save(review);
-
     }
 
     public void setImage(Destination destination, String classpathResource) throws IOException {

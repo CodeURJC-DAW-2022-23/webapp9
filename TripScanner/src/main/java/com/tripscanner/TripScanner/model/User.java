@@ -19,11 +19,11 @@ public class User {
 
     private String lastName;
 
-    private String country;
-
     private String email;
 
     private String passwordHash;
+
+    private String nationality;
 
     @Lob
     private Blob imageFile;
@@ -42,13 +42,14 @@ public class User {
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String email, String passwordHash, String... roles) {
+    public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String... roles) {
         super();
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.nationality = nationality;
         this.roles = List.of(roles);
     }
 
@@ -84,12 +85,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getCountry() {
-        return country;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public String getEmail() {
