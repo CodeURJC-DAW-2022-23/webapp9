@@ -51,110 +51,115 @@
 
 </div>
 
+<div class="pt-3 pb-5">
 
-<div class="container bg-secondary rounded-3 padded mb-2">
-    <div class="row">
-        <h2 class="text-center col"> Our most visited destinations</h2>
-    </div>
-    <div class="row">
-        <a class="col-md-6"><img src="/img/placeholder-graph.png" alt="Most viewed detinations" height="400px"
-                                 width="300px"/></a>
-        <div class="col-md-6">
-            {{#popularDestination}}
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{name}}</h5>
+    <div class="container bg-secondary rounded-3 padded my-3">
+        <div class="row">
+            <h2 class="text-center col"> Our most visited destinations</h2>
+        </div>
+        <div class="row">
+            <a class="col-md-6"><img src="/img/placeholder-graph.png" alt="Most viewed detinations" height="400px"
+                                     width="300px"/></a>
+            <div class="col-md-6">
+                {{#popularDestination}}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{name}}</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {{/popularDestination}}
             </div>
-            {{/popularDestination}}
         </div>
     </div>
-</div>
 
-<div class="container bg-secondary rounded-3 padded mt-2" id="destinations">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Destinations</h2>
-        <div class="col-2 float-end">
-            <a href='/search/destinations' role="button" class="btn btn-secondary">View more destinations</a>
+    <div class="container bg-secondary rounded-3 padded mt-5" id="destinations">
+        <div class="row">
+            <div class="col-2"></div>
+            <h2 class="text-center col-8">Destinations</h2>
+            <div class="col-2 float-end">
+                <a href='/search/destinations' role="button" class="btn btn-secondary">View more destinations</a>
+            </div>
         </div>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            {{#destinations}}
-            <div class="col">
-                <div class="card">
-                    <img src="/destination/{{id}}/image" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <a href="/details/destination/{{id}}" class="btn btn-primary">More details</a>
+        <hr class="text-light">
+        <div id="search-results">
+            <div class="row row-cols-md-3">
+                {{#destinations}}
+                <div class="col">
+                    <div class="card">
+                        <img src="/destination/{{id}}/image" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{description}}</p>
+                            <a href="/details/destination/{{id}}" class="btn btn-primary">More details</a>
+                        </div>
                     </div>
                 </div>
+                {{/destinations}}
             </div>
-            {{/destinations}}
         </div>
     </div>
-</div>
 
-<div class="container bg-secondary rounded-3 padded mt-2" id="places">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Places to visit</h2>
-        <div class="col-2 float-end">
-            <a href='/search/places' role="button" class="btn btn-secondary">View more places</a>
+    <div class="container bg-secondary rounded-3 padded mt-4" id="places">
+        <div class="row">
+            <div class="col-2"></div>
+            <h2 class="text-center col-8">Places to visit</h2>
+            <div class="col-2 float-end">
+                <a href='/search/places' role="button" class="btn btn-secondary">View more places</a>
+            </div>
         </div>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            {{#place}}
-            <div class="col">
-                <div class="card">
-                    <img src="/place/{{id}}/image" class="card-img-top" alt="{{name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <a href="/details/place/{{id}}" class="btn btn-primary">More details</a>
+        <hr class="text-light">
+        <div id="search-results">
+            <div class="row row-cols-md-3">
+                {{#place}}
+                <div class="col">
+                    <div class="card">
+                        <img src="/place/{{id}}/image" class="card-img-top" alt="{{name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{description}}</p>
+                            <a href="/details/place/{{id}}" class="btn btn-primary">More details</a>
+                        </div>
                     </div>
                 </div>
+                {{/place}}
             </div>
-            {{/place}}
         </div>
     </div>
-</div>
 
-<div class="container bg-secondary rounded-3 padded mt-2" id="itineraries">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Itineraries</h2>
-        <div class="col-2 float-end">
-            <a href='/search/itinerary' role="button" class="btn btn-secondary">View more itineraries</a>
+    <div class="container bg-secondary rounded-3 padded mt-4" id="itineraries">
+        <div class="row">
+            <div class="col-2"></div>
+            <h2 class="text-center col-8">Itineraries</h2>
+            <div class="col-2 float-end">
+                <a href='/search/itinerary' role="button" class="btn btn-secondary">View more itineraries</a>
+            </div>
         </div>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            {{#itinerary}}
-            <div class="col">
-                <div class="card">
-                    <img src="itinerary/{{id}}/image" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <a href="/details/itinerary/{{id}}" class="btn btn-primary">More details</a>
+        <hr class="text-light">
+        <div id="search-results">
+            <div class="row row-cols-md-3">
+                {{#itinerary}}
+                <div class="col">
+                    <div class="card">
+                        <img src="itinerary/{{id}}/image" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{description}}</p>
+                            <a href="/details/itinerary/{{id}}" class="btn btn-primary">More details</a>
+                        </div>
                     </div>
                 </div>
+                {{/itinerary}}
             </div>
-            {{/itinerary}}
         </div>
     </div>
+
 </div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
 </script>
