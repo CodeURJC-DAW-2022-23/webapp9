@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -45,10 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Private pages
         http.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/management").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers("/myItineraries").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/itinerary/add/place/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/myItineraries/**").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/export/**").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/itinerary/add/place/*").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/reviews/add/*").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/management/**").hasAnyRole("ADMIN");
         // LEFT TO ADD MORE WHEN MERGE TO DEV
@@ -67,5 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Allow H2 console
         http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().sameOrigin();
+        
     }
+    
 }
