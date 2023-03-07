@@ -43,6 +43,8 @@ public class ItineraryService implements AbstractService<Itinerary> {
     public Page<Itinerary> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
+
+
     public void save(Itinerary itinerary) {
         repository.save(itinerary);
     }
