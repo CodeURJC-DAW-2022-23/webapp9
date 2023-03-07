@@ -23,6 +23,7 @@ public class ProfileController {
         Optional<User> currentUser = userService.findByUsername(request.getUserPrincipal().getName());
 
         model.addAttribute("userInfo", currentUser.get());
+        model.addAttribute("imageFile", currentUser.get().getImageFile());
 
         return "profile";
     }
