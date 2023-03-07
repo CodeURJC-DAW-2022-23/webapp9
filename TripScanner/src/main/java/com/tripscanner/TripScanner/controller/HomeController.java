@@ -31,22 +31,22 @@ public class HomeController {
     public String showHomePage(Model model) {
 
         // Show 5 the most visited destinations
-        Pageable destinationsPagedPop = PageRequest.of(0, 5, Sort.by("views"));
+        Pageable destinationsPagedPop = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"));
         Page<Destination> popularDestination = destinationService.findAll(destinationsPagedPop);
         model.addAttribute("popularDestination", popularDestination);
 
         // Show 3 cards with possible destinations
-        Pageable destinationsPaged = PageRequest.of(0, 3, Sort.by("name"));
+        Pageable destinationsPaged = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
         Page<Destination> destinations = destinationService.findAll(destinationsPaged);
         model.addAttribute("destinations", destinations);
 
         //Show 3 cards with possible places
-        Pageable placePaged = PageRequest.of(0, 3, Sort.by("name"));
+        Pageable placePaged = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
         Page<Place> place = placeService.findAll(placePaged);
         model.addAttribute("place", place);
 
         //Show 3 cards with possible itinerary
-        Pageable itineraryPaged = PageRequest.of(0, 3, Sort.by("name"));
+        Pageable itineraryPaged = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
         Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
         model.addAttribute("itinerary", itinerary);
 
