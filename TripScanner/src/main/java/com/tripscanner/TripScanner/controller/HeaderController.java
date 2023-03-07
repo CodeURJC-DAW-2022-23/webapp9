@@ -31,4 +31,19 @@ public class HeaderController {
                 }
         }
 
+        @ModelAttribute("admin")
+        public Boolean admin(HttpServletRequest request) {
+                Boolean isAdmin = request.isUserInRole("ADMIN");
+                return isAdmin;
+        }
+
+        @ModelAttribute("search")
+        public Boolean search(HttpServletRequest request) {
+                String currentPage = request.getRequestURL().toString();
+                if (currentPage.contains("search")){
+                        return false;
+                }else{
+                        return true;
+                }
+        }
 }
