@@ -28,23 +28,25 @@
             {{/uniqueUsername}}
 
             <div class="col">
+                <form action="/sign" method="post" enctype="multipart/form-data">
                 <div class="card card-registration my-4">
                     <div class="row g-0" style="background-color: #A1C6EA">
                         <div class="col-xl-6 d-none d-xl-block">
-                            <form action="/sign" method="post">
+
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
                                 <div class="photoCard">
                                     <img src="/img/userPhoto.png" alt="Sample photo" class="img-fluid"
                                          style="border-top-left-radius: .55rem; border-bottom-left-radius: .25rem;"
                                          width="200px" />
-                                    <input type="file" id="file">
+                                    <input type="file" id="file" name="userImage">
                                     <label rel="stylesheet" href="css/signUp.css">Choose photo</label>
 
                                 </div>
-                            </form>
+
 
                         </div>
                         <div class="col-xl-6">
-                            <form method="post" action="/sign">
+
                                 <div class="card-body p-md-5 text-black">
                                     <h3 class="mb-5 text-uppercase">Registration form</h3>
 
@@ -59,14 +61,14 @@
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
                                                 <input type="text" id="form3Example1n" class="form-control form-control-lg"
-                                                    placeholder="Last Name*" name="lastName"/>
+                                                    placeholder="Last Name*" name="lastName" required/>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example8" class="form-control form-control-lg"
-                                            placeholder="User Name*" name="userName"/>
+                                            placeholder="User Name*" name="userName" required/>
                                     </div>
 
                                     <div class="form-outline mb-4">
@@ -77,17 +79,17 @@
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example9" class="form-control form-control-lg"
-                                            placeholder="Email*" name="email"/>
+                                            placeholder="Email*" name="email" required/>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example90" class="form-control form-control-lg"
-                                            placeholder="Password*" name="password"/>
+                                            placeholder="Password*" name="password" required/>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form3Example99" class="form-control form-control-lg"
-                                            placeholder="Repeat your password*" name="repeatedPassword"/>
+                                            placeholder="Repeat your password*" name="repeatedPassword" required/>
                                     </div>
 
                                     <div class="btn-submit">
@@ -95,10 +97,11 @@
                                     </div>
 
                                 </div>
-                            </form>
+
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

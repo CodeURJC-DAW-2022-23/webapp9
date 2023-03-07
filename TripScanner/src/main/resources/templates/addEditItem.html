@@ -15,6 +15,7 @@
 
                     {{#destination}}
                     <form class="row g-3" method="post" action="/management/destination/{{mode}}/{{id}}" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend1">Name</span>
                         <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
@@ -43,6 +44,7 @@
 
                     {{#itinerary}}
                         <form class="row g-3" method="post" action="/management/itinerary/{{mode}}/{{id}}" enctype="multipart/form-data">
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend4">Name</span>
                         <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
@@ -69,7 +71,8 @@
                     {{/itinerary}}
 
                     {{#place}}
-                    <form class="row g-3" method="post" action="/management/place/{{mode}}/{{id}}" enctype="multipart/form-data">
+                            <form class="row g-3" method="post" action="/management/place/{{mode}}/{{id}}" enctype="multipart/form-data">
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend7">Name</span>
                         <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
@@ -97,6 +100,7 @@
 
                     {{#user}}
                     <form class="row g-3" method="post" action="/management/user/{{mode}}/{{id}}" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend10">Username</span>
                         <input type="text" class="form-control" value="{{username}}" name='username' aria-describedby="inputGroupPrepend" required>
