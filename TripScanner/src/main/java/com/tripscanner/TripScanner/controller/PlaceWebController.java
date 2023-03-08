@@ -36,4 +36,20 @@ public class PlaceWebController {
         }
     }
 
+    @GetMapping("search/place/{id}/image")
+    public ResponseEntity<Object> downloadImageSearch(@PathVariable long id) throws SQLException {
+
+        Optional<Place> place = placeRepository.findById(id);
+        if (place.isPresent() && place.get().getImageFile() != null) {
+
+            Resource file = new InputStreamResource(place.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(place.get().getImageFile().length()).body(file);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

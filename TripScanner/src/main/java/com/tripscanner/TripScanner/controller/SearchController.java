@@ -13,11 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +36,7 @@ public class SearchController {
     private SearchService searchService;
 
     private String searchResult;
+    private Optional<Destination> destinationsAux;
 
 
     // Search methods for "view more details" link in main page
@@ -69,6 +68,27 @@ public class SearchController {
         model.addAttribute("information", itinerary);
         return "search";
     }
+
+    // Sort filter by country
+
+   /* @GetMapping("/search/sortCountry")
+    public String showSortedBycountry(Model model, @RequestParam("itemId" ) long itemId, HttpSession session){
+        Page<Destination> dest = destinationService.findAll(PageRequest.of(0,10));
+        model.addAttribute("items", dest);
+        String name = (String) session.getAttribute("searchResult");
+        destinationsAux = destinationService.findById(itemId);
+        if(name == "destination"){
+            List<Destination> destinationsCountry = destinationService.findByQueryCountry(destinationsAux);
+            model.addAttribute("information", destinationsCountry);
+        } else if(name == "place"){
+            List<Place> placeCountry = placeService.findByQueryCountry(Long.parseLong(String.valueOf(destinationsAux)));
+            model.addAttribute("information", placeCountry);
+        } else if(name == "itinerary"){
+            List<Itinerary> itinerariesCountry = itineraryService.findByQueryCountry(Long.parseLong(String.valueOf(destinationsAux)));
+            model.addAttribute("information", itinerariesCountry);
+        }
+        return "search";
+    }*/
 
     // Sort filter
     @GetMapping("/search/sort")

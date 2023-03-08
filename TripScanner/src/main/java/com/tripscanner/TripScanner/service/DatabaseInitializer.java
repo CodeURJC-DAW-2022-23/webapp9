@@ -39,6 +39,8 @@ public class DatabaseInitializer {
     @Autowired
     private UserRepository userRepository;
 
+    private String searchWord;
+
     @PostConstruct
     public void init() throws IOException, URISyntaxException {
 

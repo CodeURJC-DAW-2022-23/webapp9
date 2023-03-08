@@ -56,4 +56,8 @@ public class PlaceService implements AbstractService<Place> {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
+   /* public List<Place> findByQueryCountry(long id) {
+        return repository.findAllByIdLikeIgnoreCase(id);
+    }*/
+
 }

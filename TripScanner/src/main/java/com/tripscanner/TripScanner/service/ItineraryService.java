@@ -43,6 +43,7 @@ public class ItineraryService implements AbstractService<Itinerary> {
     public Page<Itinerary> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
+
     public void save(Itinerary itinerary) {
         repository.save(itinerary);
     }
@@ -55,4 +56,8 @@ public class ItineraryService implements AbstractService<Itinerary> {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
+   /* public List<Itinerary> findByQueryCountry(long id) {
+        return repository.findAllByIdLikeIgnoreCase(id);
+    }
+*/
 }

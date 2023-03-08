@@ -36,4 +36,20 @@ public class ItineraryWebController {
         }
     }
 
+    @GetMapping("search/itinerary/{id}/image")
+    public ResponseEntity<Object> downloadImageSearch(@PathVariable long id) throws SQLException {
+
+        Optional<Itinerary> itinerary = itineraryRepository.findById(id);
+        if (itinerary.isPresent() && itinerary.get().getImageFile() != null) {
+
+            Resource file = new InputStreamResource(itinerary.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(itinerary.get().getImageFile().length()).body(file);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
