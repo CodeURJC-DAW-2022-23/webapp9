@@ -17,9 +17,9 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     //List<Place> findAllByIdLikeIgnoreCase(long id);
 
-    List<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description);
+    List<Place> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description);
 
-    List<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
+    List<Place> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description, Pageable pageable);
 
 
     Page<Place> findAll(Pageable pageable);

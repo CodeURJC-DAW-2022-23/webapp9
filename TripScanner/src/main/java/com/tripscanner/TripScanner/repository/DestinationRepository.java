@@ -18,10 +18,11 @@ public interface DestinationRepository extends JpaRepository<Destination, Long> 
 
     //List<Destination> findAllByIdLikeIgnoreCase(long id);
 
-    List<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description);
+    List<Destination> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description);
 
-    List<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
+    List<Destination> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description, Pageable pageable);
 
     Page<Destination> findAll(Pageable pageable);
+
 
 }

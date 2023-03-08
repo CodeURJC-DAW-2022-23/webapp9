@@ -53,7 +53,7 @@ public class ItineraryService implements AbstractService<Itinerary> {
     }
 
     public List<Itinerary> findByQuery(String name, String description, Pageable pageable) {
-        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
+        return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
     }
 
    /* public List<Itinerary> findByQueryCountry(long id) {

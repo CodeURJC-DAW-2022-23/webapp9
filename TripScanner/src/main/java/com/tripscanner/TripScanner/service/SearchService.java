@@ -30,9 +30,9 @@ public class SearchService implements AbstractService<Information> {
 
     public List<Information> searchInfo(String name, String description) {
         List<Information> result = new ArrayList<>();
-        result.addAll(destinationRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description));
-        result.addAll(placeRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description));
-        result.addAll(itineraryRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description));
+        result.addAll(destinationRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description));
+        result.addAll(placeRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description));
+        result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description));
         return result;
     }
 
