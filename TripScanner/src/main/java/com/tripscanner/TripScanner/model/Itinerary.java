@@ -28,6 +28,8 @@ public class Itinerary implements Information {
 
     private boolean image;
 
+    private boolean isPublic;
+
     private Blob imageFile;
 
     @ManyToMany
@@ -36,17 +38,18 @@ public class Itinerary implements Information {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy="itinerary")
+    @OneToMany(mappedBy = "itinerary")
     private List<Review> reviews;
 
     public Itinerary() {
     }
 
-    public Itinerary(String name, String description, User user) {
+    public Itinerary(String name, String description, User user, boolean isPublic) {
         super();
         this.name = name;
         this.description = description;
         this.user = user;
+        this.isPublic = isPublic;
     }
 
     public Long getId() {
@@ -140,6 +143,14 @@ public class Itinerary implements Information {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Boolean isPublic() {
+        return true;
+    }
+
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 
 }

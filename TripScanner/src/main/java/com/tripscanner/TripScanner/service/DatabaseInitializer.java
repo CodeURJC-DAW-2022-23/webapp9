@@ -79,7 +79,7 @@ public class DatabaseInitializer {
 
         // Sample itineraries
 
-        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", admin);
+        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", admin, true);
         setImage(itinerary, "/img-samples/madrid-sol.jpeg");
 
         itinerary.setPlaces(Arrays.asList(place1, place2, place3));
