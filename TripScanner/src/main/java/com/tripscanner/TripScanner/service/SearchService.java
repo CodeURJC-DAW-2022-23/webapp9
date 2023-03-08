@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SearchService implements AbstractService<Information>{
+public class SearchService implements AbstractService<Information> {
 
     @Autowired
     private DestinationRepository destinationRepository;
@@ -35,7 +35,6 @@ public class SearchService implements AbstractService<Information>{
         result.addAll(itineraryRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description));
         return result;
     }
-
 
     @Override
     public Optional<Information> findById(long id) {
