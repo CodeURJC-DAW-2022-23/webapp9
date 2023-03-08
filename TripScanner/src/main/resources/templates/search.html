@@ -37,41 +37,30 @@
                         <option value="2">Two</option>
                         <option value="3">Three</option>
                     </select>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Sort by</option>
-                        <option value="1">Popularity</option>
-                        <option value="2">Alphabetical</option>
-                        <option value="3">Type</option>
-                    </select>
+                    <form action="/search/sort" method="get">
+                        <select class="form-select" aria-label="Default select example" name="sortOption">
+                            <option selected>Sort by</option>
+                            <option value="popularity">Popularity</option>
+                            <option value="asc">Alphabetical</option>
+                        </select>
+                        <input type="submit" value="Sort">
+                    </form>
                 </div>
 
                 <div class="col">
-
-                    <div class="form-check">
-                        <form action="/search/filters" method="post">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxDestination" name="destination">
-                            <label class="form-check-label" for="checkboxDestination">
-                                Destinations
-                            </label>
-                        </form>
-                    </div>
-                    <div class="form-check">
-                        <form action="/search/filters" method="post">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxPlace" name="place">
-                            <label class="form-check-label" for="checkboxPlace">
-                                Places
-                            </label>
-                        </form>
-                    </div>
-                    <div class="form-check">
-                        <form action="/search/filters" method="post">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxItinerary" name="itinerary">
-                            <label class="form-check-label" for="checkboxItinerary">
-                                Itineraries
-                            </label>
-                        </form >
-                    </div>
-
+                    <form action="/search/filter" method="get">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="checkboxDestination"
+                                   name="option1"> Destination
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="checkboxPlace" name="option2"> Places
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="checkboxItinerary" name="option3"> Itineraries
+                        </div>
+                        <button type="submit">Filter</button>
+                    </form>
                 </div>
             </div>
 

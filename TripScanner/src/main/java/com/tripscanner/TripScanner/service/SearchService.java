@@ -28,16 +28,11 @@ public class SearchService implements AbstractService<Information>{
     private ItineraryRepository itineraryRepository;
 
 
-    public List<Information> searchInfo(String name, String description, Pageable pageable, String type) {
+    public List<Information> searchInfo(String name, String description) {
         List<Information> result = new ArrayList<>();
-        result.add((Information) destinationRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable));
-        result.add((Information) placeRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable));
-        result.add((Information) itineraryRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable));
-        if (name != null) {
-            result = result.stream()
-                    .filter(p -> p.getType().toLowerCase().contains(type))
-                    .collect(Collectors.toList());
-        }
+        result.addAll(destinationRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description));
+        result.addAll(placeRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description));
+        result.addAll(itineraryRepository.findAllByNameOrDescriptionLikeIgnoreCase(name, description));
         return result;
     }
 

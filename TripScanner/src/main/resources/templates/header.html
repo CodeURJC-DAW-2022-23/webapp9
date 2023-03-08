@@ -41,7 +41,7 @@
             {{/logIn}}
 
             <form class="d-flex float-end m-3" method="get" action="/search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="name">
+                <input class="form-control me-2" type="search" placeholder="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
                 <input type='submit' value='Search'/>
             </form>
 
