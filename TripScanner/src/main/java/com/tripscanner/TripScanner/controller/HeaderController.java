@@ -33,7 +33,7 @@ public class HeaderController {
 
         @ModelAttribute("name")
         public String name(){
-            return "m";
+            return "";
 
         }
 }
