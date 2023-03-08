@@ -24,16 +24,17 @@ public class HeaderController {
         @ModelAttribute("logIn")
         public Boolean logIn(HttpServletRequest request) {
                 Principal user = request.getUserPrincipal();
-                if (user != null){
+                if (user != null) {
                         return true;
-                }else{
+                } else {
                         return false;
                 }
         }
 
         @ModelAttribute("name")
-        public String name(){
-            return "";
-
+        public String name() {
+                return "";
         }
 }
+
+
