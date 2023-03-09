@@ -168,7 +168,8 @@ public class SearchController {
                         return "search";
 
                         // sort of places
-                    } else if (str.equals("Place")) {
+                    }
+                } else if (str.equals("Place")) {
                         if (sortOption.equals("popularity")) {
                             Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
                             List<Place> placeViews = placeService.findByQuery(name, name, pageable);
@@ -199,11 +200,11 @@ public class SearchController {
 
                 }
             }
+        return "search";
 
         }
 
-        return "search";
-    }
+
 
 
     // Filter by type of search
