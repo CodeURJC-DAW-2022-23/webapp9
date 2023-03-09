@@ -170,41 +170,39 @@ public class SearchController {
                         // sort of places
                     }
                 } else if (str.equals("Place")) {
-                        if (sortOption.equals("popularity")) {
-                            Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
-                            List<Place> placeViews = placeService.findByQuery(name, name, pageable);
-                            model.addAttribute("information", placeViews);
-                            return "search";
-                        } else if (sortOption.equals("asc")) {
-                            Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
-                            List<Place> placesAsc = placeService.findByQuery(name, name, pageable);
-                            model.addAttribute("information", placesAsc);
-                            return "search";
-                        }
+                    if (sortOption.equals("popularity")) {
+                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
+                        List<Place> placeViews = placeService.findByQuery(name, name, pageable);
+                        model.addAttribute("information", placeViews);
+                        return "search";
+                    } else if (sortOption.equals("asc")) {
+                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
+                        List<Place> placesAsc = placeService.findByQuery(name, name, pageable);
+                        model.addAttribute("information", placesAsc);
+                        return "search";
+                    }
 
-                        // sort of itineraries
-                    } else if (str.equals("Itinerary")) {
-                        if (sortOption.equals("popularity")) {
-                            Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
-                            List<Itinerary> itinerariesViews = itineraryService.findByQuery(name, name, pageable);
-                            model.addAttribute("information", itinerariesViews);
-                            return "search";
-                        } else if (sortOption.equals("asc")) {
-                            Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
-                            List<Itinerary> itinerariesAsc = itineraryService.findByQuery(name, name, pageable);
-                            model.addAttribute("information", itinerariesAsc);
-                            return "search";
-                        }
-
+                    // sort of itineraries
+                } else if (str.equals("Itinerary")) {
+                    if (sortOption.equals("popularity")) {
+                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
+                        List<Itinerary> itinerariesViews = itineraryService.findByQuery(name, name, pageable);
+                        model.addAttribute("information", itinerariesViews);
+                        return "search";
+                    } else if (sortOption.equals("asc")) {
+                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
+                        List<Itinerary> itinerariesAsc = itineraryService.findByQuery(name, name, pageable);
+                        model.addAttribute("information", itinerariesAsc);
+                        return "search";
                     }
 
                 }
+
             }
+        }
         return "search";
 
-        }
-
-
+    }
 
 
     // Filter by type of search
@@ -216,23 +214,46 @@ public class SearchController {
                                Model model) {
         Pageable pageable = PageRequest.of(0, 10);
         String name = (String) session.getAttribute("searchResult");
-        if (option1) {
+        if (option1 && option2 && option3){
+            List<Destination> destination = destinationService.findByQuery(name, name, pageable);
+            List<Place> place = placeService.findByQuery(name, name, pageable);
+            List<Itinerary> itinerary = itineraryService.findByQuery(name, name, pageable);
+            if (!destination.isEmpty()) {
+                model.addAttribute("information", destination);
+                model.addAttribute("name", name);
+                return "search";
+            } else if (!place.isEmpty()) {
+                model.addAttribute("information", place);
+                model.addAttribute("name", name);
+                return "search";
+            } else if (!itinerary.isEmpty()) {
+                model.addAttribute("information", itinerary);
+                model.addAttribute("name", name);
+                return "search";
+            }
+        }
+        else if (option1) {
             List<Destination> destinations = destinationService.findByQuery(name, name, pageable);
-            model.addAttribute("information", destinations);
-            model.addAttribute("name", name);
-            return "search";
+            if (!destinations.isEmpty()) {
+                model.addAttribute("information", destinations);
+                return "search";
+            }
+            
         } else if (option2) {
             List<Place> places = placeService.findByQuery(name, name, pageable);
-            model.addAttribute("information", places);
-            return "search";
+            if (!places.isEmpty()) {
+                model.addAttribute("information", places);
+                return "search";
+            }
         } else if (option3) {
             List<Itinerary> itineraries = itineraryService.findByQuery(name, name, pageable);
-            model.addAttribute("information", itineraries);
-            return "search";
-        } else {
-            return "Not found";
+            if (!itineraries.isEmpty()) {
+                model.addAttribute("information", itineraries);
+                return "search";
+            }
         }
 
+        return "search";
     }
 
 
