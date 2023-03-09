@@ -47,13 +47,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Private pages
         http.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/itinerary/add/place/**").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/management/**").hasAnyRole("ADMIN");
         http.authorizeRequests().antMatchers("/myItineraries/**").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/export/**").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/reviews/add/*").hasAnyRole("USER");
-
-        // Private pages
-
+        http.authorizeRequests().antMatchers("/management/**").hasAnyRole("ADMIN");
         // LEFT TO ADD MORE WHEN MERGE TO DEV
 
         // Login form
@@ -70,5 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Allow H2 console
         http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().sameOrigin();
+        
     }
+    
 }

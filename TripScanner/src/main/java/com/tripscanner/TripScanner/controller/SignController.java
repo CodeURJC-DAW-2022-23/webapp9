@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.controller;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.EmailService;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 public class SignController {
@@ -42,8 +46,10 @@ public class SignController {
             @RequestParam String nationality,
             @RequestParam String email,
             @RequestParam String password,
-            @RequestParam String repeatedPassword
-    ) {
+            @RequestParam String repeatedPassword,
+            @RequestParam MultipartFile userImage
+            ) throws IOException {
+
         if (!(repeatedPassword.equals(password))) {
             model.addAttribute("correct", false);
             model.addAttribute("noEmptyFields", true);
@@ -85,6 +91,8 @@ public class SignController {
                 nationality,
                 "USER"
         );
+
+        user.setImageFile(BlobProxy.generateProxy(userImage.getInputStream(), userImage.getSize()));
 
         userService.save(user);
         emailService.sendRegistrationEmail(user);
