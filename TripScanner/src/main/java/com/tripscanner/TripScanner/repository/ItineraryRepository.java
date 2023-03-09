@@ -8,6 +8,7 @@ import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Place;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.tripscanner.TripScanner.model.Itinerary;
 
@@ -22,5 +23,6 @@ public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
     List<Itinerary> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description, Pageable pageable);
 
     Page<Itinerary> findAll(Pageable pageable);
+
 
 }

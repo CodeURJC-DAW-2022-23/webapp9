@@ -42,6 +42,10 @@ public class DestinationService implements AbstractService<Destination> {
         return repository.findAll(pageable);
     }
 
+    public Page<Destination> findAll(Pageable pageable, Sort sort) {
+        return repository.findAll(pageable);
+    }
+
     public void save(Destination destination) {
         repository.save(destination);
     }
@@ -57,10 +61,6 @@ public class DestinationService implements AbstractService<Destination> {
     public List<Destination> findByQuery(String name, String description, Pageable pageable) {
         return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
     }
-
-    /*public List<Destination> findByQueryCountry(Optional<Destination> id) {
-        return repository.findAllByIdLikeIgnoreCase(id);
-    }*/
 
 
 }

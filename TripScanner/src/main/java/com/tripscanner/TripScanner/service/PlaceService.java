@@ -44,6 +44,7 @@ public class PlaceService implements AbstractService<Place> {
         return repository.findAll(pageable);
     }
 
+
     public void save(Place place) {
         repository.save(place);
     }

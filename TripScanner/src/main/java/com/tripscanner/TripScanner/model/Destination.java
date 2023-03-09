@@ -3,13 +3,7 @@ package com.tripscanner.TripScanner.model;
 import java.sql.Blob;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Destination implements Information {
@@ -32,7 +26,7 @@ public class Destination implements Information {
 
     private String flagCode;
 
-    @OneToMany(mappedBy="destination")
+    @OneToMany(mappedBy="destination", cascade = CascadeType.ALL)
     private List<Place> places;
 
     public Destination() {
@@ -43,6 +37,8 @@ public class Destination implements Information {
         this.name = name;
         this.description = description;
         this.flagCode = flagCode.toLowerCase();
+        this.setViews(0L);
+        this.setImage(false);
     }
 
     public Long getId() {

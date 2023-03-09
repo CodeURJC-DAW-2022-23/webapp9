@@ -40,9 +40,8 @@ public class ReviewService implements AbstractService<Review> {
         return repository.findAll(pageable);
     }
 
-    @Query("SELECT r FROM Review r WHERE r.itinerary = :i")
-    public Page<Review> getItinReviews(Optional<Itinerary> i, Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<Review> getItinReviews(Itinerary i, Pageable pageable) {
+        return repository.getItinReviews(i, pageable);
     }
 
     public void save(Review review) {

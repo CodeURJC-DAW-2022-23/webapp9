@@ -1,0 +1,150 @@
+{{>header}}
+
+{{#edit}}
+<div class="container p-4">
+    <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg1">
+        <h3 class="text-center mb-3">Edit {{type}}</h3>
+        {{/edit}}
+
+        {{#add}}
+        <div class="container p-4">
+            <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg2">
+                <h3 class="text-center mb-3">Add new {{type}}</h3>
+                {{/add}}
+
+
+                    {{#destination}}
+                    <form class="row g-3" method="post" action="/management/destination/{{mode}}/{{id}}" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend1">Name</span>
+                        <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend2">Description</span>
+                        <input type="text" class="form-control" value="{{description}}" name='description' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend3">Flag Code</span>
+                        <input type="text" class="form-control" value="{{flagCode}}" name='flagCode' aria-describedby="inputGroupPrepend" required>
+                    </div>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text" id="inputGroupPrependImg1">Image</span>
+                            {{#edit}}
+                            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+                            {{/edit}}
+                            {{#add}}
+                            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+                            {{/add}}
+                        </div>
+
+                        {{/destination}}
+
+                    {{#itinerary}}
+                        <form class="row g-3" method="post" action="/management/itinerary/{{mode}}/{{id}}" enctype="multipart/form-data">
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend4">Name</span>
+                        <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend5">Description</span>
+                        <input type="text" class="form-control" value="{{description}}" name='description' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend6">User</span>
+                        <input type="text" class="form-control" value="{{username}}" name='username' aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrependImg2">Image</span>
+                        {{#edit}}
+                        <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+                        {{/edit}}
+                        {{#add}}
+                        <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+                        {{/add}}
+                    </div>
+                    {{/itinerary}}
+
+                    {{#place}}
+                            <form class="row g-3" method="post" action="/management/place/{{mode}}/{{id}}" enctype="multipart/form-data">
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend7">Name</span>
+                        <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend8">Description</span>
+                        <input type="text" class="form-control" value="{{description}}" name='description' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend9">Destination</span>
+                        <input type="text" class="form-control" value="{{dest}}" name='destination' aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrependImg3">Image</span>
+                        {{#edit}}
+                        <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+                        {{/edit}}
+                        {{#add}}
+                        <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+                        {{/add}}
+                    </div>
+                    {{/place}}
+
+                    {{#user}}
+                    <form class="row g-3" method="post" action="/management/user/{{mode}}/{{id}}" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend10">Username</span>
+                        <input type="text" class="form-control" value="{{username}}" name='username' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend11">First name</span>
+                        <input type="text" class="form-control" value="{{firstName}}" name='firstName' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend12">Last name</span>
+                        <input type="text" class="form-control" value="{{lastName}}" name='lastName' aria-describedby="inputGroupPrepend" required>
+                    </div>
+
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend13">Email</span>
+                        <input type="text" class="form-control" value="{{email}}" name='email' aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrependImg4">Image</span>
+                        {{#edit}}
+                        <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+                        {{/edit}}
+                        {{#add}}
+                        <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+                        {{/add}}
+                    </div>
+
+                    {{#add}}
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend14">Password</span>
+                        <input type="text" class="form-control" name='password' aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    {{/add}}
+                    {{/user}}
+
+                    <div class="col-12">
+                        <input class="btn btn-primary" type='submit' value='Submit'>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+</body>
+
+</html>

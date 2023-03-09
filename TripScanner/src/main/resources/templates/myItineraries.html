@@ -1,0 +1,46 @@
+{{>header}}
+
+<div class="container p-4">
+    <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
+        <h3 class="text-center mb-3">My Itineraries</h3>
+        <div class="card m-3" id="new-itinerary-form">
+            <form action="/myItineraries/add" method="post" class="card-body g-0 text-black bg-light row" enctype="multipart/form-data">
+
+                <h5 class="mb-3">Add new Itinerary</h5>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend4">Name</span>
+                    <input type="text" class="form-control" name='name' aria-describedby="inputGroupPrepend" required>
+                </div>
+
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend5">Description</span>
+                    <input type="text" class="form-control" name='description' aria-describedby="inputGroupPrepend" required>
+                </div>
+
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrependImg">Image</span>
+                    <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>
+        </div>
+
+        {{#item}}
+        <!--Item 1 -->
+        <div class="card m-3" id="item-1">
+            <div class="card-body g-0 text-black bg-light">
+                <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
+                     alt="{{name}}">
+                <h5 class="card-title">{{name}}</h5>
+                <p class="card-text"><small class="text-muted">{{description}}</small></p>
+                <button type="button" class="btn btn-primary float-end ms-2" onclick="location.href='/details/itinerary/{{id}}'">
+                    More details
+                </button>
+            </div>
+        </div>
+        {{/item}}
+    </section>
+</div>

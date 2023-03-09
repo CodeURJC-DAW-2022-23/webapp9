@@ -56,8 +56,4 @@ public class ItineraryService implements AbstractService<Itinerary> {
         return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
     }
 
-   /* public List<Itinerary> findByQueryCountry(long id) {
-        return repository.findAllByIdLikeIgnoreCase(id);
-    }
-*/
 }
