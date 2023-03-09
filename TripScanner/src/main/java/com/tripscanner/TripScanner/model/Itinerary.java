@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -137,4 +138,16 @@ public class Itinerary implements Information {
         this.reviews = reviews;
     }
 
+    public Itinerary copy(User newUser) {
+        Itinerary toReturn = new Itinerary(this.name, this.description, newUser);
+        toReturn.setImageFile(this.getImageFile());
+        List<Place> placeCopy = new ArrayList<>();
+
+        for (Place item : this.getPlaces()) {
+            placeCopy.add(item);
+        }
+
+        toReturn.setPlaces(placeCopy);
+        return toReturn;
+    }
 }

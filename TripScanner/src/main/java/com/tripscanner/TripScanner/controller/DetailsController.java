@@ -1,24 +1,13 @@
 package com.tripscanner.TripScanner.controller;
 
-import java.io.IOException;
-import java.sql.Blob;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.lowagie.text.DocumentException;
 import com.tripscanner.TripScanner.model.*;
 import com.tripscanner.TripScanner.service.*;
-import com.tripscanner.TripScanner.utils.PdfGenerator;
-
-import org.hibernate.engine.jdbc.BlobProxy;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,9 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class DetailsController {
@@ -64,6 +53,18 @@ public class DetailsController {
         destinationService.save(destination.get());
 
         return "details";
+    }
+
+    @GetMapping("/details/destination/{id}/save")
+    public String saveItinerary(HttpServletRequest request, @PathVariable long id) {
+        Itinerary currItinerary = itineraryService.findById(id).get();
+        User currUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
+        List<Itinerary> userItineraries = currUser.getItineraries();
+        userItineraries.add(currItinerary.copy(currUser));
+        currUser.setItineraries(userItineraries);
+        userService.save(currUser);
+
+        return "redirect:/details/itinerary/" + id;
     }
 
     @GetMapping("/details/place/{id}")
