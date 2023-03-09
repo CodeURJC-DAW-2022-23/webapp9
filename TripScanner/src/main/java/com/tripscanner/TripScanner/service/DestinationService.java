@@ -42,6 +42,11 @@ public class DestinationService implements AbstractService<Destination> {
     public Page<Destination> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
+
+    public Page<Destination> findAll(Pageable pageable, Sort sort) {
+        return repository.findAll(pageable);
+    }
+
     public void save(Destination destination) {
         repository.save(destination);
     }

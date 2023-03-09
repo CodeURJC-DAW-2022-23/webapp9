@@ -33,6 +33,7 @@ public class ProfileController {
         model.addAttribute("show", true);
         model.addAttribute("goodEmail", true);
         model.addAttribute("uniqueUsername", true);
+        model.addAttribute("imageFile", currentUser.get().getImageFile());
 
         return "profile";
     }
@@ -46,6 +47,7 @@ public class ProfileController {
         model.addAttribute("show", false);
         model.addAttribute("goodEmail", true);
         model.addAttribute("uniqueUsername", true);
+        model.addAttribute("imageFile", currentUser.get().getImageFile());
 
         return "profile";
     }
