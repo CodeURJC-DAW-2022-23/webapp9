@@ -189,7 +189,7 @@ public class ItineraryWebController {
         PdfGenerator generator = new PdfGenerator();
         generator.generate(itinerary.get(), response);
 
-        return "redirect:/deatils/itinerary/" + id;
+        return "redirect:/details/itinerary/" + id;
     }
 
 }
