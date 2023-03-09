@@ -13,7 +13,6 @@
 
             <div class="carousel-item active">
                 <a href="#destinations">
-                    <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="">
                     <img src="/destination/{{destination-id}}/image" class="d-block w-100" alt="">
                 </a>
                 <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
@@ -23,9 +22,7 @@
             </div>
             <div class="carousel-item">
                 <a href="#places">
-                    <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="">
                     <img src="/place/{{place-id}}/image" class="d-block w-100" alt="">
-
                 </a>
                 <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                     <h5>Places to visit</h5>
@@ -34,10 +31,7 @@
             </div>
             <div class="carousel-item">
                 <a href="#itineraries">
-                    <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="">
-
                     <img src="/itinerary/{{itinerary-id}}/image" class="d-block w-100" alt="">
-
                 </a>
                 <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                     <h5>Itineraries</h5>
@@ -58,20 +52,6 @@
 </div>
 
 
-<div class="container bg-secondary rounded-3 padded mb-2">
-    <div class="row">
-        <h2 class="text-center col"> Our most visited destinations</h2>
-    </div>
-    <div class="row">
-        <a class="col-md-6"><img src="/img/placeholder-graph.png" alt="Most viewed detinations" height="400px"
-                                 width="300px"/></a>
-        <div class="col-md-6">
-            {{#popularDestination}}
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{name}}</h5>
 <div class="pt-3 pb-5">
 
     <div class="container bg-secondary rounded-3 padded my-3">
@@ -96,30 +76,9 @@
                 </div>
                 {{/popularDestination}}
             </div>
-            {{/popularDestination}}
         </div>
     </div>
-</div>
 
-<div class="container bg-secondary rounded-3 padded mt-2" id="destinations">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Destinations</h2>
-        <a href='/search/destinations' role="button" class="btn btn-secondary col-2 float-end">View more destinations</a>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            {{#destinations}}
-            <div class="col">
-                <div class="card">
-                    <img src="destinations/{{id}}/image" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <a href="/details/{{id}}" class="btn btn-primary">More details</a>
-                    </div>
-                </div>
     <div class="container bg-secondary rounded-3 padded mt-5" id="destinations">
         <div class="row">
             <div class="col-2"></div>
@@ -144,30 +103,9 @@
                 </div>
                 {{/destinations}}
             </div>
-            {{/destinations}}
         </div>
     </div>
-</div>
 
-<div class="container bg-secondary rounded-3 padded mt-2" id="places">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Places to visit</h2>
-        <a href='/search/places' role="button" class="btn btn-secondary col-2 float-end">View more places</a>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            {{#place}}
-            <div class="col">
-                <div class="card">
-                    <img src="/place/{{id}}/image" class="card-img-top" alt="{{name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <a href="/search/{{id}}" class="btn btn-primary">More details</a>
-                    </div>
-                </div>
     <div class="container bg-secondary rounded-3 padded mt-4" id="places">
         <div class="row">
             <div class="col-2"></div>
@@ -192,30 +130,9 @@
                 </div>
                 {{/place}}
             </div>
-            {{/place}}
         </div>
     </div>
-</div>
 
-<div class="container bg-secondary rounded-3 padded mt-2" id="itineraries">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Popular itineraries</h2>
-        <a href='/search/itinerary' role="button" class="btn btn-secondary col-2 float-end">View more itineraries</a>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            {{#itinerary}}
-            <div class="col">
-                <div class="card">
-                    <img src="itinerary/{{id}}/image" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <a href="/details/{{id}}" class="btn btn-primary">More details</a>
-                    </div>
-                </div>
     <div class="container bg-secondary rounded-3 padded mt-4" id="itineraries">
         <div class="row">
             <div class="col-2"></div>
@@ -240,10 +157,8 @@
                 </div>
                 {{/itinerary}}
             </div>
-            {{/itinerary}}
         </div>
     </div>
-</div>
 
 </div>
 
