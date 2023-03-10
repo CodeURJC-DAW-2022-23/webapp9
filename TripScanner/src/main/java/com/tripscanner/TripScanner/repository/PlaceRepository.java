@@ -23,6 +23,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     List<Place> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description, Pageable pageable);
 
 
+
     Page<Place> findAll(Pageable pageable);
 
 }

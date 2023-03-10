@@ -26,7 +26,7 @@ public class Destination implements Information {
 
     private String flagCode;
 
-    @OneToMany(mappedBy="destination", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private List<Place> places;
 
     public Destination() {
@@ -121,5 +121,6 @@ public class Destination implements Information {
     public void setPlaces(List<Place> places) {
         this.places = places;
     }
+
 
 }

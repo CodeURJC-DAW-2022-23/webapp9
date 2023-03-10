@@ -151,57 +151,19 @@ public class SearchController {
             }
 
         } else {
-            List<Information> results = searchService.searchInfo(name, name);
-            List<String> searchResult = results.stream().map(Information::getType).collect(Collectors.toList());
-            for (String str : searchResult) {
-                if (str.equals("Destination")) {
-                    // sort for destinations
-                    if (sortOption.equals("popularity")) {
-                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
-                        List<Destination> destinationsViews = destinationService.findByQuery(name, name, pageable);
-                        model.addAttribute("information", destinationsViews);
-                        return "search";
-                    } else if (sortOption.equals("asc")) {
-                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
-                        List<Destination> destinationsAsc = destinationService.findByQuery(name, name, pageable);
-                        model.addAttribute("information", destinationsAsc);
-                        return "search";
-
-                        // sort of places
-                    }
-                } else if (str.equals("Place")) {
-                    if (sortOption.equals("popularity")) {
-                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
-                        List<Place> placeViews = placeService.findByQuery(name, name, pageable);
-                        model.addAttribute("information", placeViews);
-                        return "search";
-                    } else if (sortOption.equals("asc")) {
-                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
-                        List<Place> placesAsc = placeService.findByQuery(name, name, pageable);
-                        model.addAttribute("information", placesAsc);
-                        return "search";
-                    }
-
-                    // sort of itineraries
-                } else if (str.equals("Itinerary")) {
-                    if (sortOption.equals("popularity")) {
-                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
-                        List<Itinerary> itinerariesViews = itineraryService.findByQuery(name, name, pageable);
-                        model.addAttribute("information", itinerariesViews);
-                        return "search";
-                    } else if (sortOption.equals("asc")) {
-                        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
-                        List<Itinerary> itinerariesAsc = itineraryService.findByQuery(name, name, pageable);
-                        model.addAttribute("information", itinerariesAsc);
-                        return "search";
-                    }
-
-                }
-
+            if (sortOption.equals("popularity")) {
+                Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "views"));
+                List<Information> results = searchService.searchInfoSort(name, name, pageable);
+                model.addAttribute("information", results);
+                return "search";
+            } else if (sortOption.equals("asc")) {
+                Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
+                List<Information> results = searchService.searchInfoSort(name, name, pageable);
+                model.addAttribute("information", results);
+                return "search";
             }
         }
         return "search";
-
     }
 
 
@@ -214,31 +176,24 @@ public class SearchController {
                                Model model) {
         Pageable pageable = PageRequest.of(0, 10);
         String name = (String) session.getAttribute("searchResult");
-        if (option1 && option2 && option3){
-            List<Destination> destination = destinationService.findByQuery(name, name, pageable);
-            List<Place> place = placeService.findByQuery(name, name, pageable);
-            List<Itinerary> itinerary = itineraryService.findByQuery(name, name, pageable);
-            if (!destination.isEmpty()) {
-                model.addAttribute("information", destination);
-                model.addAttribute("name", name);
-                return "search";
-            } else if (!place.isEmpty()) {
-                model.addAttribute("information", place);
-                model.addAttribute("name", name);
-                return "search";
-            } else if (!itinerary.isEmpty()) {
-                model.addAttribute("information", itinerary);
-                model.addAttribute("name", name);
-                return "search";
-            }
-        }
-        else if (option1) {
+        if (option1 && option2 && option3) {
+            List<Information> results = searchService.searchInfoSort(name, name, pageable);
+            model.addAttribute("information", results);
+        } else if (option1 && option2) {
+            List<Information> results = searchService.searchInfoDestPlace(name, name, pageable);
+            model.addAttribute("information", results);
+        } else if (option1 && option3) {
+            List<Information> results = searchService.searchInfoDestItinerary(name, name, pageable);
+            model.addAttribute("information", results);
+        } else if (option2 && option3) {
+            List<Information> results = searchService.searchInfoPlaceItinerary(name, name, pageable);
+            model.addAttribute("information", results);
+        } else if (option1) {
             List<Destination> destinations = destinationService.findByQuery(name, name, pageable);
             if (!destinations.isEmpty()) {
                 model.addAttribute("information", destinations);
                 return "search";
             }
-            
         } else if (option2) {
             List<Place> places = placeService.findByQuery(name, name, pageable);
             if (!places.isEmpty()) {
@@ -261,26 +216,10 @@ public class SearchController {
     @GetMapping("/search")
     public String showSearchResult(@RequestParam("name") String name, Model model, HttpSession session) {
         Pageable pageable = PageRequest.of(0, 10);
-        List<Destination> destination = destinationService.findByQuery(name, name, pageable);
-        List<Place> place = placeService.findByQuery(name, name, pageable);
-        List<Itinerary> itinerary = itineraryService.findByQuery(name, name, pageable);
         session.setAttribute("searchResult", name);
-        searchResult = name;
-        if (!destination.isEmpty()) {
-            model.addAttribute("information", destination);
-            model.addAttribute("name", name);
-            return "search";
-        } else if (!place.isEmpty()) {
-            model.addAttribute("information", place);
-            model.addAttribute("name", name);
-            return "search";
-        } else if (!itinerary.isEmpty()) {
-            model.addAttribute("information", itinerary);
-            model.addAttribute("name", name);
-            return "search";
-        } else {
-            return "Not found";
-        }
+        List<Information> results = searchService.searchInfo(name, name);
+        model.addAttribute("information", results);
+        return "search";
     }
 }
 

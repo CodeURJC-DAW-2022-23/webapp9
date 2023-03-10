@@ -36,6 +36,35 @@ public class SearchService implements AbstractService<Information> {
         return result;
     }
 
+    public List<Information> searchInfoSort(String name, String description, Pageable pageable) {
+        List<Information> result = new ArrayList<>();
+        result.addAll(destinationRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        result.addAll(placeRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        return result;
+    }
+
+    public List<Information> searchInfoDestPlace(String name, String description, Pageable pageable) {
+        List<Information> result = new ArrayList<>();
+        result.addAll(destinationRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        result.addAll(placeRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        return result;
+    }
+
+    public List<Information> searchInfoDestItinerary(String name, String description, Pageable pageable) {
+        List<Information> result = new ArrayList<>();
+        result.addAll(destinationRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        return result;
+    }
+
+    public List<Information> searchInfoPlaceItinerary(String name, String description, Pageable pageable) {
+        List<Information> result = new ArrayList<>();
+        result.addAll(placeRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        return result;
+    }
+
     @Override
     public Optional<Information> findById(long id) {
         return Optional.empty();
