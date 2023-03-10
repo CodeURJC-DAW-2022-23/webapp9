@@ -100,6 +100,7 @@
                 {{#item}}
                 <form action="/reviews/add/{{id}}/" method="post" class="card-body g-0 text-black bg-light row">
                 {{/item}}
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
 
                     <h5 class="mb-3">Add your review!</h5>
 
