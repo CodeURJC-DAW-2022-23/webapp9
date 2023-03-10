@@ -164,7 +164,7 @@ public class ItineraryWebController {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         itinerary.get().setName(name);
         itinerary.get().setDescription(description);
-        if (imageFile != null){
+        if (!imageFile.getOriginalFilename().isBlank()){
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         itineraryService.save(itinerary.get());
