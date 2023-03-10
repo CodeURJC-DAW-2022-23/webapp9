@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +68,15 @@ public class DetailsController {
         return "redirect:/myItineraries";
     }
 
+    @GetMapping("/details/destination/{id}/delete")
+    public String deleteItinerary(HttpServletRequest request, @PathVariable long id) {
+        User currUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
+        currUser.getItineraries().remove(itineraryService.findById(id).get());
+        itineraryService.delete(id);
+
+        return "redirect:/myItineraries";
+    }
+
     @GetMapping("/details/place/{id}")
     public String showPlace(Model model, HttpServletRequest request, @PathVariable long id){
         Optional<Place> place = placeService.findById(id);
@@ -97,8 +107,15 @@ public class DetailsController {
     @GetMapping("/details/itinerary/{id}")
     public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
+        Principal currUser = request.getUserPrincipal();
         model.addAttribute("item", itinerary.get());
         model.addAttribute("isItinerary", true);
+
+        if (itinerary.get().getUser() == userService.findByUsername(currUser.getName()).get()) {
+            model.addAttribute("isOwned", true);
+        } else {
+            model.addAttribute("isOwned", false);
+        }
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){
