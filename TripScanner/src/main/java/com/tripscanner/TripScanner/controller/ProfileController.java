@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
@@ -59,7 +60,7 @@ public class ProfileController {
                               @RequestParam String lastName,
                               @RequestParam String username,
                               @RequestParam String nationality,
-                              @RequestParam String email) {
+                              @RequestParam String email) throws ServletException {
         User currentUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
 
         if (!email.matches("\\w*@\\w*\\.[a-z]{1,3}")) {
@@ -90,6 +91,7 @@ public class ProfileController {
         }
 
         userService.save(currentUser);
+        request.logout();
         return "redirect:/profile";
     }
 }
