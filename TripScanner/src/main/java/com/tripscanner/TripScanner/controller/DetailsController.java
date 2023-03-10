@@ -64,7 +64,7 @@ public class DetailsController {
         currUser.setItineraries(userItineraries);
         userService.save(currUser);
 
-        return "redirect:/details/itinerary/" + id;
+        return "redirect:/myItineraries";
     }
 
     @GetMapping("/details/place/{id}")
