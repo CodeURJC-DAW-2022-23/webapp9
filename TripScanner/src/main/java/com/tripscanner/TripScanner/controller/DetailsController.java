@@ -104,6 +104,18 @@ public class DetailsController {
         return "details";
     }
 
+    @GetMapping("/details/itinerary/{itineraryId}/details/place/{placeId}/delete")
+    public String deletePlaceFromItinerary(HttpServletRequest request, @PathVariable long itineraryId, @PathVariable long placeId) {
+        List<Itinerary> userItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
+        Itinerary currentItinerary = null;
+        for (Itinerary iti : userItineraries) {
+            if (iti.getId() == itineraryId) currentItinerary = iti;
+        }
+        currentItinerary.getPlaces().remove(placeService.findById(placeId).get());
+        itineraryService.save(currentItinerary);
+        return "redirect:/details/itinerary/" + itineraryId;
+    }
+
     @GetMapping("/details/itinerary/{id}")
     public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
@@ -111,7 +123,7 @@ public class DetailsController {
         model.addAttribute("item", itinerary.get());
         model.addAttribute("isItinerary", true);
 
-        if (itinerary.get().getUser() == userService.findByUsername(currUser.getName()).get()) {
+        if (currUser != null && itinerary.get().getUser() == userService.findByUsername(currUser.getName()).get()) {
             model.addAttribute("isOwned", true);
         } else {
             model.addAttribute("isOwned", false);
