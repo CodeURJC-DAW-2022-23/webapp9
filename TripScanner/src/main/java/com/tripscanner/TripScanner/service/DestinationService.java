@@ -62,5 +62,9 @@ public class DestinationService implements AbstractService<Destination> {
         return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
     }
 
+    public List<Destination> findByQueryOrder(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionOrderByName(name, description, pageable);
+    }
+
 
 }

@@ -56,4 +56,8 @@ public class ItineraryService implements AbstractService<Itinerary> {
         return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
     }
 
+    public List<Itinerary> findByQueryOrder(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionOrderByName(name, description, pageable);
+    }
+
 }

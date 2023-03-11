@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class SearchService implements AbstractService<Information> {
@@ -26,6 +24,7 @@ public class SearchService implements AbstractService<Information> {
 
     @Autowired
     private ItineraryRepository itineraryRepository;
+
 
 
     public List<Information> searchInfo(String name, String description) {
@@ -62,6 +61,13 @@ public class SearchService implements AbstractService<Information> {
         List<Information> result = new ArrayList<>();
         result.addAll(placeRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
         result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        return result;
+    }
+    public List<Information> orderByName(String name, String description, Pageable pageable) {
+        List<Information> result = new ArrayList<>();
+        result.addAll(destinationRepository.findAllByNameOrDescriptionOrderByName(name, description, pageable));
+        result.addAll(placeRepository.findAllByNameOrDescriptionOrderByName(name, description, pageable));
+        result.addAll(itineraryRepository.findAllByNameOrDescriptionOrderByName(name, description, pageable));
         return result;
     }
 

@@ -116,9 +116,6 @@ public class Place implements Information {
         return "Place";
     }
 
-    public String getSearchResult() {
-        return name + description;
-    }
 
     @Override
     public String getTypeLowercase() {
