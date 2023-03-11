@@ -144,11 +144,11 @@ public class Itinerary implements Information {
     }
 
     public Boolean isPublic() {
-        return true;
+        return isPublic;
     }
 
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
+    public void setPublic(boolean aPublic) {
+        this.isPublic = aPublic;
     }
 
 

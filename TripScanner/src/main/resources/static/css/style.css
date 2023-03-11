@@ -72,3 +72,7 @@ img.item-flag {
 .bg-light {
     background-color: #F6FAEF !important;
 }
+
+.all-private{
+display: flex;
+}

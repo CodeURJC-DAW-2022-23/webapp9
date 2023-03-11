@@ -65,7 +65,11 @@ public class SearchController {
         Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
         String name = "itinerary";
         session.setAttribute("searchResult", name);
-        model.addAttribute("information", itinerary);
+        for(Itinerary it: itinerary){
+            if(it.isPublic() == true) {
+                model.addAttribute("information", it);
+            }
+        }
         return "search";
     }
 
@@ -92,26 +96,6 @@ public class SearchController {
         return "search";
     }
 
-    // Sort filter by country
-
-   /* @GetMapping("/search/sortCountry")
-    public String showSortedBycountry(Model model, @RequestParam("itemId" ) long itemId, HttpSession session){
-        Page<Destination> dest = destinationService.findAll(PageRequest.of(0,10));
-        model.addAttribute("items", dest);
-        String name = (String) session.getAttribute("searchResult");
-        destinationsAux = destinationService.findById(itemId);
-        if(name == "destination"){
-            List<Destination> destinationsCountry = destinationService.findByQueryCountry(destinationsAux);
-            model.addAttribute("information", destinationsCountry);
-        } else if(name == "place"){
-            List<Place> placeCountry = placeService.findByQueryCountry(Long.parseLong(String.valueOf(destinationsAux)));
-            model.addAttribute("information", placeCountry);
-        } else if(name == "itinerary"){
-            List<Itinerary> itinerariesCountry = itineraryService.findByQueryCountry(Long.parseLong(String.valueOf(destinationsAux)));
-            model.addAttribute("information", itinerariesCountry);
-        }
-        return "search";
-    }*/
 
     // Sort filter
     @GetMapping("/search/sort")
@@ -157,7 +141,7 @@ public class SearchController {
                 model.addAttribute("information", results);
                 return "search";
             } else if (sortOption.equals("asc")) {
-                Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Order.asc("name")));
+                Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "name"));
                 List<Information> results = searchService.searchInfoSort(name, name, pageable);
                 model.addAttribute("information", results);
                 return "search";

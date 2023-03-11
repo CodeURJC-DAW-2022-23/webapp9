@@ -4,19 +4,16 @@
 <div class="container bg-secondary p-4 rounded-3">
     <div class="justify-content-between row">
         <div class="col">
-            <div class="switch-toggle switch-3 switch-candy rounded-3">
-
-                <input id="on" name="state-d" type="radio" checked=""/>
-                <label for="on" onclick="">All</label>
-
-                <form action="search/privateItinerary" method="post">
-                    <input id="na" name="state-d" type="radio" checked="checked" />
-                    <label for="na" class="disabled" onclick="">Private</label>
-                    <input type="submit" value="Private">
+            {{#logIn}}
+            <div class="all-private">
+                <form action="/search/itinerary" method="get">
+                    <input type="submit" class="btn btn-primary" value="All">
                 </form>
-
-
+                <form action="/search/privateItinerary" method="get">
+                    <input type="submit" class="btn btn-primary" value="Private">
+                </form>
             </div>
+            {{/logIn}}
         </div>
         <h2 class="text-center col-8">RESULTS</h2>
         <div class="col">
@@ -32,15 +29,6 @@
             <div class="row">
 
                 <div class="col">
-                    <form action="/search/sortCountry" method="get">
-                        <select class="form-select" aria-label="Default select example" name="itemId">
-                            <option selected>Country</option>
-                            {{#items}}
-                            <option value="{{name}}">{{name}}</option>
-                            {{/items}}
-                        </select>
-                        <input type="submit" value="Sort">
-                    </form>
                     <form action="/search/sort" method="get">
                         <select class="form-select" aria-label="Default select example" name="sortOption">
                             <option selected>Sort by</option>
