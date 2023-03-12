@@ -39,7 +39,7 @@ public class SearchService implements AbstractService<Information> {
         List<Information> result = new ArrayList<>();
         result.addAll(destinationRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
         result.addAll(placeRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
-        result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        //result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
         return result;
     }
 
@@ -53,14 +53,14 @@ public class SearchService implements AbstractService<Information> {
     public List<Information> searchInfoDestItinerary(String name, String description, Pageable pageable) {
         List<Information> result = new ArrayList<>();
         result.addAll(destinationRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
-        result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        //result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
         return result;
     }
 
     public List<Information> searchInfoPlaceItinerary(String name, String description, Pageable pageable) {
         List<Information> result = new ArrayList<>();
         result.addAll(placeRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
-        result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
+        //result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
         return result;
     }
     public List<Information> orderByName(String name, String description, Pageable pageable) {
