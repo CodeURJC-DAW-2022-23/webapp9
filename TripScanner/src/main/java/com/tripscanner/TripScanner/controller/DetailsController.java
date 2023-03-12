@@ -93,7 +93,6 @@ public class DetailsController {
 
         if (request.getUserPrincipal() != null) {
             List<Itinerary> ownedItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
-            System.out.println(ownedItineraries);
             if (ownedItineraries.isEmpty()) model.addAttribute("ownedItineraries", false);
             else model.addAttribute("ownedItineraries", ownedItineraries);
         }

@@ -205,6 +205,21 @@ public class SearchController {
                                    @RequestParam(defaultValue="DESC") String order,
                                    @RequestParam(defaultValue="0") int page,
                                    Model model) {
+
+        model.addAttribute("hideSearch", true);
+        model.addAttribute("name", name);
+
+        model.addAttribute("isItinerary", type.equals("itinerary"));
+        model.addAttribute("isPlace", type.equals("place"));
+        model.addAttribute("isDestination", type.equals("destination"));
+
+        model.addAttribute("isId", sort.equals("id"));
+        model.addAttribute("isViews", sort.equals("views"));
+        model.addAttribute("isName", sort.equals("name"));
+
+        model.addAttribute("isDesc", order.equals("DESC"));
+        model.addAttribute("isAsc", order.equals("ASC"));
+
         return "search";
     }
 
