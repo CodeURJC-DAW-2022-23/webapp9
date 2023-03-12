@@ -22,7 +22,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     List<Place> findAllByNameOrDescriptionOrderByName(String name, String description, Pageable pageable);
 
-    Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
+    Page<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
 
     Page<Place> findAll(Pageable pageable);

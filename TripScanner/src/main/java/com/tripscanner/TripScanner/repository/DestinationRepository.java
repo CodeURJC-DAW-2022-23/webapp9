@@ -26,7 +26,7 @@ public interface DestinationRepository extends PagingAndSortingRepository<Destin
 
     List<Destination> findAllByNameOrDescriptionOrderByName(String name, String description, Pageable pageable);
 
-    Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
+    Page<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
     Page<Destination> findAll(Pageable pageable);
 
