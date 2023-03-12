@@ -3,18 +3,7 @@
 
 <div class="container bg-secondary p-4 rounded-3 my-3">
     <div class="justify-content-between row">
-        <div class="col">
-            {{#logIn}}
-            <div class="all-private">
-                <form action="/search/itinerary" method="get">
-                    <input type="submit" class="btn btn-primary" value="All">
-                </form>
-                <form action="/search/privateItinerary" method="get">
-                    <input type="submit" class="btn btn-primary" value="Private">
-                </form>
-            </div>
-            {{/logIn}}
-        </div>
+        <div class="col"></div>
         <h2 class="text-center col-8">RESULTS</h2>
         <div class="col">
             <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse"
@@ -24,39 +13,53 @@
         </div>
 
     </div>
+
     <div class="collapse container" id="collapseExample">
         <div class="card card-body">
-            <div class="row">
 
-                <div class="col">
-                    <form action="/search/sort" method="get">
-                        <select class="form-select" aria-label="Default select example" name="sortOption">
-                            <option selected>Sort by</option>
-                            <option value="popularity">Popularity</option>
-                            <option value="asc">Alphabetical</option>
+            <form class="" method="get" action="/search">
+
+                <div class="row pb-4">
+                    <div class="col-12 col-md-9 col-xl-10 pe-2">
+                        <input class="form-control" type="search" placeholder="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
+                    </div>
+                    <div class="col-12 col-md-3 col-xl-2">
+                        <input class="w-100 h-100" type='submit' value='Search'/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Filter by:</h6>
+                        <select class="form-select" aria-label="Filter by" name="type">
+                            <option value="itinerary" {{#isItinerary}}selected{{/isItinerary}}>Itineraries</option>
+                            <option value="place" {{#isPlace}}selected{{/isPlace}}>Places</option>
+                            <option value="destination" {{#isDestination}}selected{{/isDestination}}>Destinations</option>
                         </select>
-                        <input type="submit" value="Sort">
-                    </form>
+                    </div>
+
+                    <div class="col">
+                        <h6>Filter by:</h6>
+                        <select class="form-select" aria-label="Order by" name="sort">
+                            <option value="id" {{#isId}}selected{{/isId}}>Newest</option>
+                            <option value="views" {{#isViews}}selected{{/isViews}}>Most watched</option>
+                            <option value="name" {{#isName}}selected{{/isName}}>Alphabetical</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <h6>Direction:</h6>
+                        <select class="form-select" aria-label="Order by" name="order">
+                            <option value="DESC" {{#isDesc}}selected{{/isDesc}}>Descending</option>
+                            <option value="ASC" {{#isAsc}}selected{{/isAsc}}>Ascending</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="col">
-                    <form action="/search/filter" method="get">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="true" id="checkboxDestination"
-                                   name="option1"> Destination
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="true" id="checkboxPlace"
-                                   name="option2"> Places
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="true" id="checkboxItinerary"
-                                   name="option3"> Itineraries
-                        </div>
-                        <button type="submit">Filter</button>
-                    </form>
-                </div>
-            </div>
+                <input type="hidden" name="page" value="0"/>
+
+            </form>
+
 
 
         </div>
