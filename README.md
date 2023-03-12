@@ -187,9 +187,6 @@ This is the class diagram of TripScanner.
 
 ![Diagrama de clases y templates](https://user-images.githubusercontent.com/102818341/224578590-cb522d32-3605-496e-8020-7e5f69148615.svg)
 
-### New navigation diagram 
-![Navigation](hhttps://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/diagrams/svgs/navigation_.svg)
-
 
 ### Members participation
 
