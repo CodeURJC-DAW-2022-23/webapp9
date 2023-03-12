@@ -44,7 +44,6 @@ public class ItineraryService implements AbstractService<Itinerary> {
         return repository.findAll(pageable);
     }
 
-
     public void save(Itinerary itinerary) {
         repository.save(itinerary);
     }
@@ -53,8 +52,12 @@ public class ItineraryService implements AbstractService<Itinerary> {
         repository.deleteById(id);
     }
 
-    public List<Itinerary> findByQuery(String name, String description) {
-        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description);
+    public List<Itinerary> findByQuery(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
+    }
+
+    public List<Itinerary> findByQueryOrder(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionOrderByName(name, description, pageable);
     }
 
 }

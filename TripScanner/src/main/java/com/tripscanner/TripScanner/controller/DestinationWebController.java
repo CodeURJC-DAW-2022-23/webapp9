@@ -55,6 +55,22 @@ public class DestinationWebController {
         }
     }
 
+    @GetMapping("search/destination/{id}/image")
+    public ResponseEntity<Object> downloadImageSearch(@PathVariable long id) throws SQLException {
+
+        Optional<Destination> destination = destinationService.findById(id);
+        if (destination.isPresent() && destination.get().getImageFile() != null) {
+
+            Resource file = new InputStreamResource(destination.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(destination.get().getImageFile().length()).body(file);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/management/destination/delete/{id}")
     public String deleteDestination(Model model, @PathVariable long id){
         Optional<Destination> dest = destinationService.findById(id);

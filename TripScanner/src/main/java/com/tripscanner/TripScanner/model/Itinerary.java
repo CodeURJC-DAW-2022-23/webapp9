@@ -22,6 +22,8 @@ public class Itinerary implements Information {
 
     private boolean image;
 
+    private boolean isPublic;
+
     private Blob imageFile;
 
     @ManyToMany
@@ -30,17 +32,21 @@ public class Itinerary implements Information {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy="itinerary", cascade = CascadeType.ALL, orphanRemoval=true)
+    // @OneToMany(mappedBy = "itinerary")
+
+    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
+
     private List<Review> reviews;
 
     public Itinerary() {
     }
 
-    public Itinerary(String name, String description, User user) {
+    public Itinerary(String name, String description, User user, boolean isPublic) {
         super();
         this.name = name;
         this.description = description;
         this.user = user;
+        this.isPublic = isPublic;
         this.setImage(false);
         this.setViews(0L);
     }
@@ -138,6 +144,14 @@ public class Itinerary implements Information {
         this.reviews = reviews;
     }
 
+    public Boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        this.isPublic = aPublic;
+    }
+
     public Itinerary copy(User newUser) {
         Itinerary toReturn = new Itinerary(this.name, this.description, newUser);
         toReturn.setImageFile(this.getImageFile());
@@ -150,4 +164,5 @@ public class Itinerary implements Information {
         toReturn.setPlaces(placeCopy);
         return toReturn;
     }
+    
 }

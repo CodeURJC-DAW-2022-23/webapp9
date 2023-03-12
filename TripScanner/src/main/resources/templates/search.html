@@ -1,142 +1,96 @@
-    {{>header}}
+{{>header}}
 
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Log In</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label required">UserName</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required">Password</label>
-                            <input type="email" class="form-control">
-                        </div>
+
+<div class="container bg-secondary p-4 rounded-3">
+    <div class="justify-content-between row">
+        <div class="col">
+            {{#logIn}}
+            <div class="all-private">
+                <form action="/search/itinerary" method="get">
+                    <input type="submit" class="btn btn-primary" value="All">
+                </form>
+                <form action="/search/privateItinerary" method="get">
+                    <input type="submit" class="btn btn-primary" value="Private">
+                </form>
+            </div>
+            {{/logIn}}
+        </div>
+        <h2 class="text-center col-8">RESULTS</h2>
+        <div class="col">
+            <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false"
+                    aria-controls="collapseExample">Filters
+            </button>
+        </div>
+
+    </div>
+    <div class="collapse container" id="collapseExample">
+        <div class="card card-body">
+            <div class="row">
+
+                <div class="col">
+                    <form action="/search/sort" method="get">
+                        <select class="form-select" aria-label="Default select example" name="sortOption">
+                            <option selected>Sort by</option>
+                            <option value="popularity">Popularity</option>
+                            <option value="asc">Alphabetical</option>
+                        </select>
+                        <input type="submit" value="Sort">
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="location.href='index.html'">Log In</button>
-                    <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet?
-                        Sign Up!</button>
+
+                <div class="col">
+                    <form action="/search/filter" method="get">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="checkboxDestination"
+                                   name="option1"> Destination
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="checkboxPlace"
+                                   name="option2"> Places
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="checkboxItinerary"
+                                   name="option3"> Itineraries
+                        </div>
+                        <button type="submit">Filter</button>
+                    </form>
                 </div>
             </div>
+
+
         </div>
     </div>
+    <hr class="text-light">
+    <div id="search-results">
 
-    <div class="container bg-secondary p-4 rounded-3">
-        <div class="justify-content-between row">
-            <div class="col">
-                <div class="switch-toggle switch-3 switch-candy rounded-3">
-
-                    <input id="on" name="state-d" type="radio" checked="" />
-                    <label for="on" onclick="">All</label>
-
-                    <input id="na" name="state-d" type="radio" checked="checked" />
-                    <label for="na" class="disabled" onclick="">Public</label>
-
-                    <input id="off" name="state-d" type="radio" />
-                    <label for="off" onclick="">Private</label>
-
+        {{#information}}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img class="img-fluid rounded-start" src="{{typeLowercase}}/{{id}}/image" alt=""
+                         id="header-item-image">
                 </div>
-            </div>
-            <h2 class="text-center col-8">RESULTS</h2>
-            <div class="col">
-                <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample" aria-expanded="false"
-                    aria-controls="collapseExample">Filters</button>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <img src="{{typeLowercase}}/{{id}}/image" class="rounded float-end item-flag"
+                             alt="...">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">{{description}}</p>
+                        <p class="card-text"><small class="text-muted">{{type}}</small></p>
+                        <a href='/details/{{typeLowercase}}/{{id}}' class="btn btn-secondary">Details</a>
+                    </div>
+                </div>
+
             </div>
 
         </div>
-        <div class="collapse container" id="collapseExample">
-            <div class="card card-body">
-                <div class="row">
-
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Country</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Sort by</option>
-                            <option value="1">Popularity</option>
-                            <option value="2">Alphabetical</option>
-                            <option value="3">Type</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxDestination">
-                            <label class="form-check-label" for="checkboxDestination">
-                                Destinations
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxPlace">
-                            <label class="form-check-label" for="checkboxPlace">
-                                Places
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxItinerary">
-                            <label class="form-check-label" for="checkboxItinerary">
-                                Itineraries
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-        <hr class="text-light">
-        <div id="search-results">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt="{{item-name}}"
-                            id="header-item-image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                                alt="...">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
-                            <p class="card-text"><small class="text-muted">{{type-result}}</small></p>
-                            <a href='details.html' class="btn btn-secondary">Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt="{{item-name}}"
-                            id="header-item-image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                                alt="...">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
-                            <p class="card-text"><small class="text-muted">{{type-result}}</small></p>
-                            <a href='details.html' class="btn btn-secondary">Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        {{/information}}
 
     </div>
+
+
+</div>
 
 </body>
 

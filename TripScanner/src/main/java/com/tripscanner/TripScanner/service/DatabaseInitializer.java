@@ -40,6 +40,7 @@ public class DatabaseInitializer {
     @Autowired
     private UserRepository userRepository;
 
+    private String searchWord;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -56,6 +57,10 @@ public class DatabaseInitializer {
         setImage(destination2, "/img-samples/sevilla.jpg");
         destinationRepository.save(destination2);
 
+        Destination destination3 = new Destination("Moscu", "Provincia de Rusia", "ru");
+        setImage(destination3, "/img-samples/moscu.jpeg");
+        destinationRepository.save(destination3);
+
         // Sample places
 
         Place place1 = new Place("Puerta del Sol", "Descripción Puerta del Sol", destination1);
@@ -70,6 +75,11 @@ public class DatabaseInitializer {
         setImage(place3, "/img-samples/sevilla-catedral.jpeg");
         placeRepository.save(place3);
 
+        Place place4 = new Place("Red Square", "Red Square", destination3);
+        setImage(place4, "/img-samples/redSquare.jpeg");
+        placeRepository.save(place4);
+
+
         // Sample users
         userRepository.save(new User("user", "User1", "User2", "user@example.org", passwordEncoder.encode("pass"), "Española", "USER"));
         User admin = new User("admin", "Admin2", "Admin2", "admin@example.org", passwordEncoder.encode("adminpass"), "Española", "USER", "ADMIN");
@@ -78,11 +88,19 @@ public class DatabaseInitializer {
 
         // Sample itineraries
 
-        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", admin);
+        Itinerary itinerary = new Itinerary("Ruta por España", "Incluyendo lugares de Madrid y Sevilla", admin, true);
         setImage(itinerary, "/img-samples/madrid-sol.jpeg");
+
 
         itinerary.setPlaces(Arrays.asList(place1, place2, place3));
         itineraryRepository.save(itinerary);
+
+        Itinerary itinerary2 = new Itinerary("Ruta por Rusia", "Incluyendo lugares de Moscu", admin, false);
+        setImage(itinerary2, "/img-samples/moscu.jpeg");
+
+        itinerary2.setPlaces(Arrays.asList(place4));
+        itineraryRepository.save(itinerary2);
+
 
         // Sample reviews
 

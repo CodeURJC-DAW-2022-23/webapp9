@@ -22,6 +22,8 @@
         <div>
 
             {{#logIn}}
+            <a class="navbar-brand float-start" href="perfil.html"><img src="{{imageFile}}"
+                                                                        alt="Placeholder userImage" widht="80px" height="80px"></a>
             <a class="navbar-brand float-end" href="/profile">
                 <img src="/user/{{id}}/image" alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 ">
             </a>
@@ -48,10 +50,10 @@
             </form>
             {{/admin}}
 
-            <form class="d-flex float-end m-3">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <img type="button" src="/img/magnify.svg.png" alt="search" width="35px" height="35px"
-                     onclick="location.href='search.html'" />
+
+            <form class="d-flex float-end m-3" method="get" action="/search">
+                <input class="form-control me-2" type="search" placeholder="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
+                <input type='submit' value='Search'/>
             </form>
 
         </div>

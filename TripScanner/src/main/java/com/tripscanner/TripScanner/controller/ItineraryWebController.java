@@ -65,6 +65,21 @@ public class ItineraryWebController {
         }
     }
 
+    @GetMapping("search/itinerary/{id}/image")
+    public ResponseEntity<Object> downloadImageSearch(@PathVariable long id) throws SQLException {
+
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        if (itinerary.isPresent() && itinerary.get().getImageFile() != null) {
+
+            Resource file = new InputStreamResource(itinerary.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(itinerary.get().getImageFile().length()).body(file);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping("/itinerary/add/place/{id}")
     public String addPlaceToItinerary(Model model, HttpServletRequest request, List<Itinerary> itineraryList, @PathVariable long id) {
 
@@ -134,7 +149,7 @@ public class ItineraryWebController {
 
     @PostMapping("/management/itinerary/add")
     public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile) throws IOException {
-        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get());
+        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get(),true);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
@@ -152,7 +167,7 @@ public class ItineraryWebController {
     @PostMapping("/myItineraries/add")
     public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile) throws IOException {
         Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
-        Itinerary itinerary = new Itinerary(name, description, user.get());
+        Itinerary itinerary = new Itinerary(name, description, user.get(), false);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);

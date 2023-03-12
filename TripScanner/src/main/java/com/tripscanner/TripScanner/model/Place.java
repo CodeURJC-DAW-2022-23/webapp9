@@ -27,7 +27,7 @@ public class Place implements Information {
     @ManyToOne
     private Destination destination;
 
-    @ManyToMany(mappedBy="places")
+    @ManyToMany(mappedBy = "places")
     private List<Itinerary> itineraries;
 
     public Place() {
@@ -116,8 +116,11 @@ public class Place implements Information {
         return "Place";
     }
 
+
     @Override
     public String getTypeLowercase() {
         return getType().toLowerCase();
     }
 }
+
+

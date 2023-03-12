@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Place;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,13 @@ public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
 
     Optional<Itinerary> findByName(String name);
 
-    List<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description);
+    //List<Itinerary> findAllByIdLikeIgnoreCase(long id);
+
+    List<Itinerary> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description);
+
+    List<Itinerary> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description, Pageable pageable);
+
+    List<Itinerary> findAllByNameOrDescriptionOrderByName(String name, String description, Pageable pageable);
 
     Page<Itinerary> findAll(Pageable pageable);
 

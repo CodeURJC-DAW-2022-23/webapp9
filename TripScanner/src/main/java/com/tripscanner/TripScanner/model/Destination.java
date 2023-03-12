@@ -26,7 +26,7 @@ public class Destination implements Information {
 
     private String flagCode;
 
-    @OneToMany(mappedBy="destination", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private List<Place> places;
 
     public Destination() {
@@ -65,6 +65,8 @@ public class Destination implements Information {
     public String getType() {
         return "Destination";
     }
+
+    //public String getSearchResult(){ return "Destination";}
 
     @Override
     public String getTypeLowercase() {
@@ -119,5 +121,6 @@ public class Destination implements Information {
     public void setPlaces(List<Place> places) {
         this.places = places;
     }
+
 
 }
