@@ -183,6 +183,7 @@ Below there is an entity-relationship diagram that shows the database entities, 
 ![Entity-Relationship Diagram](https://user-images.githubusercontent.com/102818341/224564564-71b8c637-e8cc-4bf5-8cbf-e0659c1897e3.svg)
 
 ### Class and templates diagram
+![Classes-Templates Diagram](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/diagrams/svgs/Diagrama%20de%20clases%20y%20templates.svg)
 
 This is the class diagram of TripScanner.
 
@@ -223,19 +224,19 @@ Here, each member of the team shows what they have contributed to during the dev
         - []()
 
 3. [Anna Trofimova](https://github.com/anna-trofimova)
-    - **Description of tasks:**
+    - **Description of tasks:** I developed home page, search page, the necessary algorithms to search for different elements, search filters and the ability to see your own private itineraries. These commits are:
     - **5 biggest commits:** These commits are:
-        - []()
-        - []()
-        - []()
-        - []()
-        - []()
+        - [Fixed: filter destination/place/itinerary](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/43ec94d8397a1132830e656def4eed8ba480d6c4)
+        - [Added: private itinerary](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/f0ae68bde5f062708e0b531f90cd562a6ea1388f)
+        - [Added:sort of search](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/d6330e66e82b075fc3453219549cedf46f81f490)
+        - [Fixed: sort by view](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/3e33581a3c8839c4d2d57849710d09289280a5ac)
+        - [Fixed:HomeController](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/6ef6cdeb3e5dadb26c648b3aebcdfe34a557385b)
     -**5 files with most participation:** These files are:
-        - []()
-        - []()
-        - []()
-        - []()
-        - []()
+      - [SearchControler](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/SearchController.java)
+      - [SearcService](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/service/SearchService.java)
+      - [Search](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/resources/templates/search.html)
+      - [HomePage](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/resources/templates/index.html)
+      - [HomeController](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/HomeController.java)
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
     - **Description of tasks:** I've developed the secure login and user functionality, and added the missing touches for editing and saving itineraries, as well as adding custom error pages and the graph for the most poppular destinations.
