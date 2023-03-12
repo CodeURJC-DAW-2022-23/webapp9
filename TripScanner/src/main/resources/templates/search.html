@@ -64,8 +64,8 @@
     <hr class="text-light">
     <div id="search-results">
 
+        {{#information}}
         <div class="card mb-3">
-            {{#information}}
             <div class="row g-0">
                 <div class="col-md-4">
                     <img class="img-fluid rounded-start" src="{{typeLowercase}}/{{id}}/image" alt=""
@@ -81,11 +81,11 @@
                         <a href='/details/{{typeLowercase}}/{{id}}' class="btn btn-secondary">Details</a>
                     </div>
                 </div>
-                {{/information}}
 
             </div>
 
         </div>
+        {{/information}}
 
     </div>
 
