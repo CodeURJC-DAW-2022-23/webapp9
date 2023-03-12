@@ -53,9 +53,7 @@ public class HomeController {
 
 
         // Show 5 the most visited destinations
-        List<Destination> popularDestination = destinationService.findAll();
-        Collections.sort(popularDestination, (p1, p2) -> Long.compare(p2.getViews(), p1.getViews()));
-        popularDestination = popularDestination.stream().limit(5).collect(Collectors.toList());
+        Page<Destination> popularDestination = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views")));
 
         model.addAttribute("popularDestination", popularDestination);
 
@@ -89,9 +87,7 @@ public class HomeController {
     }
 
     private List<Destination> sortListByViews(List<Destination> destList) {
-        Collections.sort(destList, (p1, p2) -> Long.compare(p2.getViews(), p1.getViews()));
-
-        if (destList.size() < 5) return destList.subList(0, destList.size());
-        else return destList.subList(0, 5);
+        Page<Destination> popularDestination = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views")));
+        return popularDestination.toList();
     }
 }
