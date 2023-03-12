@@ -203,7 +203,7 @@ Here, each member of the team shows what they have contributed to during the dev
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
     - **Description of tasks:**
-    - **5 biggest commits:** These commits are:
+    - **5 biggest commits:** Note that I usually upload more commits with less changes each, so I have a lot of contributions but each one has less changes. These commits are:
         - []()
         - []()
         - []()
@@ -233,15 +233,16 @@ Here, each member of the team shows what they have contributed to during the dev
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
     - **Description of tasks:** I've developed the secure login and user functionality, and added the missing touches for editing and saving itineraries, as well as adding custom error pages and the graph for the most poppular destinations.
-    - **5 biggest commits:** These commits are:
+    - **5 biggest commits:** Note that I usually upload more commits with less changes each, so I have a lot of contributions but each one has less changes.These commits are:
         - [Feature: Added secure login](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/60/commits/c3da1695d8f232c6a9293765bc126bf751f5ff00)
-        - []()
-        - []()
-        - []()
-        - []()
+        - [Feature: Graph showing the most visited Destinations](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/73/commits/c245e2970853ce383d04994f85f06a44fa54de0a)
+        - [Feature: Users can copy an Itinerary to their account](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/66/commits/605bb5ff9de1c6c0521c8d3c739458b25194cb54)
+        - [Feature: Users can now edit their pofile data](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/66/commits/fd4b16fc16c47352a5615cbb246b20ebeaa4e923)
+        - [Feature: Unregistered users can now register](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/60/commits/c8d83f6f48fdd3ced6129e4bd8a078fb8076f731)
     -**5 files with most participation:** These files are:
         - []()
         - []()
         - []()
         - []()
         - []()
+        
