@@ -119,6 +119,8 @@ The registration page allows for unregistered users to create a new account to g
 
 # SEARCH GOES HERE
 
+The search page allows to search for an specific keyword, as well as filter the results showed.
+
 ![image](https://user-images.githubusercontent.com/102818341/224549298-9d24e39b-45c0-4067-8116-dcb0844a1ec2.png)
 
 The details of an item are shown when you click on it and show some more information about it.
@@ -181,6 +183,10 @@ Below there is an entity-relationship diagram that shows the database entities, 
 ![Entity-Relationship Diagram](https://user-images.githubusercontent.com/102818341/224564564-71b8c637-e8cc-4bf5-8cbf-e0659c1897e3.svg)
 
 ### Class and templates diagram
+
+This is the class diagram of TripScanner.
+
+![Diagrama de clases y templates](https://user-images.githubusercontent.com/102818341/224578590-cb522d32-3605-496e-8020-7e5f69148615.svg)
 
 ### Members participation
 
