@@ -57,7 +57,7 @@ public class DatabaseInitializer {
         setImage(destination2, "/img-samples/sevilla.jpg");
         destinationRepository.save(destination2);
 
-        Destination destination3 = new Destination("Moscu", "Provincia de Rusia", "rus");
+        Destination destination3 = new Destination("Moscu", "Provincia de Rusia", "ru");
         setImage(destination3, "/img-samples/moscu.jpeg");
         destinationRepository.save(destination3);
 
