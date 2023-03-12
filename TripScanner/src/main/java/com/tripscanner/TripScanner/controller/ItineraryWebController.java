@@ -120,7 +120,7 @@ public class ItineraryWebController {
     }
 
     @PostMapping("/management/itinerary/edit/{id}")
-    public String editItinerary(Model model, MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String username) throws IOException {
+    public String editItinerary(Model model, MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         itinerary.get().setName(name);
         itinerary.get().setDescription(description);
@@ -128,6 +128,11 @@ public class ItineraryWebController {
         itinerary.get().setUser(userObj.get());
         if (imageFile != null){
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
+        if (checkboxValue != null) {
+            itinerary.get().setPublic(false);
+        } else {
+            itinerary.get().setPublic(true);
         }
         itineraryService.save(itinerary.get());
         return "redirect:/management/itinerary/";
@@ -148,10 +153,15 @@ public class ItineraryWebController {
     }
 
     @PostMapping("/management/itinerary/add")
-    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile) throws IOException {
+    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
         Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get(),true);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        if (checkboxValue != null) {
+            itinerary.setPublic(false);
+        } else {
+            itinerary.setPublic(true);
+        }
         itineraryService.save(itinerary);
         return "redirect:/management/itinerary/";
     }
@@ -165,22 +175,32 @@ public class ItineraryWebController {
     }
     
     @PostMapping("/myItineraries/add")
-    public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile) throws IOException {
+    public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
         Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
-        Itinerary itinerary = new Itinerary(name, description, user.get(), false);
+        Itinerary itinerary = new Itinerary(name, description, user.get(), true);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        if (checkboxValue != null) {
+            itinerary.setPublic(false);
+        } else {
+            itinerary.setPublic(true);
+        }
         itineraryService.save(itinerary);
         return "redirect:/myItineraries";
     }
 
     @PostMapping("/myItineraries/edit/{id}")
-    public String editMyItinerary(MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description) throws IOException {
+    public String editMyItinerary(MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         itinerary.get().setName(name);
         itinerary.get().setDescription(description);
         if (!imageFile.getOriginalFilename().isBlank()){
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
+        if (checkboxValue != null) {
+            itinerary.get().setPublic(false);
+        } else {
+            itinerary.get().setPublic(true);
         }
         itineraryService.save(itinerary.get());
         return "redirect:/myItineraries/";
