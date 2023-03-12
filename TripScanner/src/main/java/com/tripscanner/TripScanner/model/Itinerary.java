@@ -153,7 +153,7 @@ public class Itinerary implements Information {
     }
 
     public Itinerary copy(User newUser) {
-        Itinerary toReturn = new Itinerary(this.name, this.description, newUser);
+        Itinerary toReturn = new Itinerary(this.name, this.description, newUser, newUser.getRoles().contains("ADMIN"));
         toReturn.setImageFile(this.getImageFile());
         List<Place> placeCopy = new ArrayList<>();
 
