@@ -53,14 +53,6 @@ public class PlaceService implements AbstractService<Place> {
         repository.deleteById(id);
     }
 
-    public List<Place> findByQuery(String name, String description, Pageable pageable) {
-        return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
-    }
-
-    public List<Place> findByQueryOrder(String name, String description, Pageable pageable) {
-        return repository.findAllByNameOrDescriptionOrderByName(name, description, pageable);
-    }
-
     public Page<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }

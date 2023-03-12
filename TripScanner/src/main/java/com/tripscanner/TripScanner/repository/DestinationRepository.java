@@ -19,14 +19,6 @@ public interface DestinationRepository extends PagingAndSortingRepository<Destin
 
     Optional<Destination> findByName(String name);
 
-    //List<Destination> findAllByIdLikeIgnoreCase(long id);
-
-    List<Destination> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description);
-
-    List<Destination> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description, Pageable pageable);
-
-    List<Destination> findAllByNameOrDescriptionOrderByName(String name, String description, Pageable pageable);
-
     @Query("SELECT d from Destination d WHERE LOWER(d.name) LIKE %:name% OR LOWER(d.description) LIKE %:description%")
     Page<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
