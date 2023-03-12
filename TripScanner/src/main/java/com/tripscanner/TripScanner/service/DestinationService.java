@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.tripscanner.TripScanner.model.Itinerary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,6 +65,10 @@ public class DestinationService implements AbstractService<Destination> {
 
     public List<Destination> findByQueryOrder(String name, String description, Pageable pageable) {
         return repository.findAllByNameOrDescriptionOrderByName(name, description, pageable);
+    }
+
+    public Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
 

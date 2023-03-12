@@ -61,4 +61,8 @@ public class PlaceService implements AbstractService<Place> {
         return repository.findAllByNameOrDescriptionOrderByName(name, description, pageable);
     }
 
+    public Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
+    }
+
 }
