@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -198,13 +199,46 @@ public class SearchController {
 
     // Global search by word
     @GetMapping("/search")
-    public String showSearchResult(@RequestParam("name") String name, Model model, HttpSession session) {
-        Pageable pageable = PageRequest.of(0, 10);
-        session.setAttribute("searchResult", name);
-        List<Information> results = searchService.searchInfo(name, name);
-        model.addAttribute("information", results);
+    public String showSearchResult(@RequestParam(defaultValue="") String name,
+                                   @RequestParam(defaultValue="itinerary") String type,
+                                   @RequestParam(defaultValue="id") String sort,
+                                   @RequestParam(defaultValue="DESC") String order,
+                                   @RequestParam(defaultValue="0") int page,
+                                   Model model) {
         return "search";
     }
+
+    @GetMapping("/results")
+    public String results(@RequestParam(defaultValue="") String name,
+                          @RequestParam(defaultValue="itinerary") String type,
+                          @RequestParam(defaultValue="id") String sort,
+                          @RequestParam(defaultValue="DESC") String order,
+                          @RequestParam int page,
+                          Model model) {
+        Sort.Direction direction;
+        if (Objects.equals(order, "DESC")) direction = Sort.Direction.DESC;
+        else direction = Sort.Direction.ASC;
+        switch (type) {
+            case "itinerary":
+                model.addAttribute("information",
+                        itineraryService.findAllByNameOrDescriptionContainingIgnoreCase(name, name,
+                                PageRequest.of(page,10, Sort.by(direction, sort))));
+                return "searchResult";
+            case "destination":
+                model.addAttribute("information",
+                        destinationService.findAllByNameOrDescriptionLikeIgnoreCase(name, name,
+                                PageRequest.of(page,10, Sort.by(direction, sort))));
+                return "searchResult";
+            case "place":
+                model.addAttribute("information",
+                        placeService.findAllByNameOrDescriptionLikeIgnoreCase(name, name,
+                                PageRequest.of(page,10, Sort.by(direction, sort))));
+                return "searchResult";
+        }
+
+        return "searchResult";
+    }
+
 }
 
 
