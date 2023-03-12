@@ -1,32 +1,30 @@
 {{>header}}
-
 {{#itinerary}}
 <div class="container p-4">
   <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg1">
     <h3 class="text-center mb-3">Edit itinerary</h3>
-        <form class="row g-3" method="post" action="/myItineraries/edit/{{id}}" enctype="multipart/form-data">
-          <input type="hidden" name="_csrf" value="{{token}}"/>
-          <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend4">Name</span>
-            <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
-          </div>
-
-          <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend5">Description</span>
-            <input type="text" class="form-control" value="{{description}}" name='description' aria-describedby="inputGroupPrepend" required>
-          </div>
-          <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrependImg2">Image</span>
-            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
-          </div>
-          <div class="col-12">
-            <input class="btn btn-primary" type='submit' value='Submit'>
-          </div>
-        </form>
-      </section>
-    </div>
+    <form class="row g-3" method="post" action="/myItineraries/edit/{{id}}" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="{{token}}"/>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend4">Name</span>
+        <input type="text" class="form-control" value="{{name}}" name='name' aria-describedby="inputGroupPrepend" required>
+      </div>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend5">Description</span>
+        <input type="text" class="form-control" value="{{description}}" name='description' aria-describedby="inputGroupPrepend" required>
+      </div>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrependImg2">Image</span>
+        <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+      </div>
+      <div class="col-12">
+        <input class="btn btn-primary" type='submit' value='Submit'>
+      </div>
+    </form>
   </section>
 </div>
+</section>
+</div>
 {{/itinerary}}
-  </body>
+</body>
 </html>
