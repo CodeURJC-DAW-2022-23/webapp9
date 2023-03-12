@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.tripscanner.TripScanner.model.Place;
+import org.springframework.data.jpa.repository.Query;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
@@ -22,6 +23,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     List<Place> findAllByNameOrDescriptionOrderByName(String name, String description, Pageable pageable);
 
+    @Query("SELECT p from Place p WHERE LOWER(p.name) LIKE %:name% OR LOWER(p.description) LIKE %:description%")
     Page<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
 

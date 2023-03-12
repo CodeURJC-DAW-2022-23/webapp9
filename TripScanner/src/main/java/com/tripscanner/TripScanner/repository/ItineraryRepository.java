@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.tripscanner.TripScanner.model.Itinerary;
+import org.springframework.data.jpa.repository.Query;
 
 public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
 
@@ -20,7 +21,8 @@ public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
 
     List<Itinerary> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description);
 
-    Page<Itinerary> findAllByNameOrDescriptionContainingIgnoreCase(String name, String description, Pageable pageable);
+    @Query("SELECT i from Itinerary i WHERE LOWER(i.name) LIKE %:name% OR LOWER(i.description) LIKE %:description%")
+    Page<Itinerary> findAllByNameOrDescriptionLike(String name, String description, Pageable pageable);
 
     List<Itinerary> findAllByNameOrDescriptionOrderByName(String name, String description, Pageable pageable);
 

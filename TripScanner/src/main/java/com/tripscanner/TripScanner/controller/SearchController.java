@@ -215,13 +215,17 @@ public class SearchController {
                           @RequestParam(defaultValue="DESC") String order,
                           @RequestParam int page,
                           Model model) {
+
         Sort.Direction direction;
         if (Objects.equals(order, "DESC")) direction = Sort.Direction.DESC;
         else direction = Sort.Direction.ASC;
+
+        name = name.toLowerCase();
+
         switch (type) {
             case "itinerary":
                 model.addAttribute("information",
-                        itineraryService.findAllByNameOrDescriptionContainingIgnoreCase(name, name,
+                        itineraryService.findAllByNameOrDescriptionLike(name, name,
                                 PageRequest.of(page,10, Sort.by(direction, sort))));
                 return "searchResult";
             case "destination":
