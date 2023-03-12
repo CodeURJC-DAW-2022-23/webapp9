@@ -28,4 +28,20 @@ public class EmailService implements AbstractEmailService {
         javaMailSender.send(mailMessage);
     }
 
+    public void sendEmailChangeEmail(User user) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        mailMessage.setFrom(sender);
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setText(String.format("Changes in your profile.\n\n" +
+                        "Dear %s, you have recently changed the email associated to your account.\n\n" +
+                        "This email is just to confirm this change. If you need help or information,\n\n" +
+                        "please contact us at %s.",
+                user.getUsername(), sender));
+        mailMessage.setSubject("Changes in your profile's email.");
+
+        // Sending the mail
+        javaMailSender.send(mailMessage);
+    }
+
 }

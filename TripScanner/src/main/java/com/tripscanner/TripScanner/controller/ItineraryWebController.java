@@ -174,6 +174,28 @@ public class ItineraryWebController {
         return "redirect:/myItineraries";
     }
 
+    @PostMapping("/myItineraries/edit/{id}")
+    public String editMyItinerary(MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description) throws IOException {
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        itinerary.get().setName(name);
+        itinerary.get().setDescription(description);
+        if (!imageFile.getOriginalFilename().isBlank()){
+            itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
+        itineraryService.save(itinerary.get());
+        return "redirect:/myItineraries/";
+    }
+
+    @GetMapping("/myItineraries/edit/{id}")
+    public String editMyItineraryInit(Model model, @PathVariable long id) {
+        Itinerary currItinerary = itineraryService.findById(id).get();
+
+        model.addAttribute("name", currItinerary.getName());
+        model.addAttribute("description", currItinerary.getDescription());
+        model.addAttribute("itinerary", currItinerary);
+        return "editItinerary";
+    }
+
     @GetMapping("/export/itinerary/{id}")
     public String generatePdfFile(HttpServletResponse response, @PathVariable long id) throws DocumentException, IOException {
         response.setContentType("application/pdf");
@@ -182,7 +204,7 @@ public class ItineraryWebController {
         PdfGenerator generator = new PdfGenerator();
         generator.generate(itinerary.get(), response);
 
-        return "redirect:/deatils/itinerary/" + id;
+        return "redirect:/details/itinerary/" + id;
     }
 
 }
