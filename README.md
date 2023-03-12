@@ -188,6 +188,60 @@ Here, each member of the team shows what they have contributed to during the dev
 
 1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
     - **Description of tasks:** In this phase, I've developed the behaviour to show an item's details, creation of user itineraries and the admin dashboard (view and functionality of the whole dashboard).
-    - **5 biggest commits:** This commits are:
-        - [Ading deletion and edit to admin dashboard](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/59/commits/9360ed6761636d8b7b86bc51ae5b24edbd22e6d7)
-        - 
+    - **5 biggest commits:** These commits are:
+        - [Feat: Delete and edit Places, Itineraries, Destinations and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/59/commits/11d19c92ada593ba3356b5afaf10a844bfc25de2)
+        - [Feat: Add Places, Itineraries, Destinations and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/59/commits/9360ed6761636d8b7b86bc51ae5b24edbd22e6d7)
+        - []()
+        - []()
+        - []()
+    - **5 files with most participation:** These files are:
+        - []()
+        - []()
+        - []()
+        - []()
+        - []()
+
+2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
+    - **Description of tasks:**
+    - **5 biggest commits:** These commits are:
+        - []()
+        - []()
+        - []()
+        - []()
+        - []()
+    -**5 files with most participation:** These files are:
+        - []()
+        - []()
+        - []()
+        - []()
+        - []()
+
+3. [Anna Trofimova](https://github.com/anna-trofimova)
+    - **Description of tasks:**
+    - **5 biggest commits:** These commits are:
+        - []()
+        - []()
+        - []()
+        - []()
+        - []()
+    -**5 files with most participation:** These files are:
+        - []()
+        - []()
+        - []()
+        - []()
+        - []()
+
+4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
+    - **Description of tasks:** I've developed the secure login and user functionality, and added the missing touches for editing and saving itineraries, as well as adding custom error pages and the graph for the most poppular destinations.
+    - **5 biggest commits:** These commits are:
+        - [Feature: Added secure login](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/60/commits/c3da1695d8f232c6a9293765bc126bf751f5ff00)
+        - []()
+        - []()
+        - []()
+        - []()
+    -**5 files with most participation:** These files are:
+        - []()
+        - []()
+        - []()
+        - []()
+        - []()
