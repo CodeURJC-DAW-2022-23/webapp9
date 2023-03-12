@@ -21,19 +21,12 @@ public class HeaderController {
     @ModelAttribute("logIn")
     public Boolean logIn(Model model, HttpServletRequest request) {
         Principal user = request.getUserPrincipal();
-        if (user != null) {
-            return true;
+        if (user == null) {
+            return false;
         } else {
-
-            if (user == null) {
-                return false;
-            } else {
-                model.addAttribute("id", userService.findByUsername(user.getName()).get().getId());
-                return true;
-            }
+            model.addAttribute("id", userService.findByUsername(user.getName()).get().getId());
+            return true;
         }
-
-
     }
 
     @ModelAttribute("name")
