@@ -1,7 +1,7 @@
 {{>header}}
 
 
-<div class="container bg-secondary p-4 rounded-3">
+<div class="container bg-secondary p-4 rounded-3 my-3">
     <div class="justify-content-between row">
         <div class="col">
             {{#logIn}}
@@ -64,33 +64,23 @@
     <hr class="text-light">
     <div id="search-results">
 
-        {{#information}}
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img class="img-fluid rounded-start" src="{{typeLowercase}}/{{id}}/image" alt=""
-                         id="header-item-image">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <img src="{{typeLowercase}}/{{id}}/image" class="rounded float-end item-flag"
-                             alt="...">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <p class="card-text"><small class="text-muted">{{type}}</small></p>
-                        <a href='/details/{{typeLowercase}}/{{id}}' class="btn btn-secondary">Details</a>
-                    </div>
-                </div>
+    </div>
 
-            </div>
-
-        </div>
-        {{/information}}
-
+    <div class="d-none align-items-center" id="search-spinner">
+        <strong>Loading...</strong>
+        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" id="btn-more-search">
+            Load more
+        </button>
     </div>
 
 
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/js/search.js"></script>
 
 </body>
 
