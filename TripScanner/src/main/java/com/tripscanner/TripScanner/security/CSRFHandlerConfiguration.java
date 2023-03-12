@@ -27,8 +27,8 @@ class CSRFHandlerInterceptor implements HandlerInterceptor {
             final HttpServletResponse response,
             final Object handler,
             final ModelAndView modelAndView
-        )
-    throws Exception {
+    )
+            throws Exception {
         if (modelAndView != null) {
             CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
             if (token != null) {

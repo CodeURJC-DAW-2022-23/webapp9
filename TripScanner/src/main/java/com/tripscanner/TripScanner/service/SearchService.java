@@ -26,7 +26,6 @@ public class SearchService implements AbstractService<Information> {
     private ItineraryRepository itineraryRepository;
 
 
-
     public List<Information> searchInfo(String name, String description) {
         List<Information> result = new ArrayList<>();
         result.addAll(destinationRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description));
@@ -63,6 +62,7 @@ public class SearchService implements AbstractService<Information> {
         result.addAll(itineraryRepository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable));
         return result;
     }
+
     public List<Information> orderByName(String name, String description, Pageable pageable) {
         List<Information> result = new ArrayList<>();
         result.addAll(destinationRepository.findAllByNameOrDescriptionOrderByName(name, description, pageable));

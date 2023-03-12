@@ -1,5 +1,5 @@
 package com.tripscanner.TripScanner.controller;
-import com.tripscanner.TripScanner.model.Itinerary;
+
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.EmailService;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Controller

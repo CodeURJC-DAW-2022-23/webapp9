@@ -42,7 +42,7 @@ public class ItineraryWebController {
 
     @Autowired
     private PlaceService placeService;
-    
+
     @Autowired
     private UserService userService;
 
@@ -80,11 +80,12 @@ public class ItineraryWebController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/itinerary/add/place/{id}")
     public String addPlaceToItinerary(Model model, HttpServletRequest request, List<Itinerary> itineraryList, @PathVariable long id) {
 
         Optional<Place> place = placeService.findById(id);
-        if (place.isEmpty() || itineraryList.isEmpty()) return "redirect:/details/place/"+id;
+        if (place.isEmpty() || itineraryList.isEmpty()) return "redirect:/details/place/" + id;
 
         for (Itinerary itinerary : itineraryList) {
             Optional<Itinerary> dbItinerary = itineraryService.findById(itinerary.getId());
@@ -94,26 +95,26 @@ public class ItineraryWebController {
             itineraryService.save(dbItinerary.get());
         }
 
-        return "redirect:/details/itinerary/"+itineraryList.get(itineraryList.size() - 1).getId();
+        return "redirect:/details/itinerary/" + itineraryList.get(itineraryList.size() - 1).getId();
     }
 
     @GetMapping("/management/itinerary/delete/{id}")
-    public String deleteItinerary(Model model, @PathVariable long id){
+    public String deleteItinerary(Model model, @PathVariable long id) {
         itineraryService.delete(id);
         return "redirect:/management/itinerary/";
     }
 
     @GetMapping("/management/itinerary/edit/{id}")
-    public String editItineraryIni(Model model, @PathVariable long id){
+    public String editItineraryIni(Model model, @PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("mode", "edit");
         model.addAttribute("edit", true);
         model.addAttribute("type", "Itinerary");
         model.addAttribute("add", false);
         model.addAttribute("itinerary", itinerary.get());
-        if (itinerary.get().getUser() != null){
+        if (itinerary.get().getUser() != null) {
             model.addAttribute("username", itinerary.get().getUser().getUsername());
-        }else{
+        } else {
             model.addAttribute("username", " ");
         }
         return "addEditItem";
@@ -126,7 +127,7 @@ public class ItineraryWebController {
         itinerary.get().setDescription(description);
         Optional<User> userObj = userService.findByUsername(username);
         itinerary.get().setUser(userObj.get());
-        if (imageFile != null){
+        if (imageFile != null) {
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         itineraryService.save(itinerary.get());
@@ -134,7 +135,7 @@ public class ItineraryWebController {
     }
 
     @GetMapping("/management/itinerary/add")
-    public String addItineraryIni(Model model){
+    public String addItineraryIni(Model model) {
         model.addAttribute("mode", "add");
         model.addAttribute("id", "");
         model.addAttribute("add", true);
@@ -149,7 +150,7 @@ public class ItineraryWebController {
 
     @PostMapping("/management/itinerary/add")
     public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile) throws IOException {
-        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get(),true);
+        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get(), true);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
@@ -158,12 +159,12 @@ public class ItineraryWebController {
 
 
     @GetMapping("/myItineraries")
-    public String myItineraries(Model model, HttpServletRequest request){
+    public String myItineraries(Model model, HttpServletRequest request) {
         Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
         model.addAttribute("item", user.get().getItineraries());
         return "myItineraries";
     }
-    
+
     @PostMapping("/myItineraries/add")
     public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile) throws IOException {
         Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
@@ -179,7 +180,7 @@ public class ItineraryWebController {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         itinerary.get().setName(name);
         itinerary.get().setDescription(description);
-        if (!imageFile.getOriginalFilename().isBlank()){
+        if (!imageFile.getOriginalFilename().isBlank()) {
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         itineraryService.save(itinerary.get());

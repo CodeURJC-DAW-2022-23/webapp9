@@ -72,14 +72,14 @@ public class DestinationWebController {
     }
 
     @GetMapping("/management/destination/delete/{id}")
-    public String deleteDestination(Model model, @PathVariable long id){
+    public String deleteDestination(Model model, @PathVariable long id) {
         Optional<Destination> dest = destinationService.findById(id);
-        for(int i = 0; i < dest.get().getPlaces().size(); i++){
+        for (int i = 0; i < dest.get().getPlaces().size(); i++) {
             Place place = dest.get().getPlaces().get(i);
-            for(int j = 0; j < place.getItineraries().size(); j++){
+            for (int j = 0; j < place.getItineraries().size(); j++) {
                 place.getItineraries().get(j).getPlaces().remove(place);
                 itineraryService.findById(place.getItineraries().get(j).getId()).get().getPlaces().remove(place);
-                if (itineraryService.findById(place.getItineraries().get(j).getId()).get().getPlaces().isEmpty()){
+                if (itineraryService.findById(place.getItineraries().get(j).getId()).get().getPlaces().isEmpty()) {
                     itineraryService.delete(place.getItineraries().get(j).getId());
                 }
             }
@@ -89,7 +89,7 @@ public class DestinationWebController {
     }
 
     @GetMapping("/management/destination/edit/{id}")
-    public String editDestinationIni(Model model, @PathVariable long id){
+    public String editDestinationIni(Model model, @PathVariable long id) {
         Optional<Destination> destination = destinationService.findById(id);
         model.addAttribute("mode", "edit");
         model.addAttribute("edit", true);
@@ -105,7 +105,7 @@ public class DestinationWebController {
         destination.get().setName(name);
         destination.get().setDescription(description);
         destination.get().setFlagCode(flagCode);
-        if (imageFile != null){
+        if (imageFile != null) {
             destination.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
 
@@ -114,7 +114,7 @@ public class DestinationWebController {
     }
 
     @GetMapping("/management/destination/add")
-    public String addDestinationIni(Model model){
+    public String addDestinationIni(Model model) {
         model.addAttribute("mode", "add");
         model.addAttribute("id", "");
         model.addAttribute("add", true);

@@ -39,12 +39,12 @@ public class DetailsController {
     private ReviewService reviewService;
 
     @GetMapping("/details/destination/{id}")
-    public String showDestination(Model model, @PathVariable long id){
+    public String showDestination(Model model, @PathVariable long id) {
         Optional<Destination> destination = destinationService.findById(id);
         model.addAttribute("item", destination.get());
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < Math.min(3, destination.get().getPlaces().size()); i++){
+        for (int i = 0; i < Math.min(3, destination.get().getPlaces().size()); i++) {
             places.add(destination.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);
@@ -78,12 +78,12 @@ public class DetailsController {
     }
 
     @GetMapping("/details/place/{id}")
-    public String showPlace(Model model, HttpServletRequest request, @PathVariable long id){
+    public String showPlace(Model model, HttpServletRequest request, @PathVariable long id) {
         Optional<Place> place = placeService.findById(id);
         model.addAttribute("item", place.get());
 
         List<Information> itineraries = new ArrayList<>();
-        for (int i = 0; i < Math.min(3, place.get().getItineraries().size()); i++){
+        for (int i = 0; i < Math.min(3, place.get().getItineraries().size()); i++) {
             itineraries.add(place.get().getItineraries().get(i));
         }
         model.addAttribute("information", itineraries);
@@ -117,7 +117,7 @@ public class DetailsController {
     }
 
     @GetMapping("/details/itinerary/{id}")
-    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable){
+    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         Principal currUser = request.getUserPrincipal();
         model.addAttribute("item", itinerary.get());
@@ -130,7 +130,7 @@ public class DetailsController {
         }
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){
+        for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++) {
             places.add(itinerary.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);

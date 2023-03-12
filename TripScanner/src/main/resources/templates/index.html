@@ -123,7 +123,7 @@
                         <img src="/destination/{{id}}/image" class="card-img-top" alt="">
                         <div class="card-body">
                             <h5 class="card-title">{{name}}</h5>
-                            <p class="card-text">{{description}}</p>
+                            <p class="card-text">{{#description}}{{.}} {{#isLongerThan50}}...{{/isLongerThan50}}{{/description}}{{^description}}No description available{{/description}}</p>
                             <a href="/details/destination/{{id}}" class="btn btn-primary">More details</a>
                         </div>
                     </div>

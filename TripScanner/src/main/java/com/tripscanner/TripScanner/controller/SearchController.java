@@ -65,8 +65,8 @@ public class SearchController {
         Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
         String name = "itinerary";
         session.setAttribute("searchResult", name);
-        for(Itinerary it: itinerary){
-            if(it.isPublic() == true) {
+        for (Itinerary it : itinerary) {
+            if (it.isPublic() == true) {
                 model.addAttribute("information", it);
             }
         }

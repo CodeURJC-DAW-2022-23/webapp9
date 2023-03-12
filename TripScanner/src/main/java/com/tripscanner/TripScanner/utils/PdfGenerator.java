@@ -59,7 +59,7 @@ public class PdfGenerator {
 
         PdfPTable table = new PdfPTable(itinerary.getPlaces().size());
         table.setWidthPercentage(100f);
-        table.setWidths(new int[] {3,3,3});
+        table.setWidths(new int[]{3, 3, 3});
         table.setSpacingBefore(5);
 
         // Itinerary places
@@ -75,7 +75,7 @@ public class PdfGenerator {
         cell.setPhrase(new Phrase("Destination", font));
         table.addCell(cell);
 
-        for (Place place: itinerary.getPlaces()) {
+        for (Place place : itinerary.getPlaces()) {
             table.addCell(place.getName());
             table.addCell(place.getDescription());
             table.addCell(place.getDestination().getName());

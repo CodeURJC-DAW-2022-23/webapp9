@@ -1,7 +1,5 @@
 package com.tripscanner.TripScanner.controller;
 
-import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.UserService;
@@ -57,13 +55,13 @@ public class UserWebController {
     }
 
     @GetMapping("/management/user/delete/{id}")
-    public String deleteUser(Model model, @PathVariable long id){
+    public String deleteUser(Model model, @PathVariable long id) {
         userService.delete(id);
         return "redirect:/management/user/";
     }
 
     @GetMapping("/management/user/edit/{id}")
-    public String editUserIni(Model model, @PathVariable long id){
+    public String editUserIni(Model model, @PathVariable long id) {
         Optional<User> user = userService.findById(id);
         model.addAttribute("mode", "edit");
         model.addAttribute("edit", true);
@@ -80,7 +78,7 @@ public class UserWebController {
         user.get().setFirstName(firstName);
         user.get().setLastName(lastName);
         user.get().setEmail(email);
-        if (imageFile != null){
+        if (imageFile != null) {
             user.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         userService.save(user.get());
@@ -88,7 +86,7 @@ public class UserWebController {
     }
 
     @GetMapping("/management/user/add")
-    public String addUserIni(Model model){
+    public String addUserIni(Model model) {
         model.addAttribute("mode", "add");
         model.addAttribute("id", "");
         model.addAttribute("add", true);

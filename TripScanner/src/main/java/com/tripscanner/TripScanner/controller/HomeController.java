@@ -1,6 +1,5 @@
 package com.tripscanner.TripScanner.controller;
 
-import com.sun.source.tree.Tree;
 import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
@@ -17,9 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Controller

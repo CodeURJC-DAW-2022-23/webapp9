@@ -157,12 +157,10 @@ public class Itinerary implements Information {
         toReturn.setImageFile(this.getImageFile());
         List<Place> placeCopy = new ArrayList<>();
 
-        for (Place item : this.getPlaces()) {
-            placeCopy.add(item);
-        }
+        placeCopy.addAll(this.getPlaces());
 
         toReturn.setPlaces(placeCopy);
         return toReturn;
     }
-    
+
 }
