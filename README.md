@@ -1,6 +1,4 @@
-# webapp9
-
-# TripScanner
+# webapp9 | TripScanner
 
 ## Team members and info
 
@@ -23,7 +21,7 @@ Here you can see the features of our web application TripScanner.
 
 ### Entities
 
-We'll have the followin entities **users**, **places**, **destinations** and **itineraries**.
+We'll have the following entities **users**, **places**, **destinations** and **itineraries**.
 
 
 <picture>
@@ -163,4 +161,33 @@ An email is also sent if you change the email you have linked to your account.
 
 ### Executing instructions.
 
-In order to execute the app, you will need to follow this steps.
+In order to execute the app, you will need to follow this steps:
+
+1. Install all the needed dependencies. This are:
+    - Git bash. Use command `sudo apt get install git` to install.
+    - Java version 11. Use command `sudo apt get install openjdk-11-jdk` to install.
+    - Maven. Use command `sudo apt get install maven` to install.
+
+2. Once you have all the required dependencies, clone the repo from github using the commad `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9` and login to your github account.
+
+3. After cloning the repo to your local machine, go to the directory where the repository was cloned and navigate to the root directory of the spring-boot project by using the command `cd webapp9/TripScanner`.
+
+4. Finally, use the command `mvn spring-boot:run` to boot up the project and navigate to <https://localhost:8443> to use the website.
+
+### Database entity diagram
+
+Below there is an entity-relationship diagram that shows the database entities, its fields and the relations between them.
+
+![Entity-Relationship Diagram](https://user-images.githubusercontent.com/102818341/224564564-71b8c637-e8cc-4bf5-8cbf-e0659c1897e3.svg)
+
+### Class and templates diagram
+
+### Members participation
+
+Here, each member of the team shows what they have contributed to during the development of this phase.
+
+1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
+    - **Description of tasks:** In this phase, I've developed the behaviour to show an item's details, creation of user itineraries and the admin dashboard (view and functionality of the whole dashboard).
+    - **5 biggest commits:** This commits are:
+        - [Ading deletion and edit to admin dashboard](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/59/commits/9360ed6761636d8b7b86bc51ae5b24edbd22e6d7)
+        - 
