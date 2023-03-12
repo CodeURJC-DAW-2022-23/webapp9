@@ -67,7 +67,7 @@ TripScanner will have a selection of algorithms. These are:
 
 ## Phase 1 aditions
 
-## Webpage screenshots
+### Webpage screenshots
 
 Here you can see screenshots of the webpage developed during phase 1.
 
@@ -103,3 +103,64 @@ At last, administrators can see a panel with the options they have. This panel (
 
 ![Diagrama DAW-3-1](https://user-images.githubusercontent.com/102818341/218516781-fdaf6302-f9dd-4d04-948e-cc64230ff477.png)
 
+## Phase 2 additions
+
+### Webpage screenshots
+
+![image](https://user-images.githubusercontent.com/102818341/224549052-005ae1bb-13c8-4fbc-9cd5-66962c2e23da.png)
+
+The main page will show popular itineraries, destinations and places. Those are the ones most seen by the users. It will also allow for manual search using the search bar, and login into your account.
+
+![image](https://user-images.githubusercontent.com/102818341/224549082-76ad642d-906c-471d-8a36-00970db1ffdf.png)
+
+The login page allows users to log into their account or create an account if they don't have one.
+
+![image](https://user-images.githubusercontent.com/102818341/224549112-f2c45238-cae7-4b8f-b94a-d2668e73e84c.png)
+
+The registration page allows for unregistered users to create a new account to get all the features of TripScanner.
+
+# SEARCH GOES HERE
+
+![image](https://user-images.githubusercontent.com/102818341/224549298-9d24e39b-45c0-4067-8116-dcb0844a1ec2.png)
+
+The details of an item are shown when you click on it and show some more information about it.
+
+![image](https://user-images.githubusercontent.com/102818341/224549334-42cb05fc-3712-4cf1-b3e4-caf134d851f5.png)
+
+Registered users can see their profile information here, as well as editing it, and their itineraries.
+
+![image](https://user-images.githubusercontent.com/102818341/224549525-3cdb6ae9-bb35-47fd-882b-a27ee974574c.png)
+
+This page shows a registered user created and saved itineraries, as well as allowing them to create new ones.
+
+![image](https://user-images.githubusercontent.com/102818341/224549663-5dc9c7a9-7b47-45f3-ad26-cf805c8bcf6d.png)
+
+Administrators can see a panel with the options they have. Here they can filter by users, itineraries, places or destinations, as well as editing existing entries or creating new ones.
+
+![image](https://user-images.githubusercontent.com/102818341/224549788-e7bb0aa0-6317-4dce-9ffa-d9e26cc8712f.png)
+
+The views for adding a new element or user to the webpage are all the same, so the add new destination one is shown for reference.
+
+![image](https://user-images.githubusercontent.com/102818341/224549893-6b228f37-0db1-4e85-8566-c2ddd4f843d4.png)
+
+Users can edit the itineraries they own, similarly to admins being able to edit all itineraries.
+
+![image](https://user-images.githubusercontent.com/102818341/224549948-be162308-f76f-49c4-b060-a170f1b45025.png)
+
+They can also edit their profile. This view is similar to the register page.
+
+![image](https://user-images.githubusercontent.com/102818341/224549588-b00afc57-b876-42ab-8aea-e75e1ea532e9.png)
+
+Users can generate a pdf of an itinerary and download it.
+
+![image](https://user-images.githubusercontent.com/102818341/224550026-1d97af3c-8a15-4c8a-8a88-9367a68f5e8c.png)
+
+An email is sent when a user registers to the app.
+
+![image](https://user-images.githubusercontent.com/102818341/224550066-5d35e6fe-627c-4e89-b1ce-470d6f41c27e.png)
+
+An email is also sent if you change the email you have linked to your account.
+
+### Executing instructions.
+
+In order to execute the app, you will need to follow this steps.
