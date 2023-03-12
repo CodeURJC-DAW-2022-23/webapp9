@@ -58,7 +58,7 @@ public class DatabaseInitializer {
         destinationRepository.save(destination2);
 
         Destination destination3 = new Destination("Moscu", "Provincia de Rusia", "rus");
-        setImage(destination2, "/img-samples/moscu.jpeg");
+        setImage(destination3, "/img-samples/moscu.jpeg");
         destinationRepository.save(destination3);
 
         // Sample places
@@ -96,7 +96,7 @@ public class DatabaseInitializer {
         itineraryRepository.save(itinerary);
 
         Itinerary itinerary2 = new Itinerary("Ruta por Rusia", "Incluyendo lugares de Moscu", admin, false);
-        setImage(itinerary, "/img-samples/moscu.jpeg");
+        setImage(itinerary2, "/img-samples/moscu.jpeg");
 
         itinerary2.setPlaces(Arrays.asList(place4));
         itineraryRepository.save(itinerary2);
