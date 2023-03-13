@@ -69,7 +69,7 @@ public class HomeController {
 
         //Show 3 cards with possible itinerary
         Pageable itineraryPaged = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
-        Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
+        Page<Itinerary> itinerary = itineraryService.findAllPublic(itineraryPaged);
         model.addAttribute("itinerary", itinerary);
 
         // Create graph
