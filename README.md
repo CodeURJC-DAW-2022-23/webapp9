@@ -173,12 +173,15 @@ In order to execute the app, you will need to follow this steps:
     - Git bash. Use command `sudo apt get install git` to install.
     - Java version 11. Use command `sudo apt get install openjdk-11-jdk` to install.
     - Maven. Use command `sudo apt get install maven` to install.
+    - Docker. You can install docker using the snap store or by executing the command `sudo snap install docker`
 
 2. Once you have all the required dependencies, clone the repo from github using the commad `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9` and login to your github account.
 
 3. After cloning the repo to your local machine, go to the directory where the repository was cloned and navigate to the root directory of the spring-boot project by using the command `cd webapp9/TripScanner`.
 
-4. Finally, use the command `mvn spring-boot:run` to boot up the project and navigate to <https://localhost:8443> to use the website.
+4. Execute the command `sudo docker run --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=tripscanner -p 3306:3306 -d mysql:8.0.22
+
+5. Finally, use the command `mvn spring-boot:run` to boot up the project and navigate to <https://localhost:8443> to use the website.
 
 ### Database entity diagram
 
