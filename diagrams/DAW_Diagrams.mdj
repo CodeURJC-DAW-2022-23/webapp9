@@ -3200,20 +3200,35 @@
 											"top": 391,
 											"width": 190.2314453125,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGcxx2q5vZz68=",
+											"_parent": {
+												"$ref": "AAAAAAGGTwexJQ+NQyk="
+											},
+											"model": {
+												"$ref": "AAAAAAGGcxx2Z5vWcz8="
+											},
+											"font": "Arial;13;0",
+											"left": 293,
+											"top": 406,
+											"width": 190.2314453125,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 288,
 									"top": 311,
 									"width": 200.2314453125,
-									"height": 98
+									"height": 113
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 288,
 							"top": 288,
 							"width": 200.2314453125,
-							"height": 121,
+							"height": 136,
 							"nameLabel": {
 								"$ref": "AAAAAAGGTwexJQ+ML2E="
 							},
@@ -4214,6 +4229,16 @@
 							"name": "points",
 							"type": "INT",
 							"length": "11"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGcxx2Z5vWcz8=",
+							"_parent": {
+								"$ref": "AAAAAAGGTwexJA+Jc9w="
+							},
+							"name": "date",
+							"type": "DATE",
+							"length": 0
 						}
 					]
 				},
