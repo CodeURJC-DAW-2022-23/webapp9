@@ -207,4 +207,15 @@ public class ItineraryWebController {
         return "redirect:/details/itinerary/" + id;
     }
 
+    @GetMapping("/itinerary/{id}/information")
+    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+
+        model.addAttribute("itemId", id);
+        List<Place> places = itineraryService.findById(id).get().getPlaces();
+        model.addAttribute("information",
+                places.subList(Math.min(page * 10, places.size()), Math.min((page + 1) * 10, places.size())));
+
+        return "detailsInformation";
+    }
+
 }

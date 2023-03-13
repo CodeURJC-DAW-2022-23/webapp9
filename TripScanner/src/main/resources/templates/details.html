@@ -71,30 +71,22 @@
 
     <!-- Destination Information -->
     <div class="container p-4">
-        <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
-            <h3 class="text-center mb-3">Related Information</h3>
+        <div class="p-4 mb-4 bg-secondary rounded-3 text-dark">
+            <section id="info-item-bg">
+                <h3 class="text-center mb-3">Related Information</h3>
 
-            {{#information}}
-            <!--Item 1 -->
-            <div class="card m-3" id="item-1">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="{{flag}}" class="rounded float-end item-flag"
-                        alt="{{name}}">
-                    <h5 class="card-title">{{name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{type}}</small></p>
-                    <a href="/details/{{typeLowercase}}/{{id}}" class="btn btn-primary">See more</a>
-                    {{#isOwned}}
-                    <button type="button" class="btn btn-danger" onclick="location.href='{{item.id}}/details/{{typeLowercase}}/{{id}}/delete'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                        </svg>
-                    </button>
-                    {{/isOwned}}
-                </div>
+            </section>
+
+            <div class="d-none align-items-center" id="information-spinner">
+                <strong>Loading...</strong>
+                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
             </div>
-            {{/information}}
-
-        </section>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" id="btn-more-information">
+                    Load more
+                </button>
+            </div>
+        </div>
     </div>
     {{/item}}
 
@@ -164,6 +156,9 @@
     </div>
     {{/hide}}
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/details.js"></script>
 
 </body>
 
