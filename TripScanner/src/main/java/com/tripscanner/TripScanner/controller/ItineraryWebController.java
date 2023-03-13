@@ -240,6 +240,7 @@ public class ItineraryWebController {
         List<Place> places = itineraryService.findById(id).get().getPlaces();
         model.addAttribute("information",
                 places.subList(Math.min(page * 10, places.size()), Math.min((page + 1) * 10, places.size())));
+        model.addAttribute("showLock", true);
 
         return "detailsInformation";
     }
