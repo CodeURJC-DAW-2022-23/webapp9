@@ -212,19 +212,20 @@ Here, each member of the team shows what they have contributed to during the dev
         - [addEditItem](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/addEditItem.html)
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
-    - **Description of tasks:**
+    - **Description of tasks:** I've been in charge of deploying the H2 database at the begining of the stage to start working with it and at the end, when everything was implemented, migrating it to MySQL. Also, I've been developing the pagination section in all pages that required it such as details (for information and reviews for the itineraries) and search results; the controller for downloading database images, aditional technologies (pdf exportation and email sending), private/public itinerary visibility functionality and some diagrams (such as the database entity-relationship diagram) for the documentation. Apart from that, I've been reviewing code and helping others.
     - **5 biggest commits:** Note that I usually upload more commits with less changes each, so I have a lot of contributions but each one has less changes. These commits are:
-        - []()
-        - []()
-        - []()
-        - []()
-        - []()
+        - [Feat: Load images on pages](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/98cfbaa6a1adeb4dd533fcb74550d79d67cb59bc)
+        - [Feat: Log In forms ](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/03548dd901a82f822346aff19d4fbdd3dc9cf7ab)
+        - [Feat: Itinerary review pagination](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/6ee2806f59e3355919a15d96786cd8560201541f)
+        - [Feat: Search pagination](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/0ca1c2a5e6cc8ca10d149907aded673645fade46)
+        - [ Feat: PDF exporter class](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/57457eb49da909e7979c78ef18f9d06537e7b52b)
+        
     - **5 files with most participation:** These files are:
-        - []()
-        - []()
-        - []()
-        - []()
-        - []()
+        - [/java/../controller/SearchController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/SearchController.java)
+        - [/java/../utils/PdfGenerator.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/utils/PdfGenerator.java)
+        - [/java/../model/*](https://github.com/CodeURJC-DAW-2022-23/webapp9/tree/main/TripScanner/src/main/java/com/tripscanner/TripScanner/model)
+        - [/java/../repository/*](https://github.com/CodeURJC-DAW-2022-23/webapp9/tree/main/TripScanner/src/main/java/com/tripscanner/TripScanner/repository)
+        - [/resources/../js/search.js](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/static/js/search.js)
 
 3. [Anna Trofimova](https://github.com/anna-trofimova)
     - **Description of tasks:** I developed home page, search page, the necessary algorithms to search for different elements, search filters and the ability to see your own private itineraries. These commits are:
