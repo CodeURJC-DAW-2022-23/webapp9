@@ -19,13 +19,11 @@
                 <div class="card card-registration my-4">
                     <div class="row g-0">
                         <div class="col-xl-6 d-none d-xl-block">
-                            <div class="photoCard">
-                                <img src="/user/{{id}}/image" alt="Sample photo" class="img-fluid"
-                                     style="border-top-left-radius: .55rem; border-bottom-left-radius: .25rem;"
-                                     width="200px" />
+                            <div class="photoCard m-5 p-5">
+                                <img src="/user/{{id}}/image" alt="Sample photo" class="img-fluid rounded" width="500px" />
                             </div>
                             {{#show}}
-                            <form action="/logout" method="post">
+                            <form action="/logout" method="post" class="m-5 p-5">
                                 <input type="hidden" name="_csrf" value="{{token}}"/>
                                 <input type="submit" value="Log Out" class="btn btn-warning btn-lg ms-2"/>
                             </form>

@@ -1,5 +1,7 @@
 {{>header}}
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <div class="container-fluid p-0 my-4">
 
     <div id="carousel" class="carousel slide" data-bs-ride="carousel">
@@ -58,9 +60,44 @@
         <div class="row">
             <h2 class="text-center col"> Our most visited destinations</h2>
         </div>
-        <div class="row">
-            <a class="col-md-6"><img src="/img/placeholder-graph.png" alt="Most viewed detinations" height="400px"
-                                     width="300px"/></a>
+        <div class="row" id="chart_div">
+            <a class="col-md-6">
+                <canvas id="views-chart"></canvas>
+                <script>
+    var ctx = document.getElementById('views-chart').getContext('2d');
+    var places = [{{#places}}{ name: "{{name}}" }{{^isLast}},{{/isLast}}{{/places}}];
+    var views = {{views}};
+    var labels = places.map(place => place.name);
+
+    // Add a helper function to detect the last element of an array
+    function isLast(index, array) {
+        return index === array.length - 1;
+    }
+
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Views',
+                data: views,
+                backgroundColor: 'rgba(13,110,253,255)',
+                borderColor: 'rgba(246,250,239,255)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+            </a>
             <div class="col-md-6">
                 {{#popularDestination}}
                 <div class="card mb-3">
