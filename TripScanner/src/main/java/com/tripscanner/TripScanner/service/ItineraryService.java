@@ -52,12 +52,8 @@ public class ItineraryService implements AbstractService<Itinerary> {
         repository.deleteById(id);
     }
 
-    public List<Itinerary> findByQuery(String name, String description, Pageable pageable) {
-        return repository.findAllByNameOrDescriptionContainingIgnoreCase(name, description, pageable);
-    }
-
-    public List<Itinerary> findByQueryOrder(String name, String description, Pageable pageable) {
-        return repository.findAllByNameOrDescriptionOrderByName(name, description, pageable);
+    public Page<Itinerary> findAllByNameOrDescriptionLike(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionLike(name, description, pageable);
     }
 
 }

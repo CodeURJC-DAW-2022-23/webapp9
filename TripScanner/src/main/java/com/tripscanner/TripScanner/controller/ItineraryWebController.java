@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.controller;
 import com.lowagie.text.DocumentException;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Review;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.model.User;
@@ -231,6 +232,28 @@ public class ItineraryWebController {
         generator.generate(itinerary.get(), response);
 
         return "redirect:/details/itinerary/" + id;
+    }
+
+    @GetMapping("/itinerary/{id}/information")
+    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+
+        model.addAttribute("itemId", id);
+        List<Place> places = itineraryService.findById(id).get().getPlaces();
+        model.addAttribute("information",
+                places.subList(Math.min(page * 10, places.size()), Math.min((page + 1) * 10, places.size())));
+
+        return "detailsInformation";
+    }
+
+    @GetMapping("/itinerary/{id}/reviews")
+    public String getReviews(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+
+        model.addAttribute("itemId", id);
+        List<Review> reviews = itineraryService.findById(id).get().getReviews();
+        model.addAttribute("review",
+                reviews.subList(Math.min(page * 10, reviews.size()), Math.min((page + 1) * 10, reviews.size())));
+
+        return "detailsReview";
     }
 
 }

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -135,6 +136,17 @@ public class PlaceWebController {
         place.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         placeService.save(place);
         return "redirect:/management/place/";
+    }
+
+    @GetMapping("/place/{id}/information")
+    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+
+        model.addAttribute("itemId", id);
+        List<Itinerary> itineraries = placeService.findById(id).get().getItineraries();
+        model.addAttribute("information",
+                itineraries.subList(Math.min(page * 10, itineraries.size()), Math.min((page + 1) * 10, itineraries.size())));
+
+        return "detailsInformation";
     }
 
 }
