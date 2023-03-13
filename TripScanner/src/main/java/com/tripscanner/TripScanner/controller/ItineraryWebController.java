@@ -44,7 +44,7 @@ public class ItineraryWebController {
 
     @Autowired
     private PlaceService placeService;
-    
+
     @Autowired
     private UserService userService;
 
@@ -82,41 +82,43 @@ public class ItineraryWebController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/itinerary/add/place/{id}")
     public String addPlaceToItinerary(Model model, HttpServletRequest request, List<Itinerary> itineraryList, @PathVariable long id) {
 
         Optional<Place> place = placeService.findById(id);
-        if (place.isEmpty() || itineraryList.isEmpty()) return "redirect:/details/place/"+id;
+        if (place.isEmpty() || itineraryList.isEmpty()) return "redirect:/details/place/" + id;
 
         for (Itinerary itinerary : itineraryList) {
             Optional<Itinerary> dbItinerary = itineraryService.findById(itinerary.getId());
             if (dbItinerary.isEmpty()) continue;
-            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), dbItinerary.get().getUser().getId())) continue;
+            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), dbItinerary.get().getUser().getId()))
+                continue;
 
             dbItinerary.get().getPlaces().add(place.get());
             itineraryService.save(dbItinerary.get());
         }
 
-        return "redirect:/details/itinerary/"+itineraryList.get(itineraryList.size() - 1).getId();
+        return "redirect:/details/itinerary/" + itineraryList.get(itineraryList.size() - 1).getId();
     }
 
     @GetMapping("/management/itinerary/delete/{id}")
-    public String deleteItinerary(Model model, @PathVariable long id){
+    public String deleteItinerary(Model model, @PathVariable long id) {
         itineraryService.delete(id);
         return "redirect:/management/itinerary/";
     }
 
     @GetMapping("/management/itinerary/edit/{id}")
-    public String editItineraryIni(Model model, @PathVariable long id){
+    public String editItineraryIni(Model model, @PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         model.addAttribute("mode", "edit");
         model.addAttribute("edit", true);
         model.addAttribute("type", "Itinerary");
         model.addAttribute("add", false);
         model.addAttribute("itinerary", itinerary.get());
-        if (itinerary.get().getUser() != null){
+        if (itinerary.get().getUser() != null) {
             model.addAttribute("username", itinerary.get().getUser().getUsername());
-        }else{
+        } else {
             model.addAttribute("username", " ");
         }
         return "addEditItem";
@@ -129,7 +131,7 @@ public class ItineraryWebController {
         itinerary.get().setDescription(description);
         Optional<User> userObj = userService.findByUsername(username);
         itinerary.get().setUser(userObj.get());
-        if (imageFile != null){
+        if (imageFile != null) {
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         if (checkboxValue != null) {
@@ -142,7 +144,7 @@ public class ItineraryWebController {
     }
 
     @GetMapping("/management/itinerary/add")
-    public String addItineraryIni(Model model){
+    public String addItineraryIni(Model model) {
         model.addAttribute("mode", "add");
         model.addAttribute("id", "");
         model.addAttribute("add", true);
@@ -157,7 +159,7 @@ public class ItineraryWebController {
 
     @PostMapping("/management/itinerary/add")
     public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
-        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get(),true);
+        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get(), true);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         if (checkboxValue != null) {
@@ -171,12 +173,12 @@ public class ItineraryWebController {
 
 
     @GetMapping("/myItineraries")
-    public String myItineraries(Model model, HttpServletRequest request){
+    public String myItineraries(Model model, HttpServletRequest request) {
         Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
         model.addAttribute("item", user.get().getItineraries());
         return "myItineraries";
     }
-    
+
     @PostMapping("/myItineraries/add")
     public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
         Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
@@ -195,11 +197,12 @@ public class ItineraryWebController {
     @PostMapping("/myItineraries/edit/{id}")
     public String editMyItinerary(MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam(value = "isPrivate", required = false) String checkboxValue, HttpServletRequest request) throws IOException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
-        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), itinerary.get().getUser().getId())) return null;
+        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), itinerary.get().getUser().getId()))
+            return null;
 
         itinerary.get().setName(name);
         itinerary.get().setDescription(description);
-        if (!imageFile.getOriginalFilename().isBlank()){
+        if (!imageFile.getOriginalFilename().isBlank()) {
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         if (checkboxValue != null) {
@@ -214,7 +217,8 @@ public class ItineraryWebController {
     @GetMapping("/myItineraries/edit/{id}")
     public String editMyItineraryInit(Model model, @PathVariable long id, HttpServletRequest request) {
         Itinerary currItinerary = itineraryService.findById(id).get();
-        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), currItinerary.getUser().getId())) return null;
+        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), currItinerary.getUser().getId()))
+            return null;
 
         model.addAttribute("name", currItinerary.getName());
         model.addAttribute("description", currItinerary.getDescription());
@@ -234,7 +238,7 @@ public class ItineraryWebController {
     }
 
     @GetMapping("/itinerary/{id}/information")
-    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
 
         model.addAttribute("itemId", id);
         List<Place> places = itineraryService.findById(id).get().getPlaces();
@@ -246,7 +250,7 @@ public class ItineraryWebController {
     }
 
     @GetMapping("/itinerary/{id}/reviews")
-    public String getReviews(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+    public String getReviews(Model model, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
 
         model.addAttribute("itemId", id);
         List<Review> reviews = itineraryService.findById(id).get().getReviews();

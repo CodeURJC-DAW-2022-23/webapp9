@@ -40,12 +40,12 @@ public class DetailsController {
     private ReviewService reviewService;
 
     @GetMapping("/details/destination/{id}")
-    public String showDestination(Model model, @PathVariable long id){
+    public String showDestination(Model model, @PathVariable long id) {
         Optional<Destination> destination = destinationService.findById(id);
         model.addAttribute("item", destination.get());
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < Math.min(3, destination.get().getPlaces().size()); i++){
+        for (int i = 0; i < Math.min(3, destination.get().getPlaces().size()); i++) {
             places.add(destination.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);
@@ -79,12 +79,12 @@ public class DetailsController {
     }
 
     @GetMapping("/details/place/{id}")
-    public String showPlace(Model model, HttpServletRequest request, @PathVariable long id){
+    public String showPlace(Model model, HttpServletRequest request, @PathVariable long id) {
         Optional<Place> place = placeService.findById(id);
         model.addAttribute("item", place.get());
 
         List<Information> itineraries = new ArrayList<>();
-        for (int i = 0; i < Math.min(3, place.get().getItineraries().size()); i++){
+        for (int i = 0; i < Math.min(3, place.get().getItineraries().size()); i++) {
             itineraries.add(place.get().getItineraries().get(i));
         }
         model.addAttribute("information", itineraries);
@@ -109,7 +109,8 @@ public class DetailsController {
         List<Itinerary> userItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
         Itinerary currentItinerary = null;
         for (Itinerary iti : userItineraries) {
-            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), iti.getUser().getId())) continue;
+            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), iti.getUser().getId()))
+                continue;
             if (iti.getId() == itineraryId) currentItinerary = iti;
         }
         currentItinerary.getPlaces().remove(placeService.findById(placeId).get());
@@ -118,11 +119,11 @@ public class DetailsController {
     }
 
     @GetMapping("/details/itinerary/{id}")
-    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id){
+    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         Principal currUser = request.getUserPrincipal();
 
-        if (!itinerary.get().isPublic()){
+        if (!itinerary.get().isPublic()) {
             if (currUser == null) return "error/405";
             else if (!Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
                 return "error/405";
@@ -139,7 +140,7 @@ public class DetailsController {
         }
 
         List<Information> places = new ArrayList<>();
-        for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){
+        for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++) {
             places.add(itinerary.get().getPlaces().get(i));
         }
         model.addAttribute("information", places);
