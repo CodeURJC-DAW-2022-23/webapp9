@@ -219,7 +219,7 @@ Here, each member of the team shows what they have contributed to during the dev
         - []()
         - []()
         - []()
-    -**5 files with most participation:** These files are:
+    - **5 files with most participation:** These files are:
         - []()
         - []()
         - []()
