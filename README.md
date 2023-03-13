@@ -249,10 +249,10 @@ Here, each member of the team shows what they have contributed to during the dev
         - [Feature: Users can copy an Itinerary to their account](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/66/commits/605bb5ff9de1c6c0521c8d3c739458b25194cb54)
         - [Feature: Users can now edit their pofile data](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/66/commits/fd4b16fc16c47352a5615cbb246b20ebeaa4e923)
         - [Feature: Unregistered users can now register](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/60/commits/c8d83f6f48fdd3ced6129e4bd8a078fb8076f731)
-    -**5 files with most participation:** These files are:
-        - []()
-        - []()
-        - []()
-        - []()
-        - []()
+    - **5 files with most participation:** These files are:
+        - [SignController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/SignController.java)
+        - [ProfileController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/ProfileController.java)
+        - [CSRFHandlerConfiguration.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/CSRFHandlerConfiguration.java)
+        - [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/WebSecurityConfig.java)
+        - [profile.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/profile.html)
         
