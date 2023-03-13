@@ -1,4 +1,5 @@
 package com.tripscanner.TripScanner.controller;
+
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.UserService;
@@ -64,7 +65,7 @@ public class ProfileController {
                               @RequestParam String lastName,
                               @RequestParam String username,
                               @RequestParam String nationality,
-                              @RequestParam String email) throws ServletException{
+                              @RequestParam String email) throws ServletException {
         User currentUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
 
         if (!email.matches("\\w*@\\w*\\.[a-z]{1,3}")) {
@@ -106,7 +107,7 @@ public class ProfileController {
                             Model model) throws IOException {
         User currentUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
 
-        if(!imageFile.getOriginalFilename().isBlank()){
+        if (!imageFile.getOriginalFilename().isBlank()) {
             currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
             userService.save(currentUser);
             model.addAttribute("imageFile", currentUser.getImageFile());
