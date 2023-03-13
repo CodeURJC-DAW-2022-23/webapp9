@@ -77,7 +77,7 @@ public class DetailsController {
             itineraryService.delete(id);
             return "redirect:/myItineraries";
         } else {
-            return "redirect:/403.html";
+            return "error/403";
         }
     }
 
@@ -121,7 +121,7 @@ public class DetailsController {
             itineraryService.save(currentItinerary);
             return "redirect:/details/itinerary/" + itineraryId;
         } else {
-            return "redirect:/403.html";
+            return "error/403";
         }
     }
 
@@ -131,9 +131,9 @@ public class DetailsController {
         Principal currUser = request.getUserPrincipal();
 
         if (!itinerary.get().isPublic()){
-            if (currUser == null) return "error/405";
+            if (currUser == null) return "error/403";
             else if (!Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
-                return "error/405";
+                return "error/403";
             }
         }
 
