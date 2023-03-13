@@ -48,7 +48,7 @@ public class SignController {
             @RequestParam String password,
             @RequestParam String repeatedPassword,
             @RequestParam MultipartFile userImage
-            ) throws IOException {
+    ) throws IOException {
 
         if (!(repeatedPassword.equals(password))) {
             model.addAttribute("correct", false);

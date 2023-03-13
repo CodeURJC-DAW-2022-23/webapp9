@@ -1,6 +1,4 @@
 {{>header}}
-
-
 <div class="container bg-secondary p-4 rounded-3 my-3">
     <div class="justify-content-between row">
         <div class="col"></div>
@@ -11,14 +9,10 @@
                     aria-controls="collapseExample">Filters
             </button>
         </div>
-
     </div>
-
     <div class="collapse container" id="collapseExample">
         <div class="card card-body">
-
             <form class="" method="get" action="/search">
-
                 <div class="row pb-4">
                     <div class="col-12 col-md-9 col-xl-10 pe-2">
                         <input class="form-control" type="search" value="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
@@ -27,7 +21,6 @@
                         <input class="w-100 h-100" type='submit' value='Search'/>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col">
                         <h6>Filter by:</h6>
@@ -37,7 +30,6 @@
                             <option value="destination" {{#isDestination}}selected{{/isDestination}}>Destinations</option>
                         </select>
                     </div>
-
                     <div class="col">
                         <h6>Order by:</h6>
                         <select class="form-select" aria-label="Order by" name="sort">
@@ -46,7 +38,6 @@
                             <option value="name" {{#isName}}selected{{/isName}}>Alphabetical</option>
                         </select>
                     </div>
-
                     <div class="col">
                         <h6>Direction:</h6>
                         <select class="form-select" aria-label="Order by" name="order">
@@ -55,20 +46,13 @@
                         </select>
                     </div>
                 </div>
-
                 <input type="hidden" name="page" value="0"/>
-
             </form>
-
-
-
         </div>
     </div>
     <hr class="text-light">
     <div id="search-results">
-
     </div>
-
     <div class="d-none align-items-center" id="search-spinner">
         <strong>Loading...</strong>
         <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
@@ -78,12 +62,8 @@
             Load more
         </button>
     </div>
-
-
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/js/search.js"></script>
-
 </body>
-
 </html>

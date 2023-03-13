@@ -71,12 +71,12 @@ public class PlaceWebController {
     }
 
     @GetMapping("/management/place/delete/{id}")
-    public String deletePlace(Model model, @PathVariable long id){
+    public String deletePlace(Model model, @PathVariable long id) {
         Optional<Place> place = placeService.findById(id);
-        for(int i = 0; i < place.get().getItineraries().size(); i++){
+        for (int i = 0; i < place.get().getItineraries().size(); i++) {
             place.get().getItineraries().get(i).getPlaces().remove(place.get());
             itineraryService.findById(place.get().getItineraries().get(i).getId()).get().getPlaces().remove(place);
-            if (itineraryService.findById(place.get().getItineraries().get(i).getId()).get().getPlaces().isEmpty()){
+            if (itineraryService.findById(place.get().getItineraries().get(i).getId()).get().getPlaces().isEmpty()) {
                 itineraryService.delete(place.get().getItineraries().get(i).getId());
             }
         }
@@ -85,16 +85,16 @@ public class PlaceWebController {
     }
 
     @GetMapping("/management/place/edit/{id}")
-    public String editPlaceIni(Model model, @PathVariable long id){
+    public String editPlaceIni(Model model, @PathVariable long id) {
         Optional<Place> place = placeService.findById(id);
         model.addAttribute("mode", "edit");
         model.addAttribute("edit", true);
         model.addAttribute("type", "Place");
         model.addAttribute("add", false);
         model.addAttribute("place", place.get());
-        if (place.get().getDestination() != null){
+        if (place.get().getDestination() != null) {
             model.addAttribute("dest", place.get().getDestination().getName());
-        }else{
+        } else {
             model.addAttribute("dest", " ");
         }
 
@@ -108,7 +108,7 @@ public class PlaceWebController {
         place.get().setDescription(description);
         Optional<Destination> dest = destinationService.findByName(destination);
         place.get().setDestination(dest.get());
-        if (imageFile != null){
+        if (imageFile != null) {
             place.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         placeService.save(place.get());
@@ -116,7 +116,7 @@ public class PlaceWebController {
     }
 
     @GetMapping("/management/place/add")
-    public String addPlaceIni(Model model){
+    public String addPlaceIni(Model model) {
         model.addAttribute("mode", "add");
         model.addAttribute("id", "");
         model.addAttribute("add", true);
@@ -139,7 +139,7 @@ public class PlaceWebController {
     }
 
     @GetMapping("/place/{id}/information")
-    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
 
         model.addAttribute("itemId", id);
         List<Itinerary> itineraries = placeService.findById(id).get().getItineraries();

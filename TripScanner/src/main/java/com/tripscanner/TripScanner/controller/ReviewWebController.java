@@ -1,6 +1,5 @@
 package com.tripscanner.TripScanner.controller;
 
-import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Review;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.ReviewService;
@@ -29,7 +28,7 @@ public class ReviewWebController {
     @PostMapping("/reviews/add/{id}")
     public String newReviewProcess(Model model, HttpServletRequest request, Review review, @PathVariable long id) {
 
-        if (review.getScore() > 5 || review.getScore() < 0) return "redirect:/details/itinerary/"+id;
+        if (review.getScore() > 5 || review.getScore() < 0) return "redirect:/details/itinerary/" + id;
 
         review.setUser(userService.findByUsername(request.getUserPrincipal().getName()).get());
         review.setViews(0L);
@@ -37,7 +36,7 @@ public class ReviewWebController {
         review.setDate(new Date());
         reviewService.save(review);
 
-        return "redirect:/details/itinerary/"+id;
+        return "redirect:/details/itinerary/" + id;
     }
 
 }

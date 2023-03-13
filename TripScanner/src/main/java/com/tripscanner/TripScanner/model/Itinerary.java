@@ -164,5 +164,5 @@ public class Itinerary implements Information {
         toReturn.setPlaces(placeCopy);
         return toReturn;
     }
-    
+
 }

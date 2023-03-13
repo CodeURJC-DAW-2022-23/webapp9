@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findAll(Pageable pageable);
+
     @Query("SELECT r FROM Review r WHERE r.itinerary = :i")
     Page<Review> getItinReviews(Itinerary i, Pageable pageable);
 

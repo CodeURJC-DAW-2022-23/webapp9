@@ -1,4 +1,3 @@
-
 const fileName = location.href.split("/");
 
 const type = fileName[4];
@@ -15,7 +14,7 @@ $(() => {
         ajax(`/${type}/${id}/information?page=${pageInfo}`, "#information-spinner", "#info-item-bg");
     });
 
-    if (type === "itinerary")  {
+    if (type === "itinerary") {
         ajax(`/${type}/${id}/reviews?page=${pageInfo}`, "#reviews-spinner", "#info-review-bg");
         $('#btn-more-reviews').on("click", () => {
             pageInfo += 1;
@@ -31,19 +30,18 @@ function ajax(url, spinner, where) {
         type: "GET",
         contentType: "application/json",
         url: url,
-        beforeSend: function () {
+        beforeSend: function() {
             $(spinner).removeClass('d-none');
             $(spinner).addClass('d-flex');
         },
-        success: function (result) {
+        success: function(result) {
             console.log(result)
             $(where).append(result);
         },
-        complete: function () {
+        complete: function() {
             $(spinner).addClass('d-none');
             $(spinner).removeClass('d-flex');
         },
     });
 
 }
-

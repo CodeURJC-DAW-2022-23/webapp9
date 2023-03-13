@@ -26,11 +26,11 @@ public class SearchController {
     private ItineraryService itineraryService;
 
     @GetMapping("/search")
-    public String showSearchResult(@RequestParam(defaultValue="") String name,
-                                   @RequestParam(defaultValue="itinerary") String type,
-                                   @RequestParam(defaultValue="id") String sort,
-                                   @RequestParam(defaultValue="DESC") String order,
-                                   @RequestParam(defaultValue="0") int page,
+    public String showSearchResult(@RequestParam(defaultValue = "") String name,
+                                   @RequestParam(defaultValue = "itinerary") String type,
+                                   @RequestParam(defaultValue = "id") String sort,
+                                   @RequestParam(defaultValue = "DESC") String order,
+                                   @RequestParam(defaultValue = "0") int page,
                                    Model model) {
 
         model.addAttribute("hideSearch", true);
@@ -51,10 +51,10 @@ public class SearchController {
     }
 
     @GetMapping("/results")
-    public String results(@RequestParam(defaultValue="") String name,
-                          @RequestParam(defaultValue="itinerary") String type,
-                          @RequestParam(defaultValue="id") String sort,
-                          @RequestParam(defaultValue="DESC") String order,
+    public String results(@RequestParam(defaultValue = "") String name,
+                          @RequestParam(defaultValue = "itinerary") String type,
+                          @RequestParam(defaultValue = "id") String sort,
+                          @RequestParam(defaultValue = "DESC") String order,
                           @RequestParam int page,
                           Model model) {
 
@@ -68,17 +68,17 @@ public class SearchController {
             case "itinerary":
                 model.addAttribute("information",
                         itineraryService.findAllByNameOrDescriptionLike(name, name,
-                                PageRequest.of(page,10, Sort.by(direction, sort))));
+                                PageRequest.of(page, 10, Sort.by(direction, sort))));
                 return "searchResult";
             case "destination":
                 model.addAttribute("information",
                         destinationService.findAllByNameOrDescriptionLikeIgnoreCase(name, name,
-                                PageRequest.of(page,10, Sort.by(direction, sort))));
+                                PageRequest.of(page, 10, Sort.by(direction, sort))));
                 return "searchResult";
             case "place":
                 model.addAttribute("information",
                         placeService.findAllByNameOrDescriptionLikeIgnoreCase(name, name,
-                                PageRequest.of(page,10, Sort.by(direction, sort))));
+                                PageRequest.of(page, 10, Sort.by(direction, sort))));
                 return "searchResult";
         }
 
