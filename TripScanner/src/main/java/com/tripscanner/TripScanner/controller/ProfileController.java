@@ -3,15 +3,19 @@ import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.EmailService;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +64,7 @@ public class ProfileController {
                               @RequestParam String lastName,
                               @RequestParam String username,
                               @RequestParam String nationality,
-                              @RequestParam String email) throws ServletException {
+                              @RequestParam String email) throws ServletException{
         User currentUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
 
         if (!email.matches("\\w*@\\w*\\.[a-z]{1,3}")) {
@@ -90,8 +94,23 @@ public class ProfileController {
             emailService.sendEmailChangeEmail(currentUser);
         }
 
+
         userService.save(currentUser);
         request.logout();
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/profile/edit/photo")
+    public String editPhoto(@RequestParam MultipartFile imageFile,
+                            HttpServletRequest request,
+                            Model model) throws IOException {
+        User currentUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
+
+        if(!imageFile.getOriginalFilename().isBlank()){
+            currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            userService.save(currentUser);
+            model.addAttribute("imageFile", currentUser.getImageFile());
+        }
         return "redirect:/profile";
     }
 }

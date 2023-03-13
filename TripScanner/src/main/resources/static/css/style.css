@@ -76,3 +76,28 @@ img.item-flag {
 .all-private{
 display: flex;
 }
+
+.modal-content{
+    background-color: #A1C6EA !important;
+    margin: 70px;
+    border-radius: 18px;
+}
+
+.modal-header{
+align-self: center;
+}
+
+.modal-title {
+background-color: #A1C6EA !important;
+color: black;
+}
+
+.form-control{
+border-radius: 2.375rem;
+}
+
+.modal-footer{
+display: block;
+margin-left: 45px;
+}
+
