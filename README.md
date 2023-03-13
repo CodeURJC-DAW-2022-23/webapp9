@@ -197,19 +197,19 @@ This is the class diagram of TripScanner.
 Here, each member of the team shows what they have contributed to during the development of this phase.
 
 1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
-    - **Description of tasks:** In this phase, I've developed the behaviour to show an item's details, creation of user itineraries and the admin dashboard (view and functionality of the whole dashboard).
+    - **Description of tasks:** In this phase, I've developed the functionality to show item's details and its related information, interface and creation of user itineraries and the admin management view and functionality, including editing, deleting and adding all kinds of items.
     - **5 biggest commits:** These commits are:
-        - [Feat: Delete and edit Places, Itineraries, Destinations and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/59/commits/11d19c92ada593ba3356b5afaf10a844bfc25de2)
-        - [Feat: Add Places, Itineraries, Destinations and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/pull/59/commits/9360ed6761636d8b7b86bc51ae5b24edbd22e6d7)
-        - []()
-        - []()
-        - []()
+        - [Feat: Delete and edit Places, Itineraries, Destinations and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/11d19c92ada593ba3356b5afaf10a844bfc25de2)
+        - [Feat: Add Places, Itineraries, Destinations and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/9360ed6761636d8b7b86bc51ae5b24edbd22e6d7)
+        - [Feat: Details controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/736d3e293765239291bc088b0b49503c5957088d)
+        - [Fix: Changed way of showing lists](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/c39605a58a4d547ef14af94f3d3db523a0e88db1)
+        - [Feat: Complete my itineraries page](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/736d3e293765239291bc088b0b49503c5957088d)
     - **5 files with most participation:** These files are:
-        - []()
-        - []()
-        - []()
-        - []()
-        - []()
+        - [ManagementController](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/ManagementController.java)
+        - [PlaceWebController](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/PlaceWebController.java)
+        - [DestinationWebController](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/DestinationWebController.java)
+        - [UserWebController](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/UserWebController.java)
+        - [addEditItem](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/addEditItem.html)
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
     - **Description of tasks:**
