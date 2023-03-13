@@ -161,6 +161,10 @@ An email is sent when a user registers to the app.
 
 An email is also sent if you change the email you have linked to your account.
 
+![navigation](https://user-images.githubusercontent.com/102818341/224582389-2e89b9a6-ecd8-405c-bc4d-1f93c23c08c3.svg)
+
+Finally, above is the updated navigation diagram of the webpage.
+
 ### Executing instructions.
 
 In order to execute the app, you will need to follow this steps:
