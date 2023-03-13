@@ -189,7 +189,7 @@ Below there is an entity-relationship diagram that shows the database entities, 
 ### Class and templates diagram
 This is the class diagram of TripScanner.
 
-![Diagrama de clases y templates](https://user-images.githubusercontent.com/102818341/224578590-cb522d32-3605-496e-8020-7e5f69148615.svg)
+![Diagrama de clases y templates](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/diagrams/svgs/templates2.svg)
 
 
 ### Members participation
