@@ -1,5 +1,4 @@
 {{>header}}
-
 <div class="container p-4">
     <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
         <h3 class="text-center mb-3">My Itineraries</h3>
@@ -11,12 +10,10 @@
                     <span class="input-group-text" id="inputGroupPrepend4">Name</span>
                     <input type="text" class="form-control" name='name' aria-describedby="inputGroupPrepend" required>
                 </div>
-
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend5">Description</span>
                     <input type="text" class="form-control" name='description' aria-describedby="inputGroupPrepend" required>
                 </div>
-
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrependImg">Image</span>
                     <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
@@ -24,12 +21,9 @@
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="isPrivate">
                     </span>
                 </div>
-
                 <button type="submit" class="btn btn-primary">Submit</button>
-
             </form>
         </div>
-
         {{#item}}
         <!--Item 1 -->
         <div class="card m-3" id="item-1">
@@ -65,13 +59,11 @@
                     </svg>
                 </button>
                 <!-- Delete Button -->
-
                 <button type="button" class="btn btn-danger" onclick="location.href='/details/destination/{{id}}/delete'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                     </svg>
                 </button>
-                
             </div>
         </div>
         {{/item}}
