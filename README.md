@@ -117,7 +117,7 @@ The login page allows users to log into their account or create an account if th
 
 The registration page allows for unregistered users to create a new account to get all the features of TripScanner.
 
-# SEARCH GOES HERE
+![image](https://user-images.githubusercontent.com/72264031/224675126-39fdfa93-8b74-40cb-9567-81f8a099f7e1.png)
 
 The search page allows to search for an specific keyword, as well as filter the results showed.
 

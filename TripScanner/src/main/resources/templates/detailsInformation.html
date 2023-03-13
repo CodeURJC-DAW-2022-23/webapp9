@@ -3,8 +3,12 @@
     <div class="card-body g-0 text-black bg-light">
         <img src="{{flag}}" class="rounded float-end item-flag"
              alt="{{name}}">
-        <h5 class="card-title">{{name}}</h5>
-        <p class="card-text"><small class="text-muted">{{type}}</small></p>
+        <div class="d-flex mb-3">
+            <div>
+                <h5 class="card-title">{{name}}</h5>
+                <p class="card-text"><small class="text-muted">{{type}}</small></p>
+            </div>
+        </div>
         <a href="/details/{{typeLowercase}}/{{id}}" class="btn btn-primary">See more</a>
         {{#isOwned}}
         <button type="button" class="btn btn-danger" onclick="location.href='{{itemId}}/details/{{typeLowercase}}/{{id}}/delete'">
