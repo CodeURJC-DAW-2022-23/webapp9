@@ -49,10 +49,16 @@
             {{/admin}}
 
 
+            {{^hideSearch}}
             <form class="d-flex float-end m-3" method="get" action="/search">
                 <input class="form-control me-2" type="search" placeholder="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
+                <input type="hidden" name="type" value="itinerary"/>
+                <input type="hidden" name="sort" value="id"/>
+                <input type="hidden" name="order" value="DESC"/>
+                <input type="hidden" name="page" value="0"/>
                 <input type='submit' value='Search'/>
             </form>
+            {{/hideSearch}}
 
         </div>
     </div>
