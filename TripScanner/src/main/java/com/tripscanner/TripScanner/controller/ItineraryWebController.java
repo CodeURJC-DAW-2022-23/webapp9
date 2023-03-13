@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -89,6 +90,7 @@ public class ItineraryWebController {
         for (Itinerary itinerary : itineraryList) {
             Optional<Itinerary> dbItinerary = itineraryService.findById(itinerary.getId());
             if (dbItinerary.isEmpty()) continue;
+            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), dbItinerary.get().getUser().getId())) continue;
 
             dbItinerary.get().getPlaces().add(place.get());
             itineraryService.save(dbItinerary.get());
@@ -190,8 +192,10 @@ public class ItineraryWebController {
     }
 
     @PostMapping("/myItineraries/edit/{id}")
-    public String editMyItinerary(MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
+    public String editMyItinerary(MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam(value = "isPrivate", required = false) String checkboxValue, HttpServletRequest request) throws IOException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
+        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), itinerary.get().getUser().getId())) return null;
+
         itinerary.get().setName(name);
         itinerary.get().setDescription(description);
         if (!imageFile.getOriginalFilename().isBlank()){
@@ -207,8 +211,9 @@ public class ItineraryWebController {
     }
 
     @GetMapping("/myItineraries/edit/{id}")
-    public String editMyItineraryInit(Model model, @PathVariable long id) {
+    public String editMyItineraryInit(Model model, @PathVariable long id, HttpServletRequest request) {
         Itinerary currItinerary = itineraryService.findById(id).get();
+        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), currItinerary.getUser().getId())) return null;
 
         model.addAttribute("name", currItinerary.getName());
         model.addAttribute("description", currItinerary.getDescription());
