@@ -63,9 +63,15 @@
                         <span class="input-group-text" id="inputGroupPrependImg2">Image</span>
                         {{#edit}}
                         <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+                        <span class="input-group-text" id="inputGroupPrependImg">Make itinerary private
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="isPrivate">
+                        </span>
                         {{/edit}}
                         {{#add}}
                         <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+                        <span class="input-group-text" id="inputGroupPrependImg">Make itinerary private
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="isPrivate">
+                        </span>
                         {{/add}}
                     </div>
                     {{/itinerary}}
