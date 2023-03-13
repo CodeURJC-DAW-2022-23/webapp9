@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -21,6 +22,8 @@ public class Itinerary implements Information {
 
     private boolean image;
 
+    private boolean isPublic;
+
     private Blob imageFile;
 
     @ManyToMany
@@ -29,17 +32,21 @@ public class Itinerary implements Information {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy="itinerary", cascade = CascadeType.ALL, orphanRemoval=true)
+    // @OneToMany(mappedBy = "itinerary")
+
+    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
+
     private List<Review> reviews;
 
     public Itinerary() {
     }
 
-    public Itinerary(String name, String description, User user) {
+    public Itinerary(String name, String description, User user, boolean isPublic) {
         super();
         this.name = name;
         this.description = description;
         this.user = user;
+        this.isPublic = isPublic;
         this.setImage(false);
         this.setViews(0L);
     }
@@ -137,4 +144,25 @@ public class Itinerary implements Information {
         this.reviews = reviews;
     }
 
+    public Boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        this.isPublic = aPublic;
+    }
+
+    public Itinerary copy(User newUser) {
+        Itinerary toReturn = new Itinerary(this.name, this.description, newUser, newUser.getRoles().contains("ADMIN"));
+        toReturn.setImageFile(this.getImageFile());
+        List<Place> placeCopy = new ArrayList<>();
+
+        for (Place item : this.getPlaces()) {
+            placeCopy.add(item);
+        }
+
+        toReturn.setPlaces(placeCopy);
+        return toReturn;
+    }
+    
 }

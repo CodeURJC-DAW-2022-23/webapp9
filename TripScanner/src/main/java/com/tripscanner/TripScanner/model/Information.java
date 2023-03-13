@@ -20,4 +20,5 @@ public interface Information {
 
     String getFlag();
 
+
 }

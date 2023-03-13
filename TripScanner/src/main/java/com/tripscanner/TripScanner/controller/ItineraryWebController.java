@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.controller;
 import com.lowagie.text.DocumentException;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Review;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.model.User;
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -65,6 +67,21 @@ public class ItineraryWebController {
         }
     }
 
+    @GetMapping("search/itinerary/{id}/image")
+    public ResponseEntity<Object> downloadImageSearch(@PathVariable long id) throws SQLException {
+
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        if (itinerary.isPresent() && itinerary.get().getImageFile() != null) {
+
+            Resource file = new InputStreamResource(itinerary.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(itinerary.get().getImageFile().length()).body(file);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping("/itinerary/add/place/{id}")
     public String addPlaceToItinerary(Model model, HttpServletRequest request, List<Itinerary> itineraryList, @PathVariable long id) {
 
@@ -74,6 +91,7 @@ public class ItineraryWebController {
         for (Itinerary itinerary : itineraryList) {
             Optional<Itinerary> dbItinerary = itineraryService.findById(itinerary.getId());
             if (dbItinerary.isEmpty()) continue;
+            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), dbItinerary.get().getUser().getId())) continue;
 
             dbItinerary.get().getPlaces().add(place.get());
             itineraryService.save(dbItinerary.get());
@@ -105,7 +123,7 @@ public class ItineraryWebController {
     }
 
     @PostMapping("/management/itinerary/edit/{id}")
-    public String editItinerary(Model model, MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String username) throws IOException {
+    public String editItinerary(Model model, MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         itinerary.get().setName(name);
         itinerary.get().setDescription(description);
@@ -113,6 +131,11 @@ public class ItineraryWebController {
         itinerary.get().setUser(userObj.get());
         if (imageFile != null){
             itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
+        if (checkboxValue != null) {
+            itinerary.get().setPublic(false);
+        } else {
+            itinerary.get().setPublic(true);
         }
         itineraryService.save(itinerary.get());
         return "redirect:/management/itinerary/";
@@ -133,10 +156,15 @@ public class ItineraryWebController {
     }
 
     @PostMapping("/management/itinerary/add")
-    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile) throws IOException {
-        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get());
+    public String addItinerary(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String username, @RequestParam MultipartFile imageFile, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
+        Itinerary itinerary = new Itinerary(name, description, userService.findByUsername(username).get(),true);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        if (checkboxValue != null) {
+            itinerary.setPublic(false);
+        } else {
+            itinerary.setPublic(true);
+        }
         itineraryService.save(itinerary);
         return "redirect:/management/itinerary/";
     }
@@ -150,13 +178,48 @@ public class ItineraryWebController {
     }
     
     @PostMapping("/myItineraries/add")
-    public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile) throws IOException {
+    public String addUserItinerary(Model model, HttpServletRequest request, @RequestParam String name, @RequestParam String description, @RequestParam MultipartFile imageFile, @RequestParam(value = "isPrivate", required = false) String checkboxValue) throws IOException {
         Optional<User> user = userService.findByUsername(request.getUserPrincipal().getName());
-        Itinerary itinerary = new Itinerary(name, description, user.get());
+        Itinerary itinerary = new Itinerary(name, description, user.get(), true);
         itinerary.setViews(0L);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        if (checkboxValue != null) {
+            itinerary.setPublic(false);
+        } else {
+            itinerary.setPublic(true);
+        }
         itineraryService.save(itinerary);
         return "redirect:/myItineraries";
+    }
+
+    @PostMapping("/myItineraries/edit/{id}")
+    public String editMyItinerary(MultipartFile imageFile, @PathVariable long id, @RequestParam String name, @RequestParam String description, @RequestParam(value = "isPrivate", required = false) String checkboxValue, HttpServletRequest request) throws IOException {
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), itinerary.get().getUser().getId())) return null;
+
+        itinerary.get().setName(name);
+        itinerary.get().setDescription(description);
+        if (!imageFile.getOriginalFilename().isBlank()){
+            itinerary.get().setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
+        if (checkboxValue != null) {
+            itinerary.get().setPublic(false);
+        } else {
+            itinerary.get().setPublic(true);
+        }
+        itineraryService.save(itinerary.get());
+        return "redirect:/myItineraries/";
+    }
+
+    @GetMapping("/myItineraries/edit/{id}")
+    public String editMyItineraryInit(Model model, @PathVariable long id, HttpServletRequest request) {
+        Itinerary currItinerary = itineraryService.findById(id).get();
+        if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), currItinerary.getUser().getId())) return null;
+
+        model.addAttribute("name", currItinerary.getName());
+        model.addAttribute("description", currItinerary.getDescription());
+        model.addAttribute("itinerary", currItinerary);
+        return "editItinerary";
     }
 
     @GetMapping("/export/itinerary/{id}")
@@ -167,7 +230,30 @@ public class ItineraryWebController {
         PdfGenerator generator = new PdfGenerator();
         generator.generate(itinerary.get(), response);
 
-        return "redirect:/deatils/itinerary/" + id;
+        return "redirect:/details/itinerary/" + id;
+    }
+
+    @GetMapping("/itinerary/{id}/information")
+    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+
+        model.addAttribute("itemId", id);
+        List<Place> places = itineraryService.findById(id).get().getPlaces();
+        model.addAttribute("information",
+                places.subList(Math.min(page * 10, places.size()), Math.min((page + 1) * 10, places.size())));
+        model.addAttribute("showLock", true);
+
+        return "detailsInformation";
+    }
+
+    @GetMapping("/itinerary/{id}/reviews")
+    public String getReviews(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+
+        model.addAttribute("itemId", id);
+        List<Review> reviews = itineraryService.findById(id).get().getReviews();
+        model.addAttribute("review",
+                reviews.subList(Math.min(page * 10, reviews.size()), Math.min((page + 1) * 10, reviews.size())));
+
+        return "detailsReview";
     }
 
 }

@@ -1,142 +1,89 @@
-    {{>header}}
+{{>header}}
 
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Log In</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label required">UserName</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required">Password</label>
-                            <input type="email" class="form-control">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="location.href='index.html'">Log In</button>
-                    <button type="submit" class="btn btn-danger" onclick="location.href='signUp.html'">Not a member yet?
-                        Sign Up!</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container bg-secondary p-4 rounded-3">
-        <div class="justify-content-between row">
-            <div class="col">
-                <div class="switch-toggle switch-3 switch-candy rounded-3">
-
-                    <input id="on" name="state-d" type="radio" checked="" />
-                    <label for="on" onclick="">All</label>
-
-                    <input id="na" name="state-d" type="radio" checked="checked" />
-                    <label for="na" class="disabled" onclick="">Public</label>
-
-                    <input id="off" name="state-d" type="radio" />
-                    <label for="off" onclick="">Private</label>
-
-                </div>
-            </div>
-            <h2 class="text-center col-8">RESULTS</h2>
-            <div class="col">
-                <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse"
+<div class="container bg-secondary p-4 rounded-3 my-3">
+    <div class="justify-content-between row">
+        <div class="col"></div>
+        <h2 class="text-center col-8">RESULTS</h2>
+        <div class="col">
+            <button type="button" class="btn btn-dark float-end" data-bs-toggle="collapse"
                     data-bs-target="#collapseExample" aria-expanded="false"
-                    aria-controls="collapseExample">Filters</button>
-            </div>
-
+                    aria-controls="collapseExample">Filters
+            </button>
         </div>
-        <div class="collapse container" id="collapseExample">
-            <div class="card card-body">
-                <div class="row">
-
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Country</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Sort by</option>
-                            <option value="1">Popularity</option>
-                            <option value="2">Alphabetical</option>
-                            <option value="3">Type</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxDestination">
-                            <label class="form-check-label" for="checkboxDestination">
-                                Destinations
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxPlace">
-                            <label class="form-check-label" for="checkboxPlace">
-                                Places
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkboxItinerary">
-                            <label class="form-check-label" for="checkboxItinerary">
-                                Itineraries
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-        <hr class="text-light">
-        <div id="search-results">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt="{{item-name}}"
-                            id="header-item-image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                                alt="...">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
-                            <p class="card-text"><small class="text-muted">{{type-result}}</small></p>
-                            <a href='details.html' class="btn btn-secondary">Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img class="img-fluid rounded-start" src="https://picsum.photos/1920/1080" alt="{{item-name}}"
-                            id="header-item-image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                                alt="...">
-                            <h5 class="card-title">{{name-result}}</h5>
-                            <p class="card-text">{{description-result}}</p>
-                            <p class="card-text"><small class="text-muted">{{type-result}}</small></p>
-                            <a href='details.html' class="btn btn-secondary">Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
     </div>
+
+    <div class="collapse container" id="collapseExample">
+        <div class="card card-body">
+
+            <form class="" method="get" action="/search">
+
+                <div class="row pb-4">
+                    <div class="col-12 col-md-9 col-xl-10 pe-2">
+                        <input class="form-control" type="search" value="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
+                    </div>
+                    <div class="col-12 col-md-3 col-xl-2">
+                        <input class="w-100 h-100" type='submit' value='Search'/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Filter by:</h6>
+                        <select class="form-select" aria-label="Filter by" name="type">
+                            <option value="itinerary" {{#isItinerary}}selected{{/isItinerary}}>Itineraries</option>
+                            <option value="place" {{#isPlace}}selected{{/isPlace}}>Places</option>
+                            <option value="destination" {{#isDestination}}selected{{/isDestination}}>Destinations</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <h6>Order by:</h6>
+                        <select class="form-select" aria-label="Order by" name="sort">
+                            <option value="id" {{#isId}}selected{{/isId}}>Newest</option>
+                            <option value="views" {{#isViews}}selected{{/isViews}}>Most watched</option>
+                            <option value="name" {{#isName}}selected{{/isName}}>Alphabetical</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <h6>Direction:</h6>
+                        <select class="form-select" aria-label="Order by" name="order">
+                            <option value="DESC" {{#isDesc}}selected{{/isDesc}}>Descending</option>
+                            <option value="ASC" {{#isAsc}}selected{{/isAsc}}>Ascending</option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" name="page" value="0"/>
+
+            </form>
+
+
+
+        </div>
+    </div>
+    <hr class="text-light">
+    <div id="search-results">
+
+    </div>
+
+    <div class="d-none align-items-center" id="search-spinner">
+        <strong>Loading...</strong>
+        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" id="btn-more-search">
+            Load more
+        </button>
+    </div>
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/js/search.js"></script>
 
 </body>
 

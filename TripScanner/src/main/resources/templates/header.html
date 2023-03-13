@@ -48,16 +48,21 @@
             </form>
             {{/admin}}
 
-            <form class="d-flex float-end m-3">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <img type="button" src="/img/magnify.svg.png" alt="search" width="35px" height="35px"
-                     onclick="location.href='search.html'" />
+
+            {{^hideSearch}}
+            <form class="d-flex float-end m-3" method="get" action="/search">
+                <input class="form-control me-2" type="search" placeholder="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
+                <input type="hidden" name="type" value="itinerary"/>
+                <input type="hidden" name="sort" value="id"/>
+                <input type="hidden" name="order" value="DESC"/>
+                <input type="hidden" name="page" value="0"/>
+                <input type='submit' value='Search'/>
             </form>
+            {{/hideSearch}}
 
         </div>
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"

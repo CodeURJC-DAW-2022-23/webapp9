@@ -15,25 +15,29 @@ import java.util.Optional;
 @ControllerAdvice
 public class HeaderController {
 
-        @Autowired
-        private UserService userService;
+    @Autowired
+    private UserService userService;
 
-        @ModelAttribute("logIn")
-        public Boolean logIn(Model model, HttpServletRequest request) {
-                Principal user = request.getUserPrincipal();
-
-                if (user == null){
-                        return false;
-                }else{
-                        model.addAttribute("id", userService.findByUsername(user.getName()).get().getId());
-                        return true;
-                }
+    @ModelAttribute("logIn")
+    public Boolean logIn(Model model, HttpServletRequest request) {
+        Principal user = request.getUserPrincipal();
+        if (user == null) {
+            return false;
+        } else {
+            model.addAttribute("id", userService.findByUsername(user.getName()).get().getId());
+            return true;
         }
+    }
 
-        @ModelAttribute("admin")
-        public Boolean admin(HttpServletRequest request) {
-                Boolean isAdmin = request.isUserInRole("ADMIN");
-                return isAdmin;
-        }
+    @ModelAttribute("name")
+    public String name() {
+        return "";
+    }
+
+    @ModelAttribute("admin")
+    public Boolean admin(HttpServletRequest request) {
+        Boolean isAdmin = request.isUserInRole("ADMIN");
+        return isAdmin;
+    }
 
 }

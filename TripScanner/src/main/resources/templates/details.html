@@ -25,20 +25,16 @@
                                     <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
                                 </svg>
                             </button>
-                            {{/item}}
-                            {{/isLogged}}{{/isItinerary}}
-                            <!-- Edit Button -->
-                            <!--
-                            <button type="button" class="btn btn-primary float-end">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path
-                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                    <path fill-rule="evenodd"
-                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+
+                            <!-- Save Button -->
+                            <button type="button" class="btn btn-primary float-end" onclick="location.href='/details/destination/{{id}}/save'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                                 </svg>
                             </button>
-                            -->
+                            {{/item}}
+                            {{/isLogged}}{{/isItinerary}}
                         </div>
                     </div>
 
@@ -71,94 +67,88 @@
             {{/isLogged}}{{/isPlace}}
         </section>
     </div>
-    {{/item}}
+
 
     <!-- Destination Information -->
     <div class="container p-4">
-        <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
-            <h3 class="text-center mb-3">Related Information</h3>
+        <div class="p-4 mb-4 bg-secondary rounded-3 text-dark">
+            <section id="info-item-bg">
+                <h3 class="text-center mb-3">Related Information</h3>
 
-            {{#information}}
-            <!--Item 1 -->
-            <div class="card m-3" id="item-1">
-                <div class="card-body g-0 text-black bg-light">
-                    <img src="{{flag}}" class="rounded float-end item-flag"
-                        alt="{{name}}">
-                    <h5 class="card-title">{{name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{type}}</small></p>
-                    <a href="/details/{{typeLowercase}}/{{id}}" class="btn btn-primary">See more</a>
-                </div>
+            </section>
+
+            <div class="d-none align-items-center" id="information-spinner">
+                <strong>Loading...</strong>
+                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
             </div>
-            {{/information}}
-
-        </section>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" id="btn-more-information">
+                    Load more
+                </button>
+            </div>
+        </div>
     </div>
+    {{/item}}
 
 {{^hide}}
     <!-- Reviews -->
     <div class="container p-4">
-        <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-review-bg">
-            <h3 class="text-center mb-3">Reviews</h3>
+        <div class="p-4 mb-4 bg-secondary rounded-3 text-dark">
+            <section id="info-review-bg">
+                <h3 class="text-center mb-3">Reviews</h3>
 
-            <div class="card m-3" id="new-review-form">
-                {{#item}}
-                <form action="/reviews/add/{{id}}/" method="post" class="card-body g-0 text-black bg-light row">
-                {{/item}}
+                {{#isLogged}}
+                <div class="card m-3" id="new-review-form">
+                    {{#item}}
+                    <form action="/reviews/add/{{id}}/" method="post" class="card-body g-0 text-black bg-light row">
+                        {{/item}}
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
 
-                    <h5 class="mb-3">Add your review!</h5>
+                        <h5 class="mb-3">Add your review!</h5>
 
-                    <div class="mb-3 row">
-                        <div class="col-9">
-                            <label for="review-title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="review-title" name="title">
+                        <div class="mb-3 row">
+                            <div class="col-9">
+                                <label for="review-title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="review-title" name="title">
+                            </div>
+                            <div class="col-3">
+                                <label for="review-score" class="form-label">Score</label>
+                                <input type="text" class="form-control" id="review-score" name="score">
+                                <div id="score-review-help" class="form-text">Write a score from 0-5</div>
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <label for="review-score" class="form-label">Score</label>
-                            <input type="text" class="form-control" id="review-score" name="score">
-                            <div id="score-review-help" class="form-text">Write a score from 0-5</div>
+
+                        <div class="mb-3 row">
+                            <div class="col-12">
+                                <label for="review-title" class="form-label">Body</label>
+                                <textarea class="form-control" id="review-body" name="description"></textarea>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mb-3 row">
-                        <div class="col-12">
-                            <label for="review-title" class="form-label">Body</label>
-                            <textarea class="form-control" id="review-body" name="description"></textarea>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-
-                </form>
-            </div>
-
-            {{#review}}
-            <!--Review 1 -->
-            <div class="card m-3" id="review-1">
-                <div class="card-body g-0 text-black bg-light row">
-                    <div class="col-1">
-                        {{#user}}
-                        <img class="img-fluid rounded-start" src="{{image}}" alt="{{username}}"
-                             width="75" height="75">
-                        {{/user}}
-                    </div>
-                    <div class="col-11">
-                        <p class="float-end">{{score}}</p>
-                        <h5 class="card-title">{{title}}</h5>
-                        {{#user}}
-                        <p class="card-text"><small class="text-muted">{{firstName}} {{lastName}}</small></p>
-                        {{/user}}
-                        <p class="float-end"><small class="text-muted">{{dateToString}}</small></p>
-                        <p class="card-text">{{description}}</p>
-                    </div>
-
+                    </form>
                 </div>
+                {{/isLogged}}
+
+            </section>
+
+            <div class="d-none align-items-center" id="reviews-spinner">
+                <strong>Loading...</strong>
+                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
             </div>
-            {{/review}}
-
-        </section>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" id="btn-more-reviews">
+                    Load more
+                </button>
+            </div>
+        </div>
     </div>
-    {{/hide}}
+{{/hide}}
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/details.js"></script>
 
 </body>
 

@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.controller;
 
+import com.sun.source.tree.Tree;
 import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
@@ -14,6 +15,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -28,7 +34,7 @@ public class HomeController {
     private ItineraryService itineraryService;
 
     @GetMapping("/")
-    public String showHomePage(Model model) {
+    public ModelAndView showHomePage(Model model, @RequestParam Map<String, Integer> chartData) {
 
         // Set id of most visited destination
         Page<Destination> topDestination = destinationService.findAll(
@@ -48,6 +54,7 @@ public class HomeController {
 
         // Show 5 the most visited destinations
         Page<Destination> popularDestination = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views")));
+
         model.addAttribute("popularDestination", popularDestination);
 
         // Show 3 cards with possible destinations
@@ -65,9 +72,22 @@ public class HomeController {
         Page<Itinerary> itinerary = itineraryService.findAll(itineraryPaged);
         model.addAttribute("itinerary", itinerary);
 
-        return "index";
+        // Create graph
+
+        List<Destination> dests = sortListByViews(destinationService.findAll());
+        List<Long> views = new ArrayList<>();
+
+        for (Destination d : dests) {
+            views.add(d.getViews());
+        }
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("places", dests);
+        mav.addObject("views", views);
+        return mav;
     }
 
-
-
+    private List<Destination> sortListByViews(List<Destination> destList) {
+        Page<Destination> popularDestination = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views")));
+        return popularDestination.toList();
+    }
 }

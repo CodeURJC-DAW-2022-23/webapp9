@@ -1,0 +1,22 @@
+{{#review}}
+<div class="card m-3" id="review-1">
+    <div class="card-body g-0 text-black bg-light row">
+        <div class="col-1">
+            {{#user}}
+            <img class="img-fluid rounded-start" src="/user/{{id}}/image" alt="{{username}}"
+                 width="75" height="75">
+            {{/user}}
+        </div>
+        <div class="col-11">
+            <p class="float-end">{{score}}</p>
+            <h5 class="card-title">{{title}}</h5>
+            {{#user}}
+            <p class="card-text"><small class="text-muted">{{firstName}} {{lastName}}</small></p>
+            {{/user}}
+            <p class="float-end"><small class="text-muted">{{dateToString}}</small></p>
+            <p class="card-text">{{description}}</p>
+        </div>
+
+    </div>
+</div>
+{{/review}}

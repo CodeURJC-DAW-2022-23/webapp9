@@ -1,24 +1,15 @@
 package com.tripscanner.TripScanner.controller;
 
-import java.io.IOException;
-import java.sql.Blob;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import com.lowagie.text.DocumentException;
 import com.tripscanner.TripScanner.model.*;
 import com.tripscanner.TripScanner.service.*;
-import com.tripscanner.TripScanner.utils.PdfGenerator;
-
-import org.hibernate.engine.jdbc.BlobProxy;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,9 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class DetailsController {
@@ -66,6 +57,27 @@ public class DetailsController {
         return "details";
     }
 
+    @GetMapping("/details/destination/{id}/save")
+    public String saveItinerary(HttpServletRequest request, @PathVariable long id) {
+        Itinerary currItinerary = itineraryService.findById(id).get();
+        User currUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
+        List<Itinerary> userItineraries = currUser.getItineraries();
+        userItineraries.add(currItinerary.copy(currUser));
+        currUser.setItineraries(userItineraries);
+        userService.save(currUser);
+
+        return "redirect:/myItineraries";
+    }
+
+    @GetMapping("/details/destination/{id}/delete")
+    public String deleteItinerary(HttpServletRequest request, @PathVariable long id) {
+        User currUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
+        currUser.getItineraries().remove(itineraryService.findById(id).get());
+        itineraryService.delete(id);
+
+        return "redirect:/myItineraries";
+    }
+
     @GetMapping("/details/place/{id}")
     public String showPlace(Model model, HttpServletRequest request, @PathVariable long id){
         Optional<Place> place = placeService.findById(id);
@@ -82,7 +94,6 @@ public class DetailsController {
 
         if (request.getUserPrincipal() != null) {
             List<Itinerary> ownedItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
-            System.out.println(ownedItineraries);
             if (ownedItineraries.isEmpty()) model.addAttribute("ownedItineraries", false);
             else model.addAttribute("ownedItineraries", ownedItineraries);
         }
@@ -93,11 +104,39 @@ public class DetailsController {
         return "details";
     }
 
+    @GetMapping("/details/itinerary/{itineraryId}/details/place/{placeId}/delete")
+    public String deletePlaceFromItinerary(HttpServletRequest request, @PathVariable long itineraryId, @PathVariable long placeId) {
+        List<Itinerary> userItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
+        Itinerary currentItinerary = null;
+        for (Itinerary iti : userItineraries) {
+            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), iti.getUser().getId())) continue;
+            if (iti.getId() == itineraryId) currentItinerary = iti;
+        }
+        currentItinerary.getPlaces().remove(placeService.findById(placeId).get());
+        itineraryService.save(currentItinerary);
+        return "redirect:/details/itinerary/" + itineraryId;
+    }
+
     @GetMapping("/details/itinerary/{id}")
-    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable){
+    public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id){
         Optional<Itinerary> itinerary = itineraryService.findById(id);
+        Principal currUser = request.getUserPrincipal();
+
+        if (!itinerary.get().isPublic()){
+            if (currUser == null) return "error/405";
+            else if (!Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
+                return "error/405";
+            }
+        }
+
         model.addAttribute("item", itinerary.get());
         model.addAttribute("isItinerary", true);
+
+        if (currUser != null && itinerary.get().getUser() == userService.findByUsername(currUser.getName()).get()) {
+            model.addAttribute("isOwned", true);
+        } else {
+            model.addAttribute("isOwned", false);
+        }
 
         List<Information> places = new ArrayList<>();
         for (int i = 0; i < Math.min(3, itinerary.get().getPlaces().size()); i++){
