@@ -234,7 +234,7 @@ Here, each member of the team shows what they have contributed to during the dev
         - [Added:sort of search](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/d6330e66e82b075fc3453219549cedf46f81f490)
         - [Fixed: sort by view](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/3e33581a3c8839c4d2d57849710d09289280a5ac)
         - [Fixed:HomeController](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/6ef6cdeb3e5dadb26c648b3aebcdfe34a557385b)
-    -**5 files with most participation:** These files are:
+    - **5 files with most participation:** These files are:
       - [SearchControler](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/SearchController.java)
       - [SearcService](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/service/SearchService.java)
       - [Search](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/resources/templates/search.html)
