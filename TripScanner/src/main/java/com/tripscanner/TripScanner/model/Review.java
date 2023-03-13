@@ -91,7 +91,7 @@ public class Review {
     }
 
     public String getDateToString() {
-        return new SimpleDateFormat("dd/MM/yyyy, H:m").format(this.date);
+        return new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(this.date);
     }
 
     public void setDate(Date date) {
