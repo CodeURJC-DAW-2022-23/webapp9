@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.tripscanner.TripScanner.model.*;
@@ -109,6 +110,7 @@ public class DetailsController {
         List<Itinerary> userItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
         Itinerary currentItinerary = null;
         for (Itinerary iti : userItineraries) {
+            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), iti.getUser().getId())) continue;
             if (iti.getId() == itineraryId) currentItinerary = iti;
         }
         currentItinerary.getPlaces().remove(placeService.findById(placeId).get());
@@ -120,6 +122,14 @@ public class DetailsController {
     public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id, Pageable pageable) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         Principal currUser = request.getUserPrincipal();
+
+        if (!itinerary.get().isPublic()){
+            if (currUser == null) return "error/405";
+            else if (!Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
+                return "error/405";
+            }
+        }
+
         model.addAttribute("item", itinerary.get());
         model.addAttribute("isItinerary", true);
 
