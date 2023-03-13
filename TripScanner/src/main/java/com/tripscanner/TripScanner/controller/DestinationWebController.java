@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -134,5 +135,16 @@ public class DestinationWebController {
         destination.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         destinationService.save(destination);
         return "redirect:/management/destination/";
+    }
+
+    @GetMapping("/destination/{id}/information")
+    public String getInformation(Model model, @PathVariable long id, @RequestParam(defaultValue="0") int page) {
+
+        model.addAttribute("itemId", id);
+        List<Place> places = destinationService.findById(id).get().getPlaces();
+        model.addAttribute("information",
+                places.subList(Math.min(page * 10, places.size()), Math.min((page + 1) * 10, places.size())));
+
+        return "detailsInformation";
     }
 }
