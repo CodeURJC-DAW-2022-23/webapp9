@@ -72,10 +72,13 @@ public class DetailsController {
     @GetMapping("/details/destination/{id}/delete")
     public String deleteItinerary(HttpServletRequest request, @PathVariable long id) {
         User currUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
-        currUser.getItineraries().remove(itineraryService.findById(id).get());
-        itineraryService.delete(id);
-
-        return "redirect:/myItineraries";
+        if (currUser.getItineraries().contains(itineraryService.findById(id))) {
+            currUser.getItineraries().remove(itineraryService.findById(id).get());
+            itineraryService.delete(id);
+            return "redirect:/myItineraries";
+        } else {
+            return "redirect:/403.html";
+        }
     }
 
     @GetMapping("/details/place/{id}")
@@ -106,15 +109,20 @@ public class DetailsController {
 
     @GetMapping("/details/itinerary/{itineraryId}/details/place/{placeId}/delete")
     public String deletePlaceFromItinerary(HttpServletRequest request, @PathVariable long itineraryId, @PathVariable long placeId) {
-        List<Itinerary> userItineraries = userService.findByUsername(request.getUserPrincipal().getName()).get().getItineraries();
-        Itinerary currentItinerary = null;
-        for (Itinerary iti : userItineraries) {
-            if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), iti.getUser().getId())) continue;
-            if (iti.getId() == itineraryId) currentItinerary = iti;
+        User currUser = userService.findByUsername(request.getUserPrincipal().getName()).get();
+        List<Itinerary> userItineraries = currUser.getItineraries();
+        if (currUser.getItineraries().contains(itineraryService.findById(itineraryId))) {
+            Itinerary currentItinerary = null;
+            for (Itinerary iti : userItineraries) {
+                if (!Objects.equals(userService.findByUsername(request.getUserPrincipal().getName()).get().getId(), iti.getUser().getId())) continue;
+                if (iti.getId() == itineraryId) currentItinerary = iti;
+            }
+            currentItinerary.getPlaces().remove(placeService.findById(placeId).get());
+            itineraryService.save(currentItinerary);
+            return "redirect:/details/itinerary/" + itineraryId;
+        } else {
+            return "redirect:/403.html";
         }
-        currentItinerary.getPlaces().remove(placeService.findById(placeId).get());
-        itineraryService.save(currentItinerary);
-        return "redirect:/details/itinerary/" + itineraryId;
     }
 
     @GetMapping("/details/itinerary/{id}")
