@@ -89,6 +89,7 @@ align-self: center;
 
 .modal-title {
 background-color: #A1C6EA !important;
+color: black;
 }
 
 .form-control{
@@ -97,6 +98,6 @@ border-radius: 2.375rem;
 
 .modal-footer{
 display: block;
-margin: 10px;
+margin-left: 45px;
 }
 

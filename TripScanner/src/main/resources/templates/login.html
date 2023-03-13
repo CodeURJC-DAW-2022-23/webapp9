@@ -30,12 +30,12 @@
 
         <form action="/login" method="post">
           <div class="modal-body">
-            <div class="form-outline mb-4">
+            <div class="form-outline mb-4" style="padding-left: 40px;padding-right: 40px;">
               <label class="form-label required">UserName</label>
               <input type="text" class="form-control" name="username">
               <input type="hidden" name="_csrf" value="{{token}}"/>
             </div>
-            <div class="form-outline mb-4">
+            <div class="form-outline mb-4" style="padding-left: 40px;padding-right: 40px;">
               <label class="form-label required">Password</label>
               <input type="password" class="form-control" name="password">
             </div>
@@ -48,7 +48,7 @@
 
         <form action="/sign" method="get">
           <input type="hidden" name="_csrf" value="{{token}}"/>
-          <button type="submit" class="btn btn-danger" style="margin: 10px;">Not a member yet? Sign Up!</button>
+          <button type="submit" class="btn btn-danger" style="margin-left: 45px; margin-top: 10px; margin-bottom: 10px;">Not a member yet? Sign Up!</button>
         </form>
       </div>
 
