@@ -1,4 +1,4 @@
-package com.tripscanner.TripScanner.controller;
+package com.tripscanner.TripScanner.controller.webController;
 
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;

@@ -1,4 +1,4 @@
-package com.tripscanner.TripScanner.security;
+package com.tripscanner.TripScanner.security.webSecurity;
 
 import java.security.SecureRandom;
 
