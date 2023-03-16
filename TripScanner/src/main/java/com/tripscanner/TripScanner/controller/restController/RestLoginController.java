@@ -22,15 +22,20 @@ public class RestLoginController {
             @CookieValue(name = "accessToken", required = false) String accessToken,
             @CookieValue(name = "refreshToken", required = false) String refreshToken,
             @RequestBody LoginRequest loginRequest) {
+
         return userService.login(loginRequest, accessToken, refreshToken);
     }
+
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshToken(
             @CookieValue(name = "refreshToken", required = false) String refreshToken) {
+
         return userService.refresh(refreshToken);
     }
+
     @PostMapping("/logout")
     public ResponseEntity<AuthResponse> logOut(HttpServletRequest request, HttpServletResponse response) {
+
         return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.SUCCESS, userService.logout(request, response)));
     }
 }
