@@ -1,4 +1,4 @@
-package com.tripscanner.TripScanner.security;
+package com.tripscanner.TripScanner.security.webSecurity;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.csrf.CsrfToken;

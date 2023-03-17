@@ -1,4 +1,4 @@
-package com.tripscanner.TripScanner.controller;
+package com.tripscanner.TripScanner.controller.webController;
 
 import java.security.Principal;
 import java.util.ArrayList;
