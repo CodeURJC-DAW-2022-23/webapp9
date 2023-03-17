@@ -18,22 +18,24 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import java.security.SecureRandom;
 
 @Configuration
-@Order(2)
+@Order(1)
 public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
-    public RepositoryUserDetailsService userDetailsService;
+    RepositoryUserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-
-    @Autowired
-    public PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
+    //Expose AuthenticationManager as a Bean to be used in other services
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -42,22 +44,27 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    // URLs that need authentication to access to it
-    // Other URLs can be accessed without authentication
+        http.antMatcher("/api/**");
 
-    // Disable CSRF protection (it is difficult to implement in REST APIs)
-            http.csrf().disable();
+        // URLs that need authentication to access to it
 
-    // Disable Http Basic Authentication
-            http.httpBasic().disable();
 
-    // Disable Form login Authentication
-            http.formLogin().disable();
+        // Other URLs can be accessed without authentication
+        http.authorizeRequests().anyRequest().permitAll();
 
-    // Avoid creating session
-            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // Disable CSRF protection (it is difficult to implement in REST APIs)
+        http.csrf().disable();
 
-    // Add JWT Token filter
-            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        // Disable Http Basic Authentication
+        http.httpBasic().disable();
+
+        // Disable Form login Authentication
+        http.formLogin().disable();
+
+        // Avoid creating session
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // Add JWT Token filter
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
