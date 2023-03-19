@@ -22,4 +22,7 @@ public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
 
     @Query("SELECT i from Itinerary i WHERE i.user.username = :user")
     Page<Itinerary> findAllByUser(String user, Pageable pageable);
+
+    @Query("SELECT i from Itinerary i WHERE i.user.username = :user OR i.isPublic = true")
+    Page<Itinerary> findAllByUserOrPublic(String user, Pageable pageable);
 }

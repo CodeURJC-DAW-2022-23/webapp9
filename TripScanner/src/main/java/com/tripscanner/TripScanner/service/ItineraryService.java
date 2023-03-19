@@ -60,4 +60,6 @@ public class ItineraryService implements AbstractService<Itinerary> {
 
     public Page<Itinerary> findAllByUser(String user, Pageable pageable) { return repository.findAllByUser(user, pageable); }
 
+    public Page<Itinerary> findAllByUserOrPublic(String user, Pageable pageable) { return repository.findAllByUserOrPublic(user, pageable); }
+
 }
