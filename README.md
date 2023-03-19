@@ -1,5 +1,11 @@
 # webapp9 | TripScanner
 
+## Index
+
+1. [Phase 0 additions](README/#phase_0_additions)
+2. [Phase 1 aditions](README/#phase_1_aditions)
+3. [Phase 2 additions](README/#phase_2_additions)
+
 ## Phase 0 additions
 
 ### Team members and info
