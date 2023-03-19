@@ -67,7 +67,7 @@ public class SearchController {
         switch (type) {
             case "itinerary":
                 model.addAttribute("information",
-                        itineraryService.findAllByNameOrDescriptionLike(name, name,
+                        itineraryService.findAllByNameOrDescriptionLikeIgnoreCase(name, name,
                                 PageRequest.of(page, 10, Sort.by(direction, sort))));
                 return "searchResult";
             case "destination":

@@ -3,7 +3,6 @@ package com.tripscanner.TripScanner.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,12 +53,15 @@ public class ItineraryService implements AbstractService<Itinerary> {
         repository.deleteById(id);
     }
 
-    public Page<Itinerary> findAllByNameOrDescriptionLike(String name, String description, Pageable pageable) {
-        return repository.findAllByNameOrDescriptionLike(name, description, pageable);
+    public Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
-    public Page<Itinerary> findAllByUser(String user, Pageable pageable) { return repository.findAllByUser(user, pageable); }
+    public Page<Place> findFromPlace(long id, Pageable pageable) {
+        return repository.findFromPlace(id, pageable);
+    }
 
-    public Page<Itinerary> findAllByUserOrPublic(String user, Pageable pageable) { return repository.findAllByUserOrPublic(user, pageable); }
-
+    public Page<Place> findFromUser(long id, Pageable pageable) {
+        return repository.findFromUser(id, pageable);
+    }
 }

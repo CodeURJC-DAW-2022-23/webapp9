@@ -22,6 +22,7 @@ public class Place implements Information {
     private Long views;
 
     @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     private boolean image;

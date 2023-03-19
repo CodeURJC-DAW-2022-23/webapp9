@@ -23,11 +23,13 @@ public class User {
 
     private String email;
 
+    @JsonIgnore
     private String passwordHash;
 
     private String nationality;
 
     @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     private boolean image;

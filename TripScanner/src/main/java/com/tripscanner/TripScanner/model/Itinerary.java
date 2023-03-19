@@ -26,18 +26,20 @@ public class Itinerary implements Information {
 
     private boolean isPublic;
 
+    @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     @ManyToMany
+    @JsonIgnore
     private List<Place> places;
 
     @ManyToOne
     @JsonIgnore
     private User user;
 
-    // @OneToMany(mappedBy = "itinerary")
-
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Review> reviews;
 
     public Itinerary() {
