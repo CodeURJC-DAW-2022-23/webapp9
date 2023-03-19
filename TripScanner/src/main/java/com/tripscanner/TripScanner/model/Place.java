@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Blob;
 import java.util.List;
 
@@ -25,9 +27,11 @@ public class Place implements Information {
     private boolean image;
 
     @ManyToOne
+    @JsonIgnore
     private Destination destination;
 
     @ManyToMany(mappedBy = "places")
+    @JsonIgnore
     private List<Itinerary> itineraries;
 
     public Place() {

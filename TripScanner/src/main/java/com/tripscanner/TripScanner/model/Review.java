@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,9 +31,11 @@ public class Review {
     private Date date;
 
     @ManyToOne
+    @JsonIgnore
     private Itinerary itinerary;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public Review() {

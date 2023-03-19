@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Blob;
 import java.util.List;
 
@@ -34,9 +36,11 @@ public class User {
     private List<String> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Itinerary> itineraries;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Review> reviews;
 
     public User() {
@@ -149,4 +153,23 @@ public class User {
         this.reviews = reviews;
     }
 
+    public boolean hasUserName() {
+        return !this.username.isEmpty() || !this.username.isBlank();
+    }
+
+    public boolean hasFirstName() {
+        return !this.firstName.isEmpty() || !this.firstName.isBlank();
+    }
+
+    public boolean hasLastName() {
+        return !this.lastName.isEmpty() || !this.lastName.isBlank();
+    }
+
+    public boolean hasEmail() {
+        return !this.email.isEmpty() || !this.email.isBlank();
+    }
+
+    public boolean hasPasswordHash() {
+        return !this.passwordHash.isEmpty() || !this.passwordHash.isBlank();
+    }
 }
