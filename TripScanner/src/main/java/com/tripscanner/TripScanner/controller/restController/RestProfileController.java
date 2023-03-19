@@ -9,8 +9,11 @@ import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.EmailService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.Optional;
 
 @RestController
@@ -74,17 +78,23 @@ public class RestProfileController {
         return new ResponseEntity<>(itineraries, HttpStatus.OK);
     }
 
-    @GetMapping("/itineraries/{id}/places")
-    public ResponseEntity<Page<Place>> getPlacesInUserItinerary(HttpServletRequest request, @PathVariable long id) {
-        Principal currUser = request.getUserPrincipal();
-
-        if (currUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Optional<Itinerary> itinerary = itineraryService.findById(id);
-
-        if (!itinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Page<Place> places = placeService.findAllByItineraryId(id, PageRequest.of(0, 5));
-
-        return new ResponseEntity<>(places, HttpStatus.OK);
+    @GetMapping("/image")
+    public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request) throws SQLException {
+        Principal principalUser = request.getUserPrincipal();
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        User user = userService.findByUsername(principalUser.getName()).get();
+        if (!user.isImage()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Resource img = new InputStreamResource(user.getImageFile().getBinaryStream());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(user.getImageFile().length()).body(img);
+    }
+    @GetMapping("/{username}/image")
+    public ResponseEntity<Object> downloadProfileImageFromUsername(@PathVariable String username, HttpServletRequest request) throws SQLException {
+        Optional<User> optionalUser = userService.findByUsername(username);
+        if (!optionalUser.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        User user = optionalUser.get();
+        if (!user.isImage()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Resource img = new InputStreamResource(user.getImageFile().getBinaryStream());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(user.getImageFile().length()).body(img);
     }
 
     @PutMapping("/")
