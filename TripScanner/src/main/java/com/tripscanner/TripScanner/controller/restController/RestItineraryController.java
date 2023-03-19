@@ -165,6 +165,20 @@ public class RestItineraryController {
         return new ResponseEntity<>(copy, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteItinerary(@PathVariable long id, HttpServletRequest request) {
+        Principal principalUser = request.getUserPrincipal();
+        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        User user = userService.findByUsername(principalUser.getName()).get();
+        Itinerary itinerary = optionalItinerary.get();
+
+        if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity(HttpStatus.FORBIDDEN);
+        itineraryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity editItineraryById(@RequestBody Itinerary newData, @PathVariable long id, HttpServletRequest request) {
@@ -208,4 +222,6 @@ public class RestItineraryController {
         itineraryService.save(itinerary);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
 }
