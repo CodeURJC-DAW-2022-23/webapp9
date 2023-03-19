@@ -167,4 +167,11 @@ public class Itinerary implements Information {
         return toReturn;
     }
 
+    public boolean hasName() {
+        return !this.name.isBlank() || !this.name.isEmpty() || !(this.name == null);
+    }
+
+    public boolean hasDescription() {
+        return !(this.description == null);
+    }
 }
