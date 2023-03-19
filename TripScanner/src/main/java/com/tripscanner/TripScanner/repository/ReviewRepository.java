@@ -1,6 +1,5 @@
 package com.tripscanner.TripScanner.repository;
 
-import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +11,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findAll(Pageable pageable);
 
-    @Query("SELECT r FROM Review r WHERE r.itinerary = :i")
-    Page<Review> getItinReviews(Itinerary i, Pageable pageable);
+    @Query("SELECT r FROM Review r WHERE r.itinerary.id = :id")
+    Page<Review> findFromItinerary(long id, Pageable pageable);
+
+    @Query("SELECT r FROM Review r WHERE r.user.id = :id")
+    Page<Review> findFromUser(long id, Pageable pageable);
 
 }
