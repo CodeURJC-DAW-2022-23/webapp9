@@ -98,7 +98,7 @@ public class RestItineraryController {
             if (!itinerary.getUser().getUsername().equals(usr.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        Page<Place> places = placeService.findAllByItineraryId(id, PageRequest.of(0, 5));
+        Page<Place> places = placeService.findFromItinerary(id, PageRequest.of(0, 5));
 
         return new ResponseEntity<>(places, HttpStatus.OK);
     }

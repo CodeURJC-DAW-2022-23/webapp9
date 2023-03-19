@@ -73,7 +73,7 @@ public class RestProfileController {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Page<Itinerary> itineraries = itineraryService.findAllByUser(currUser.getName(), PageRequest.of(0, 5));
+        Page<Itinerary> itineraries = itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(0, 5));
 
         return new ResponseEntity<>(itineraries, HttpStatus.OK);
     }
