@@ -46,6 +46,29 @@ public class RestManagementController {
         return ResponseEntity.created(location).body(destination);
     }
 
+    @PutMapping("/destinations/{id}")
+    public ResponseEntity<Destination> editDestination(@PathVariable long id, @RequestBody Destination newDestination){
+        Optional<Destination> destination = destinationService.findById(id);
+        if(destination.isPresent()){
+            newDestination.setId(id);
+            destinationService.save(newDestination);
+            return ResponseEntity.ok(destination.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/destinations/{id}")
+    public ResponseEntity<Destination> deleteDestination(@PathVariable long id){
+        Optional<Destination> destination = destinationService.findById(id);
+        if (destination.isPresent()){
+            itineraryService.delete(id);
+            return ResponseEntity.ok(destination.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 
    //itinerary
@@ -59,7 +82,6 @@ public class RestManagementController {
         }
     }
 
-
     @PostMapping("/itineraries/")
     public ResponseEntity<Itinerary> createItinerary(@RequestBody Itinerary itinerary){
         itineraryService.save(itinerary);
@@ -70,12 +92,11 @@ public class RestManagementController {
 
     @PutMapping("/itineraries/{id}")
     public ResponseEntity<Itinerary> editItinerary(@PathVariable long id, @RequestBody Itinerary newItineraries){
-        Itinerary itinerary = itineraryService.findById(id).orElseThrow();
-
-        if(itinerary != null){
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        if(itinerary.isPresent()){
             newItineraries.setId(id);
             itineraryService.save(newItineraries);
-            return ResponseEntity.ok(itinerary);
+            return ResponseEntity.ok(itinerary.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -83,10 +104,10 @@ public class RestManagementController {
 
     @DeleteMapping("/itineraries/{id}")
     public ResponseEntity<Itinerary> deleteItinerary(@PathVariable long id){
-        Itinerary itinerary = itineraryService.findById(id).orElseThrow();
-        if (itinerary != null){
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        if (itinerary.isPresent()){
             itineraryService.delete(id);
-            return ResponseEntity.ok(itinerary);
+            return ResponseEntity.ok(itinerary.get());
         } else {
             return ResponseEntity.notFound().build();
         }
