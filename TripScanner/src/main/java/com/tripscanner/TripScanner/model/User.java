@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Blob;
 import java.util.List;
 
@@ -21,11 +23,13 @@ public class User {
 
     private String email;
 
+    @JsonIgnore
     private String passwordHash;
 
     private String nationality;
 
     @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     private boolean image;
@@ -34,9 +38,11 @@ public class User {
     private List<String> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Itinerary> itineraries;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Review> reviews;
 
     public User() {

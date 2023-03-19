@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Blob;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class Destination implements Information {
     private Long views;
 
     @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     private boolean image;
@@ -27,6 +30,7 @@ public class Destination implements Information {
     private String flagCode;
 
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Place> places;
 
     public Destination() {
