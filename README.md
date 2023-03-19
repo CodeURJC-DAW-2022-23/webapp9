@@ -2,10 +2,11 @@
 
 ## Index
 
-1. [Phase 0 additions](README/#phase_0_additions)
-2. [Phase 1 aditions](README/#phase_1_aditions)
-3. [Phase 2 additions](README/#phase_2_additions)
+1. [Phase 0 additions](#phase0)
+2. [Phase 1 aditions](#phase1)
+3. [Phase 2 additions](#phase2)
 
+<a name="phase0"></a>
 ## Phase 0 additions
 
 ### Team members and info
@@ -71,6 +72,7 @@ TripScanner will have a selection of algorithms. These are:
 - An algorithm to search for the shortest path between places of an itinerary.
 - A search algorithm with different search criteria, for both places and destinations.
 
+<a name="phase1"></a>
 ## Phase 1 aditions
 
 ### Webpage screenshots
@@ -109,6 +111,7 @@ At last, administrators can see a panel with the options they have. This panel (
 
 ![Diagrama DAW-3-1](https://user-images.githubusercontent.com/102818341/218516781-fdaf6302-f9dd-4d04-948e-cc64230ff477.png)
 
+<a name="phase2"></a>
 ## Phase 2 additions
 
 ### Webpage screenshots
