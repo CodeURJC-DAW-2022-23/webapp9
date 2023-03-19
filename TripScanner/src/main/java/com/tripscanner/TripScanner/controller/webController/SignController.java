@@ -1,4 +1,4 @@
-package com.tripscanner.TripScanner.controller;
+package com.tripscanner.TripScanner.controller.webController;
 
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.UserService;
