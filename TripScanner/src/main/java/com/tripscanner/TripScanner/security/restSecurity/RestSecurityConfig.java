@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,7 +48,7 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         http.antMatcher("/api/**");
 
         // URLs that need authentication to access to it
-
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/").hasAnyRole("USER");
 
         // Other URLs can be accessed without authentication
         http.authorizeRequests().anyRequest().permitAll();
