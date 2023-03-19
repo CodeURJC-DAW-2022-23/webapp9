@@ -31,6 +31,7 @@ public class Itinerary implements Information {
     private Blob imageFile;
 
     @ManyToMany
+    @JsonIgnore
     private List<Place> places;
 
     @ManyToOne
