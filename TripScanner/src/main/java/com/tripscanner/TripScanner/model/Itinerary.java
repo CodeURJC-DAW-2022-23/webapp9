@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +26,19 @@ public class Itinerary implements Information {
 
     private boolean isPublic;
 
+    @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     @ManyToMany
+    @JsonIgnore
     private List<Place> places;
 
     @ManyToOne
     private User user;
 
-    // @OneToMany(mappedBy = "itinerary")
-
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
-
+    @JsonIgnore
     private List<Review> reviews;
 
     public Itinerary() {

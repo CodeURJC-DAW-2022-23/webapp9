@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,5 +60,8 @@ public class DestinationService implements AbstractService<Destination> {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
+    public Page<Destination> findFromPlace(long id, Pageable pageable) {
+        return repository.findFromPlace(id, pageable);
+    }
 
 }
