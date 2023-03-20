@@ -1,7 +1,11 @@
 package com.tripscanner.TripScanner.controller.restController;
 
+import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.rest.DestinationDetails;
+import com.tripscanner.TripScanner.model.rest.PlaceDetails;
+import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,9 @@ public class PlaceRestController {
 
     @Autowired
     private PlaceService placeService;
+
+    @Autowired
+    private ItineraryService itineraryService;
 
     @GetMapping("")
     public ResponseEntity<Page<Place>> places(@RequestParam(defaultValue = "") String name,
@@ -38,10 +45,17 @@ public class PlaceRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Place> place(@PathVariable int id) {
-        Optional<Place> place = placeService.findById(id);
+    public ResponseEntity<PlaceDetails> destination(@PathVariable int id,
+                                                    @RequestParam(defaultValue = "0") int placesPage) {
+        Optional<Place> optionalPlace = placeService.findById(id);
 
-        if (place.isPresent()) return ResponseEntity.ok(place.get());
+        if (optionalPlace.isPresent()) {
+            Place place = optionalPlace.get();
+            PlaceDetails placeDetails = new PlaceDetails(place,
+                    itineraryService.findFromPlace(place.getId(), PageRequest.of(placesPage, 10)));
+
+            return ResponseEntity.ok(placeDetails);
+        }
         else return ResponseEntity.notFound().build();
     }
 
