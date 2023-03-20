@@ -60,7 +60,7 @@ public class DestinationService implements AbstractService<Destination> {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
-    public Page<Place> findFromPlace(long id, Pageable pageable) {
+    public Page<Destination> findFromPlace(long id, Pageable pageable) {
         return repository.findFromPlace(id, pageable);
     }
 

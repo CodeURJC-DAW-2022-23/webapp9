@@ -22,6 +22,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findAll(Pageable pageable);
 
     @Query("SELECT u FROM User u JOIN u.itineraries i WHERE i.id = :id")
-    Page<Place> findFromItinerary(long id, Pageable pageable);
+    Page<User> findFromItinerary(long id, Pageable pageable);
 
 }

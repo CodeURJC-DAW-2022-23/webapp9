@@ -22,10 +22,10 @@ public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
     Page<Itinerary> findAll(Pageable pageable);
 
     @Query("SELECT i FROM Itinerary i JOIN i.places p WHERE p.id = :id")
-    Page<Place> findFromPlace(long id, Pageable pageable);
+    Page<Itinerary> findFromPlace(long id, Pageable pageable);
 
     @Query("SELECT i FROM Itinerary i WHERE i.user.id = :id")
-    Page<Place> findFromUser(long id, Pageable pageable);
+    Page<Itinerary> findFromUser(long id, Pageable pageable);
 
 
 }

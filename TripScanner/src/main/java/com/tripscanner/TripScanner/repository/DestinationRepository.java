@@ -21,6 +21,6 @@ public interface DestinationRepository extends PagingAndSortingRepository<Destin
     Page<Destination> findAll(Pageable pageable);
 
     @Query("SELECT d FROM Destination d JOIN d.places p WHERE p.id = :id")
-    Page<Place> findFromPlace(long id, Pageable pageable);
+    Page<Destination> findFromPlace(long id, Pageable pageable);
 
 }
