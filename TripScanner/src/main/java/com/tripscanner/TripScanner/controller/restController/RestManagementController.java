@@ -7,13 +7,11 @@ import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;
-import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.UserService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +36,6 @@ public class RestManagementController {
 
     @Autowired
     private DestinationService destinationService;
-
-    @Autowired
-    private PlaceService placeService;
 
     @Autowired
     private UserService userService;
@@ -64,9 +61,12 @@ public class RestManagementController {
     }
 
     @PutMapping("/destinations/{id}")
-    public ResponseEntity<Destination> editDestination(@PathVariable long id, @RequestBody Destination newDestination) {
+    public ResponseEntity<Destination> editDestination(@PathVariable long id, @RequestBody Destination newDestination) throws SQLException {
         Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent()) {
+            if (newDestination.getImageFile() != null) {
+                newDestination.setImageFile(BlobProxy.generateProxy(destination.get().getImageFile().getBinaryStream(), destination.get().getImageFile().length()));
+            }
             newDestination.setId(id);
             destinationService.save(newDestination);
             return ResponseEntity.ok(destination.get());
