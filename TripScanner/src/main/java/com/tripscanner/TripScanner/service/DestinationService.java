@@ -55,9 +55,16 @@ public class DestinationService implements AbstractService<Destination> {
         repository.deleteById(id);
     }
 
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+
     public Page<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
+
+
 
 
 }

@@ -31,9 +31,11 @@ public class Itinerary implements Information {
     private Blob imageFile;
 
     @ManyToMany
+    @JsonIgnore
     private List<Place> places;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -165,6 +167,14 @@ public class Itinerary implements Information {
 
         toReturn.setPlaces(placeCopy);
         return toReturn;
+    }
+
+    public boolean hasName() {
+        return !this.name.isBlank() || !this.name.isEmpty() || !(this.name == null);
+    }
+
+    public boolean hasDescription() {
+        return !(this.description == null);
     }
 
 }

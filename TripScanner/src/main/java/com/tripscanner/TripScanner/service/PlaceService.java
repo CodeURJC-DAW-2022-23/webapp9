@@ -57,4 +57,8 @@ public class PlaceService implements AbstractService<Place> {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
+   /* public Optional<Place> findFromPlace(long id) {
+        return repository.deleteFromPlace(id);
+    }*/
+
 }
