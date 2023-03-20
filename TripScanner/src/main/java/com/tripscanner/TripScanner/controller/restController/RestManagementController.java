@@ -130,15 +130,23 @@ public class RestManagementController {
 
 
     @PutMapping("/itineraries/{id}")
-    public ResponseEntity<Itinerary> editItinerary(@PathVariable long id, @RequestBody Itinerary newItineraries, HttpServletRequest request) {
-        Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
+    public ResponseEntity editItinerary(@PathVariable long id, @RequestBody Itinerary newItineraries, HttpServletRequest request) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
+
         if (itinerary.isPresent()) {
+            if (newItineraries.hasName()) itinerary.get().setName(newItineraries.getName());
+            if (newItineraries.hasDescription()) itinerary.get().setDescription(newItineraries.getDescription());
+            if (newItineraries.getPlaces() != null) {
+                for (Place p : newItineraries.getPlaces()) {
+                    List<Place> placeList = itinerary.get().getPlaces();
+                    placeList.add(p);
+                    itinerary.get().setPlaces(placeList);
+                }
+            }
+            itinerary.get().setPublic(newItineraries.isPublic());
             newItineraries.setId(id);
-            itineraryService.save(newItineraries);
-            return ResponseEntity.ok(itinerary.get());
+            itineraryService.save(itinerary.get());
+            return new ResponseEntity(HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
         }

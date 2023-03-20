@@ -18,10 +18,6 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     @Query("SELECT p from Place p WHERE LOWER(p.name) LIKE %:name% OR LOWER(p.description) LIKE %:description%")
     Page<Place> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable);
 
-   /* @Modifying
-    @Query("DELETE d FROM Place WHERE d.destination_id = :id")
-    Optional<Place> deleteFromPlace(long id);*/
-
     Page<Place> findAll(Pageable pageable);
 
 }
