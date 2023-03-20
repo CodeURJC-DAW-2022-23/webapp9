@@ -1,10 +1,12 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
+import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
+import com.tripscanner.TripScanner.model.rest.UserDetails;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
+import com.tripscanner.TripScanner.service.ReviewService;
 import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.EmailService;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,20 +42,23 @@ public class RestProfileController {
     public ItineraryService itineraryService;
 
     @Autowired
-    public PlaceService placeService;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    public ReviewService reviewService;
 
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    public PlaceService placeService;
+
     @GetMapping("/")
-    public ResponseEntity<User> getUser(HttpServletRequest request) {
+    public ResponseEntity<UserDetails> getUser(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser != null) {
-            return new ResponseEntity<>(userService.findByUsername(currUser.getName()).get(), HttpStatus.OK);
+            User user = userService.findByUsername(currUser.getName()).get();
+            return new ResponseEntity<>(new UserDetails(user,
+                                                        itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(page, 10)),
+                                                        reviewService.findFromUser(user.getId(), PageRequest.of(page, 10))), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -69,13 +76,18 @@ public class RestProfileController {
     }
 
     @GetMapping("/itineraries")
-    public ResponseEntity<Page<Itinerary>> getUserItineraries(HttpServletRequest request) {
+    public ResponseEntity<List<ItineraryDetails>> getUserItineraries(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Page<Itinerary> itineraries = itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(0, 5));
 
-        return new ResponseEntity<>(itineraries, HttpStatus.OK);
+        List<ItineraryDetails> toShow = new ArrayList<>();
+        for (Itinerary i : itineraries) {
+            toShow.add(new ItineraryDetails(i, placeService.findFromItinerary(i.getId(), PageRequest.of(page, 10))));
+        }
+
+        return new ResponseEntity<>(toShow, HttpStatus.OK);
     }
 
     @GetMapping("/image")
@@ -98,10 +110,10 @@ public class RestProfileController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<User> editUser(@RequestBody User newData, HttpServletRequest request) throws ServletException {
+    public ResponseEntity editUser(@RequestBody User newData, HttpServletRequest request) throws ServletException {
         Principal currUser = request.getUserPrincipal();
-        if (currUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        if (newData == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (currUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
+        if (newData == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
 
         User usr = userService.findByUsername(currUser.getName()).get();
         if (userService.findByUsername(newData.getUsername()).isPresent() && newData.getUsername().equals(usr.getUsername())) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -117,19 +129,19 @@ public class RestProfileController {
         }
 
         userService.save(usr);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/image")
-    public ResponseEntity<User> editImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) throws IOException {
+    public ResponseEntity editImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) throws IOException {
         Principal currUser = request.getUserPrincipal();
 
-        if (currUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (currUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
         User user = userService.findByUsername(currUser.getName()).get();
         user.setImage(true);
         user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         userService.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

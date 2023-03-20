@@ -3,6 +3,8 @@ package com.tripscanner.TripScanner.controller.restController;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
+import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
+import com.tripscanner.TripScanner.model.rest.PlaceDetails;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.UserService;
@@ -27,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,21 +47,25 @@ public class RestItineraryController {
     private UserService userService;
 
     @GetMapping("/")
-    public ResponseEntity<Page<Itinerary>> getItineraries(HttpServletRequest request) {
+    public ResponseEntity<List<ItineraryDetails>> getItineraries(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal principalUser = request.getUserPrincipal();
         Page<Itinerary> itineraries;
         if (principalUser == null) {
-            itineraries = itineraryService.findAllPublic(PageRequest.of(0, 5));
+            itineraries = itineraryService.findAllPublic(PageRequest.of(page, 10));
         } else {
             User user = userService.findByUsername(principalUser.getName()).get();
-            itineraries = itineraryService.findAllByUserOrPublic(user.getUsername(), PageRequest.of(0, 5));
+            itineraries = itineraryService.findAllByUserOrPublic(user.getUsername(), PageRequest.of(page, 10));
+        }
+        List<ItineraryDetails> toShow = new ArrayList<>();
+        for(Itinerary i : itineraries) {
+            toShow.add(new ItineraryDetails(i, placeService.findFromItinerary(i.getId(), PageRequest.of(page, 10))));
         }
 
-        return new ResponseEntity<>(itineraries, HttpStatus.OK);
+        return new ResponseEntity<>(toShow, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Itinerary> getItinerary(HttpServletRequest request, @PathVariable long id) {
+    public ResponseEntity<ItineraryDetails> getItinerary(HttpServletRequest request, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -68,7 +75,7 @@ public class RestItineraryController {
             if (usr == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             if (!itinerary.getUser().getUsername().equals(usr.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>(itinerary, HttpStatus.OK);
+        return new ResponseEntity<>(new ItineraryDetails(itinerary, placeService.findFromItinerary(itinerary.getId(), PageRequest.of(page, 10))), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/image")
@@ -87,7 +94,7 @@ public class RestItineraryController {
     }
 
     @GetMapping("/{id}/places")
-    public ResponseEntity<Page<Place>> getPlacesInUserItinerary(HttpServletRequest request, @PathVariable long id) {
+    public ResponseEntity<List<PlaceDetails>> getPlacesInUserItinerary(HttpServletRequest request, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -99,8 +106,12 @@ public class RestItineraryController {
         }
 
         Page<Place> places = placeService.findFromItinerary(id, PageRequest.of(0, 5));
+        List<PlaceDetails> placesDetails = new ArrayList<>();
+        for (Place p : places) {
+            placesDetails.add(new PlaceDetails(p, itineraryService.findFromPlace(p.getId(), PageRequest.of(page, 10))));
+        }
 
-        return new ResponseEntity<>(places, HttpStatus.OK);
+        return new ResponseEntity<>(placesDetails, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/export")
@@ -149,11 +160,11 @@ public class RestItineraryController {
     // and only nouns are used for resources. Same goes for "/api/itineraries/{id}/export". Also, POST method is allowed here,
     // as new data is added to the database, even though the body of the request is not needed.
     @PostMapping("/{id}/copy")
-    public ResponseEntity<Itinerary> copyItinerary(@PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity copyItinerary(@PathVariable long id, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary copy = optionalItinerary.get().copy(user);
@@ -162,7 +173,7 @@ public class RestItineraryController {
         user.setItineraries(userItineraries);
 
         itineraryService.save(copy);
-        return new ResponseEntity<>(copy, HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
