@@ -63,18 +63,7 @@ public class RestProfileController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-    @GetMapping("/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        Optional<User> currUser = userService.findByUsername(username);
-
-        if (currUser.isPresent()) {
-            return new ResponseEntity<>(currUser.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
+    
     @GetMapping("/itineraries")
     public ResponseEntity<List<ItineraryDetails>> getUserItineraries(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal currUser = request.getUserPrincipal();
