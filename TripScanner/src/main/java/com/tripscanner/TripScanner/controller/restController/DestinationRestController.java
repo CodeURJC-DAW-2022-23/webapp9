@@ -7,12 +7,16 @@ import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -56,6 +60,20 @@ public class DestinationRestController {
             return ResponseEntity.ok(destinationDetails);
         }
         else return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Optional<Destination> destination = destinationService.findById(id);
+
+        if (destination.isPresent() && destination.get().getImageFile() != null) {
+            Resource file = new InputStreamResource(destination.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(destination.get().getImageFile().length()).body(file);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

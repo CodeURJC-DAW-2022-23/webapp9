@@ -1,19 +1,22 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.model.rest.DestinationDetails;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ReviewService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -62,6 +65,20 @@ public class ItineraryRestController {
             return ResponseEntity.ok(itineraryDetails);
         }
         else return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+
+        if (itinerary.isPresent() && itinerary.get().getImageFile() != null) {
+            Resource file = new InputStreamResource(itinerary.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(itinerary.get().getImageFile().length()).body(file);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
