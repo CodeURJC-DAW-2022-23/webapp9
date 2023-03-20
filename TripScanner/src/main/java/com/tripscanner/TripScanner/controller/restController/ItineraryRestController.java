@@ -2,7 +2,11 @@ package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.model.rest.DestinationDetails;
+import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.service.ItineraryService;
+import com.tripscanner.TripScanner.service.PlaceService;
+import com.tripscanner.TripScanner.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +23,12 @@ public class ItineraryRestController {
 
     @Autowired
     private ItineraryService itineraryService;
+
+    @Autowired
+    private PlaceService placeService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("")
     public ResponseEntity<Page<Itinerary>> itineraries(@RequestParam(defaultValue = "") String name,
@@ -38,10 +48,19 @@ public class ItineraryRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Itinerary> itinerary(@PathVariable int id) {
-        Optional<Itinerary> itinerary = itineraryService.findById(id);
+    public ResponseEntity<ItineraryDetails> itinerary(@PathVariable int id,
+                                                        @RequestParam(defaultValue = "0") int placesPage,
+                                                        @RequestParam(defaultValue = "0") int reviewsPage) {
+        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
 
-        if (itinerary.isPresent()) return ResponseEntity.ok(itinerary.get());
+        if (optionalItinerary.isPresent()) {
+            Itinerary itinerary = optionalItinerary.get();
+            ItineraryDetails itineraryDetails = new ItineraryDetails(itinerary,
+                    placeService.findFromItinerary(itinerary.getId(), PageRequest.of(placesPage, 10)),
+                    reviewService.findFromItinerary(itinerary.getId(), PageRequest.of(reviewsPage, 10)));
+
+            return ResponseEntity.ok(itineraryDetails);
+        }
         else return ResponseEntity.notFound().build();
     }
 
