@@ -153,11 +153,11 @@ public class RestManagementController {
     }
 
     @DeleteMapping("/itineraries/{id}")
-    public ResponseEntity<Itinerary> deleteItinerary(@PathVariable long id) {
+    public ResponseEntity deleteItinerary(@PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         if (itinerary.isPresent()) {
             itineraryService.delete(id);
-            return ResponseEntity.ok(itinerary.get());
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
         }
