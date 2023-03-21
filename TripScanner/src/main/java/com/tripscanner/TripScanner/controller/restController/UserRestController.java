@@ -44,7 +44,7 @@ public class UserRestController {
     @Operation(summary = "Create a new user account")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "Sucessfully signed up the new user",
                     content = @Content
             ),
@@ -84,7 +84,7 @@ public class UserRestController {
     @Operation(summary = "Returns the profile image of the desired user")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "Sucessfully returned the user image",
                     content = @Content
             ),
