@@ -1,12 +1,15 @@
 package com.tripscanner.TripScanner.controller.restController;
 
+import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.service.UserService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +18,9 @@ import java.net.URI;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -44,6 +49,20 @@ public class UserRestController {
             return ResponseEntity.created(location).body(user);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Optional<User> optionalUser = userService.findById(id);
+
+        if (optionalUser.isPresent() && optionalUser.get().getImageFile() != null) {
+            Resource file = new InputStreamResource(optionalUser.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(optionalUser.get().getImageFile().length()).body(file);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
