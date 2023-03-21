@@ -3,6 +3,12 @@ package com.tripscanner.TripScanner.controller.restController;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -30,7 +36,24 @@ public class UserRestController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("")
-    public ResponseEntity<User> register(@RequestBody UserDTO userDTO) {
+    @Operation(summary = "Create a new user account")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Sucessfully signed up the new user",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Username already in use",
+                    content = @Content
+            )
+    })
+    public ResponseEntity<User> register(
+            @Parameter(description="user details", content = {@Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation=UserDTO.class))
+            }) @RequestBody UserDTO userDTO) {
         User user = new User(userDTO);
 
         if (!userService.existName(user.getUsername())) {
