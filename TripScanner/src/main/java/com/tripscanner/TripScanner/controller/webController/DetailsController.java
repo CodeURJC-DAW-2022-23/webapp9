@@ -12,12 +12,10 @@ import com.tripscanner.TripScanner.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -155,7 +153,7 @@ public class DetailsController {
 
         model.addAttribute("hide", false);
 
-        Page<Review> reviews = reviewService.getItinReviews(itinerary.get(), PageRequest.of(0, 10));
+        Page<Review> reviews = reviewService.findFromItinerary(itinerary.get().getId(), PageRequest.of(0, 10));
         model.addAttribute("review", reviews);
         model.addAttribute("isLogged", request.getUserPrincipal() != null);
 

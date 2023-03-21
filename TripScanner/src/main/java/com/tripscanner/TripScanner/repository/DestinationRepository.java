@@ -2,6 +2,7 @@ package com.tripscanner.TripScanner.repository;
 
 import java.util.Optional;
 
+import com.tripscanner.TripScanner.model.Place;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +22,7 @@ public interface DestinationRepository extends PagingAndSortingRepository<Destin
 
     Page<Destination> findAll(Pageable pageable);
 
-    void deleteById(Long id);
-
+    @Query("SELECT d FROM Destination d JOIN d.places p WHERE p.id = :id")
+    Page<Destination> findFromPlace(long id, Pageable pageable);
 
 }
