@@ -38,6 +38,16 @@ public class UserRestController {
     public ResponseEntity<User> register(@RequestBody UserDTO userDTO) {
         User user = new User(userDTO);
 
+
+
+        if (user.getUsername() == null || user.getEmail() == null || user.getPasswordHash() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!user.getEmail().matches("\\w*@\\w*\\.[a-z]{1,3}")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (!userService.existName(user.getUsername())) {
             user.setImage(false);
             user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
