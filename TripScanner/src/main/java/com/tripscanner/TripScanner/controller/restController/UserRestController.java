@@ -79,7 +79,7 @@ public class UserRestController {
     @Operation(summary = "Returns the profile image of the desired user")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "Sucessfully returned the user image",
                     content = @Content
             ),
