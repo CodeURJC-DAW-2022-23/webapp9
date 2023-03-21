@@ -49,6 +49,11 @@ public class UserRestController {
                     content = @Content
             ),
             @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments or required arguemnts missing",
+                    content = @Content
+            ),
+            @ApiResponse(
                     responseCode = "403",
                     description = "Username already in use",
                     content = @Content
