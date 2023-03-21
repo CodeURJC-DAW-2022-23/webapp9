@@ -12,8 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -78,6 +83,41 @@ public class RestPlaceManagementController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/image")
+    public ResponseEntity<Place> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<Place> place = placeService.findById(id);
+
+        if (place.isPresent()) {
+            Place newPlace = place.get();
+
+            newPlace.setImage(true);
+            newPlace.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+
+            placeService.save(newPlace);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/places/" + id + "/image");
+            return ResponseEntity.created(location).build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/image")
+    public ResponseEntity<Place> editImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<Place> place = placeService.findById(id);
+
+        if (place.isPresent()) {
+            Place newPlace = place.get();
+            newPlace.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            placeService.save(newPlace);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/places/" + id + "/image");
+            return ResponseEntity.created(location).body(newPlace);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

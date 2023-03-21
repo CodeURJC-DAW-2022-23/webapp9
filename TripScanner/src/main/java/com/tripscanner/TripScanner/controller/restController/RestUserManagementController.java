@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.controller.restController;
 
+import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.service.UserService;
@@ -11,8 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -62,7 +68,7 @@ public class RestUserManagementController {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
             User newUser = new User(userDTO);
-            newUser.setImageFile(user.get().getImageFile()); //en vd esto en el metodo de la imagen
+            newUser.setImageFile(user.get().getImageFile());
             newUser.setPasswordHash(user.get().getPasswordHash());
             newUser.setRoles(user.get().getRoles());
             newUser.setId(id);
@@ -84,6 +90,41 @@ public class RestUserManagementController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/image")
+    public ResponseEntity<User> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<User> user = userService.findById(id);
+
+        if (user.isPresent()) {
+            User newUser = user.get();
+
+            newUser.setImage(true);
+            newUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+
+            userService.save(newUser);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/users/" + id + "/image");
+            return ResponseEntity.created(location).build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/image")
+    public ResponseEntity<User> editImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<User> user = userService.findById(id);
+
+        if (user.isPresent()) {
+            User newUser = user.get();
+            newUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            userService.save(newUser);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/users/" + id + "/image");
+            return ResponseEntity.created(location).body(newUser);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
