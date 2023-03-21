@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/management/")
+@RequestMapping("/api/management/destination")
 public class RestManagementDestinationController {
     @Autowired
     private ItineraryService itineraryService;
@@ -28,7 +28,7 @@ public class RestManagementDestinationController {
     private DestinationService destinationService;
 
 
-    @GetMapping("/destination/")
+    @GetMapping("")
     public ResponseEntity<Destination> getDestination() {
         List<Destination> destinations = destinationService.findAll();
         if (!destinations.isEmpty()) {
@@ -38,14 +38,14 @@ public class RestManagementDestinationController {
         }
     }
 
-    @PostMapping("/destination/")
+    @PostMapping("")
     public ResponseEntity<Destination> createDestination(@RequestBody Destination destination) {
         destinationService.save(destination);
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(destination.getId()).toUri();
         return ResponseEntity.created(location).body(destination);
     }
 
-    @PutMapping("/destination/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Destination> editDestination(@PathVariable long id, @RequestBody Destination newDestination) throws SQLException {
         Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent()) {
@@ -60,7 +60,7 @@ public class RestManagementDestinationController {
         }
     }
 
-    @DeleteMapping("/destination/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Destination> deleteDestination(@PathVariable long id) {
         Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent()) {

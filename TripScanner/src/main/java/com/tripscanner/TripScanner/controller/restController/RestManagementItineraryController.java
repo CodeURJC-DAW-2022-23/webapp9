@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/management/")
+@RequestMapping("/api/management/itinerary")
 public class RestManagementItineraryController {
     @Autowired
     private ItineraryService itineraryService;
@@ -29,7 +29,7 @@ public class RestManagementItineraryController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/itinerary/")
+    @GetMapping(" ")
     public ResponseEntity<Itinerary> getItinerary() {
         List<Itinerary> itinerary = itineraryService.findAll();
         if (!itinerary.isEmpty()) {
@@ -39,7 +39,7 @@ public class RestManagementItineraryController {
         }
     }
 
-    @PostMapping("/itinerary/")
+    @PostMapping(" ")
     public ResponseEntity<Long> createNewItinerary(@RequestBody Itinerary itinerary, HttpServletRequest request) throws IOException {
         Principal principalUser = request.getUserPrincipal();
         if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -60,7 +60,7 @@ public class RestManagementItineraryController {
     }
 
 
-    @PutMapping("/itinerary/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity editItinerary(@PathVariable long id, @RequestBody Itinerary newItineraries, HttpServletRequest request) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
@@ -83,7 +83,7 @@ public class RestManagementItineraryController {
         }
     }
 
-    @DeleteMapping("/itinerary/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteItinerary(@PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         if (itinerary.isPresent()) {
