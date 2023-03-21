@@ -58,4 +58,9 @@ public class UserService implements AbstractService<User> {
         return repository.findFromItinerary(id, pageable);
     }
 
+    public boolean existName(String username) {
+        Optional<User> user = findByUsername(username);
+        return user.isPresent();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tripscanner.TripScanner.model.rest.UserDTO;
 
 import java.sql.Blob;
 import java.util.List;
@@ -46,6 +47,17 @@ public class User {
     private List<Review> reviews;
 
     public User() {
+    }
+
+    public User(UserDTO userDTO) {
+        super();
+        this.username = userDTO.getUsername();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.email = userDTO.getEmail();
+        this.passwordHash = userDTO.getPasswordHash();
+        this.nationality = userDTO.getNationality();
+        this.roles = List.of("USER");
     }
 
     public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String... roles) {

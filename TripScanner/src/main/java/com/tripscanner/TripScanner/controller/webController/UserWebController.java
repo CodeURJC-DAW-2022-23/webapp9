@@ -103,7 +103,7 @@ public class UserWebController {
 
     @PostMapping("/management/user/add")
     public String addUser(Model model, @RequestParam String username, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password, @RequestParam MultipartFile imageFile) throws IOException {
-        User user = new User(username, firstName, lastName, email, passwordEncoder.encode(password), "Española", "USER");
+        User user = new User(username, firstName, lastName, email, passwordEncoder.encode(password), "", "USER");
         user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         userService.save(user);
         return "redirect:/management/user/";
