@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
