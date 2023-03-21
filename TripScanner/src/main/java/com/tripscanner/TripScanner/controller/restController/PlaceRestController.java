@@ -63,7 +63,7 @@ public class PlaceRestController {
         else return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/place/{id}/image")
+    @GetMapping("/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
         Optional<Place> place = placeService.findById(id);
 
