@@ -7,6 +7,8 @@ import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +31,10 @@ public class RestManagementDestinationController {
 
 
     @GetMapping("")
-    public ResponseEntity<Destination> getDestination() {
-        List<Destination> destinations = destinationService.findAll();
+    public ResponseEntity<Page<Destination>> getDestination(Pageable pageable) {
+        Page<Destination> destinations = destinationService.findAll(pageable);
         if (!destinations.isEmpty()) {
-            return ResponseEntity.ok(destinations.get(1));
+            return ResponseEntity.ok(destinations);
         } else {
             return ResponseEntity.notFound().build();
         }

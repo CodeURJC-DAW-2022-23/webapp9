@@ -10,6 +10,8 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +32,10 @@ public class RestManagementItineraryController {
     private UserService userService;
 
     @GetMapping(" ")
-    public ResponseEntity<Itinerary> getItinerary() {
-        List<Itinerary> itinerary = itineraryService.findAll();
+    public ResponseEntity<Page<Itinerary>>getItinerary(Pageable pageable) {
+        Page<Itinerary> itinerary = itineraryService.findAll(pageable);
         if (!itinerary.isEmpty()) {
-            return ResponseEntity.ok(itinerary.get(1));
+            return ResponseEntity.ok(itinerary);
         } else {
             return ResponseEntity.notFound().build();
         }
