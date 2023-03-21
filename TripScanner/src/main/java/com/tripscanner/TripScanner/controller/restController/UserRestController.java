@@ -76,6 +76,19 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}/image")
+    @Operation(summary = "Returns the profile image of the desired user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Sucessfully returned the user image",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Username already in use",
+                    content = @Content
+            )
+    })
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
         Optional<User> optionalUser = userService.findById(id);
 
