@@ -4,6 +4,7 @@ package com.tripscanner.TripScanner.controller.restController;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
+import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.UserService;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -18,12 +19,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+
 @RestController
-@RequestMapping("/api/management/itinerary")
+@RequestMapping("/api/management/itineraries")
 public class RestManagementItineraryController {
     @Autowired
     private ItineraryService itineraryService;
@@ -32,7 +36,7 @@ public class RestManagementItineraryController {
     private UserService userService;
 
     @GetMapping(" ")
-    public ResponseEntity<Page<Itinerary>>getItinerary(Pageable pageable) {
+    public ResponseEntity<Page<Itinerary>> getItinerary(Pageable pageable) {
         Page<Itinerary> itinerary = itineraryService.findAll(pageable);
         if (!itinerary.isEmpty()) {
             return ResponseEntity.ok(itinerary);
@@ -41,29 +45,29 @@ public class RestManagementItineraryController {
         }
     }
 
-    @PostMapping(" ")
-    public ResponseEntity<Long> createNewItinerary(@RequestBody Itinerary itinerary, HttpServletRequest request) throws IOException {
-        Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        User user = userService.findByUsername(principalUser.getName()).get();
+    @PostMapping(" ")
+    public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itinerary) throws IOException {
+
         if (!itinerary.hasName()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         Itinerary newItinerary;
         if (!itinerary.hasDescription())
-            newItinerary = new Itinerary(itinerary.getName(), "", user, itinerary.isPublic());
-        else newItinerary = new Itinerary(itinerary.getName(), itinerary.getDescription(), user, itinerary.isPublic());
+            newItinerary = new Itinerary(itinerary.getName(), "", userService.findByUsername(itinerary.getUser()).get(), true);
+        else newItinerary = new Itinerary(itinerary.getName(), itinerary.getDescription(), userService.findByUsername(itinerary.getUser()).get(), true);
 
         newItinerary.setImage(true);
         Resource image = new ClassPathResource("static/img/placeholder.jpg");
         newItinerary.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 
         itineraryService.save(newItinerary);
-        return new ResponseEntity<>(newItinerary.getId(), HttpStatus.CREATED);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(newItinerary.getId()).toUri();
+        return ResponseEntity.created(location).body(newItinerary);
     }
 
 
+
     @PutMapping("/{id}")
-    public ResponseEntity editItinerary(@PathVariable long id, @RequestBody Itinerary newItineraries, HttpServletRequest request) {
+    public ResponseEntity editItinerary(@PathVariable long id, @RequestBody Itinerary newItineraries) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
         if (itinerary.isPresent()) {

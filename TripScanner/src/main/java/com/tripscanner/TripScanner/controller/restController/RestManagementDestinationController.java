@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/management/destination")
+@RequestMapping("/api/management/destinations")
 public class RestManagementDestinationController {
     @Autowired
     private ItineraryService itineraryService;
