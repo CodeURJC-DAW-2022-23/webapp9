@@ -35,7 +35,7 @@ public class RestManagementItineraryController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(" ")
+    @GetMapping("")
     public ResponseEntity<Page<Itinerary>> getItinerary(Pageable pageable) {
         Page<Itinerary> itinerary = itineraryService.findAll(pageable);
         if (!itinerary.isEmpty()) {
@@ -46,14 +46,15 @@ public class RestManagementItineraryController {
     }
 
 
-    @PostMapping(" ")
+    @PostMapping("")
     public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itinerary) throws IOException {
 
-        if (!itinerary.hasName()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Itinerary newItinerary;
-        if (!itinerary.hasDescription())
-            newItinerary = new Itinerary(itinerary.getName(), "", userService.findByUsername(itinerary.getUser()).get(), true);
-        else newItinerary = new Itinerary(itinerary.getName(), itinerary.getDescription(), userService.findByUsername(itinerary.getUser()).get(), true);
+        Optional<User> user = userService.findByUsername(itinerary.getUser());
+        if (user.isEmpty() || itinerary.getName() == null || itinerary.getDescription() == null)
+            return ResponseEntity.badRequest().build();
+
+        Itinerary newItinerary = new Itinerary(itinerary, user.get());
+        newItinerary.setPublic(user.get().getRoles().contains("ADMIN"));
 
         newItinerary.setImage(true);
         Resource image = new ClassPathResource("static/img/placeholder.jpg");

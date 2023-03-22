@@ -1,13 +1,17 @@
 package com.tripscanner.TripScanner.model.rest;
 
 public class ItineraryDTO {
+
     private String name;
 
     private String description;
 
     private String user;
 
+    public ItineraryDTO() {}
+
     public ItineraryDTO(String name, String description, String user) {
+        super();
         this.name = name;
         this.description = description;
         this.user = user;
@@ -37,11 +41,4 @@ public class ItineraryDTO {
         this.user = user;
     }
 
-    public boolean hasName() {
-        return !this.name.isBlank() || !this.name.isEmpty() || !(this.name == null);
-    }
-
-    public boolean hasDescription() {
-        return !(this.description == null);
-    }
 }

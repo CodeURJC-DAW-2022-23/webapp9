@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -55,6 +56,16 @@ public class Itinerary implements Information {
         this.setViews(0L);
     }
 
+    public Itinerary(ItineraryDTO itineraryDTO, User user) {
+        super();
+        this.name = itineraryDTO.getName();
+        this.description = itineraryDTO.getDescription();
+        this.user = user;
+        this.isPublic = true;
+        this.setImage(false);
+        this.setViews(0L);
+    }
+
     public Long getId() {
         return id;
     }
@@ -87,7 +98,7 @@ public class Itinerary implements Information {
 
     @Override
     public String getFlag() {
-        if (places.isEmpty()) {
+        if (places == null || places.isEmpty()) {
             return "https://flagicons.lipis.dev/flags/4x3/xx.svg";
         } else {
             return places.get(0).getFlag();
