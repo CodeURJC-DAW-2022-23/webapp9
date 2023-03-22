@@ -50,8 +50,11 @@ public class RestManagementItineraryController {
     public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itinerary) throws IOException {
 
         Optional<User> user = userService.findByUsername(itinerary.getUser());
-        if (user.isEmpty() || itinerary.getName() == null || itinerary.getDescription() == null)
+        if (user.isEmpty() || itinerary.getName() == null)
             return ResponseEntity.badRequest().build();
+
+        if (itinerary.getDescription() == null)
+            itinerary.setDescription("");
 
         Itinerary newItinerary = new Itinerary(itinerary, user.get());
         newItinerary.setPublic(user.get().getRoles().contains("ADMIN"));
