@@ -45,7 +45,7 @@ public class ItineraryRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<Page<Itinerary>> getItineraries(HttpServletRequest request,
                                                           @RequestParam(defaultValue = "") String name,
                                                           @RequestParam(defaultValue = "id") String sort,
