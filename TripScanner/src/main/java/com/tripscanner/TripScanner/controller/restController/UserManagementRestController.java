@@ -1,6 +1,5 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.service.UserService;
@@ -27,7 +26,7 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 @RestController
 @RequestMapping("/api/management/users")
-public class RestUserManagementController {
+public class UserManagementRestController {
 
     @Autowired
     private UserService userService;
