@@ -35,7 +35,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/itineraries")
-public class RestItineraryController {
+public class ItineraryRestController {
 
     @Autowired
     private ItineraryService itineraryService;
@@ -47,7 +47,7 @@ public class RestItineraryController {
     private UserService userService;
 
     @GetMapping("/")
-    public ResponseEntity<List<ItineraryDetails>> getItineraries(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Itinerary>> getItineraries(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal principalUser = request.getUserPrincipal();
         Page<Itinerary> itineraries;
         if (principalUser == null) {
@@ -56,62 +56,8 @@ public class RestItineraryController {
             User user = userService.findByUsername(principalUser.getName()).get();
             itineraries = itineraryService.findAllByUserOrPublic(user.getUsername(), PageRequest.of(page, 10));
         }
-        List<ItineraryDetails> toShow = new ArrayList<>();
-        for(Itinerary i : itineraries) {
-            toShow.add(new ItineraryDetails(i, placeService.findFromItinerary(i.getId(), PageRequest.of(page, 10))));
-        }
 
-        return new ResponseEntity<>(toShow, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ItineraryDetails> getItinerary(HttpServletRequest request, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
-        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        Itinerary itinerary = optionalItinerary.get();
-        if (!itinerary.isPublic()) {
-            Principal usr = request.getUserPrincipal();
-            if (usr == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            if (!itinerary.getUser().getUsername().equals(usr.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(new ItineraryDetails(itinerary, placeService.findFromItinerary(itinerary.getId(), PageRequest.of(page, 10))), HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}/image")
-    public ResponseEntity<Object> getItineraryImage(@PathVariable long id, HttpServletRequest request) throws SQLException {
-        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        Itinerary itinerary = optionalItinerary.get();
-        if (!itinerary.isPublic()) {
-            Principal usr = request.getUserPrincipal();
-            if (usr == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            if (!itinerary.getUser().getUsername().equals(usr.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        Resource img = new InputStreamResource(itinerary.getImageFile().getBinaryStream());
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(itinerary.getImageFile().length()).body(img);
-    }
-
-    @GetMapping("/{id}/places")
-    public ResponseEntity<List<PlaceDetails>> getPlacesInUserItinerary(HttpServletRequest request, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
-        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        Itinerary itinerary = optionalItinerary.get();
-        if (!itinerary.isPublic()) {
-            Principal usr = request.getUserPrincipal();
-            if (usr == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            if (!itinerary.getUser().getUsername().equals(usr.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
-        Page<Place> places = placeService.findFromItinerary(id, PageRequest.of(0, 5));
-        List<PlaceDetails> placesDetails = new ArrayList<>();
-        for (Place p : places) {
-            placesDetails.add(new PlaceDetails(p, itineraryService.findFromPlace(p.getId(), PageRequest.of(page, 10))));
-        }
-
-        return new ResponseEntity<>(placesDetails, HttpStatus.OK);
+        return new ResponseEntity<>(itineraries, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/export")
