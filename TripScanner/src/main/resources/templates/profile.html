@@ -18,6 +18,7 @@
                         <div class="photoCard m-5 p-5">
                             <img src="/user/{{id}}/image" alt="Sample photo" class="img-fluid rounded" width="500px"/>
                         </div>
+                        {{#edit}}
                         <form action="/profile/edit/photo" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_csrf" value="{{token}}"/>
                             <div class="form-outline mb-4">
@@ -26,6 +27,7 @@
                                 <button type="submit">Upload Photo</button>
                             </div>
                         </form>
+                        {{/edit}}
                         {{#show}}
                         <form action="/logout" method="post" class="m-5 p-5">
                             <input type="hidden" name="_csrf" value="{{token}}"/>
