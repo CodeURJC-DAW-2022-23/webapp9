@@ -1,11 +1,13 @@
 package com.tripscanner.TripScanner.controller.restController;
 
+import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.service.UserService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,8 @@ public class UserManagementRestController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("")
-    public ResponseEntity<Page<User>> getUsers(Pageable pageable){
-        Page<User> users = userService.findAll(pageable);
+    public ResponseEntity<Page<User>> getUsers(@RequestParam(defaultValue = "0") int page){
+        Page<User> users = userService.findAll(PageRequest.of(page, 10));
         if (!users.isEmpty()) {
             return ResponseEntity.ok(users);
         } else {

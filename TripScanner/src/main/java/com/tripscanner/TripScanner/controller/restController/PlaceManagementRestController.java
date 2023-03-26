@@ -8,6 +8,7 @@ import com.tripscanner.TripScanner.service.PlaceService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class PlaceManagementRestController {
     private PlaceService placeService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Place>> getPlaces(Pageable pageable){
-        Page<Place> places = placeService.findAll(pageable);
+    public ResponseEntity<Page<Place>> getPlaces(@RequestParam(defaultValue = "0") int page){
+        Page<Place> places = placeService.findAll(PageRequest.of(page, 10));
         if (!places.isEmpty()) {
             return ResponseEntity.ok(places);
         } else {
