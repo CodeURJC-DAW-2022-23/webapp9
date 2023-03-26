@@ -16,4 +16,4 @@ COPY --from=builder /tmp/target/*.jar /usr/src/app/
 
 EXPOSE 8443
 
-CMD ["java", "-jar", "advice-0.0.1-SNAPSHOT.jar"
+CMD ["java", "-jar", "Backend-0.0.1-SNAPSHOT.jar" ]
