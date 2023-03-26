@@ -31,11 +31,9 @@ public class Review {
     private Date date;
 
     @ManyToOne
-    @JsonIgnore
     private Itinerary itinerary;
 
     @ManyToOne
-    @JsonIgnore
     private User user;
 
     public Review() {

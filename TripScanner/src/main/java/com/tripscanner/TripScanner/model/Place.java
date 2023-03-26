@@ -28,7 +28,6 @@ public class Place implements Information {
     private boolean image;
 
     @ManyToOne
-    @JsonIgnore
     private Destination destination;
 
     @ManyToMany(mappedBy = "places")

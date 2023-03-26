@@ -35,7 +35,6 @@ public class Itinerary implements Information {
     private List<Place> places;
 
     @ManyToOne
-    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
