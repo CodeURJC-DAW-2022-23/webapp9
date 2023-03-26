@@ -17,4 +17,4 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=tripscanner
     volumes:
-      - ./var/lib/mysql/
+      - ./mysql:/var/lib/mysql/
