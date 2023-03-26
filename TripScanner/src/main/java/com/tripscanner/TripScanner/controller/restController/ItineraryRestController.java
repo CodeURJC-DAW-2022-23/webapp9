@@ -132,7 +132,7 @@ public class ItineraryRestController {
     // and only nouns are used for resources. Same goes for "/api/itineraries/{id}/export". Also, POST method is allowed here,
     // as new data is added to the database, even though the body of the request is not needed.
     @PostMapping("/{id}/copy")
-    public ResponseEntity copyItinerary(@PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Itinerary> copyItinerary(@PathVariable long id, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
