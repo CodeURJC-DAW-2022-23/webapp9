@@ -420,10 +420,19 @@
 				{
 					"name": "PUT add place to itinerary",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "7",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "https://localhost:8443/api/user/itineraries/10/places",
+							"raw": "https://localhost:8443/api/itineraries/10/places",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -431,7 +440,6 @@
 							"port": "8443",
 							"path": [
 								"api",
-								"user",
 								"itineraries",
 								"10",
 								"places"
