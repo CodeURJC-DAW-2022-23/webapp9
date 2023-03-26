@@ -57,15 +57,17 @@ public class UserRestController {
     @Autowired
     public PasswordEncoder passwordEncoder;
 
-    @GetMapping("")
-    public ResponseEntity<UserDetails> getUser(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+    @GetMapping("me")
+    public ResponseEntity<UserDetails> getUser(HttpServletRequest request,
+                                               @RequestParam(defaultValue = "0") int pageItineraries,
+                                               @RequestParam(defaultValue = "0") int pageReviews) {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser != null) {
             User user = userService.findByUsername(currUser.getName()).get();
             return new ResponseEntity<>(new UserDetails(user,
-                                                        itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(page, 10)),
-                                                        reviewService.findFromUser(user.getId(), PageRequest.of(page, 10))), HttpStatus.OK);
+                                                        itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(pageItineraries, 10)),
+                                                        reviewService.findFromUser(user.getId(), PageRequest.of(pageReviews, 10))), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
