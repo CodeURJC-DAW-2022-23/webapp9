@@ -12,8 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -41,6 +46,7 @@ public class ManagementDestinationRestController {
 
     @PostMapping("")
     public ResponseEntity<Destination> createDestination(@RequestBody Destination destination) {
+        destination.setViews(0L);
         destinationService.save(destination);
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(destination.getId()).toUri();
         return ResponseEntity.created(location).body(destination);
@@ -54,6 +60,7 @@ public class ManagementDestinationRestController {
                 newDestination.setImageFile(BlobProxy.generateProxy(destination.get().getImageFile().getBinaryStream(), destination.get().getImageFile().length()));
             }
             newDestination.setId(id);
+            newDestination.setViews(destination.get().getViews());
             destinationService.save(newDestination);
             return ResponseEntity.ok(destination.get());
         } else {
@@ -79,6 +86,41 @@ public class ManagementDestinationRestController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/image")
+    public ResponseEntity<Destination> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<Destination> destination = destinationService.findById(id);
+
+        if (destination.isPresent()) {
+            Destination newDestination = destination.get();
+
+            newDestination.setImage(true);
+            newDestination.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+
+            destinationService.save(newDestination);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/destinations/" + id + "/image");
+            return ResponseEntity.created(location).build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/image")
+    public ResponseEntity<Destination> editImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<Destination> destination = destinationService.findById(id);
+
+        if (destination.isPresent()) {
+            Destination newDestination = destination.get();
+            newDestination.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            destinationService.save(newDestination);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/destinations/" + id + "/image");
+            return ResponseEntity.created(location).body(newDestination);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

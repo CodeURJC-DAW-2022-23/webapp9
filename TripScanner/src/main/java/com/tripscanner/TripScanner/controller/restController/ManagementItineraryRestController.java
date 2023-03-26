@@ -1,6 +1,5 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
@@ -16,9 +15,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,6 +105,41 @@ public class ManagementItineraryRestController {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/image")
+    public ResponseEntity<Itinerary> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+
+        if (itinerary.isPresent()) {
+            Itinerary newitinerary = itinerary.get();
+
+            newitinerary.setImage(true);
+            newitinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+
+            itineraryService.save(newitinerary);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/itineraries/" + id + "/image");
+            return ResponseEntity.created(location).build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/image")
+    public ResponseEntity<Itinerary> editImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+
+        if (itinerary.isPresent()) {
+            Itinerary newitinerary = itinerary.get();
+            newitinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            itineraryService.save(newitinerary);
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            URI location = new URI(baseUrl + "/api/itineraries/" + id + "/image");
+            return ResponseEntity.created(location).body(newitinerary);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
