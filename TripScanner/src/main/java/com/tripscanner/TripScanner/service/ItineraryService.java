@@ -57,6 +57,10 @@ public class ItineraryService implements AbstractService<Itinerary> {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
+    public Page<Itinerary> findAllByUserOrPublic(String user, Pageable pageable) { 
+        return repository.findAllByUserOrPublic(user, pageable); 
+    }
+
     public Page<Itinerary> findFromPlace(long id, Pageable pageable) {
         return repository.findFromPlace(id, pageable);
     }
@@ -64,6 +68,13 @@ public class ItineraryService implements AbstractService<Itinerary> {
     public Page<Itinerary> findFromUser(long id, Pageable pageable) {
         return repository.findFromUser(id, pageable);
     }
+    
+    public Page<Itinerary> findAllByNameOrDescriptionAndUserOrPublicLikeIgnoreCase(String name, String description, String user, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionAndUserOrPublicLikeIgnoreCase(name, description, user, pageable);
+    }
 
+    public Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCasePublic(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionLikeIgnoreCasePublic(name, description, pageable);
+    }
 
 }
