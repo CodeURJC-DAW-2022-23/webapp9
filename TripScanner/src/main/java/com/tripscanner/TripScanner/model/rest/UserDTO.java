@@ -70,4 +70,5 @@ public class UserDTO {
         this.passwordHash = passwordHash;
         this.nationality = nationality;
     }
+
 }

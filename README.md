@@ -1,6 +1,15 @@
 # webapp9 | TripScanner
 
-## Team members and info
+## Index
+
+1. [Phase 0 additions](#phase0)
+2. [Phase 1 aditions](#phase1)
+3. [Phase 2 additions](#phase2)
+
+<a name="phase0"></a>
+## Phase 0 additions
+
+### Team members and info
 
 Here you can find information about the members that form the developer team for TripScanner
 
@@ -11,15 +20,15 @@ Here you can find information about the members that form the developer team for
 | Iván        | Penedo Ventosa | i.penedo.2020@alumnos.urjc.es    | [@xIvqn](https://github.com/xIvqn)                   |
 | Adaya María | Ruíz Mayoral   | a.ruiz.2020@alumnos.urjc.es      | [@AdayaUwU](https://github.com/AdayaUwU)             |
 
-## Team Organization
+### Team Organization
 
 The team will be organized using the intregration with the native GitHub Projects. That way, team members can use GitHub Issues and other GitHub options to automate the workflow of the web application development. GitHub Project can be accessed through the following [link](https://github.com/orgs/CodeURJC-DAW-2022-23/projects/3/views/1?layout=board).
 
-## App features
+### App features
 
 Here you can see the features of our web application TripScanner.
 
-### Entities
+#### Entities
 
 We'll have the following entities **users**, **places**, **destinations** and **itineraries**.
 
@@ -30,7 +39,7 @@ We'll have the following entities **users**, **places**, **destinations** and **
   <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
 </picture>
 
-### User privileges
+#### User privileges
 
 Our web app will have the following types of users:
 
@@ -40,15 +49,15 @@ Our web app will have the following types of users:
 
 - **Administrator:** Administrators can do all the previous tasks. They can also edit the public itineraries and create new ones, add new places and destinations.
 
-### Images
+#### Images
 
 Out of our four entities, three of them will have images asociated to them. Users will have a profile picture of their liking, places will have a photo of them and destinations will have a picture of an iconic landmark they have.
 
-### Graphs
+#### Graphs
 
 Inside each destination, users will be able to see a bar graph containing the most popular places inside them. There will also be a graph in the main page where you can see the most popular destinations.
 
-### Aditional technologies
+#### Aditional technologies
 
 The app will be able to send confirmation emails to users when they register, and anytime they save or edit an itinerary.
 
@@ -56,13 +65,14 @@ It will also be able to generate pdf documents with a selected itinerary that a 
 
 Our app will use the OpenStreetMap API which is an Open Source map API. We will also be using SkyScanner's and TripAdvisor API to get information about hotels, destinations and flights.
 
-### Advanced algorithms
+#### Advanced algorithms
 
 TripScanner will have a selection of algorithms. These are:
 
 - An algorithm to search for the shortest path between places of an itinerary.
 - A search algorithm with different search criteria, for both places and destinations.
 
+<a name="phase1"></a>
 ## Phase 1 aditions
 
 ### Webpage screenshots
@@ -101,6 +111,7 @@ At last, administrators can see a panel with the options they have. This panel (
 
 ![Diagrama DAW-3-1](https://user-images.githubusercontent.com/102818341/218516781-fdaf6302-f9dd-4d04-948e-cc64230ff477.png)
 
+<a name="phase2"></a>
 ## Phase 2 additions
 
 ### Webpage screenshots
@@ -187,10 +198,10 @@ Below there is an entity-relationship diagram that shows the database entities, 
 ![Entity-Relationship Diagram](https://user-images.githubusercontent.com/102818341/224564564-71b8c637-e8cc-4bf5-8cbf-e0659c1897e3.svg)
 
 ### Class and templates diagram
+
 This is the class diagram of TripScanner.
 
 ![Diagrama de clases y templates](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/diagrams/svgs/templates2.svg)
-
 
 ### Members participation
 
@@ -215,11 +226,11 @@ Here, each member of the team shows what they have contributed to during the dev
     - **Description of tasks:** I've been in charge of deploying the H2 database at the begining of the stage to start working with it and at the end, when everything was implemented, migrating it to MySQL. Also, I've been developing the pagination section in all pages that required it such as details (for information and reviews for the itineraries) and search results; the controller for downloading database images, aditional technologies (pdf exportation and email sending), private/public itinerary visibility functionality and some diagrams (such as the database entity-relationship diagram) for the documentation. Apart from that, I've been reviewing code and helping others.
     - **5 biggest commits:** Note that I usually upload more commits with less changes each, so I have a lot of contributions but each one has less changes. These commits are:
         - [Feat: Load images on pages](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/98cfbaa6a1adeb4dd533fcb74550d79d67cb59bc)
-        - [Feat: Log In forms ](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/03548dd901a82f822346aff19d4fbdd3dc9cf7ab)
+        - [Feat: Log In forms](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/03548dd901a82f822346aff19d4fbdd3dc9cf7ab)
         - [Feat: Itinerary review pagination](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/6ee2806f59e3355919a15d96786cd8560201541f)
         - [Feat: Search pagination](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/0ca1c2a5e6cc8ca10d149907aded673645fade46)
-        - [ Feat: PDF exporter class](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/57457eb49da909e7979c78ef18f9d06537e7b52b)
-        
+        - [Feat: PDF exporter class](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/57457eb49da909e7979c78ef18f9d06537e7b52b)
+
     - **5 files with most participation:** These files are:
         - [/java/../controller/SearchController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/SearchController.java)
         - [/java/../utils/PdfGenerator.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/utils/PdfGenerator.java)
@@ -256,4 +267,3 @@ Here, each member of the team shows what they have contributed to during the dev
         - [CSRFHandlerConfiguration.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/CSRFHandlerConfiguration.java)
         - [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/WebSecurityConfig.java)
         - [profile.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/profile.html)
-        
