@@ -13,8 +13,6 @@ public class ItineraryDTO {
 
     private String user;
 
-    private boolean isPublic;
-
     public ItineraryDTO() {}
 
     public ItineraryDTO(String name, String description, String user) {
