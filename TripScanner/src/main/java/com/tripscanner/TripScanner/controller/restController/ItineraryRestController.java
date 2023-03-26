@@ -166,27 +166,28 @@ public class ItineraryRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{itineraryId}/places")
-    public ResponseEntity deletePlacesFromItinerary(@PathVariable long itineraryId, @RequestBody long placeId, HttpServletRequest request) {
+    @DeleteMapping("/{itineraryId}/places/{placeId}")
+    public ResponseEntity<Page<Place>> deletePlacesFromItinerary(@PathVariable long itineraryId, @PathVariable long placeId, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
         Optional<Place> optionalPlace = placeService.findById(placeId);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
         if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
         if (!optionalPlace.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
         Place place = optionalPlace.get();
 
-        if (!itinerary.getUser().getUsername().equals(user.getUsername()) || user.getRoles().contains("ADMIN")) return new ResponseEntity(HttpStatus.FORBIDDEN);
+        if (!itinerary.getUser().getUsername().equals(user.getUsername()) || user.getRoles().contains("ADMIN"))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         List<Place> itineraryPlaces = itinerary.getPlaces();
         itineraryPlaces.remove(place);
         itinerary.setPlaces(itineraryPlaces);
         itineraryService.save(itinerary);
 
-        return ResponseEntity.ok().body(itineraryPlaces);
+        return ResponseEntity.ok().body(placeService.findFromItinerary(itineraryId, PageRequest.of(0, 10)));
     }
 
     @PutMapping("/{id}")
@@ -210,26 +211,27 @@ public class ItineraryRestController {
     }
 
     @PutMapping("/{itineraryId}/places")
-    public ResponseEntity editPlaces(@PathVariable long itineraryId, @RequestBody long placeId, HttpServletRequest request) {
+    public ResponseEntity<Page<Place>> editPlaces(@PathVariable long itineraryId, @RequestBody long placeId, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
         Optional<Place> optionalPlace = placeService.findById(placeId);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        if (!optionalPlace.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!optionalPlace.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
         Place place = optionalPlace.get();
 
-        if (!itinerary.getUser().getUsername().equals(user.getUsername()) || user.getRoles().contains("ADMIN")) return new ResponseEntity(HttpStatus.FORBIDDEN);
+        if (!itinerary.getUser().getUsername().equals(user.getUsername()))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         List<Place> itineraryPlaces = itinerary.getPlaces();
         itineraryPlaces.add(place);
         itinerary.setPlaces(itineraryPlaces);
         itineraryService.save(itinerary);
 
-        return ResponseEntity.ok().body(itineraryPlaces);
+        return ResponseEntity.ok().body(placeService.findFromItinerary(itinerary.getId(), PageRequest.of(0, 10)));
     }
 
     @PutMapping(value = "/{id}/image", consumes = {"multipart/form-data", "image/jpeg", "image/png"})
