@@ -21,7 +21,7 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 @RestController
 @RequestMapping("/api/management/destinations")
-public class RestManagementDestinationController {
+public class ManagementDestinationRestController {
     @Autowired
     private ItineraryService itineraryService;
 

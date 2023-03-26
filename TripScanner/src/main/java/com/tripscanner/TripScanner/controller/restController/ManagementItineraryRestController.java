@@ -17,10 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +26,7 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 @RestController
 @RequestMapping("/api/management/itineraries")
-public class RestManagementItineraryController {
+public class ManagementItineraryRestController {
     @Autowired
     private ItineraryService itineraryService;
 
