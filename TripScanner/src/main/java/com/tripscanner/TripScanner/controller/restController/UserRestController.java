@@ -114,7 +114,8 @@ public class UserRestController {
         }
 
         userService.save(usr);
-        return new ResponseEntity(HttpStatus.CREATED);
+
+        return ResponseEntity.ok().body(usr);
     }
 
     @PutMapping("/me/image")
@@ -127,7 +128,7 @@ public class UserRestController {
         user.setImage(true);
         user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         userService.save(user);
-        return new ResponseEntity(HttpStatus.OK);
+        return ResponseEntity.ok().body(user.getImageFile());
     }
 
     @PostMapping("")

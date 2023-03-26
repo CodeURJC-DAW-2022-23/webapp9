@@ -31,12 +31,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 @RequestMapping("/api/itineraries")
@@ -105,7 +108,7 @@ public class ItineraryRestController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Long> createNewItinerary(@RequestBody Itinerary itinerary, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Itinerary> createNewItinerary(@RequestBody Itinerary itinerary, HttpServletRequest request) throws IOException {
         Principal principalUser = request.getUserPrincipal();
         if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -120,7 +123,10 @@ public class ItineraryRestController {
         newItinerary.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 
         itineraryService.save(newItinerary);
-        return new ResponseEntity<>(newItinerary.getId(), HttpStatus.CREATED);
+
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(newItinerary.getId()).toUri();
+
+        return ResponseEntity.created(location).body(newItinerary);
     }
 
     // Note that "/api/itineraries/{id}/copy" follows naming conventions for REST APIs, as verbs CAN be used inside subrecurses,
@@ -140,7 +146,10 @@ public class ItineraryRestController {
         user.setItineraries(userItineraries);
 
         itineraryService.save(copy);
-        return new ResponseEntity(HttpStatus.CREATED);
+
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(copy.getId()).toUri();
+
+        return ResponseEntity.created(location).body(copy);
     }
 
     @DeleteMapping("/{id}")
@@ -181,7 +190,8 @@ public class ItineraryRestController {
         itinerary.setPublic(newData.isPublic());
 
         itineraryService.save(itinerary);
-        return new ResponseEntity(HttpStatus.OK);
+
+        return ResponseEntity.ok().body(itinerary);
     }
 
     @PutMapping(value = "/{id}/image", consumes = {"multipart/form-data", "image/jpeg", "image/png"})
@@ -198,7 +208,8 @@ public class ItineraryRestController {
         itinerary.setImage(true);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
-        return new ResponseEntity(HttpStatus.OK);
+
+        return ResponseEntity.ok().body(itinerary.getImageFile());
     }
 
     @GetMapping("/{id}")
