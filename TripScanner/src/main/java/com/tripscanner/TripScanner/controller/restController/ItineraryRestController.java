@@ -46,7 +46,7 @@ public class ItineraryRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<Page<Itinerary>> getItineraries(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal principalUser = request.getUserPrincipal();
         Page<Itinerary> itineraries;
@@ -83,7 +83,7 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(baos.toByteArray());
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<Long> createNewItinerary(@RequestBody Itinerary itinerary, HttpServletRequest request) throws IOException {
         Principal principalUser = request.getUserPrincipal();
         if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

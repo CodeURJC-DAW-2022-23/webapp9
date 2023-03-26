@@ -49,7 +49,7 @@ public class ProfileRestController {
     @Autowired
     public PlaceService placeService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<UserDetails> getUser(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal currUser = request.getUserPrincipal();
 
@@ -97,7 +97,7 @@ public class ProfileRestController {
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(user.getImageFile().length()).body(img);
     }
 
-    @PutMapping("/")
+    @PutMapping("")
     public ResponseEntity editUser(@RequestBody User newData, HttpServletRequest request) throws ServletException {
         Principal currUser = request.getUserPrincipal();
         if (currUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
