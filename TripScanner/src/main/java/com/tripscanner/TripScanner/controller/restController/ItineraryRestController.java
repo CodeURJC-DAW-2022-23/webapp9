@@ -166,6 +166,29 @@ public class ItineraryRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/{itineraryId}/places")
+    public ResponseEntity deletePlacesFromItinerary(@PathVariable long itineraryId, @RequestBody long placeId, HttpServletRequest request) {
+        Principal principalUser = request.getUserPrincipal();
+        Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
+        Optional<Place> optionalPlace = placeService.findById(placeId);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if (!optionalPlace.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        User user = userService.findByUsername(principalUser.getName()).get();
+        Itinerary itinerary = optionalItinerary.get();
+        Place place = optionalPlace.get();
+
+        if (!itinerary.getUser().getUsername().equals(user.getUsername()) || user.getRoles().contains("ADMIN")) return new ResponseEntity(HttpStatus.FORBIDDEN);
+
+        List<Place> itineraryPlaces = itinerary.getPlaces();
+        itineraryPlaces.remove(place);
+        itinerary.setPlaces(itineraryPlaces);
+        itineraryService.save(itinerary);
+
+        return ResponseEntity.ok().body(itineraryPlaces);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Itinerary> editItineraryById(@RequestBody ItineraryDTO itineraryDTO, @PathVariable long id, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
