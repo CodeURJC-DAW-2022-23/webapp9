@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.controller.restController;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
+import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.model.rest.PlaceDetails;
 import com.tripscanner.TripScanner.service.ItineraryService;
@@ -108,16 +109,14 @@ public class ItineraryRestController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Itinerary> createNewItinerary(@RequestBody Itinerary itinerary, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itineraryDTO, HttpServletRequest request) throws IOException {
         Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         User user = userService.findByUsername(principalUser.getName()).get();
-        if (!itinerary.hasName()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Itinerary newItinerary;
-        if (!itinerary.hasDescription()) newItinerary = new Itinerary(itinerary.getName(), "", user, itinerary.isPublic());
-        else newItinerary = new Itinerary(itinerary.getName(), itinerary.getDescription(), user, itinerary.isPublic());
+        if (itineraryDTO.getName() == null || itineraryDTO.getDescription() == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        Itinerary newItinerary = new Itinerary(itineraryDTO, user, user.getRoles().contains("ADMIN"));
         newItinerary.setImage(true);
         Resource image = new ClassPathResource("/static/img/placeholder.jpeg");
         newItinerary.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
