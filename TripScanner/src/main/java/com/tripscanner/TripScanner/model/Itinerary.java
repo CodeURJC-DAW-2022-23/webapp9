@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -48,6 +49,16 @@ public class Itinerary implements Information {
         super();
         this.name = name;
         this.description = description;
+        this.user = user;
+        this.isPublic = isPublic;
+        this.setImage(false);
+        this.setViews(0L);
+    }
+
+    public Itinerary(ItineraryDTO itineraryDTO, User user, boolean isPublic) {
+        super();
+        this.name = itineraryDTO.getName();
+        this.description = itineraryDTO.getDescription();
         this.user = user;
         this.isPublic = isPublic;
         this.setImage(false);

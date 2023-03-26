@@ -167,26 +167,19 @@ public class ItineraryRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editItineraryById(@RequestBody Itinerary newData, @PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Itinerary> editItineraryById(@RequestBody ItineraryDTO itineraryDTO, @PathVariable long id, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if (optionalItinerary.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
 
-        if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity(HttpStatus.FORBIDDEN);
-        if (newData.hasName()) itinerary.setName(newData.getName());
-        if (newData.hasDescription()) itinerary.setDescription(newData.getDescription());
-        if (newData.getPlaces() != null) {
-            for (Place p : newData.getPlaces()) {
-                List<Place> placeList = itinerary.getPlaces();
-                placeList.add(p);
-                itinerary.setPlaces(placeList);
-            }
-        }
-        itinerary.setPublic(newData.isPublic());
+        if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (itineraryDTO.getName() != null) itinerary.setName(itineraryDTO.getName());
+        if (itineraryDTO.getDescription() != null) itinerary.setDescription(itineraryDTO.getDescription());
+        itinerary.setPublic(itineraryDTO.isPublic());
 
         itineraryService.save(itinerary);
 
