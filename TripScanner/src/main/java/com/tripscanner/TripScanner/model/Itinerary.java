@@ -97,7 +97,7 @@ public class Itinerary implements Information {
 
     @Override
     public String getFlag() {
-        if (places.isEmpty()) {
+        if (places == null || places.isEmpty()) {
             return "https://flagicons.lipis.dev/flags/4x3/xx.svg";
         } else {
             return places.get(0).getFlag();
@@ -186,4 +186,5 @@ public class Itinerary implements Information {
     public boolean hasDescription() {
         return !(this.description == null);
     }
+
 }

@@ -62,4 +62,5 @@ public class UserService implements AbstractService<User> {
         Optional<User> user = findByUsername(username);
         return user.isPresent();
     }
+
 }
