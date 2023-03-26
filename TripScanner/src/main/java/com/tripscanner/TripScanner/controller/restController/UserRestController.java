@@ -29,9 +29,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.tripscanner.TripScanner.model.rest.UserDTO;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import java.net.URI;
+import java.util.Arrays;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserRestController {
 
     @Autowired
@@ -49,6 +54,9 @@ public class UserRestController {
     @Autowired
     public PlaceService placeService;
 
+    @Autowired
+    public PasswordEncoder passwordEncoder;
+
     @GetMapping("")
     public ResponseEntity<UserDetails> getUser(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
         Principal currUser = request.getUserPrincipal();
@@ -64,7 +72,9 @@ public class UserRestController {
     }
     
     @GetMapping("/itineraries")
-    public ResponseEntity<List<ItineraryDetails>> getUserItineraries(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<List<ItineraryDetails>> getUserItineraries(HttpServletRequest request,
+                                                                     @RequestParam(defaultValue = "0") int pagePlaces,
+                                                                     @RequestParam(defaultValue = "0") int pageReviews) {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -72,7 +82,10 @@ public class UserRestController {
 
         List<ItineraryDetails> toShow = new ArrayList<>();
         for (Itinerary i : itineraries) {
-            toShow.add(new ItineraryDetails(i, placeService.findFromItinerary(i.getId(), PageRequest.of(page, 10))));
+            toShow.add(new ItineraryDetails(
+                    i,
+                    placeService.findFromItinerary(i.getId(), PageRequest.of(pagePlaces, 10)),
+                    reviewService.findFromItinerary(i.getId(), PageRequest.of(pageReviews, 10))));
         }
 
         return new ResponseEntity<>(toShow, HttpStatus.OK);
@@ -83,15 +96,6 @@ public class UserRestController {
         Principal principalUser = request.getUserPrincipal();
         if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         User user = userService.findByUsername(principalUser.getName()).get();
-        if (!user.isImage()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Resource img = new InputStreamResource(user.getImageFile().getBinaryStream());
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(user.getImageFile().length()).body(img);
-    }
-    @GetMapping("/{username}/image")
-    public ResponseEntity<Object> downloadProfileImageFromUsername(@PathVariable String username, HttpServletRequest request) throws SQLException {
-        Optional<User> optionalUser = userService.findByUsername(username);
-        if (!optionalUser.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        User user = optionalUser.get();
         if (!user.isImage()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Resource img = new InputStreamResource(user.getImageFile().getBinaryStream());
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(user.getImageFile().length()).body(img);
@@ -132,4 +136,47 @@ public class UserRestController {
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @PostMapping("")
+    public ResponseEntity<User> register(@RequestBody UserDTO userDTO) {
+        User user = new User(userDTO);
+
+
+
+        if (user.getUsername() == null || user.getEmail() == null || user.getPasswordHash() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!user.getEmail().matches("\\w*@\\w*\\.[a-z]{1,3}")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!userService.existName(user.getUsername())) {
+            user.setImage(false);
+            user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+            user.setRoles(Arrays.asList("USER"));
+
+            userService.save(user);
+            URI location = fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+
+            return ResponseEntity.created(location).body(user);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Optional<User> optionalUser = userService.findById(id);
+
+        if (optionalUser.isPresent() && optionalUser.get().getImageFile() != null) {
+            Resource file = new InputStreamResource(optionalUser.get().getImageFile().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(optionalUser.get().getImageFile().length()).body(file);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

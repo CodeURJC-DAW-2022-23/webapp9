@@ -3,9 +3,11 @@ package com.tripscanner.TripScanner.controller.webController;
 import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ItineraryService;
+import com.tripscanner.TripScanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -30,8 +34,11 @@ public class HomeController {
     @Autowired
     private ItineraryService itineraryService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/")
-    public ModelAndView showHomePage(Model model, @RequestParam Map<String, Integer> chartData) {
+    public ModelAndView showHomePage(Model model, @RequestParam Map<String, Integer> chartData, HttpServletRequest request) {
 
         // Set id of most visited destination
         Page<Destination> topDestination = destinationService.findAll(
@@ -66,7 +73,12 @@ public class HomeController {
 
         //Show 3 cards with possible itinerary
         Pageable itineraryPaged = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
-        Page<Itinerary> itinerary = itineraryService.findAllPublic(itineraryPaged);
+        Principal principalUser = request.getUserPrincipal();
+        Page<Itinerary> itinerary;
+        if (principalUser != null) {
+            User user = userService.findByUsername(principalUser.getName()).get();
+            itinerary = itineraryService.findAllByUserOrPublic(user.getUsername(), itineraryPaged);
+        } else itinerary = itineraryService.findAllPublic(itineraryPaged);
         model.addAttribute("itinerary", itinerary);
 
         // Create graph

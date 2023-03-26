@@ -54,8 +54,12 @@ public class UserService implements AbstractService<User> {
         repository.deleteById(id);
     }
 
-    public Page<Place> findFromItinerary(long id, Pageable pageable) {
+    public Page<User> findFromItinerary(long id, Pageable pageable) {
         return repository.findFromItinerary(id, pageable);
     }
 
+    public boolean existName(String username) {
+        Optional<User> user = findByUsername(username);
+        return user.isPresent();
+    }
 }
