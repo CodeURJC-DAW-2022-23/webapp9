@@ -57,7 +57,7 @@ public class UserRestController {
     @Autowired
     public PasswordEncoder passwordEncoder;
 
-    @GetMapping("me")
+    @GetMapping("/me")
     public ResponseEntity<UserDetails> getUser(HttpServletRequest request,
                                                @RequestParam(defaultValue = "0") int pageItineraries,
                                                @RequestParam(defaultValue = "0") int pageReviews) {
@@ -73,7 +73,7 @@ public class UserRestController {
         }
     }
     
-    @GetMapping("/itineraries")
+    @GetMapping("/me/itineraries")
     public ResponseEntity<List<ItineraryDetails>> getUserItineraries(HttpServletRequest request,
                                                                      @RequestParam(defaultValue = "0") int pagePlaces,
                                                                      @RequestParam(defaultValue = "0") int pageReviews) {
@@ -93,7 +93,7 @@ public class UserRestController {
         return new ResponseEntity<>(toShow, HttpStatus.OK);
     }
 
-    @GetMapping("/image")
+    @GetMapping("/me/image")
     public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request) throws SQLException {
         Principal principalUser = request.getUserPrincipal();
         if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -103,7 +103,7 @@ public class UserRestController {
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(user.getImageFile().length()).body(img);
     }
 
-    @PutMapping("")
+    @PutMapping("/me")
     public ResponseEntity editUser(@RequestBody User newData, HttpServletRequest request) throws ServletException {
         Principal currUser = request.getUserPrincipal();
         if (currUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
@@ -126,7 +126,7 @@ public class UserRestController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PutMapping("/image")
+    @PutMapping("/me/image")
     public ResponseEntity editImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) throws IOException {
         Principal currUser = request.getUserPrincipal();
 
