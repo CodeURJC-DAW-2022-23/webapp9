@@ -32,7 +32,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
-public class ProfileRestController {
+public class UserRestController {
 
     @Autowired
     public UserService userService;
