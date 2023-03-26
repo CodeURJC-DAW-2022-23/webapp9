@@ -119,7 +119,7 @@ public class UserRestController {
     }
 
     @PutMapping("/me/image")
-    public ResponseEntity editImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) throws IOException {
+    public ResponseEntity editImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) throws IOException, SQLException {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
@@ -128,7 +128,10 @@ public class UserRestController {
         user.setImage(true);
         user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         userService.save(user);
-        return ResponseEntity.ok().body(user.getImageFile());
+        Resource file = new InputStreamResource(imageFile.getInputStream());
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .contentLength(user.getImageFile().length()).body(file);
     }
 
     @PostMapping("")

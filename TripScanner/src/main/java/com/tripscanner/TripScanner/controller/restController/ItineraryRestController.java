@@ -195,7 +195,7 @@ public class ItineraryRestController {
     }
 
     @PutMapping(value = "/{id}/image", consumes = {"multipart/form-data", "image/jpeg", "image/png"})
-    public ResponseEntity editItineraryImage(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable long id, HttpServletRequest request) throws IOException {
+    public ResponseEntity editItineraryImage(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable long id, HttpServletRequest request) throws IOException, SQLException {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -209,7 +209,10 @@ public class ItineraryRestController {
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
 
-        return ResponseEntity.ok().body(itinerary.getImageFile());
+        Resource file = new InputStreamResource(imageFile.getInputStream());
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .contentLength(itinerary.getImageFile().length()).body(file);
     }
 
     @GetMapping("/{id}")
