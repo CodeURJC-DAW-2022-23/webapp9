@@ -74,23 +74,14 @@ public class UserRestController {
     }
     
     @GetMapping("/me/itineraries")
-    public ResponseEntity<List<ItineraryDetails>> getUserItineraries(HttpServletRequest request,
-                                                                     @RequestParam(defaultValue = "0") int pagePlaces,
-                                                                     @RequestParam(defaultValue = "0") int pageReviews) {
+    public ResponseEntity<Page<Itinerary>> getUserItineraries(HttpServletRequest request,
+                                                              @RequestParam(defaultValue = "0") int page) {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Page<Itinerary> itineraries = itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(0, 5));
+        Page<Itinerary> itineraries = itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(page, 10));
 
-        List<ItineraryDetails> toShow = new ArrayList<>();
-        for (Itinerary i : itineraries) {
-            toShow.add(new ItineraryDetails(
-                    i,
-                    placeService.findFromItinerary(i.getId(), PageRequest.of(pagePlaces, 10)),
-                    reviewService.findFromItinerary(i.getId(), PageRequest.of(pageReviews, 10))));
-        }
-
-        return new ResponseEntity<>(toShow, HttpStatus.OK);
+        return new ResponseEntity<>(itineraries, HttpStatus.OK);
     }
 
     @GetMapping("/me/image")
