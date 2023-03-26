@@ -1,7 +1,5 @@
 package com.tripscanner.TripScanner.model.rest;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class UserDTO {
 
     private String username;
@@ -72,4 +70,5 @@ public class UserDTO {
         this.passwordHash = passwordHash;
         this.nationality = nationality;
     }
+
 }

@@ -56,6 +56,11 @@ public class DestinationService implements AbstractService<Destination> {
         repository.deleteById(id);
     }
 
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+
     public Page<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
@@ -63,5 +68,7 @@ public class DestinationService implements AbstractService<Destination> {
     public Page<Destination> findFromPlace(long id, Pageable pageable) {
         return repository.findFromPlace(id, pageable);
     }
+
+
 
 }
