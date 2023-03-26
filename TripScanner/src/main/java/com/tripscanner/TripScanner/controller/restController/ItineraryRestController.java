@@ -3,6 +3,7 @@ package com.tripscanner.TripScanner.controller.restController;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
+import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.model.rest.PlaceDetails;
 import com.tripscanner.TripScanner.service.ItineraryService;
@@ -108,16 +109,14 @@ public class ItineraryRestController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Itinerary> createNewItinerary(@RequestBody Itinerary itinerary, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itineraryDTO, HttpServletRequest request) throws IOException {
         Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         User user = userService.findByUsername(principalUser.getName()).get();
-        if (!itinerary.hasName()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Itinerary newItinerary;
-        if (!itinerary.hasDescription()) newItinerary = new Itinerary(itinerary.getName(), "", user, itinerary.isPublic());
-        else newItinerary = new Itinerary(itinerary.getName(), itinerary.getDescription(), user, itinerary.isPublic());
+        if (itineraryDTO.getName() == null || itineraryDTO.getDescription() == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        Itinerary newItinerary = new Itinerary(itineraryDTO, user, user.getRoles().contains("ADMIN"));
         newItinerary.setImage(true);
         Resource image = new ClassPathResource("/static/img/placeholder.jpeg");
         newItinerary.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
@@ -168,26 +167,19 @@ public class ItineraryRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editItineraryById(@RequestBody Itinerary newData, @PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Itinerary> editItineraryById(@RequestBody ItineraryDTO itineraryDTO, @PathVariable long id, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if (optionalItinerary.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
 
-        if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity(HttpStatus.FORBIDDEN);
-        if (newData.hasName()) itinerary.setName(newData.getName());
-        if (newData.hasDescription()) itinerary.setDescription(newData.getDescription());
-        if (newData.getPlaces() != null) {
-            for (Place p : newData.getPlaces()) {
-                List<Place> placeList = itinerary.getPlaces();
-                placeList.add(p);
-                itinerary.setPlaces(placeList);
-            }
-        }
-        itinerary.setPublic(newData.isPublic());
+        if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (itineraryDTO.getName() != null) itinerary.setName(itineraryDTO.getName());
+        if (itineraryDTO.getDescription() != null) itinerary.setDescription(itineraryDTO.getDescription());
+        itinerary.setPublic(itineraryDTO.isPublic());
 
         itineraryService.save(itinerary);
 
@@ -218,7 +210,7 @@ public class ItineraryRestController {
     }
 
     @PutMapping(value = "/{id}/image", consumes = {"multipart/form-data", "image/jpeg", "image/png"})
-    public ResponseEntity editItineraryImage(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable long id, HttpServletRequest request) throws IOException, SQLException {
+    public ResponseEntity<Resource> editItineraryImage(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable long id, HttpServletRequest request) throws IOException, SQLException {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -226,7 +218,7 @@ public class ItineraryRestController {
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
-        if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity(HttpStatus.FORBIDDEN);
+        if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         itinerary.setImage(true);
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
