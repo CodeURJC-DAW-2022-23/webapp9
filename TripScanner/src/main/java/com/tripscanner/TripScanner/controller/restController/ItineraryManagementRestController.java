@@ -29,7 +29,7 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 @RestController
 @RequestMapping("/api/management/itineraries")
-public class ManagementItineraryRestController {
+public class ItineraryManagementRestController {
     @Autowired
     private ItineraryService itineraryService;
 
