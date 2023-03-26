@@ -69,21 +69,24 @@ public class ManagementItineraryRestController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity editItinerary(@PathVariable long id, @RequestBody Itinerary newItineraries) {
+    public ResponseEntity editItinerary(@PathVariable long id, @RequestBody ItineraryDTO newItineraries) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
         if (itinerary.isPresent()) {
             if (newItineraries.hasName()) itinerary.get().setName(newItineraries.getName());
             if (newItineraries.hasDescription()) itinerary.get().setDescription(newItineraries.getDescription());
-            if (newItineraries.getPlaces() != null) {
-                for (Place p : newItineraries.getPlaces()) {
+            if (newItineraries.getPlace() != null) {
+                for (Place p : newItineraries.getPlace()) {
                     List<Place> placeList = itinerary.get().getPlaces();
                     placeList.add(p);
                     itinerary.get().setPlaces(placeList);
                 }
             }
+            if (newItineraries.getUser() != null) {
+                itinerary.get().setUser(userService.findByUsername(newItineraries.getUser()).get());
+            }
             itinerary.get().setPublic(newItineraries.isPublic());
-            newItineraries.setId(id);
+            itinerary.get().setId(id);
             itineraryService.save(itinerary.get());
             return new ResponseEntity(HttpStatus.OK);
         } else {
