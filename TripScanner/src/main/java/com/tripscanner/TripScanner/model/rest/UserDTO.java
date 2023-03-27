@@ -1,5 +1,7 @@
 package com.tripscanner.TripScanner.model.rest;
 
+import com.tripscanner.TripScanner.model.User;
+
 public class UserDTO {
 
     private String username;
@@ -62,6 +64,8 @@ public class UserDTO {
         this.nationality = nationality;
     }
 
+    public UserDTO(){
+    }
     public UserDTO(String username, String firstName, String lastName, String email, String passwordHash, String nationality) {
         this.username = username;
         this.firstName = firstName;
