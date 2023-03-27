@@ -82,7 +82,7 @@ public class UserManagementRestController {
     @Operation(summary = "Create a new user")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "New user was created",
                     content = {@Content(
                             mediaType = "application/json",
@@ -166,10 +166,7 @@ public class UserManagementRestController {
             @ApiResponse(
                     responseCode = "204",
                     description = "User was correctly deleted",
-                    content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation=User.class)
-                    )}
+                    content = @Content
             ),
             @ApiResponse(
                     responseCode = "403",
@@ -190,7 +187,7 @@ public class UserManagementRestController {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
             userService.delete(id);
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } else {
             return ResponseEntity.notFound().build();
         }
