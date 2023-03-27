@@ -140,7 +140,6 @@ public class UserRestController {
                 .contentLength(user.getImageFile().length()).body(file);
     }
 
-    @PostMapping("")
     @Operation(summary = "Create a new user account")
     @ApiResponses(value = {
             @ApiResponse(
@@ -159,6 +158,7 @@ public class UserRestController {
                     content = @Content
             )
     })
+    @PostMapping("")
     public ResponseEntity<User> register(
             @Parameter(description="user details", content = {@Content(
                     mediaType = "application/json",
@@ -190,7 +190,6 @@ public class UserRestController {
         }
     }
 
-    @GetMapping("/{id}/image")
     @Operation(summary = "Returns the profile image of the desired user")
     @ApiResponses(value = {
             @ApiResponse(
@@ -199,12 +198,13 @@ public class UserRestController {
                     content = @Content
             ),
             @ApiResponse(
-                    responseCode = "403",
-                    description = "Username already in use",
+                    responseCode = "404",
+                    description = "Requested a non-existing User's image.",
                     content = @Content
             )
     })
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Object> downloadImage(@Parameter(description="user id") @PathVariable long id) throws SQLException {
         Optional<User> optionalUser = userService.findById(id);
 
         if (optionalUser.isPresent() && optionalUser.get().getImageFile() != null) {
