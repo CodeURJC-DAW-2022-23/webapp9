@@ -64,5 +64,4 @@ public class PlaceService implements AbstractService<Place> {
     public Page<Place> findFromItinerary(long id, Pageable pageable) {
         return repository.findFromItinerary(id, pageable);
     }
-
 }

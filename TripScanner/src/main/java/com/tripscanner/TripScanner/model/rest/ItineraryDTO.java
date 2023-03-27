@@ -1,7 +1,6 @@
 package com.tripscanner.TripScanner.model.rest;
 
 import com.tripscanner.TripScanner.model.Place;
-
 import java.util.List;
 
 public class ItineraryDTO {
@@ -10,12 +9,9 @@ public class ItineraryDTO {
 
     private String description;
 
-    private String user;
-
-    private List<Place> places;
-
     private boolean isPublic;
 
+    private String user;
 
     public ItineraryDTO() {}
 
@@ -24,6 +20,12 @@ public class ItineraryDTO {
         this.name = name;
         this.description = description;
         this.user = user;
+    }
+
+    public ItineraryDTO(String name, String description, boolean isPublic) {
+        this.name = name;
+        this.description = description;
+        this.isPublic = isPublic;
     }
 
     public String getName() {
@@ -42,24 +44,16 @@ public class ItineraryDTO {
         this.description = description;
     }
 
+    public boolean isPublic() {
+        return isPublic;
+    }
+
     public String getUser() {
         return user;
     }
 
     public void setUser(String user) {
         this.user = user;
-    }
-
-    public void setPlace(List<Place>places) {
-        this.places = places;
-    }
-
-    public List<Place> getPlace() {
-        return places;
-    }
-
-    public Boolean isPublic() {
-        return isPublic;
     }
 
     public void setPublic(boolean aPublic) {
@@ -74,5 +68,3 @@ public class ItineraryDTO {
         return !(this.description == null);
     }
 }
-
-

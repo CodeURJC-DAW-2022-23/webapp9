@@ -25,5 +25,4 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     @Query("SELECT p FROM Place p JOIN p.itineraries i WHERE i.id = :id")
     Page<Place> findFromItinerary(long id, Pageable pageable);
-
 }

@@ -55,12 +55,12 @@ public class Itinerary implements Information {
         this.setViews(0L);
     }
 
-    public Itinerary(ItineraryDTO itineraryDTO, User user) {
+    public Itinerary(ItineraryDTO itineraryDTO, User user, boolean isPublic) {
         super();
         this.name = itineraryDTO.getName();
         this.description = itineraryDTO.getDescription();
         this.user = user;
-        this.isPublic = true;
+        this.isPublic = isPublic;
         this.setImage(false);
         this.setViews(0L);
     }
