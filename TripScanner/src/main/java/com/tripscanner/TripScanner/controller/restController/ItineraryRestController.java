@@ -475,7 +475,7 @@ public class ItineraryRestController {
                     description = "Successfully searched the desired Itineraries.",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ItineraryDetails.class)
+                            schema = @Schema(implementation = ItineraryDetailsDTO.class)
                     )}
             ),
             @ApiResponse(

@@ -75,7 +75,7 @@ public class DestinationRestController {
                     description = "Successfully searched the desired destinations.",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = DestinationDetails.class)
+                            schema = @Schema(implementation = DestinationDetailsDTO.class)
                     )}
             ),
             @ApiResponse(
@@ -112,7 +112,7 @@ public class DestinationRestController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Sucessfully returned the Destination's image.",
+                    description = "Successfully returned the Destination's image.",
                     content = {@Content(
                             mediaType = "image/jpeg"
                     )}

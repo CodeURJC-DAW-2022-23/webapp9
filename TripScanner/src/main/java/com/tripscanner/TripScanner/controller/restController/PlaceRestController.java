@@ -74,7 +74,7 @@ public class PlaceRestController {
                     description = "Successfully searched the desired Place.",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = PlaceDetails.class)
+                            schema = @Schema(implementation = PlaceDetailsDTO.class)
                     )}
             ),
             @ApiResponse(
@@ -95,7 +95,7 @@ public class PlaceRestController {
             placeService.save(place);
 
             PlaceDetailsDTO placeDetailsDTO = new PlaceDetailsDTO(place,
-                    itineraryService.findFromPlace(place.getId(), PageRequest.of(placesPage, 10)));
+                    itineraryService.findFromPlace(place.getId(), PageRequest.of(page, 10)));
 
             return ResponseEntity.ok(placeDetailsDTO);
         }

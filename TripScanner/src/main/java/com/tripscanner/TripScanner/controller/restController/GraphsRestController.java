@@ -33,7 +33,7 @@ public class GraphsRestController {
                     description = "Returns requested data.",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = GraphDetails.class)
+                            schema = @Schema(implementation = GraphDetailsDTO.class)
                     )}
             )
     })
