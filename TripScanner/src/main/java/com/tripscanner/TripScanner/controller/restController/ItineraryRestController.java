@@ -179,7 +179,7 @@ public class ItineraryRestController {
         Itinerary itinerary = optionalItinerary.get();
         Place place = optionalPlace.get();
 
-        if (!itinerary.getUser().getUsername().equals(user.getUsername()) || user.getRoles().contains("ADMIN"))
+        if (!itinerary.getUser().getUsername().equals(user.getUsername()) && !user.getRoles().contains("ADMIN"))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         List<Place> itineraryPlaces = itinerary.getPlaces();
