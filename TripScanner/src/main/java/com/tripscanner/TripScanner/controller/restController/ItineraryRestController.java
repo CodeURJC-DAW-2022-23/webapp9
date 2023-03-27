@@ -6,6 +6,7 @@ import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.model.rest.PlaceDetails;
+import com.tripscanner.TripScanner.model.rest.PlaceIdDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.UserService;
@@ -210,11 +211,11 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(itinerary);
     }
 
-    @PutMapping("/{itineraryId}/places")
-    public ResponseEntity<Page<Place>> editPlaces(@PathVariable long itineraryId, @RequestBody long placeId, HttpServletRequest request) {
+    @PostMapping("/{itineraryId}/places")
+    public ResponseEntity<Page<Place>> editPlaces(@PathVariable long itineraryId, @RequestBody PlaceIdDTO placeIdDTO, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
-        Optional<Place> optionalPlace = placeService.findById(placeId);
+        Optional<Place> optionalPlace = placeService.findById(placeIdDTO.getPlaceId());
         if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         if (!optionalPlace.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
