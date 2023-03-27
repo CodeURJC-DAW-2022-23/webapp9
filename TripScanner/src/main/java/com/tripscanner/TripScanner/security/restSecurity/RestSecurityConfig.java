@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,10 +48,23 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         http.antMatcher("/api/**");
 
         // URLs that need authentication to access to it
-
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/users/me").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/users/me").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/users/me/image").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/users/me/image").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/users/me/itineraries").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/itineraries/*/export").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/itineraries/").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/itineraries/*/copy").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/itineraries/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/itineraries/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/management/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/management/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/management/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/management/**").hasRole("ADMIN");
 
         // Other URLs can be accessed without authentication
-        http.authorizeRequests().anyRequest().permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/itineraries/").permitAll();
 
         // Disable CSRF protection (it is difficult to implement in REST APIs)
         http.csrf().disable();
