@@ -31,6 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -90,7 +92,28 @@ public class ItineraryRestController {
 
         return new ResponseEntity<>(itineraries, HttpStatus.OK);
     }
-    
+
+    @Operation(summary = "Generate a pdf for an itinerary")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Itinerary successfully exported to pdf",
+                    content = {@Content(
+                            mediaType = "application/pdf"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Operation not supported for users without an account",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary with specified id not found",
+                    content = @Content
+            )
+    })
+
     @GetMapping("/{id}/pdf")
     public ResponseEntity getPdfFromItinerary(
             @Parameter(description = "id of the itinerary to be exported")
@@ -117,13 +140,45 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(baos.toByteArray());
     }
 
+    @Operation(summary = "Creates a new itinerary if itiDTO is present. If it is not present and there is a copyFrom id, copies the itinerary with id = copyFrom")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Newly created itinerary",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Itinerary.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "itiDTO data missing for POSTing new itinerary",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Operation not supported for users without an account",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary to copy from not found",
+                    content = @Content
+            )
+    })
+
     @PostMapping("")
-    public ResponseEntity<Itinerary> createNewItinerary(@RequestParam(required = false) Optional<Long> copyFrom, @RequestBody(required = false) Optional<ItineraryDTO> itiDTO, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Itinerary> createOrCopyItinerary(
+            @Parameter(description = "id of the itinerary to copy")
+            @RequestParam(required = false) Optional<Long> copyFrom,
+            @Parameter(description = "data of the itinerary to create")
+            @RequestBody(required = false) Optional<ItineraryDTO> itiDTO,
+            HttpServletRequest request) throws IOException {
         if (copyFrom.isPresent()) {
             Principal principalUser = request.getUserPrincipal();
             Optional<Itinerary> optionalItinerary = itineraryService.findById(copyFrom.get());
             if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            if (principalUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
             User user = userService.findByUsername(principalUser.getName()).get();
             Itinerary copy = optionalItinerary.get().copy(user);
@@ -143,7 +198,7 @@ public class ItineraryRestController {
         ItineraryDTO itineraryDTO = itiDTO.get();
 
         Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         if (itineraryDTO.getName() == null || itineraryDTO.getDescription() == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -160,12 +215,34 @@ public class ItineraryRestController {
         return ResponseEntity.created(location).body(newItinerary);
     }
 
+    @Operation(summary = "Delete an itinerary given its id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully deleted the itinerary",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Operation not supported for not registered users",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary not found",
+                    content = @Content
+            )
+    })
+
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteItinerary(@PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity deleteItinerary(
+            @Parameter(description = "id of the itinerary to be deleted")
+            @PathVariable long id,
+            HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if (principalUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
@@ -175,12 +252,39 @@ public class ItineraryRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "Remove a place from an owned itinerary")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Place removed successfully",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Place.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Login needed to perform operation or User is not owner of the itinerary",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary or place not found",
+                    content = @Content
+            )
+    })
+
     @DeleteMapping("/{itineraryId}/places/{placeId}")
-    public ResponseEntity<Page<Place>> deletePlacesFromItinerary(@PathVariable long itineraryId, @PathVariable long placeId, HttpServletRequest request) {
+    public ResponseEntity<Page<Place>> deletePlacesFromItinerary(
+            @Parameter(description = "id of the itinerary to modify")
+            @PathVariable long itineraryId,
+            @Parameter(description = "id of the place to remove")
+            @PathVariable long placeId,
+            HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
         Optional<Place> optionalPlace = placeService.findById(placeId);
-        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if (principalUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
         if (!optionalPlace.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
         if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
 
@@ -199,12 +303,39 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(placeService.findFromItinerary(itineraryId, PageRequest.of(0, 10)));
     }
 
+    @Operation(summary = "Edit an itinerary given its id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Itinerary edited successfully",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Itinerary.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Login needed to perform operation or User is not owner of the itinerary",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary not found",
+                    content = @Content
+            )
+    })
+
     @PutMapping("/{id}")
-    public ResponseEntity<Itinerary> editItineraryById(@RequestBody ItineraryDTO itineraryDTO, @PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Itinerary> editItineraryById(
+            @Parameter(description = "new data of the itinerary")
+            @RequestBody ItineraryDTO itineraryDTO,
+            @Parameter(description = "id of the itinerary to edit")
+            @PathVariable long id,
+            HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (optionalItinerary.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
@@ -219,12 +350,39 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(itinerary);
     }
 
+    @Operation(summary = "Add a place to an owned itinerary")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Place added successfully",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Place.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Login needed to perform operation or User is not owner of the itinerary",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary or place not found",
+                    content = @Content
+            )
+    })
+
     @PutMapping("/{itineraryId}/places")
-    public ResponseEntity<Page<Place>> editPlaces(@PathVariable long itineraryId, @RequestBody long placeId, HttpServletRequest request) {
+    public ResponseEntity<Page<Place>> editPlaces(
+            @Parameter(description = "id of the itinerary you want to add a place to")
+            @PathVariable long itineraryId,
+            @Parameter(description = "id of the place you want to add to the itinerary")
+            @RequestBody long placeId,
+            HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
         Optional<Place> optionalPlace = placeService.findById(placeId);
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         if (!optionalPlace.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -243,12 +401,38 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(placeService.findFromItinerary(itinerary.getId(), PageRequest.of(0, 10)));
     }
 
+    @Operation(summary = "Edit the image of an itinerary")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Image edited successfully",
+                    content = {@Content(
+                            mediaType = "application/jpeg"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Login needed to perform operation or User is not owner of the itinerary",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary not found",
+                    content = @Content
+            )
+    })
+
     @PutMapping(value = "/{id}/image", consumes = {"multipart/form-data", "image/jpeg", "image/png"})
-    public ResponseEntity<Resource> editItineraryImage(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable long id, HttpServletRequest request) throws IOException, SQLException {
+    public ResponseEntity<Resource> editItineraryImage(
+            @Parameter(description = "image to set as itinerary image")
+            @RequestParam("imageFile") MultipartFile imageFile,
+            @Parameter(description = "id of the itinerary you want to add an image to")
+            @PathVariable long id,
+            HttpServletRequest request) throws IOException, SQLException, URISyntaxException {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
@@ -258,10 +442,7 @@ public class ItineraryRestController {
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
 
-        Resource file = new InputStreamResource(imageFile.getInputStream());
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                .contentLength(itinerary.getImageFile().length()).body(file);
+        
     }
 
     @GetMapping("/{id}")
