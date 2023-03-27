@@ -2,7 +2,7 @@
 
 if test $# -gt 1
 then
-    echo "Too many arguments"
+    echo "Too many arguments. Call the script with ./create_image.sh DockerHubUsrname/tripscanner-webapp"
     exit 1
 
 elif test $# -eq 0
