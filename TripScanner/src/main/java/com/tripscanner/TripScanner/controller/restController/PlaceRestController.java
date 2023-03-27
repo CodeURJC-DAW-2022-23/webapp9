@@ -55,11 +55,12 @@ public class PlaceRestController {
 
         if (optionalPlace.isPresent()) {
             Place place = optionalPlace.get();
-            PlaceDetails placeDetails = new PlaceDetails(place,
-                    itineraryService.findFromPlace(place.getId(), PageRequest.of(placesPage, 10)));
 
             place.setViews(place.getViews() + 1);
             placeService.save(place);
+
+            PlaceDetails placeDetails = new PlaceDetails(place,
+                    itineraryService.findFromPlace(place.getId(), PageRequest.of(placesPage, 10)));
 
             return ResponseEntity.ok(placeDetails);
         }

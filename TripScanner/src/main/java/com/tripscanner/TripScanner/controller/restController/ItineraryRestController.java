@@ -272,12 +272,13 @@ public class ItineraryRestController {
             if (usr == null || !itinerary.getUser().getUsername().equals(usr.getName()))
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        ItineraryDetails itineraryDetails = new ItineraryDetails(itinerary,
-                placeService.findFromItinerary(itinerary.getId(), PageRequest.of(placesPage, 10)),
-                reviewService.findFromItinerary(itinerary.getId(), PageRequest.of(reviewsPage, 10)));
 
         itinerary.setViews(itinerary.getViews() + 1);
         itineraryService.save(itinerary);
+
+        ItineraryDetails itineraryDetails = new ItineraryDetails(itinerary,
+                placeService.findFromItinerary(itinerary.getId(), PageRequest.of(placesPage, 10)),
+                reviewService.findFromItinerary(itinerary.getId(), PageRequest.of(reviewsPage, 10)));
 
         return ResponseEntity.ok(itineraryDetails);
     }
