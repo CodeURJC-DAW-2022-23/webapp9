@@ -7,6 +7,11 @@ import com.tripscanner.TripScanner.model.rest.DestinationDetails;
 import com.tripscanner.TripScanner.model.rest.PlaceDetails;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -31,11 +36,24 @@ public class PlaceRestController {
     @Autowired
     private ItineraryService itineraryService;
 
+    @Operation(summary = "Searches for Places in the database. Filters can be applied optionally.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired Place.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            )
+    })
     @GetMapping("")
-    public ResponseEntity<Page<Place>> places(@RequestParam(defaultValue = "") String name,
-                                              @RequestParam(defaultValue = "id") String sort,
-                                              @RequestParam(defaultValue = "DESC") String order,
-                                              @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Place>> places(@Parameter(description="search query") @RequestParam(defaultValue = "") String name,
+                                              @Parameter(description="sorting type: id, name, views") @RequestParam(defaultValue = "id") String sort,
+                                              @Parameter(description="order specifier") @RequestParam(defaultValue = "DESC") String order,
+                                              @Parameter(description="page number") @RequestParam(defaultValue = "0") int page) {
 
         Sort.Direction direction;
         if (Objects.equals(order, "DESC")) direction = Sort.Direction.DESC;
@@ -48,23 +66,49 @@ public class PlaceRestController {
                 PageRequest.of(page, 10, Sort.by(direction, sort))));
     }
 
+    @Operation(summary = "Searches for Places in the database. Filters can be applied optionally.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired Place.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<PlaceDetails> destination(@PathVariable int id,
-                                                    @RequestParam(defaultValue = "0") int placesPage) {
+    public ResponseEntity<PlaceDetails> place(@Parameter(description="place id") @PathVariable int id,
+                                              @Parameter(description="itineraries page number") @RequestParam(defaultValue = "0") int page) {
         Optional<Place> optionalPlace = placeService.findById(id);
 
         if (optionalPlace.isPresent()) {
             Place place = optionalPlace.get();
             PlaceDetails placeDetails = new PlaceDetails(place,
-                    itineraryService.findFromPlace(place.getId(), PageRequest.of(placesPage, 10)));
+                    itineraryService.findFromPlace(place.getId(), PageRequest.of(page, 10)));
 
             return ResponseEntity.ok(placeDetails);
         }
         else return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Returns the image of the desired Place.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Sucessfully returned the Place's image.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing Place's image.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+    public ResponseEntity<Object> downloadImage(@Parameter(description="place id") @PathVariable long id) throws SQLException {
         Optional<Place> place = placeService.findById(id);
 
         if (place.isPresent() && place.get().getImageFile() != null) {
