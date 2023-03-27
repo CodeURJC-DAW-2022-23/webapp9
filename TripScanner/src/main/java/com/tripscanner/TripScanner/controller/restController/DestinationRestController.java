@@ -42,7 +42,10 @@ public class DestinationRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Successfully searched the desired destinations.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Destination.class)
+                    )}
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -72,7 +75,10 @@ public class DestinationRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Successfully searched the desired destinations.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = DestinationDetails.class)
+                    )}
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -105,7 +111,9 @@ public class DestinationRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Sucessfully returned the Destination's image.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/jpg"
+                    )}
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -114,7 +122,7 @@ public class DestinationRestController {
             )
     })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@Parameter(description="destination id") @PathVariable long id) throws SQLException {
+    public ResponseEntity<Resource> downloadImage(@Parameter(description="destination id") @PathVariable long id) throws SQLException {
         Optional<Destination> destination = destinationService.findById(id);
 
         if (destination.isPresent() && destination.get().getImageFile() != null) {

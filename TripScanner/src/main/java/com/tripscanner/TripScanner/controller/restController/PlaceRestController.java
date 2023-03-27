@@ -10,6 +10,7 @@ import com.tripscanner.TripScanner.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,11 @@ public class PlaceRestController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Successfully searched the desired Place.",
-                    content = @Content
+                    description = "Successfully searched the desired Places.",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Place.class)
+                    )}
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -71,7 +75,10 @@ public class PlaceRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Successfully searched the desired Place.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = PlaceDetails.class)
+                    )}
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -99,7 +106,9 @@ public class PlaceRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Sucessfully returned the Place's image.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/jpg"
+                    )}
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -108,7 +117,7 @@ public class PlaceRestController {
             )
     })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@Parameter(description="place id") @PathVariable long id) throws SQLException {
+    public ResponseEntity<Resource> downloadImage(@Parameter(description="place id") @PathVariable long id) throws SQLException {
         Optional<Place> place = placeService.findById(id);
 
         if (place.isPresent() && place.get().getImageFile() != null) {

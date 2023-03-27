@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.controller.restController;
 
+import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
@@ -15,6 +16,7 @@ import com.tripscanner.TripScanner.utils.PdfGenerator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -68,7 +70,10 @@ public class ItineraryRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Successfully searched the desired Itinerary.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Itinerary.class)
+                    )}
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -278,7 +283,10 @@ public class ItineraryRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Successfully searched the desired Itineraries.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ItineraryDetails.class)
+                    )}
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -324,7 +332,9 @@ public class ItineraryRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Sucessfully returned the Itinerary's image.",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/jpg"
+                    )}
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -333,7 +343,7 @@ public class ItineraryRestController {
             )
     })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@Parameter(description="itinerary id") @PathVariable long id) throws SQLException {
+    public ResponseEntity<Resource> downloadImage(@Parameter(description="itinerary id") @PathVariable long id) throws SQLException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
         if (itinerary.isPresent() && itinerary.get().getImageFile() != null) {

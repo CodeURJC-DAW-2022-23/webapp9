@@ -195,7 +195,9 @@ public class UserRestController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Sucessfully returned the user image",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/jpg"
+                    )}
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -204,7 +206,7 @@ public class UserRestController {
             )
     })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@Parameter(description="user id") @PathVariable long id) throws SQLException {
+    public ResponseEntity<Resource> downloadImage(@Parameter(description="user id") @PathVariable long id) throws SQLException {
         Optional<User> optionalUser = userService.findById(id);
 
         if (optionalUser.isPresent() && optionalUser.get().getImageFile() != null) {
