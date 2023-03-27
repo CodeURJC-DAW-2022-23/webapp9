@@ -319,7 +319,7 @@ Those are the instructions to run it:
 
 #### Building docker image
 
-To build the Docker image using the `create_image.sh` file you might need to intall Docker first as the previous step shows.
+To build the Docker image using the `create_image.sh` file you might need to install Docker first as the previous step shows.
 
 After that, you should:
 
@@ -327,7 +327,7 @@ After that, you should:
 2. Open a terminal.
 3. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
 4. Go to the docker folder using `cd webapp9/docker`.
-5. Run `./create_image.sh %username%/tripscanner-webapp` replacing %username% with you DockerHub username.
+5. Run `./create_image.sh %username%/tripscanner-webapp` replacing %username% with your DockerHub username.
 
 
 ### Members participation
