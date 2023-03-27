@@ -143,7 +143,7 @@ public class ItineraryRestController {
     @Operation(summary = "Creates a new itinerary if itiDTO is present. If it is not present and there is a copyFrom id, copies the itinerary with id = copyFrom")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "Newly created itinerary",
                     content = {@Content(
                             mediaType = "application/json",
@@ -407,7 +407,7 @@ public class ItineraryRestController {
                     responseCode = "200",
                     description = "Image edited successfully",
                     content = {@Content(
-                            mediaType = "application/jpeg"
+                            mediaType = "image/jpeg"
                     )}
             ),
             @ApiResponse(
