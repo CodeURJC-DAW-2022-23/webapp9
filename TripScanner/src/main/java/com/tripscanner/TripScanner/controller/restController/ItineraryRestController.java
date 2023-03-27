@@ -370,11 +370,6 @@ public class ItineraryRestController {
                     content = @Content
             ),
             @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized request to a private Itinerary.",
-                    content = @Content
-            ),
-            @ApiResponse(
                     responseCode = "403",
                     description = "Invalid permissions to request places from a private Itinerary.",
                     content = @Content
