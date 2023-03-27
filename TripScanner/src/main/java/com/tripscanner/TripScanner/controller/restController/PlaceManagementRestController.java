@@ -85,7 +85,7 @@ public class PlaceManagementRestController {
     @Operation(summary = "Create a new place")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "New place was created",
                     content = {@Content(
                             mediaType = "application/json",
@@ -153,10 +153,7 @@ public class PlaceManagementRestController {
             @ApiResponse(
                     responseCode = "204",
                     description = "Place was correctly deleted",
-                    content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation= Place.class)
-                    )}
+                    content = @Content
             ),
             @ApiResponse(
                     responseCode = "403",
@@ -184,7 +181,7 @@ public class PlaceManagementRestController {
                 }
             }
             placeService.delete(id);
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } else {
             return ResponseEntity.notFound().build();
         }
