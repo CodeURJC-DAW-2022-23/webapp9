@@ -1,9 +1,16 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.model.rest.DestinationDetailsDTO;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -28,11 +35,27 @@ public class DestinationRestController {
     @Autowired
     private PlaceService placeService;
 
+    @Operation(summary = "Searches for destinations in the database. Filters can be applied optionally.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired destinations.",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Destination.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            )
+    })
     @GetMapping("")
-    public ResponseEntity<Page<Destination>> destinations(@RequestParam(defaultValue = "") String name,
-                                                          @RequestParam(defaultValue = "id") String sort,
-                                                          @RequestParam(defaultValue = "DESC") String order,
-                                                          @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Destination>> destinations(@Parameter(description="search query") @RequestParam(defaultValue = "") String name,
+                                                          @Parameter(description="sorting type: id, name, views") @RequestParam(defaultValue = "id") String sort,
+                                                          @Parameter(description="order specifier") @RequestParam(defaultValue = "DESC") String order,
+                                                          @Parameter(description="page number") @RequestParam(defaultValue = "0") int page) {
 
         Sort.Direction direction;
         if (Objects.equals(order, "DESC")) direction = Sort.Direction.DESC;
@@ -45,9 +68,30 @@ public class DestinationRestController {
                 PageRequest.of(page, 10, Sort.by(direction, sort))));
     }
 
+    @Operation(summary = "Get Detailed information about a specific Destination.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired destinations.",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = DestinationDetails.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing Destination.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<DestinationDetailsDTO> destination(@PathVariable int id,
-                                                             @RequestParam(defaultValue = "0") int placesPage) {
+    public ResponseEntity<DestinationDetailsDTO> destination(@Parameter(description="destination id") @PathVariable int id,
+                                                             @Parameter(description="places page number") @RequestParam(defaultValue = "0") int placesPage) {
         Optional<Destination> optionalDestination = destinationService.findById(id);
 
         if (optionalDestination.isPresent()) {
@@ -64,8 +108,23 @@ public class DestinationRestController {
         else return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Returns the image of the desired Destination.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Sucessfully returned the Destination's image.",
+                    content = {@Content(
+                            mediaType = "image/jpeg"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing Destination's image.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+    public ResponseEntity<Resource> downloadImage(@Parameter(description="destination id") @PathVariable long id) throws SQLException {
         Optional<Destination> destination = destinationService.findById(id);
 
         if (destination.isPresent() && destination.get().getImageFile() != null) {
