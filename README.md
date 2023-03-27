@@ -284,7 +284,7 @@ The API REST documentation has been generated using OpenAPI specification. As so
 
 The classes and templates diagram has been updated with the new `@RestController` classes. Please note that the `@Service` classes have been implemented before, in the *Stage 2*.
 
-**INCLUDE UPDATED DIAGRAM HERE**
+![Phase3DAW](https://user-images.githubusercontent.com/103607990/228073072-d75470f1-8616-49de-88e1-09d99020b0db.svg)
 
 ### Docker
 
