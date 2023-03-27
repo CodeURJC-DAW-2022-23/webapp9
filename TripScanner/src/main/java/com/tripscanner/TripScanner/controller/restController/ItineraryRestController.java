@@ -293,9 +293,9 @@ public class ItineraryRestController {
     }
 
     @GetMapping("/{id}/places")
-    public ResponseEntity<List<PlaceDetails>> getPlacesInUserItinerary(HttpServletRequest request,
-                                                                       @PathVariable long id,
-                                                                       @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Place>> getPlacesInUserItinerary(HttpServletRequest request,
+                                                                @PathVariable long id,
+                                                                @RequestParam(defaultValue = "0") int page) {
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -306,13 +306,7 @@ public class ItineraryRestController {
             if (!itinerary.getUser().getUsername().equals(usr.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        Page<Place> places = placeService.findFromItinerary(id, PageRequest.of(0, 5));
-        List<PlaceDetails> placesDetails = new ArrayList<>();
-        for (Place p : places) {
-            placesDetails.add(new PlaceDetails(p, itineraryService.findFromPlace(p.getId(), PageRequest.of(page, 10))));
-        }
-
-        return new ResponseEntity<>(placesDetails, HttpStatus.OK);
+        return new ResponseEntity<>(placeService.findFromItinerary(id, PageRequest.of(page, 10)), HttpStatus.OK);
     }
 
 }
