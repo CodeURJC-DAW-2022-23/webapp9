@@ -145,12 +145,12 @@ public class UserRestController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Sucessfully signed up the new user",
+                    description = "Successfully signed up the new user",
                     content = @Content
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Invalid arguments or required arguemnts missing",
+                    description = "Invalid arguments or required arguments missing",
                     content = @Content
             ),
             @ApiResponse(
