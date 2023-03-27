@@ -128,10 +128,11 @@ public class DetailsController {
     public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         Principal currUser = request.getUserPrincipal();
+        User usr = userService.findByUsername(currUser.getName()).get();
 
         if (!itinerary.get().isPublic()) {
             if (currUser == null) return "error/403";
-            else if (!Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
+            else if (!usr.getRoles().contains("ADMIN") || !Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
                 return "error/403";
             }
         }
