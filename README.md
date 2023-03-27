@@ -335,7 +335,7 @@ After that, you should:
 Here, each member of the team shows what they have contributed to during the development of this phase.
 
 1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
-    - **Description of tasks:** 
+    - **Description of tasks:** In this phase I have been in charge of the admin functionality for places and users in the API. Initially I was going to work on Railway too, but since it was removed, I was also in charge of the documentation (README, diagrams and API) and of checking that everything was working properly and fixing errors.
     - **5 biggest commits:** These commits are:
         - [Feat: Upload and edit image methods](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/e5f1175200b391c4c7d176cc0f168a28246132e0)
         - [Feat: get, add, edit and delete Places](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/9a201c60ef490b6e20df1bdcd8bb13409e63b575)
