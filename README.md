@@ -277,8 +277,8 @@ Here, each member of the team shows what they have contributed to during the dev
 
 The API REST documentation has been generated using OpenAPI specification. As so, it has been automatically generated into a `.yml` and `.html` file. Both files are accessible from this repository, through the following links:
 
-* [**api-docs.yml**]()
-* [**api-docs.html**]()
+* [**api-docs.yml**](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/api-docs/api-docs.yaml)
+* [**api-docs.html**](https://raw.githack.com/CodeURJC-DAW-2022-23/webapp9/dev/TripScanner/api-docs/api-docs.html)
 
 ### Updated classes and templates diagram
 
