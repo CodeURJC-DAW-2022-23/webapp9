@@ -54,6 +54,10 @@ public class DestinationRestController {
 
         if (optionalDestination.isPresent()) {
             Destination destination = optionalDestination.get();
+
+            destination.setViews(destination.getViews() + 1);
+            destinationService.save(destination);
+
             DestinationDetails destinationDetails = new DestinationDetails(destination,
                     placeService.findFromDestination(destination.getId(), PageRequest.of(placesPage, 10)));
 
