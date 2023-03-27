@@ -85,14 +85,15 @@ public class DatabaseInitializer {
 
 
         // Sample users
-        userRepository.save(new User("user", "User1", "User2", "user@example.org", passwordEncoder.encode("pass"), "Spanish", "USER"));
+        User user = new User("user", "User1", "User2", "user@example.org", passwordEncoder.encode("pass"), "Spanish", "USER");
+        userRepository.save(user);
         User admin = new User("admin", "Admin2", "Admin2", "admin@example.org", passwordEncoder.encode("adminpass"), "Spanish", "USER", "ADMIN");
         setImage(admin, "/img-samples/madrid-sol.jpeg");
         userRepository.save(admin);
 
         // Sample itineraries
 
-        Itinerary itinerary = new Itinerary("Route around Spain", "Including places in Madrid and Seville", admin, true);
+        Itinerary itinerary = new Itinerary("Route around Spain", "Including places in Madrid and Seville", user, true);
         setImage(itinerary, "/img-samples/madrid-sol.jpeg");
 
 

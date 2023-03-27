@@ -57,8 +57,7 @@ public class ItineraryManagementRestController {
         if (itinerary.getDescription() == null)
             itinerary.setDescription("");
 
-        Itinerary newItinerary = new Itinerary(itinerary, user.get());
-        newItinerary.setPublic(user.get().getRoles().contains("ADMIN"));
+        Itinerary newItinerary = new Itinerary(itinerary, user.get(), user.get().getRoles().contains("ADMIN"));
 
         newItinerary.setImage(true);
         Resource image = new ClassPathResource("static/img/placeholder.jpg");
@@ -78,13 +77,6 @@ public class ItineraryManagementRestController {
         if (itinerary.isPresent()) {
             if (newItineraries.hasName()) itinerary.get().setName(newItineraries.getName());
             if (newItineraries.hasDescription()) itinerary.get().setDescription(newItineraries.getDescription());
-            if (newItineraries.getPlace() != null) {
-                for (Place p : newItineraries.getPlace()) {
-                    List<Place> placeList = itinerary.get().getPlaces();
-                    placeList.add(p);
-                    itinerary.get().setPlaces(placeList);
-                }
-            }
             if (newItineraries.getUser() != null) {
                 itinerary.get().setUser(userService.findByUsername(newItineraries.getUser()).get());
             }
