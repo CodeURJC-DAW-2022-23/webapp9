@@ -10,6 +10,9 @@ public class PlaceDTO {
 
     private String destination;
 
+    public PlaceDTO(){
+    }
+
     public PlaceDTO(String name, String description, String destination) {
         this.name = name;
         this.description = description;
