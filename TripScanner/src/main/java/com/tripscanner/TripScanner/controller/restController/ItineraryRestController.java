@@ -6,6 +6,7 @@ import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.model.rest.PlaceDetails;
+import com.tripscanner.TripScanner.model.rest.PlaceIdDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.UserService;
@@ -350,6 +351,7 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(itinerary);
     }
 
+
     @Operation(summary = "Add a place to an owned itinerary")
     @ApiResponses(value = {
             @ApiResponse(
@@ -372,7 +374,7 @@ public class ItineraryRestController {
             )
     })
 
-    @PutMapping("/{itineraryId}/places")
+    @PostMapping("/{itineraryId}/places")
     public ResponseEntity<Page<Place>> editPlaces(
             @Parameter(description = "id of the itinerary you want to add a place to")
             @PathVariable long itineraryId,
