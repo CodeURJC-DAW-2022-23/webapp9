@@ -6,6 +6,7 @@ import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.model.rest.PlaceDetails;
+import com.tripscanner.TripScanner.model.rest.PlaceIdDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.UserService;
@@ -111,7 +112,7 @@ public class ItineraryRestController {
     @PostMapping("")
     public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itineraryDTO, HttpServletRequest request) throws IOException {
         Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         if (itineraryDTO.getName() == null || itineraryDTO.getDescription() == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -210,12 +211,12 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(itinerary);
     }
 
-    @PutMapping("/{itineraryId}/places")
-    public ResponseEntity<Page<Place>> editPlaces(@PathVariable long itineraryId, @RequestBody long placeId, HttpServletRequest request) {
+    @PostMapping("/{itineraryId}/places")
+    public ResponseEntity<Page<Place>> editPlaces(@PathVariable long itineraryId, @RequestBody PlaceIdDTO placeIdDTO, HttpServletRequest request) {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
-        Optional<Place> optionalPlace = placeService.findById(placeId);
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        Optional<Place> optionalPlace = placeService.findById(placeIdDTO.getPlaceId());
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         if (!optionalPlace.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -271,6 +272,10 @@ public class ItineraryRestController {
             if (usr == null || !itinerary.getUser().getUsername().equals(usr.getName()))
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
+        itinerary.setViews(itinerary.getViews() + 1);
+        itineraryService.save(itinerary);
+
         ItineraryDetails itineraryDetails = new ItineraryDetails(itinerary,
                 placeService.findFromItinerary(itinerary.getId(), PageRequest.of(placesPage, 10)),
                 reviewService.findFromItinerary(itinerary.getId(), PageRequest.of(reviewsPage, 10)));
