@@ -16,10 +16,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +55,7 @@ public class ItineraryManagementRestController {
                     description = "Found the itinerary",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation=Itinerary.class)
+                            schema = @Schema(implementation = Itinerary.class)
                     )}
             ),
             @ApiResponse(
@@ -73,7 +76,7 @@ public class ItineraryManagementRestController {
     })
 
     @GetMapping("")
-    public ResponseEntity<Page<Itinerary>> getItinerary(@Parameter(description="page number") @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Itinerary>> getItinerary(@Parameter(description = "page number") @RequestParam(defaultValue = "0") int page) {
         Page<Itinerary> itinerary = itineraryService.findAll(PageRequest.of(page, 10));
         if (!itinerary.isEmpty()) {
             return ResponseEntity.ok(itinerary);
@@ -90,18 +93,18 @@ public class ItineraryManagementRestController {
                     description = "Itinerary is created",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= Itinerary.class)
+                            schema = @Schema(implementation = Itinerary.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             )
     })
 
     @PostMapping("")
-    public ResponseEntity<Itinerary> createNewItinerary(@Parameter(description="new itinerary") @RequestBody ItineraryDTO itinerary) throws IOException {
+    public ResponseEntity<Itinerary> createNewItinerary(@Parameter(description = "new itinerary") @RequestBody ItineraryDTO itinerary) throws IOException {
 
         Optional<User> user = userService.findByUsername(itinerary.getUser());
         if (user.isEmpty() || itinerary.getName() == null)
@@ -129,12 +132,12 @@ public class ItineraryManagementRestController {
                     description = "Itinerary is edited",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= Itinerary.class)
+                            schema = @Schema(implementation = Itinerary.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             ),
             @ApiResponse(
@@ -145,9 +148,8 @@ public class ItineraryManagementRestController {
     })
 
 
-
     @PutMapping("/{id}")
-    public ResponseEntity editItinerary(@Parameter(description="edited itinerary") @PathVariable long id, @RequestBody ItineraryDTO newItineraries) {
+    public ResponseEntity editItinerary(@Parameter(description = "edited itinerary") @PathVariable long id, @RequestBody ItineraryDTO newItineraries) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
         if (itinerary.isPresent()) {
@@ -168,16 +170,16 @@ public class ItineraryManagementRestController {
     @Operation(summary = "Delete itinerary by id")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "204",
                     description = "itinerary is deleted",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= Itinerary.class)
+                            schema = @Schema(implementation = Itinerary.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             ),
             @ApiResponse(
@@ -188,7 +190,7 @@ public class ItineraryManagementRestController {
     })
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteItinerary(@Parameter(description="delete itinerary by id") @PathVariable long id) {
+    public ResponseEntity deleteItinerary(@Parameter(description = "delete itinerary by id") @PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         if (itinerary.isPresent()) {
             itineraryService.delete(id);
@@ -198,41 +200,6 @@ public class ItineraryManagementRestController {
         }
     }
 
-    @Operation(summary = "Download new image")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Image is downloaded",
-                    content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation= Itinerary.class)
-                    )}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden",
-                    content = @Content
-            )
-    })
-
-    @PostMapping("/{id}/image")
-    public ResponseEntity<Itinerary> uploadImage(@Parameter(description="download image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
-        Optional<Itinerary> itinerary = itineraryService.findById(id);
-
-        if (itinerary.isPresent()) {
-            Itinerary newitinerary = itinerary.get();
-
-            newitinerary.setImage(true);
-            newitinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-
-            itineraryService.save(newitinerary);
-            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
-            URI location = new URI(baseUrl + "/api/itineraries/" + id + "/image");
-            return ResponseEntity.created(location).build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     @Operation(summary = "Edit itinerary`s image")
     @ApiResponses(value = {
@@ -240,13 +207,13 @@ public class ItineraryManagementRestController {
                     responseCode = "200",
                     description = "Image is edited",
                     content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation= Itinerary.class)
+                            mediaType = "image/jpeg",
+                            schema = @Schema(implementation = Itinerary.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             ),
             @ApiResponse(
@@ -257,16 +224,19 @@ public class ItineraryManagementRestController {
     })
 
     @PutMapping("/{id}/image")
-    public ResponseEntity<Itinerary> editImage(@Parameter(description="edit image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+    public ResponseEntity<Resource> editImage(@Parameter(description = "edit image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException, SQLException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
         if (itinerary.isPresent()) {
             Itinerary newitinerary = itinerary.get();
             newitinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            newitinerary.setImage(true);
             itineraryService.save(newitinerary);
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
             URI location = new URI(baseUrl + "/api/itineraries/" + id + "/image");
-            return ResponseEntity.created(location).body(newitinerary);
+            Resource file = new InputStreamResource(imageFile.getInputStream());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+                    .contentLength(newitinerary.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

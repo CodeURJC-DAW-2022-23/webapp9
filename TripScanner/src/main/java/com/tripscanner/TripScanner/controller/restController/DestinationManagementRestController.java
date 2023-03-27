@@ -14,9 +14,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,12 +51,12 @@ public class DestinationManagementRestController {
                     description = "Found the destination",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= Destination.class)
+                            schema = @Schema(implementation = Destination.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             ),
             @ApiResponse(
@@ -65,7 +68,7 @@ public class DestinationManagementRestController {
 
 
     @GetMapping("")
-    public ResponseEntity<Page<Destination>> getDestination(@Parameter(description="page number") @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Destination>> getDestination(@Parameter(description = "page number") @RequestParam(defaultValue = "0") int page) {
         Page<Destination> destinations = destinationService.findAll(PageRequest.of(page, 10));
         if (!destinations.isEmpty()) {
             return ResponseEntity.ok(destinations);
@@ -81,18 +84,18 @@ public class DestinationManagementRestController {
                     description = "Destination is created",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= Destination.class)
+                            schema = @Schema(implementation = Destination.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             )
     })
 
     @PostMapping("")
-    public ResponseEntity<Destination> createDestination(@Parameter(description="new destination") @RequestBody Destination destination) {
+    public ResponseEntity<Destination> createDestination(@Parameter(description = "new destination") @RequestBody Destination destination) {
         destination.setViews(0L);
         destinationService.save(destination);
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(destination.getId()).toUri();
@@ -107,12 +110,12 @@ public class DestinationManagementRestController {
                     description = "Destination is edited",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= Destination.class)
+                            schema = @Schema(implementation = Destination.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             ),
             @ApiResponse(
@@ -123,7 +126,7 @@ public class DestinationManagementRestController {
     })
 
     @PutMapping("/{id}")
-    public ResponseEntity<Destination> editDestination(@Parameter(description="edited destination") @PathVariable long id, @RequestBody Destination newDestination) throws SQLException {
+    public ResponseEntity<Destination> editDestination(@Parameter(description = "edited destination") @PathVariable long id, @RequestBody Destination newDestination) throws SQLException {
         Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent()) {
             if (newDestination.getImageFile() != null) {
@@ -141,16 +144,16 @@ public class DestinationManagementRestController {
     @Operation(summary = "Delete destination by id")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "204",
                     description = "Destination is deleted",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= Destination.class)
+                            schema = @Schema(implementation = Destination.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             ),
             @ApiResponse(
@@ -161,7 +164,7 @@ public class DestinationManagementRestController {
     })
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Destination> deleteDestination(@Parameter(description="if of destination to delete") @PathVariable long id) {
+    public ResponseEntity<Destination> deleteDestination(@Parameter(description = "if of destination to delete") @PathVariable long id) {
         Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent()) {
             for (int i = 0; i < destination.get().getPlaces().size(); i++) {
@@ -182,56 +185,19 @@ public class DestinationManagementRestController {
     }
 
 
-    @Operation(summary = "Download new image")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Image is downloaded",
-                    content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation= Destination.class)
-                    )}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden",
-                    content = @Content
-            )
-    })
-
-    @PostMapping("/{id}/image")
-    public ResponseEntity<Destination> uploadImage(@Parameter(description="download image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
-        Optional<Destination> destination = destinationService.findById(id);
-
-        if (destination.isPresent()) {
-            Destination newDestination = destination.get();
-
-            newDestination.setImage(true);
-            newDestination.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-
-            destinationService.save(newDestination);
-            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
-            URI location = new URI(baseUrl + "/api/destinations/" + id + "/image");
-            return ResponseEntity.created(location).build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-
     @Operation(summary = "Edit destination`s image")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Image is edited",
                     content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation= Destination.class)
+                            mediaType = "image/jpeg",
+                            schema = @Schema(implementation = Destination.class)
                     )}
             ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Forbidden",
+                    description = "Not authorized",
                     content = @Content
             ),
             @ApiResponse(
@@ -242,16 +208,21 @@ public class DestinationManagementRestController {
     })
 
     @PutMapping("/{id}/image")
-    public ResponseEntity<Destination> editImage( @Parameter(description="edited image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+    public ResponseEntity<Resource> editImage(@Parameter(description = "edited image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException, SQLException {
         Optional<Destination> destination = destinationService.findById(id);
 
         if (destination.isPresent()) {
             Destination newDestination = destination.get();
+
             newDestination.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            newDestination.setImage(true);
             destinationService.save(newDestination);
+
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+            Resource file = new InputStreamResource(imageFile.getInputStream());
             URI location = new URI(baseUrl + "/api/destinations/" + id + "/image");
-            return ResponseEntity.created(location).body(newDestination);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+                    .contentLength(newDestination.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
