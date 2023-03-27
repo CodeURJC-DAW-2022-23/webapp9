@@ -442,7 +442,13 @@ public class ItineraryRestController {
         itinerary.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         itineraryService.save(itinerary);
 
-        
+        Resource file = new InputStreamResource(imageFile.getInputStream());
+
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+        URI location = new URI(baseUrl + "/api/places/" + id + "/image");
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+                .contentLength(itinerary.getImageFile().length()).body(file);
     }
 
     @GetMapping("/{id}")
