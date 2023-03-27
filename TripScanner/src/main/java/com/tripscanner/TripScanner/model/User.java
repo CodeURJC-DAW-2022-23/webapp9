@@ -167,4 +167,23 @@ public class User {
         this.reviews = reviews;
     }
 
+    public boolean hasUserName() {
+        return !this.username.isEmpty() || !this.username.isBlank();
+    }
+
+    public boolean hasFirstName() {
+        return !this.firstName.isEmpty() || !this.firstName.isBlank();
+    }
+
+    public boolean hasLastName() {
+        return !this.lastName.isEmpty() || !this.lastName.isBlank();
+    }
+
+    public boolean hasEmail() {
+        return !this.email.isEmpty() || !this.email.isBlank();
+    }
+
+    public boolean hasPasswordHash() {
+        return !this.passwordHash.isEmpty() || !this.passwordHash.isBlank();
+    }
 }

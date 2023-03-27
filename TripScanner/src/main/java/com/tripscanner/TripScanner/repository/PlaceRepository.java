@@ -3,10 +3,12 @@ package com.tripscanner.TripScanner.repository;
 
 import java.util.Optional;
 
+import com.tripscanner.TripScanner.model.Destination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.tripscanner.TripScanner.model.Place;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
@@ -23,5 +25,4 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     @Query("SELECT p FROM Place p JOIN p.itineraries i WHERE i.id = :id")
     Page<Place> findFromItinerary(long id, Pageable pageable);
-
 }
