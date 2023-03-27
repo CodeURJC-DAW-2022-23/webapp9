@@ -7,6 +7,7 @@ import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,31 +52,21 @@ public class DestinationManagementRestController {
                     )}
             ),
             @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized",
-                    content = @Content
-            ),
-            @ApiResponse(
                     responseCode = "403",
                     description = "Forbidden",
                     content = @Content
             ),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid name supplied",
-                    content = @Content
-            ),
-            @ApiResponse(
                     responseCode = "404",
-                    description = "Itinerary not found",
+                    description = "Destination not found",
                     content = @Content
             )
     })
 
 
     @GetMapping("")
-    public ResponseEntity<Page<Destination>> getDestination(Pageable pageable) {
-        Page<Destination> destinations = destinationService.findAll(pageable);
+    public ResponseEntity<Page<Destination>> getDestination(@Parameter(description="page number") @RequestParam(defaultValue = "0") int page) {
+        Page<Destination> destinations = destinationService.findAll(PageRequest.of(page, 10));
         if (!destinations.isEmpty()) {
             return ResponseEntity.ok(destinations);
         } else {
@@ -82,16 +74,56 @@ public class DestinationManagementRestController {
         }
     }
 
+    @Operation(summary = "Create a new destination")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Destination is created",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= Destination.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            )
+    })
+
     @PostMapping("")
-    public ResponseEntity<Destination> createDestination(@RequestBody Destination destination) {
+    public ResponseEntity<Destination> createDestination(@Parameter(description="new destination") @RequestBody Destination destination) {
         destination.setViews(0L);
         destinationService.save(destination);
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(destination.getId()).toUri();
         return ResponseEntity.created(location).body(destination);
     }
 
+
+    @Operation(summary = "Edit destination")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Destination is edited",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= Destination.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Destination not found",
+                    content = @Content
+            )
+    })
+
     @PutMapping("/{id}")
-    public ResponseEntity<Destination> editDestination(@PathVariable long id, @RequestBody Destination newDestination) throws SQLException {
+    public ResponseEntity<Destination> editDestination(@Parameter(description="edited destination") @PathVariable long id, @RequestBody Destination newDestination) throws SQLException {
         Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent()) {
             if (newDestination.getImageFile() != null) {
@@ -106,8 +138,30 @@ public class DestinationManagementRestController {
         }
     }
 
+    @Operation(summary = "Delete destination by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Destination is deleted",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= Destination.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Destination not found",
+                    content = @Content
+            )
+    })
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Destination> deleteDestination(@PathVariable long id) {
+    public ResponseEntity<Destination> deleteDestination(@Parameter(description="if of destination to delete") @PathVariable long id) {
         Optional<Destination> destination = destinationService.findById(id);
         if (destination.isPresent()) {
             for (int i = 0; i < destination.get().getPlaces().size(); i++) {
@@ -127,8 +181,26 @@ public class DestinationManagementRestController {
         }
     }
 
+
+    @Operation(summary = "Download new image")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Image is downloaded",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= Destination.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            )
+    })
+
     @PostMapping("/{id}/image")
-    public ResponseEntity<Destination> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+    public ResponseEntity<Destination> uploadImage(@Parameter(description="download image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
         Optional<Destination> destination = destinationService.findById(id);
 
         if (destination.isPresent()) {
@@ -146,8 +218,31 @@ public class DestinationManagementRestController {
         }
     }
 
+
+    @Operation(summary = "Edit destination`s image")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Image is edited",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= Destination.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Image not found",
+                    content = @Content
+            )
+    })
+
     @PutMapping("/{id}/image")
-    public ResponseEntity<Destination> editImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+    public ResponseEntity<Destination> editImage( @Parameter(description="edited image") @PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
         Optional<Destination> destination = destinationService.findById(id);
 
         if (destination.isPresent()) {
