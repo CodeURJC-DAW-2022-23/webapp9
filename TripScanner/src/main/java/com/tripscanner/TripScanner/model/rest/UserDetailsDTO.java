@@ -5,7 +5,7 @@ import com.tripscanner.TripScanner.model.Review;
 import com.tripscanner.TripScanner.model.User;
 import org.springframework.data.domain.Page;
 
-public class UserDetails {
+public class UserDetailsDTO {
 
     private User user;
 
@@ -13,7 +13,7 @@ public class UserDetails {
 
     private Page<Review> reviews;
 
-    public UserDetails(User user, Page<Itinerary> itineraries, Page<Review> reviews) {
+    public UserDetailsDTO(User user, Page<Itinerary> itineraries, Page<Review> reviews) {
         this.user = user;
         this.itineraries = itineraries;
         this.reviews = reviews;

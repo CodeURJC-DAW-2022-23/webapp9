@@ -4,8 +4,7 @@ import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
-import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
-import com.tripscanner.TripScanner.model.rest.PlaceDetails;
+import com.tripscanner.TripScanner.model.rest.ItineraryDetailsDTO;
 import com.tripscanner.TripScanner.model.rest.PlaceIdDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
@@ -36,7 +35,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -257,10 +255,10 @@ public class ItineraryRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItineraryDetails> itinerary(HttpServletRequest request,
-                                                      @PathVariable int id,
-                                                      @RequestParam(defaultValue = "0") int placesPage,
-                                                      @RequestParam(defaultValue = "0") int reviewsPage) {
+    public ResponseEntity<ItineraryDetailsDTO> itinerary(HttpServletRequest request,
+                                                         @PathVariable int id,
+                                                         @RequestParam(defaultValue = "0") int placesPage,
+                                                         @RequestParam(defaultValue = "0") int reviewsPage) {
 
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -276,11 +274,11 @@ public class ItineraryRestController {
         itinerary.setViews(itinerary.getViews() + 1);
         itineraryService.save(itinerary);
 
-        ItineraryDetails itineraryDetails = new ItineraryDetails(itinerary,
+        ItineraryDetailsDTO itineraryDetailsDTO = new ItineraryDetailsDTO(itinerary,
                 placeService.findFromItinerary(itinerary.getId(), PageRequest.of(placesPage, 10)),
                 reviewService.findFromItinerary(itinerary.getId(), PageRequest.of(reviewsPage, 10)));
 
-        return ResponseEntity.ok(itineraryDetails);
+        return ResponseEntity.ok(itineraryDetailsDTO);
     }
 
     @GetMapping("/{id}/image")

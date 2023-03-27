@@ -2,8 +2,7 @@ package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.User;
-import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
-import com.tripscanner.TripScanner.model.rest.UserDetails;
+import com.tripscanner.TripScanner.model.rest.UserDetailsDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ReviewService;
@@ -26,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,14 +55,14 @@ public class UserRestController {
     public PasswordEncoder passwordEncoder;
 
     @GetMapping("/me")
-    public ResponseEntity<UserDetails> getUser(HttpServletRequest request,
-                                               @RequestParam(defaultValue = "0") int pageItineraries,
-                                               @RequestParam(defaultValue = "0") int pageReviews) {
+    public ResponseEntity<UserDetailsDTO> getUser(HttpServletRequest request,
+                                                  @RequestParam(defaultValue = "0") int pageItineraries,
+                                                  @RequestParam(defaultValue = "0") int pageReviews) {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser != null) {
             User user = userService.findByUsername(currUser.getName()).get();
-            return new ResponseEntity<>(new UserDetails(user,
+            return new ResponseEntity<>(new UserDetailsDTO(user,
                                                         itineraryService.findAllByUsername(currUser.getName(), PageRequest.of(pageItineraries, 10)),
                                                         reviewService.findFromUser(user.getId(), PageRequest.of(pageReviews, 10))), HttpStatus.OK);
         } else {

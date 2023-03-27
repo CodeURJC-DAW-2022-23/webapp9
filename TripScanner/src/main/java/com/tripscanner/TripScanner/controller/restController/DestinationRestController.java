@@ -1,10 +1,8 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.rest.DestinationDetails;
+import com.tripscanner.TripScanner.model.rest.DestinationDetailsDTO;
 import com.tripscanner.TripScanner.service.DestinationService;
-import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -48,8 +46,8 @@ public class DestinationRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DestinationDetails> destination(@PathVariable int id,
-                                                          @RequestParam(defaultValue = "0") int placesPage) {
+    public ResponseEntity<DestinationDetailsDTO> destination(@PathVariable int id,
+                                                             @RequestParam(defaultValue = "0") int placesPage) {
         Optional<Destination> optionalDestination = destinationService.findById(id);
 
         if (optionalDestination.isPresent()) {
@@ -58,10 +56,10 @@ public class DestinationRestController {
             destination.setViews(destination.getViews() + 1);
             destinationService.save(destination);
 
-            DestinationDetails destinationDetails = new DestinationDetails(destination,
+            DestinationDetailsDTO destinationDetailsDTO = new DestinationDetailsDTO(destination,
                     placeService.findFromDestination(destination.getId(), PageRequest.of(placesPage, 10)));
 
-            return ResponseEntity.ok(destinationDetails);
+            return ResponseEntity.ok(destinationDetailsDTO);
         }
         else return ResponseEntity.notFound().build();
     }
