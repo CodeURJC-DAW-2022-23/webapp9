@@ -335,19 +335,19 @@ After that, you should:
 Here, each member of the team shows what they have contributed to during the development of this phase.
 
 1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
-    - **Description of tasks:** 
+    - **Description of tasks:** In this phase I have been in charge of the admin functionality for places and users in the API. Initially I was going to work on Railway too, but since it was removed, I was also in charge of the documentation (README, diagrams and API) and of checking that everything was working properly and fixing errors.
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Feat: Upload and edit image methods](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/e5f1175200b391c4c7d176cc0f168a28246132e0)
+        - [Feat: get, add, edit and delete Places](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/9a201c60ef490b6e20df1bdcd8bb13409e63b575)
+        - [Feat: get, add, edit and delete Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/d57f59571e951ba7a65f09895347f891ae8bb051)
+        - [Feat: API upload and edit image](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/32214c5a7d44a92e04e50ccd4ccfe86de271a9cb)
+        - [Feat: authentication needed URLs](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/139106c173d97eed396c5a35cbd47f8300e8103c)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [UserManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/UserManagementRestController.java)
+        - [PlaceManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/PlaceManagementRestController.java)
+        - [RestSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/security/restSecurity/RestSecurityConfig.java)
+        - [PlaceDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/PlaceDTO.java)
+        - [UserDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/UserDTO.java)
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
     - **Description of tasks:** 
