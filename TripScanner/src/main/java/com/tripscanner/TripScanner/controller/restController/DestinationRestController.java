@@ -1,11 +1,9 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.rest.DestinationDetails;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
+import com.tripscanner.TripScanner.model.rest.DestinationDetailsDTO;
 import com.tripscanner.TripScanner.service.DestinationService;
-import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -92,16 +90,20 @@ public class DestinationRestController {
             )
     })
     @GetMapping("/{id}")
-    public ResponseEntity<DestinationDetails> destination(@Parameter(description="destination id") @PathVariable int id,
-                                                          @Parameter(description="places page number") @RequestParam(defaultValue = "0") int placesPage) {
+    public ResponseEntity<DestinationDetailsDTO> destination(@Parameter(description="destination id") @PathVariable int id,
+                                                             @Parameter(description="places page number") @RequestParam(defaultValue = "0") int placesPage) {
         Optional<Destination> optionalDestination = destinationService.findById(id);
 
         if (optionalDestination.isPresent()) {
             Destination destination = optionalDestination.get();
-            DestinationDetails destinationDetails = new DestinationDetails(destination,
+
+            destination.setViews(destination.getViews() + 1);
+            destinationService.save(destination);
+
+            DestinationDetailsDTO destinationDetailsDTO = new DestinationDetailsDTO(destination,
                     placeService.findFromDestination(destination.getId(), PageRequest.of(placesPage, 10)));
 
-            return ResponseEntity.ok(destinationDetails);
+            return ResponseEntity.ok(destinationDetailsDTO);
         }
         else return ResponseEntity.notFound().build();
     }

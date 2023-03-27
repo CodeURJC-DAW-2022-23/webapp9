@@ -1,12 +1,10 @@
 package com.tripscanner.TripScanner.model.rest;
 
 import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.model.Place;
 
 import java.util.List;
 
-public class GraphDetails {
+public class GraphDetailsDTO {
 
     private List<Destination> destinations;
 
@@ -28,10 +26,10 @@ public class GraphDetails {
         this.views = views;
     }
 
-    public GraphDetails() {
+    public GraphDetailsDTO() {
     }
 
-    public GraphDetails(List<Destination> destinations, List<Long> views) {
+    public GraphDetailsDTO(List<Destination> destinations, List<Long> views) {
         this.destinations = destinations;
         this.views = views;
     }

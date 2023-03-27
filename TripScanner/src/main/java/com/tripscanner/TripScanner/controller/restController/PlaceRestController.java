@@ -1,10 +1,7 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
-import com.tripscanner.TripScanner.model.rest.DestinationDetails;
-import com.tripscanner.TripScanner.model.rest.PlaceDetails;
+import com.tripscanner.TripScanner.model.rest.PlaceDetailsDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,16 +84,20 @@ public class PlaceRestController {
             )
     })
     @GetMapping("/{id}")
-    public ResponseEntity<PlaceDetails> place(@Parameter(description="place id") @PathVariable int id,
-                                              @Parameter(description="itineraries page number") @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<PlaceDetailsDTO> place(@Parameter(description="place id") @PathVariable int id,
+                                                 @Parameter(description="itineraries page number") @RequestParam(defaultValue = "0") int page) {
         Optional<Place> optionalPlace = placeService.findById(id);
 
         if (optionalPlace.isPresent()) {
             Place place = optionalPlace.get();
-            PlaceDetails placeDetails = new PlaceDetails(place,
-                    itineraryService.findFromPlace(place.getId(), PageRequest.of(page, 10)));
+            
+            place.setViews(place.getViews() + 1);
+            placeService.save(place);
 
-            return ResponseEntity.ok(placeDetails);
+            PlaceDetailsDTO placeDetailsDTO = new PlaceDetailsDTO(place,
+                    itineraryService.findFromPlace(place.getId(), PageRequest.of(placesPage, 10)));
+
+            return ResponseEntity.ok(placeDetailsDTO);
         }
         else return ResponseEntity.notFound().build();
     }

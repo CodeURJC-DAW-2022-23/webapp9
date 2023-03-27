@@ -4,13 +4,13 @@ import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import org.springframework.data.domain.Page;
 
-public class PlaceDetails {
+public class PlaceDetailsDTO {
 
     private Place place;
 
     private Page<Itinerary> itineraries;
 
-    public PlaceDetails(Place place, Page<Itinerary> itineraries) {
+    public PlaceDetailsDTO(Place place, Page<Itinerary> itineraries) {
         this.place = place;
         this.itineraries = itineraries;
     }

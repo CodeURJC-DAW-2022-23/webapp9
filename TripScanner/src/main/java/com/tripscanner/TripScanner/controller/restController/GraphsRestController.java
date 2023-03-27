@@ -1,8 +1,7 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.rest.DestinationDetails;
-import com.tripscanner.TripScanner.model.rest.GraphDetails;
+import com.tripscanner.TripScanner.model.rest.GraphDetailsDTO;
 import com.tripscanner.TripScanner.service.DestinationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -39,7 +38,7 @@ public class GraphsRestController {
             )
     })
     @GetMapping("/index")
-    public ResponseEntity<GraphDetails> indexGraph() {
+    public ResponseEntity<GraphDetailsDTO> indexGraph() {
         List<Destination> destinations = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"))).toList();
         List<Long> views = new ArrayList<>();
 
@@ -47,7 +46,7 @@ public class GraphsRestController {
             views.add(destination.getViews());
         }
 
-        return ResponseEntity.ok(new GraphDetails(destinations, views));
+        return ResponseEntity.ok(new GraphDetailsDTO(destinations, views));
     }
 
 }

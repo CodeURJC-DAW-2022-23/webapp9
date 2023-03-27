@@ -3,8 +3,9 @@
 ## Index
 
 1. [Phase 0 additions](#phase0)
-2. [Phase 1 aditions](#phase1)
+2. [Phase 1 additions](#phase1)
 3. [Phase 2 additions](#phase2)
+4. [Phase 3 additions](#phase3)
 
 <a name="phase0"></a>
 ## Phase 0 additions
@@ -267,3 +268,130 @@ Here, each member of the team shows what they have contributed to during the dev
         - [CSRFHandlerConfiguration.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/CSRFHandlerConfiguration.java)
         - [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/WebSecurityConfig.java)
         - [profile.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/profile.html)
+        
+<a name="phase3"></a>
+# Phase 3 additions
+
+
+### API REST Documentation
+
+The API REST documentation has been generated using OpenAPI specification. As so, it has been automatially generated into a `.yml` and `.html` file. Both files are accessible from this repository, through the following links:
+
+* [**api-docs.yml**]()
+* [**api-docs.html**]()
+
+### Updated classes and templates diagram
+
+The classes and templates diagram has been updated with the new `@RestController` classes. Please note that the `@Service` classes have been implemented before, in the *Stage 2*.
+
+**INCLUDE UPDATED DIAGRAM HERE**
+
+### Docker
+
+In the following sections, it'll be explaned everything about the Docker usage in the application, including the execution of the dockerized webapp and the building of the docker image
+
+#### Executing dockerized application
+
+To run the Docker image using the `docker-compose.yml` file you might need to intall Docker first:
+
+* Windows:
+  * Microsoft Windows 10 Professional or Enterprise 64-bit or Windows 10:
+    * https://store.docker.com/editions/community/docker-ce-desktop-windows
+    * https://docs.docker.com/docker-for-windows/install-windows-home/
+* Linux:
+  * Ubuntu: https://store.docker.com/editions/community/docker-ce-server-ubuntu
+  * Fedora: https://store.docker.com/editions/community/docker-ce-server-fedora
+  * Debian: https://store.docker.com/editions/community/docker-ce-server-debian
+  * CentOS: https://store.docker.com/editions/community/docker-ce-server-centos
+* Mac:
+  * Apple macOS Mojave (10.14) or newer:
+    * https://store.docker.com/editions/community/docker-ce-desktop-mac
+    * Apple M1 chip: https://docs.docker.com/docker-for-mac/apple-m1/
+
+Those are the instructions to run it: 
+
+1. Open a terminal.
+2. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
+3. Go to the docker folder using `cd webapp9/docker`.
+4. Run the `docker-compose.yml` file using `docker-compose up`.
+5. Now you've got both webapp and API running on `https://localhost:8443`.
+
+
+#### Building docker image
+
+To build the Docker image using the `create_image.sh` file you might need to intall Docker first as the previous step shows.
+
+After that, you should:
+
+1. Cretae an account on DockerHub and log-in locally.
+2. Open a terminal.
+3. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
+4. Go to the docker folder using `cd webapp9/docker`.
+5. Run `./create_image.sh %username%/tripscanner-webapp` replacing %username% with you DockerHub username.
+
+
+### Members participation
+
+Here, each member of the team shows what they have contributed to during the development of this phase.
+
+1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
+    - **Description of tasks:** 
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
+    - **Description of tasks:** 
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+3. [Anna Trofimova](https://github.com/anna-trofimova)
+    - **Description of tasks:** 
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
+    - **Description of tasks:** 
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+
