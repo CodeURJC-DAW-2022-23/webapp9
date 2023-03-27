@@ -33,7 +33,6 @@ Here you can see the features of our web application TripScanner.
 
 We'll have the following entities **users**, **places**, **destinations** and **itineraries**.
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/72264031/217202549-74b12ef3-274f-477a-935e-f8d553fb5e04.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/72264031/216968255-32aef1b5-eaf1-45b7-acb8-776c2c00c8fc.svg">
@@ -380,7 +379,7 @@ Here, each member of the team shows what they have contributed to during the dev
         - [NAME](URL)
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
-    - **Description of tasks:** 
+    - **Description of tasks:** This phase, I've been in charge of coding the Rest Controllers used by registered users, as well as its documentation. This controllers implement functionalities such as managing your itineraries and creating new ones, and editing your profile info. I've also been in charge of developing the Docker functionalities with [@anna-trofimova](https://github.com/anna-trofimova).
     - **5 biggest commits:** These commits are:
         - [NAME](URL)
         - [NAME](URL)
