@@ -89,7 +89,7 @@ public class ItineraryManagementRestController {
     @Operation(summary = "Create a new itinerary")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "204",
                     description = "Itinerary is created",
                     content = {@Content(
                             mediaType = "application/json",
@@ -149,7 +149,7 @@ public class ItineraryManagementRestController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity editItinerary(@Parameter(description = "edited itinerary") @PathVariable long id, @RequestBody ItineraryDTO newItineraries) {
+    public ResponseEntity editItinerary(@Parameter(description = "edited item") @PathVariable long id, @RequestBody ItineraryDTO newItineraries) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
         if (itinerary.isPresent()) {

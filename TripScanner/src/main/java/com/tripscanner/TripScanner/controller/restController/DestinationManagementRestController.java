@@ -80,7 +80,7 @@ public class DestinationManagementRestController {
     @Operation(summary = "Create a new destination")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "Destination is created",
                     content = {@Content(
                             mediaType = "application/json",
@@ -106,7 +106,7 @@ public class DestinationManagementRestController {
     @Operation(summary = "Edit destination")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "204",
                     description = "Destination is edited",
                     content = {@Content(
                             mediaType = "application/json",
