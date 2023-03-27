@@ -112,7 +112,7 @@ public class ItineraryRestController {
     @PostMapping("")
     public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itineraryDTO, HttpServletRequest request) throws IOException {
         Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         User user = userService.findByUsername(principalUser.getName()).get();
         if (itineraryDTO.getName() == null || itineraryDTO.getDescription() == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -216,7 +216,7 @@ public class ItineraryRestController {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(itineraryId);
         Optional<Place> optionalPlace = placeService.findById(placeIdDTO.getPlaceId());
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         if (!optionalPlace.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
