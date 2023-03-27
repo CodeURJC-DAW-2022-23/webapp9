@@ -4,11 +4,20 @@ import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,8 +45,32 @@ public class UserManagementRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Operation(summary = "Get a page with all users")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Users page",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation=User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Not authorized",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Users not found",
+                    content = @Content
+            )
+    })
+
     @GetMapping("")
-    public ResponseEntity<Page<User>> getUsers(@RequestParam(defaultValue = "0") int page){
+    public ResponseEntity<Page<User>> getUsers(
+            @Parameter(description="page number")
+            @RequestParam(defaultValue = "0") int page){
         Page<User> users = userService.findAll(PageRequest.of(page, 10));
         if (!users.isEmpty()) {
             return ResponseEntity.ok(users);
@@ -46,8 +79,27 @@ public class UserManagementRestController {
         }
     }
 
+    @Operation(summary = "Create a new user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "New user was created",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation=User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Not authorized",
+                    content = @Content
+            )
+    })
+
     @PostMapping("")
-    public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> createUser(
+            @Parameter(description="new user's information")
+            @RequestBody UserDTO userDTO) {
         User user = new User(userDTO);
 
         if (!userService.existName(user.getUsername())) {
@@ -64,8 +116,34 @@ public class UserManagementRestController {
         }
     }
 
+    @Operation(summary = "Edit existing user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User was correctly edited",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation=User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Not authorized",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found",
+                    content = @Content
+            )
+    })
+
     @PutMapping("/{id}")
-    public ResponseEntity<User> editUser(@PathVariable long id, @RequestBody UserDTO userDTO) throws SQLException {
+    public ResponseEntity<User> editUser(
+            @Parameter(description="id of user to be edited")
+            @PathVariable long id,
+            @Parameter(description="user's new information")
+            @RequestBody UserDTO userDTO) throws SQLException {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
             User newUser = new User(userDTO);
@@ -83,8 +161,32 @@ public class UserManagementRestController {
         }
     }
 
+    @Operation(summary = "Delete user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "User was correctly deleted",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation=User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Not authorized",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found",
+                    content = @Content
+            )
+    })
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable long id) {
+    public ResponseEntity<User> deleteUser(
+            @Parameter(description="id of user to be deleted")
+            @PathVariable long id) {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
             userService.delete(id);
@@ -94,36 +196,46 @@ public class UserManagementRestController {
         }
     }
 
-    @PostMapping("/{id}/image")
-    public ResponseEntity<User> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
-        Optional<User> user = userService.findById(id);
-
-        if (user.isPresent()) {
-            User newUser = user.get();
-
-            newUser.setImage(true);
-            newUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-
-            userService.save(newUser);
-            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
-            URI location = new URI(baseUrl + "/api/users/" + id + "/image");
-            return ResponseEntity.created(location).build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    @Operation(summary = "Edit existing user's image")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User's image was edited correctly",
+                    content = {@Content(
+                            mediaType = "image/jpeg",
+                            schema = @Schema(implementation=User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Not authorized",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found",
+                    content = @Content
+            )
+    })
 
     @PutMapping("/{id}/image")
-    public ResponseEntity<User> editImage(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+    public ResponseEntity<Resource> editImage(
+            @Parameter(description="id of user to edit its image")
+            @PathVariable long id,
+            @Parameter(description="image to be uploaded")
+            @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException, SQLException {
         Optional<User> user = userService.findById(id);
 
         if (user.isPresent()) {
             User newUser = user.get();
             newUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            newUser.setImage(true);
             userService.save(newUser);
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
             URI location = new URI(baseUrl + "/api/users/" + id + "/image");
-            return ResponseEntity.created(location).body(newUser);
+            Resource file = new InputStreamResource(imageFile.getInputStream());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+                    .contentLength(newUser.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

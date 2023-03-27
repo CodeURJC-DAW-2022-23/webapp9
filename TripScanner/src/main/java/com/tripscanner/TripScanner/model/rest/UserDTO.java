@@ -66,6 +66,7 @@ public class UserDTO {
 
     public UserDTO(){
     }
+
     public UserDTO(String username, String firstName, String lastName, String email, String passwordHash, String nationality) {
         this.username = username;
         this.firstName = firstName;
