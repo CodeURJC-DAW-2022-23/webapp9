@@ -276,6 +276,9 @@ public class ItineraryRestController {
                 placeService.findFromItinerary(itinerary.getId(), PageRequest.of(placesPage, 10)),
                 reviewService.findFromItinerary(itinerary.getId(), PageRequest.of(reviewsPage, 10)));
 
+        itinerary.setViews(itinerary.getViews() + 1);
+        itineraryService.save(itinerary);
+
         return ResponseEntity.ok(itineraryDetails);
     }
 

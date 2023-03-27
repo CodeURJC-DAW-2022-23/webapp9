@@ -57,6 +57,9 @@ public class DestinationRestController {
             DestinationDetails destinationDetails = new DestinationDetails(destination,
                     placeService.findFromDestination(destination.getId(), PageRequest.of(placesPage, 10)));
 
+            destination.setViews(destination.getViews() + 1);
+            destinationService.save(destination);
+
             return ResponseEntity.ok(destinationDetails);
         }
         else return ResponseEntity.notFound().build();

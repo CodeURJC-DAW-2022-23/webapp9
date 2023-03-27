@@ -58,6 +58,9 @@ public class PlaceRestController {
             PlaceDetails placeDetails = new PlaceDetails(place,
                     itineraryService.findFromPlace(place.getId(), PageRequest.of(placesPage, 10)));
 
+            place.setViews(place.getViews() + 1);
+            placeService.save(place);
+
             return ResponseEntity.ok(placeDetails);
         }
         else return ResponseEntity.notFound().build();
