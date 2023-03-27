@@ -278,7 +278,7 @@ Here, each member of the team shows what they have contributed to during the dev
 The API REST documentation has been generated using OpenAPI specification. As so, it has been automatially generated into a `.yml` and `.html` file. Both files are accessible from this repository, through the following links:
 
 * [**api-docs.yml**]()
-* [**api-docs.htmlz**]()
+* [**api-docs.html**]()
 
 ### Updated classes and templates diagram
 
