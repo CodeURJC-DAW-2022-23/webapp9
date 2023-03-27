@@ -9,6 +9,12 @@ import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ReviewService;
 import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.EmailService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -24,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,6 +38,8 @@ import java.util.List;
 import java.util.Optional;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.Arrays;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
@@ -57,9 +66,28 @@ public class UserRestController {
     @Autowired
     public PasswordEncoder passwordEncoder;
 
+    @Operation(summary = "Shows the logged user's profile")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Displayed profile properly",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Operation not available when no user is logged in",
+                    content = @Content
+            )
+    })
+
     @GetMapping("/me")
     public ResponseEntity<UserDetails> getUser(HttpServletRequest request,
+                                               @Parameter(description = "itineraries page number")
                                                @RequestParam(defaultValue = "0") int pageItineraries,
+                                               @Parameter(description = "reviews page number")
                                                @RequestParam(defaultValue = "0") int pageReviews) {
         Principal currUser = request.getUserPrincipal();
 
@@ -72,9 +100,27 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
+    @Operation(summary = "Get the logged user's owned itineraries")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Itineraries returned successfully",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Itinerary.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Operation not available when no user is logged in",
+                    content = @Content
+            )
+    })
+
     @GetMapping("/me/itineraries")
     public ResponseEntity<Page<Itinerary>> getUserItineraries(HttpServletRequest request,
+                                                              @Parameter(description = "itineraries page number")
                                                               @RequestParam(defaultValue = "0") int page) {
         Principal currUser = request.getUserPrincipal();
 
@@ -84,21 +130,72 @@ public class UserRestController {
         return new ResponseEntity<>(itineraries, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get a logged user's profile picture")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User obtained successfully",
+                    content = {@Content(
+                            mediaType = "image/jpeg"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Operation not available when no user is logged in",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User does not have an image",
+                    content = @Content
+            )
+    })
+
     @GetMapping("/me/image")
     public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request) throws SQLException {
         Principal principalUser = request.getUserPrincipal();
-        if (principalUser == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (principalUser == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         User user = userService.findByUsername(principalUser.getName()).get();
         if (!user.isImage()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Resource img = new InputStreamResource(user.getImageFile().getBinaryStream());
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").contentLength(user.getImageFile().length()).body(img);
     }
 
+    @Operation(summary = "Edits the user's information")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully edited user's data",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Email does not match against correct mail format",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "No user is logged in",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Empty body of request",
+                    content = @Content
+            )
+    })
+
     @PutMapping("/me")
-    public ResponseEntity editUser(@RequestBody User newData, HttpServletRequest request) throws ServletException {
+    public ResponseEntity editUser(
+            @Parameter(description = "body of the request containing the new user data")
+            @RequestBody User newData,
+            HttpServletRequest request) throws ServletException {
         Principal currUser = request.getUserPrincipal();
         if (currUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
-        if (newData == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (newData == null) return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
         User usr = userService.findByUsername(currUser.getName()).get();
         if (userService.findByUsername(newData.getUsername()).isPresent() && newData.getUsername().equals(usr.getUsername())) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -109,6 +206,9 @@ public class UserRestController {
         if (newData.getFirstName() != null && newData.hasFirstName()) usr.setFirstName(newData.getFirstName());
         if (newData.getLastName() != null && newData.hasLastName()) usr.setLastName(newData.getLastName());
         if (newData.getEmail() != null && !newData.getEmail().equals(usr.getEmail()) && newData.hasEmail()) {
+            if (!newData.getEmail().matches("\\w*@\\w*\\.[a-z]{1,3}")) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             usr.setEmail(newData.getEmail());
             emailService.sendEmailChangeEmail(usr);
         }
@@ -118,8 +218,24 @@ public class UserRestController {
         return ResponseEntity.ok().body(usr);
     }
 
+    @Operation(summary = "Edits logged user's profile picture")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Image edited successfully",
+                    content = {@Content(
+                            mediaType = "image/jpeg"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Operation not available for not logged in users",
+                    content = @Content
+            )
+    })
+
     @PutMapping("/me/image")
-    public ResponseEntity editImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) throws IOException, SQLException {
+    public ResponseEntity editImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request) throws IOException, SQLException, URISyntaxException {
         Principal currUser = request.getUserPrincipal();
 
         if (currUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
@@ -130,7 +246,10 @@ public class UserRestController {
         userService.save(user);
         Resource file = new InputStreamResource(imageFile.getInputStream());
 
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+        URI location = new URI(baseUrl + "/api/users/" + user.getId() + "/image");
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
                 .contentLength(user.getImageFile().length()).body(file);
     }
 
