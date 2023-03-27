@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.model.rest.UserDetails;
@@ -8,6 +9,12 @@ import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ReviewService;
 import com.tripscanner.TripScanner.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.tripscanner.TripScanner.utils.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -253,8 +260,32 @@ public class UserRestController {
                 .contentLength(user.getImageFile().length()).body(file);
     }
 
+    @Operation(summary = "Create a new user account")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Successfully signed up the new user",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments or required arguments missing",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Username already in use",
+                    content = @Content
+            )
+    })
     @PostMapping("")
-    public ResponseEntity<User> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> register(@Parameter(description="user details", content = {@Content(
+                                             mediaType = "application/json",
+                                             schema = @Schema(implementation=UserDTO.class))
+                                         }) @RequestBody UserDTO userDTO) {
         User user = new User(userDTO);
 
 
@@ -281,8 +312,23 @@ public class UserRestController {
         }
     }
 
+    @Operation(summary = "Returns the profile image of the desired user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully returned the user image",
+                    content = {@Content(
+                            mediaType = "image/jpeg"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing User's image.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+    public ResponseEntity<Resource> downloadImage(@Parameter(description="user id") @PathVariable long id) throws SQLException {
         Optional<User> optionalUser = userService.findById(id);
 
         if (optionalUser.isPresent() && optionalUser.get().getImageFile() != null) {

@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.controller.restController;
 
+import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
@@ -67,12 +68,28 @@ public class ItineraryRestController {
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "Searches for Itineraries in the database. Filters can be applied optionally.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired Itinerary.",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Itinerary.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            )
+    })
     @GetMapping("")
     public ResponseEntity<Page<Itinerary>> getItineraries(HttpServletRequest request,
-                                                          @RequestParam(defaultValue = "") String name,
-                                                          @RequestParam(defaultValue = "id") String sort,
-                                                          @RequestParam(defaultValue = "DESC") String order,
-                                                          @RequestParam(defaultValue = "0") int page) {
+                                                          @Parameter(description="search query") @RequestParam(defaultValue = "") String name,
+                                                          @Parameter(description="sorting type: id, name, views") @RequestParam(defaultValue = "id") String sort,
+                                                          @Parameter(description="order specifier") @RequestParam(defaultValue = "DESC") String order,
+                                                          @Parameter(description="page number") @RequestParam(defaultValue = "0") int page) {
         Sort.Direction direction;
         if (Objects.equals(order, "DESC")) direction = Sort.Direction.DESC;
         else if (Objects.equals(order, "ASC")) direction = Sort.Direction.ASC;
@@ -453,11 +470,37 @@ public class ItineraryRestController {
                 .contentLength(itinerary.getImageFile().length()).body(file);
     }
 
+    @Operation(summary = "Get Detailed information about a specific Itinerary.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired Itineraries.",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ItineraryDetails.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Invalid permissions to request places from a private Itinerary.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing Itinerary.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ItineraryDetails> itinerary(HttpServletRequest request,
-                                                      @PathVariable int id,
-                                                      @RequestParam(defaultValue = "0") int placesPage,
-                                                      @RequestParam(defaultValue = "0") int reviewsPage) {
+                                                      @Parameter(description="itinerary id") @PathVariable int id,
+                                                      @Parameter(description="places page number") @RequestParam(defaultValue = "0") int placesPage,
+                                                      @Parameter(description="reviews page number") @RequestParam(defaultValue = "0") int reviewsPage) {
 
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -476,8 +519,23 @@ public class ItineraryRestController {
         return ResponseEntity.ok(itineraryDetails);
     }
 
+    @Operation(summary = "Returns the image of the desired Itinerary.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Sucessfully returned the Itinerary's image.",
+                    content = {@Content(
+                            mediaType = "image/jpeg"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing Itinerary's image.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+    public ResponseEntity<Resource> downloadImage(@Parameter(description="itinerary id") @PathVariable long id) throws SQLException {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
 
         if (itinerary.isPresent() && itinerary.get().getImageFile() != null) {
@@ -490,6 +548,29 @@ public class ItineraryRestController {
         }
     }
 
+    @Operation(summary = "Get Detailed information about a specific Itinerary.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired Places frmo an Itinerary.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Invalid permissions to request places from a private Itinerary.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing Itinerary.",
+                    content = @Content
+            )
+    })
     @GetMapping("/{id}/places")
     public ResponseEntity<Page<Place>> getPlacesInUserItinerary(HttpServletRequest request,
                                                                 @PathVariable long id,
@@ -500,7 +581,7 @@ public class ItineraryRestController {
         Itinerary itinerary = optionalItinerary.get();
         if (!itinerary.isPublic()) {
             Principal usr = request.getUserPrincipal();
-            if (usr == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (usr == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             if (!itinerary.getUser().getUsername().equals(usr.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 

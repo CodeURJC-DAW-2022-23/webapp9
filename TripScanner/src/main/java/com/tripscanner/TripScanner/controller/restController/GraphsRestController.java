@@ -1,8 +1,14 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.rest.DestinationDetails;
 import com.tripscanner.TripScanner.model.rest.GraphDetails;
 import com.tripscanner.TripScanner.service.DestinationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,6 +27,17 @@ public class GraphsRestController {
     @Autowired
     private DestinationService destinationService;
 
+    @Operation(summary = "Get needed information to build the top 5 destinations graph with its views.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Returns requested data.",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = GraphDetails.class)
+                    )}
+            )
+    })
     @GetMapping("/index")
     public ResponseEntity<GraphDetails> indexGraph() {
         List<Destination> destinations = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"))).toList();
