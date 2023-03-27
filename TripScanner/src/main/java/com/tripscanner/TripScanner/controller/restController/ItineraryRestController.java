@@ -12,6 +12,12 @@ import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.service.ReviewService;
 import com.tripscanner.TripScanner.utils.PdfGenerator;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -84,13 +90,16 @@ public class ItineraryRestController {
 
         return new ResponseEntity<>(itineraries, HttpStatus.OK);
     }
-
-    @GetMapping("/{id}/export")
-    public ResponseEntity getPdfFromItinerary(@PathVariable long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity getPdfFromItinerary(
+            @Parameter(description = "id of the itinerary to be exported")
+            @PathVariable long id, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
         Principal principalUser = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if (principalUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
         Itinerary itinerary = optionalItinerary.get();
         PdfGenerator generator = new PdfGenerator();
@@ -109,7 +118,30 @@ public class ItineraryRestController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Itinerary> createNewItinerary(@RequestBody ItineraryDTO itineraryDTO, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Itinerary> createNewItinerary(@RequestParam(required = false) Optional<Long> copyFrom, @RequestBody(required = false) Optional<ItineraryDTO> itiDTO, HttpServletRequest request) throws IOException {
+        if (copyFrom.isPresent()) {
+            Principal principalUser = request.getUserPrincipal();
+            Optional<Itinerary> optionalItinerary = itineraryService.findById(copyFrom.get());
+            if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
+            if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+            User user = userService.findByUsername(principalUser.getName()).get();
+            Itinerary copy = optionalItinerary.get().copy(user);
+            List<Itinerary> userItineraries = user.getItineraries();
+            userItineraries.add(copy);
+            user.setItineraries(userItineraries);
+
+            itineraryService.save(copy);
+
+            URI location = fromCurrentRequest().path("/{id}").buildAndExpand(copy.getId()).toUri();
+
+            return ResponseEntity.created(location).body(copy);
+        }
+
+        else if (!itiDTO.isPresent()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        ItineraryDTO itineraryDTO = itiDTO.get();
+
         Principal principalUser = request.getUserPrincipal();
         if (principalUser == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
@@ -126,29 +158,6 @@ public class ItineraryRestController {
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(newItinerary.getId()).toUri();
 
         return ResponseEntity.created(location).body(newItinerary);
-    }
-
-    // Note that "/api/itineraries/{id}/copy" follows naming conventions for REST APIs, as verbs CAN be used inside subrecurses,
-    // and only nouns are used for resources. Same goes for "/api/itineraries/{id}/export". Also, POST method is allowed here,
-    // as new data is added to the database, even though the body of the request is not needed.
-    @PostMapping("/{id}/copy")
-    public ResponseEntity<Itinerary> copyItinerary(@PathVariable long id, HttpServletRequest request) {
-        Principal principalUser = request.getUserPrincipal();
-        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
-        if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (principalUser == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
-
-        User user = userService.findByUsername(principalUser.getName()).get();
-        Itinerary copy = optionalItinerary.get().copy(user);
-        List<Itinerary> userItineraries = user.getItineraries();
-        userItineraries.add(copy);
-        user.setItineraries(userItineraries);
-
-        itineraryService.save(copy);
-
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(copy.getId()).toUri();
-
-        return ResponseEntity.created(location).body(copy);
     }
 
     @DeleteMapping("/{id}")
