@@ -107,7 +107,7 @@ public class PlaceRestController {
                     responseCode = "200",
                     description = "Sucessfully returned the Place's image.",
                     content = {@Content(
-                            mediaType = "application/jpg"
+                            mediaType = "image/jpeg"
                     )}
             ),
             @ApiResponse(

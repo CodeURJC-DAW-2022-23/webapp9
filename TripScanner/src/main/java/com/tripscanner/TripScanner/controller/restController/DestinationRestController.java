@@ -112,7 +112,7 @@ public class DestinationRestController {
                     responseCode = "200",
                     description = "Sucessfully returned the Destination's image.",
                     content = {@Content(
-                            mediaType = "application/jpg"
+                            mediaType = "image/jpeg"
                     )}
             ),
             @ApiResponse(

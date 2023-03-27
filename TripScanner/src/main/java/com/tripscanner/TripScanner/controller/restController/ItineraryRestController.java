@@ -334,7 +334,7 @@ public class ItineraryRestController {
                     responseCode = "200",
                     description = "Sucessfully returned the Itinerary's image.",
                     content = {@Content(
-                            mediaType = "application/jpg"
+                            mediaType = "image/jpeg"
                     )}
             ),
             @ApiResponse(

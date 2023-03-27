@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetails;
 import com.tripscanner.TripScanner.model.rest.UserDetails;
@@ -145,7 +146,10 @@ public class UserRestController {
             @ApiResponse(
                     responseCode = "201",
                     description = "Successfully signed up the new user",
-                    content = @Content
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)
+                    )}
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -159,11 +163,10 @@ public class UserRestController {
             )
     })
     @PostMapping("")
-    public ResponseEntity<User> register(
-            @Parameter(description="user details", content = {@Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation=UserDTO.class))
-            }) @RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> register(@Parameter(description="user details", content = {@Content(
+                                             mediaType = "application/json",
+                                             schema = @Schema(implementation=UserDTO.class))
+                                         }) @RequestBody UserDTO userDTO) {
         User user = new User(userDTO);
 
 
@@ -194,9 +197,9 @@ public class UserRestController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Sucessfully returned the user image",
+                    description = "Successfully returned the user image",
                     content = {@Content(
-                            mediaType = "application/jpg"
+                            mediaType = "image/jpeg"
                     )}
             ),
             @ApiResponse(
