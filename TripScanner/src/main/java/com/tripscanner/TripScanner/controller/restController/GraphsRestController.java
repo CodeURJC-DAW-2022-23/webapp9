@@ -22,7 +22,7 @@ public class GraphsRestController {
 
     @GetMapping("/index")
     public ResponseEntity<GraphDetails> indexGraph() {
-        List<Destination> destinations = destinationService.findAll(Sort.by("DESC", "views"));
+        List<Destination> destinations = destinationService.findAll(Sort.by(Sort.Direction.DESC, "views"));
         List<Long> views = new ArrayList<>();
 
         for (Destination destination : destinations) {
