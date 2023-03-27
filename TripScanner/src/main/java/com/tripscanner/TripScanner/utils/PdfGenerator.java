@@ -1,24 +1,17 @@
 package com.tripscanner.TripScanner.utils;
 
-import java.awt.*;
-import java.io.IOException;
-
-import com.tripscanner.TripScanner.model.Itinerary;
-
-import javax.servlet.http.HttpServletResponse;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.CMYKColor;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
+
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.IOException;
 
 public class PdfGenerator {
     public void generate(Itinerary itinerary, HttpServletResponse response) throws DocumentException, IOException {

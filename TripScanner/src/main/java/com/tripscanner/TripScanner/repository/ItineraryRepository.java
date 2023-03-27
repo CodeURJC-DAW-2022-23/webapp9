@@ -1,13 +1,12 @@
 package com.tripscanner.TripScanner.repository;
 
-import java.util.Optional;
-
-import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Itinerary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.tripscanner.TripScanner.model.Itinerary;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
 
 public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
 

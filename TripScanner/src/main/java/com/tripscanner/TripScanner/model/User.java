@@ -3,10 +3,9 @@ package com.tripscanner.TripScanner.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 
+import javax.persistence.*;
 import java.sql.Blob;
 import java.util.List;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "UserTable")

@@ -4,10 +4,10 @@ import com.lowagie.text.DocumentException;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.Review;
-import com.tripscanner.TripScanner.service.ItineraryService;
-import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.DestinationService;
+import com.tripscanner.TripScanner.service.ItineraryService;
+import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.PdfGenerator;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -21,17 +21,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

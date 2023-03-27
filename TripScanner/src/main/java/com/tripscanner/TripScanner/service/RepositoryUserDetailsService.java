@@ -1,7 +1,6 @@
 package com.tripscanner.TripScanner.service;
 
 import com.tripscanner.TripScanner.model.User;
-import com.tripscanner.TripScanner.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

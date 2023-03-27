@@ -1,10 +1,9 @@
 package com.tripscanner.TripScanner.repository;
 
-import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.tripscanner.TripScanner.model.Review;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {

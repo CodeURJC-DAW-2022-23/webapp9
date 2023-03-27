@@ -1,14 +1,7 @@
 package com.tripscanner.TripScanner.controller.webController;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 import com.tripscanner.TripScanner.model.*;
 import com.tripscanner.TripScanner.service.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class DetailsController {
@@ -128,10 +126,11 @@ public class DetailsController {
     public String showItinerary(Model model, HttpServletRequest request, @PathVariable long id) {
         Optional<Itinerary> itinerary = itineraryService.findById(id);
         Principal currUser = request.getUserPrincipal();
+        User usr = userService.findByUsername(currUser.getName()).get();
 
         if (!itinerary.get().isPublic()) {
             if (currUser == null) return "error/403";
-            else if (!Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
+            else if (!usr.getRoles().contains("ADMIN") || !Objects.equals(userService.findByUsername(currUser.getName()).get().getId(), itinerary.get().getUser().getId())) {
                 return "error/403";
             }
         }

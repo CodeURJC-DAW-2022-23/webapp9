@@ -275,7 +275,7 @@ Here, each member of the team shows what they have contributed to during the dev
 
 ### API REST Documentation
 
-The API REST documentation has been generated using OpenAPI specification. As so, it has been automatially generated into a `.yml` and `.html` file. Both files are accessible from this repository, through the following links:
+The API REST documentation has been generated using OpenAPI specification. As so, it has been automatically generated into a `.yml` and `.html` file. Both files are accessible from this repository, through the following links:
 
 * [**api-docs.yml**]()
 * [**api-docs.html**]()
@@ -284,7 +284,7 @@ The API REST documentation has been generated using OpenAPI specification. As so
 
 The classes and templates diagram has been updated with the new `@RestController` classes. Please note that the `@Service` classes have been implemented before, in the *Stage 2*.
 
-**INCLUDE UPDATED DIAGRAM HERE**
+![Phase3DAW](https://user-images.githubusercontent.com/103607990/228073072-d75470f1-8616-49de-88e1-09d99020b0db.svg)
 
 ### Docker
 
@@ -292,7 +292,7 @@ In the following sections, it'll be explaned everything about the Docker usage i
 
 #### Executing dockerized application
 
-To run the Docker image using the `docker-compose.yml` file you might need to intall Docker first:
+To run the Docker image using the `docker-compose.yml` file you might need to install Docker first:
 
 * Windows:
   * Microsoft Windows 10 Professional or Enterprise 64-bit or Windows 10:
@@ -308,7 +308,7 @@ To run the Docker image using the `docker-compose.yml` file you might need to in
     * https://store.docker.com/editions/community/docker-ce-desktop-mac
     * Apple M1 chip: https://docs.docker.com/docker-for-mac/apple-m1/
 
-Those are the instructions to run it: 
+These are the instructions to run it: 
 
 1. Open a terminal.
 2. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
@@ -319,7 +319,7 @@ Those are the instructions to run it:
 
 #### Building docker image
 
-To build the Docker image using the `create_image.sh` file you might need to intall Docker first as the previous step shows.
+To build the Docker image using the `create_image.sh` file you might need to install Docker first as the previous step shows.
 
 After that, you should:
 
@@ -327,7 +327,7 @@ After that, you should:
 2. Open a terminal.
 3. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
 4. Go to the docker folder using `cd webapp9/docker`.
-5. Run `./create_image.sh %username%/tripscanner-webapp` replacing %username% with you DockerHub username.
+5. Run `./create_image.sh %username%/tripscanner-webapp` replacing %username% with your DockerHub username.
 
 
 ### Members participation
