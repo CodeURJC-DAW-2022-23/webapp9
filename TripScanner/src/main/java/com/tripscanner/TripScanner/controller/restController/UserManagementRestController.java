@@ -12,9 +12,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -161,7 +164,7 @@ public class UserManagementRestController {
     @Operation(summary = "Delete user")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "204",
                     description = "User was correctly deleted",
                     content = {@Content(
                             mediaType = "application/json",
@@ -193,58 +196,13 @@ public class UserManagementRestController {
         }
     }
 
-    @Operation(summary = "Upload new user's image")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "User's image was uploaded correctly",
-                    content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation=User.class)
-                    )}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Not authorized",
-                    content = @Content
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "User not found",
-                    content = @Content
-            )
-    })
-
-    @PostMapping("/{id}/image")
-    public ResponseEntity<User> uploadImage(
-            @Parameter(description="id of user to upload its image")
-            @PathVariable long id,
-            @Parameter(description="image to be uploaded")
-            @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
-        Optional<User> user = userService.findById(id);
-
-        if (user.isPresent()) {
-            User newUser = user.get();
-
-            newUser.setImage(true);
-            newUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-
-            userService.save(newUser);
-            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
-            URI location = new URI(baseUrl + "/api/users/" + id + "/image");
-            return ResponseEntity.created(location).build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @Operation(summary = "Edit existing user's image")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "User's image was edited correctly",
                     content = {@Content(
-                            mediaType = "application/json",
+                            mediaType = "image/jpeg",
                             schema = @Schema(implementation=User.class)
                     )}
             ),
@@ -261,20 +219,23 @@ public class UserManagementRestController {
     })
 
     @PutMapping("/{id}/image")
-    public ResponseEntity<User> editImage(
+    public ResponseEntity<Resource> editImage(
             @Parameter(description="id of user to edit its image")
             @PathVariable long id,
             @Parameter(description="image to be uploaded")
-            @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+            @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException, SQLException {
         Optional<User> user = userService.findById(id);
 
         if (user.isPresent()) {
             User newUser = user.get();
             newUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            newUser.setImage(true);
             userService.save(newUser);
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
             URI location = new URI(baseUrl + "/api/users/" + id + "/image");
-            return ResponseEntity.created(location).body(newUser);
+            Resource file = new InputStreamResource(imageFile.getInputStream());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+                    .contentLength(newUser.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

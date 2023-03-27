@@ -14,9 +14,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -148,7 +151,7 @@ public class PlaceManagementRestController {
     @Operation(summary = "Delete place")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "204",
                     description = "Place was correctly deleted",
                     content = {@Content(
                             mediaType = "application/json",
@@ -187,58 +190,13 @@ public class PlaceManagementRestController {
         }
     }
 
-    @Operation(summary = "Upload new place's image")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Place's image was uploaded correctly",
-                    content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation= Place.class)
-                    )}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Not authorized",
-                    content = @Content
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Place not found",
-                    content = @Content
-            )
-    })
-
-    @PostMapping("/{id}/image")
-    public ResponseEntity<Place> uploadImage(
-            @Parameter(description="id of place to upload its image")
-            @PathVariable long id,
-            @Parameter(description="image to be uploaded")
-            @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
-        Optional<Place> place = placeService.findById(id);
-
-        if (place.isPresent()) {
-            Place newPlace = place.get();
-
-            newPlace.setImage(true);
-            newPlace.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-
-            placeService.save(newPlace);
-            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
-            URI location = new URI(baseUrl + "/api/places/" + id + "/image");
-            return ResponseEntity.created(location).build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @Operation(summary = "Edit existing place's image")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Place's image was edited correctly",
                     content = {@Content(
-                            mediaType = "application/json",
+                            mediaType = "image/jpeg",
                             schema = @Schema(implementation= Place.class)
                     )}
             ),
@@ -255,20 +213,23 @@ public class PlaceManagementRestController {
     })
 
     @PutMapping("/{id}/image")
-    public ResponseEntity<Place> editImage(
+    public ResponseEntity<Resource> editImage(
             @Parameter(description="id of place to edit its image")
             @PathVariable long id,
             @Parameter(description="image to be uploaded")
-            @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException {
+            @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, URISyntaxException, SQLException {
         Optional<Place> place = placeService.findById(id);
 
         if (place.isPresent()) {
             Place newPlace = place.get();
             newPlace.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            newPlace.setImage(true);
             placeService.save(newPlace);
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
             URI location = new URI(baseUrl + "/api/places/" + id + "/image");
-            return ResponseEntity.created(location).body(newPlace);
+            Resource file = new InputStreamResource(imageFile.getInputStream());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+                    .contentLength(newPlace.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
