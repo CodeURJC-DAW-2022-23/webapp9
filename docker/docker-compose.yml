@@ -1,17 +1,17 @@
 version: "3.9"
 
 services:
-  web:
+  webapp:
     image: lovethefrogs/tripscanner-webapp
     restart: always
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db/tripscanner
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database/tripscanner
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL-AUTO=create-drop
     ports:
       - 8443:8443
-  db:
+  database:
     image: mysql:8.0.22
     environment:
       - MYSQL_ROOT_PASSWORD=password
