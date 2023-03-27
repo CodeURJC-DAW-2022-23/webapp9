@@ -167,19 +167,19 @@ public class DatabaseInitializer {
         Itinerary itinerary3 = new Itinerary("Route around Turkey", "Including places in Istanbul", admin, true);
         setImage(itinerary3, "/img-samples/roma.jpeg");
 
-        itinerary2.setPlaces(Arrays.asList(place7, place8, place9));
+        itinerary3.setPlaces(Arrays.asList(place7, place8, place9));
         itineraryRepository.save(itinerary3);
 
         Itinerary itinerary4 = new Itinerary("Route around Italy", "Including places in Rome", admin, true);
         setImage(itinerary4, "/img-samples/istanbul.jpeg");
 
-        itinerary2.setPlaces(Arrays.asList(place12, place13, place14, place15));
+        itinerary4.setPlaces(Arrays.asList(place12, place13, place14, place15));
         itineraryRepository.save(itinerary4);
 
         Itinerary itinerary5 = new Itinerary("Route around China", "Including places in Beijing", admin, true);
         setImage(itinerary5, "/img-samples/Beijing.jpeg");
 
-        itinerary2.setPlaces(Arrays.asList(place10, place11));
+        itinerary5.setPlaces(Arrays.asList(place10, place11));
         itineraryRepository.save(itinerary5);
 
 
