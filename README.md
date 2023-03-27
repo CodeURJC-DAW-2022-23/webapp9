@@ -3,7 +3,7 @@
 ## Index
 
 1. [Phase 0 additions](#phase0)
-2. [Phase 1 aditions](#phase1)
+2. [Phase 1 additions](#phase1)
 3. [Phase 2 additions](#phase2)
 4. [Phase 3 additions](#phase3)
 
@@ -312,7 +312,7 @@ Those are the instructions to run it:
 
 #### Building docker image
 
-To build the Docker image using the `create_image.sh` file you might need to intall Docker first as the following step shows.
+To build the Docker image using the `create_image.sh` file you might need to intall Docker first as the previous step shows.
 
 After that, you should:
 
