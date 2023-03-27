@@ -4,6 +4,7 @@ import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.rest.GraphDetails;
 import com.tripscanner.TripScanner.service.DestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class GraphsRestController {
 
     @GetMapping("/index")
     public ResponseEntity<GraphDetails> indexGraph() {
-        List<Destination> destinations = destinationService.findAll(Sort.by(Sort.Direction.DESC, "views"));
+        List<Destination> destinations = destinationService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"))).toList();
         List<Long> views = new ArrayList<>();
 
         for (Destination destination : destinations) {
