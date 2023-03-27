@@ -1,24 +1,18 @@
 package com.tripscanner.TripScanner.service;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-
-import javax.annotation.PostConstruct;
-
 import com.tripscanner.TripScanner.model.*;
-import com.tripscanner.TripScanner.repository.DestinationRepository;
-import com.tripscanner.TripScanner.repository.ItineraryRepository;
-import com.tripscanner.TripScanner.repository.PlaceRepository;
-import com.tripscanner.TripScanner.repository.ReviewRepository;
-import com.tripscanner.TripScanner.repository.UserRepository;
-
+import com.tripscanner.TripScanner.repository.*;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Arrays;
 
 @Service
 public class DatabaseInitializer {

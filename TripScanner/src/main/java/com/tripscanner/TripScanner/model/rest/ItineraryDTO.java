@@ -1,8 +1,5 @@
 package com.tripscanner.TripScanner.model.rest;
 
-import com.tripscanner.TripScanner.model.Place;
-import java.util.List;
-
 public class ItineraryDTO {
 
     private String name;

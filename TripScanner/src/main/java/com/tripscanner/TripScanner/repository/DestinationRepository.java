@@ -1,15 +1,13 @@
 package com.tripscanner.TripScanner.repository;
 
-import java.util.Optional;
-
-import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Destination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.tripscanner.TripScanner.model.Destination;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.Optional;
 
 
 public interface DestinationRepository extends PagingAndSortingRepository<Destination, Long>, JpaRepository<Destination, Long> {

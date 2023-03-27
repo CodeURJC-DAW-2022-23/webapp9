@@ -1,7 +1,5 @@
 package com.tripscanner.TripScanner.model.rest;
 
-import javax.persistence.Column;
-
 public class PlaceDTO {
 
     private String name;

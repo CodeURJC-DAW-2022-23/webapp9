@@ -5,8 +5,8 @@ import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.service.DestinationService;
-import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ItineraryService;
+import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {

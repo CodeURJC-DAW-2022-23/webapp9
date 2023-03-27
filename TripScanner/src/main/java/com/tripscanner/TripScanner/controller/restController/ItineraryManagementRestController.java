@@ -1,8 +1,6 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
@@ -20,7 +18,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +30,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;

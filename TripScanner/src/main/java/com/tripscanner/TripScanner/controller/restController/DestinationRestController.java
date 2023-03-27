@@ -1,7 +1,6 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.model.rest.DestinationDetailsDTO;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;

@@ -1,6 +1,5 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.service.UserService;
@@ -16,7 +15,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

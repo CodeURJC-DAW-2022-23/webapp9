@@ -3,11 +3,10 @@ package com.tripscanner.TripScanner.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 
+import javax.persistence.*;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.*;
 
 @Entity
 public class Itinerary implements Information {

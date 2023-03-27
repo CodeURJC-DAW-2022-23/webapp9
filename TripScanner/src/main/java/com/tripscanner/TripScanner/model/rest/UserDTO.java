@@ -1,7 +1,5 @@
 package com.tripscanner.TripScanner.model.rest;
 
-import com.tripscanner.TripScanner.model.User;
-
 public class UserDTO {
 
     private String username;

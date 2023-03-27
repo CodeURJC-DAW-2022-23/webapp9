@@ -1,18 +1,15 @@
 package com.tripscanner.TripScanner.controller.restController;
 
-import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetailsDTO;
-import com.tripscanner.TripScanner.model.rest.PlaceIdDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
-import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.service.ReviewService;
+import com.tripscanner.TripScanner.service.UserService;
 import com.tripscanner.TripScanner.utils.PdfGenerator;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -39,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;

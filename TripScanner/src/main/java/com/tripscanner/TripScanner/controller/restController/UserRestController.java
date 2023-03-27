@@ -1,19 +1,13 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.User;
+import com.tripscanner.TripScanner.model.rest.UserDTO;
 import com.tripscanner.TripScanner.model.rest.UserDetailsDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ReviewService;
 import com.tripscanner.TripScanner.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.tripscanner.TripScanner.utils.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,22 +24,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.Optional;
-import com.tripscanner.TripScanner.model.rest.UserDTO;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 import java.util.Arrays;
+import java.util.Optional;
+
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
