@@ -366,11 +366,11 @@ Here, each member of the team shows what they have contributed to during the dev
 3. [Anna Trofimova](https://github.com/anna-trofimova)
     - **Description of tasks:** 
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Fixed: delete destination and create itinerary](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/9155c5ade8638f3a99785e4261ce2244e78b42ba)
+        - [Added: Management Rest Controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/8bb397d9562eb1b9acf5cd730eb2ae1b3ed2954c)
+        - [Added: Destination Mangement Rest Controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/afa3e0c5de18554a7ff3db9909d44318a40a1774)
+        - [Update: itinerary user](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/2d894ac34be4a9828fc6cdadecf2c1629e5c8e72)
+        - [Create:docker-compose.yml](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/647bee8f6bc731ced1571d2d20fd6edd7ed4a7a8)
     - **5 files with most participation:** These files are:
         - [NAME](URL)
         - [NAME](URL)
