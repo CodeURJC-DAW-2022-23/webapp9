@@ -275,9 +275,16 @@ Here, each member of the team shows what they have contributed to during the dev
 
 ### API REST Documentation
 
+The API REST documentation has been generated using OpenAPI specification. As so, it has been automatially generated into a `.yml` and `.html` file. Both files are accessible from this repository, through the following links:
+
+* [**api-docs.yml**]()
+* [**api-docs.htmlz**]()
 
 ### Updated classes and templates diagram
 
+The classes and templates diagram has been updated with the new `@RestController` classes. Please note that the `@Service` classes have been implemented before, in the *Stage 2*.
+
+**INCLUDE UPDATED DIAGRAM HERE**
 
 ### Docker
 
