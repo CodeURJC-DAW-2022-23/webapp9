@@ -2,9 +2,11 @@ package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Review;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetailsDTO;
+import com.tripscanner.TripScanner.model.rest.ReviewDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ReviewService;
@@ -385,6 +387,33 @@ public class ItineraryRestController {
             )
     })
 
+    @PostMapping("/{id}/reviews")
+    public ResponseEntity<ReviewDTO> addReview(HttpServletRequest request, @PathVariable long id, @RequestBody Review review) {
+        Principal userPrincipal = request.getUserPrincipal();
+        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
+        if (userPrincipal == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (review.getTitle().isEmpty() || review.getTitle().isBlank() || review.getDescription().isEmpty() || review.getDescription().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (review.getScore() < 0 || review.getScore() > 5) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        User user = userService.findByUsername(userPrincipal.getName()).get();
+        Itinerary itinerary = optionalItinerary.get();
+
+        List<Review> reviews = itinerary.getReviews();
+        Review newReview = new Review(review.getTitle(), review.getDescription(), review.getScore());
+        newReview.setUser(user);
+        newReview.setItinerary(itinerary);
+        reviewService.save(newReview);
+        reviews.add(newReview);
+        itineraryService.save(itinerary);
+
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(newReview.getId()).toUri();
+
+        return ResponseEntity.created(location).body(new ReviewDTO(newReview));
+    }
+
+
+
     @PostMapping("/{itineraryId}/places")
     public ResponseEntity<Page<Place>> editPlaces(
             @Parameter(description = "id of the itinerary you want to add a place to")
@@ -490,6 +519,7 @@ public class ItineraryRestController {
                     content = @Content
             )
     })
+
     @GetMapping("/{id}")
     public ResponseEntity<ItineraryDetailsDTO> itinerary(HttpServletRequest request,
                                                       @Parameter(description="itinerary id") @PathVariable int id,
