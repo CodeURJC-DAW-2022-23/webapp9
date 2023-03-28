@@ -358,11 +358,11 @@ Here, each member of the team shows what they have contributed to during the dev
         - [Feat: Destinations, Itineraries and Places images](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/4582944779e28c34f1d86a0cdb7fe6aaecbfb67f)
         - [Feat: Itinerary REST controllers](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/96c70f607cad14e55f883b363516f2f129a9913d)
     - **5 files with most participation:** These files are:
-        - [DestinationRestController.java]()
-        - [PlaceRestController.java]()
-        - [GraphsRestController.java]()
-        - [ItineraryRestController.java]()
-        - [ItineraryDTO.java]()
+        - [DestinationRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/DestinationRestController.java)
+        - [PlaceRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/PlaceRestController.java)
+        - [GraphsRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/GraphsRestController.java)
+        - [ItineraryRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/ItineraryRestController.java)
+        - [ItineraryDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ItineraryDTO.java)
 
 3. [Anna Trofimova](https://github.com/anna-trofimova)
     - **Description of tasks:** In this phase I participated in creating manager rest controllers for destinations and itineraries. Also i was in charge of docker and adding more items to database. Apart from it, I did API documantation and Postman requests for my rest controllers. 
