@@ -265,7 +265,7 @@ public class ItineraryRestController {
         for (Review r : itinerary.getReviews()) {
             reviewService.delete(r.getId());
         }
-        
+
         itineraryService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -617,4 +617,18 @@ public class ItineraryRestController {
         return new ResponseEntity<>(placeService.findFromItinerary(id, PageRequest.of(page, 10)), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<Page<Review>> getReviewsInItinerary(HttpServletRequest request, @PathVariable long id, @RequestParam(defaultValue = "0") int page) {
+        Principal userPrincipal = request.getUserPrincipal();
+        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Itinerary itinerary = optionalItinerary.get();
+        if (!itinerary.isPublic()) {
+            if (userPrincipal == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            if (!itinerary.getUser().getUsername().equals(userPrincipal.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        return new ResponseEntity<>(reviewService.findFromItinerary(id, PageRequest.of(page, 10)), HttpStatus.OK);
+    }
 }
