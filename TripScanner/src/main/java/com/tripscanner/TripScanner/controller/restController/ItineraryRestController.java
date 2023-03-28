@@ -457,7 +457,7 @@ public class ItineraryRestController {
                                                @Parameter(description = "id of the itinerary to add a review to")
                                                @PathVariable long id,
                                                @Parameter(description = "body of the review object to be added to the itinerary")
-                                               @RequestBody Review review) {
+                                               @RequestBody ReviewDTO review) {
         Principal userPrincipal = request.getUserPrincipal();
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (userPrincipal == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
