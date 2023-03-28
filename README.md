@@ -382,16 +382,14 @@ Here, each member of the team shows what they have contributed to during the dev
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
     - **Description of tasks:** This phase, I've been in charge of coding the Rest Controllers used by registered users, as well as its documentation. This controllers implement functionalities such as managing your itineraries and creating new ones, and editing your profile info. I've also been in charge of developing the Docker functionalities with [@anna-trofimova](https://github.com/anna-trofimova).
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Feature: Added profile functionality for REST API](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/aecefe89cfe50a93ac390fa71fc01cbeab2ca8dd)
+        - [Feature: REST API's itineraries functionality](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/5709a6b6be58065ef4688e36438a729384556ca9)
+        - [Feature: Added API documentation for UserRestController](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/60e4addba6b9711982bc55f7ebb1370d4bc3ad8c)
+        - [Fix: Verb usage in URI](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/8f14cf5393066d52554adbe451915e4eb685c1a9)
+        - [Feature: Added documentation for ItineraryRestController class](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/7568ce0adbc9605398ffab4569fe1928b0c53da7)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-
-
+        - [RestLoginController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/RestLoginController.java)
+        - [ItineraryRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/ItineraryRestController.java)
+        - [UserRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/UserRestController.java)
+        - [ReviewDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ReviewDTO.java)
+        - [create_image.sh](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/docker/create_image.sh)
