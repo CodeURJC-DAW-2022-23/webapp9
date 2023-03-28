@@ -377,7 +377,7 @@ Here, each member of the team shows what they have contributed to during the dev
         - [ItineraryManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/ItineraryManagementRestController.java)
         - [ItineraryDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ItineraryDTO.java)
         - [DatabaseInitializer.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/service/DatabaseInitializer.java)
-        - [Docker-compose.yml](URL)
+        - [Docker-compose.yml](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/docker/docker-compose.yml)
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
     - **Description of tasks:** This phase, I've been in charge of coding the Rest Controllers used by registered users, as well as its documentation. This controllers implement functionalities such as managing your itineraries and creating new ones, and editing your profile info. I've also been in charge of developing the Docker functionalities with [@anna-trofimova](https://github.com/anna-trofimova).
