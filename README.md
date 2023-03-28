@@ -343,11 +343,11 @@ Here, each member of the team shows what they have contributed to during the dev
         - [Feat: API upload and edit image](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/32214c5a7d44a92e04e50ccd4ccfe86de271a9cb)
         - [Feat: authentication needed URLs](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/139106c173d97eed396c5a35cbd47f8300e8103c)
     - **5 files with most participation:** These files are:
-        - [UserManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/UserManagementRestController.java)
-        - [PlaceManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/PlaceManagementRestController.java)
-        - [RestSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/security/restSecurity/RestSecurityConfig.java)
-        - [PlaceDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/PlaceDTO.java)
-        - [UserDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/UserDTO.java)
+        - [UserManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/UserManagementRestController.java)
+        - [PlaceManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/PlaceManagementRestController.java)
+        - [RestSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/restSecurity/RestSecurityConfig.java)
+        - [PlaceDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/PlaceDTO.java)
+        - [UserDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/UserDTO.java)
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
     - **Description of tasks:** In this phase I have been in charge of the unregistered user's funcitonality in the API REST, such as Destinations, Places and Itineraries search and details. Also, I've developed the the sign-up request and the graph's controller. Initially I was going to work on Railway with @AdayaUwU , but since it was removed frmo this stage, I was also in charge of the documentation (README, diagrams and API) and of checking that everything was working properly and fixing errors for the Docker section. Apart from that, I've been lending a hand to other members when they required any help.
