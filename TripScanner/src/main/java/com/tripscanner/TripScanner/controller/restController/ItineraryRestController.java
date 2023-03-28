@@ -262,6 +262,10 @@ public class ItineraryRestController {
         Itinerary itinerary = optionalItinerary.get();
 
         if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity(HttpStatus.FORBIDDEN);
+        for (Review r : itinerary.getReviews()) {
+            reviewService.delete(r.getId());
+        }
+        
         itineraryService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
