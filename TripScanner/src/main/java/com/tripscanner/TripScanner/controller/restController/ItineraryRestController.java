@@ -448,10 +448,7 @@ public class ItineraryRestController {
             @ApiResponse(
                     responseCode = "500",
                     description = "Needed fields for review not found",
-                    content = {@Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = Exception.class)
-                    )}
+                    content = @Content
             )
     })
 
