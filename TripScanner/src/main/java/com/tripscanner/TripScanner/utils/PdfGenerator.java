@@ -12,6 +12,7 @@ import com.tripscanner.TripScanner.model.Place;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PdfGenerator {
     public void generate(Itinerary itinerary, HttpServletResponse response) throws DocumentException, IOException {
@@ -50,9 +51,9 @@ public class PdfGenerator {
         paragraph.setAlignment(Paragraph.ALIGN_LEFT);
         document.add(paragraph);
 
-        PdfPTable table = new PdfPTable(itinerary.getPlaces().size());
+        PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100f);
-        table.setWidths(new int[] {3,3,3});
+        table.setWidths(new int[] {3, 3, 3});
         table.setSpacingBefore(5);
 
         // Itinerary places
