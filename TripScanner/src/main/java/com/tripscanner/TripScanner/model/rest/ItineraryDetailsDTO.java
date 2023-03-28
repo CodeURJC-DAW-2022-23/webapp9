@@ -35,4 +35,11 @@ public class ItineraryDetailsDTO {
         this.places = places;
     }
 
+    public Page<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Page<Review> reviews) {
+        this.reviews = reviews;
+    }
 }
