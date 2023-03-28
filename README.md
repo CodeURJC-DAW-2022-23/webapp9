@@ -364,7 +364,7 @@ Here, each member of the team shows what they have contributed to during the dev
         - [ItineraryDTO.java]()
 
 3. [Anna Trofimova](https://github.com/anna-trofimova)
-    - **Description of tasks:** 
+    - **Description of tasks:** In this phase I participated in creating manager rest controllers for destinations and itineraries. Also i was in charge of docker and adding more items to database. Apart from it, I did API documantation and Postman requests for my rest controllers. 
     - **5 biggest commits:** These commits are:
         - [Fixed: delete destination and create itinerary](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/9155c5ade8638f3a99785e4261ce2244e78b42ba)
         - [Added: Management Rest Controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/8bb397d9562eb1b9acf5cd730eb2ae1b3ed2954c)
