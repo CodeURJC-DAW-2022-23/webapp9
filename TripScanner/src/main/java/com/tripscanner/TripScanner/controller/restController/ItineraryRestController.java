@@ -420,6 +420,8 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(placeService.findFromItinerary(itinerary.getId(), PageRequest.of(0, 10)));
     }
 
+    
+
     @PostMapping("/{id}/reviews")
     public ResponseEntity<ReviewDTO> addReview(HttpServletRequest request, @PathVariable long id, @RequestBody Review review) {
         Principal userPrincipal = request.getUserPrincipal();
@@ -431,6 +433,10 @@ public class ItineraryRestController {
 
         User user = userService.findByUsername(userPrincipal.getName()).get();
         Itinerary itinerary = optionalItinerary.get();
+
+        if (!itinerary.isPublic()) {
+            if (!itinerary.getUser().getUsername().equals(user.getUsername()) && !user.getRoles().contains("ADMIN")) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
         List<Review> reviews = itinerary.getReviews();
         Review newReview = new Review(review.getTitle(), review.getDescription(), review.getScore());
@@ -626,7 +632,7 @@ public class ItineraryRestController {
         Itinerary itinerary = optionalItinerary.get();
         if (!itinerary.isPublic()) {
             if (userPrincipal == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            if (!itinerary.getUser().getUsername().equals(userPrincipal.getName())) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            if (!itinerary.getUser().getUsername().equals(userPrincipal.getName()) && !userService.findByUsername(userPrincipal.getName()).get().getRoles().contains("ADMIN")) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         return new ResponseEntity<>(reviewService.findFromItinerary(id, PageRequest.of(page, 10)), HttpStatus.OK);
