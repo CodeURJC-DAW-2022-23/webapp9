@@ -372,11 +372,11 @@ Here, each member of the team shows what they have contributed to during the dev
         - [Update: itinerary user](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/2d894ac34be4a9828fc6cdadecf2c1629e5c8e72)
         - [Create:docker-compose.yml](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/647bee8f6bc731ced1571d2d20fd6edd7ed4a7a8)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [DestinationManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blame/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/DestinationManagementRestController.java)
+        - [ItineraryManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/ItineraryManagementRestController.java)
+        - [ItineraryDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ItineraryDTO.java)
+        - [DatabaseInitializer.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/service/DatabaseInitializer.java)
+        - [Docker-compose.yml](URL)
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
     - **Description of tasks:** This phase, I've been in charge of coding the Rest Controllers used by registered users, as well as its documentation. This controllers implement functionalities such as managing your itineraries and creating new ones, and editing your profile info. I've also been in charge of developing the Docker functionalities with [@anna-trofimova](https://github.com/anna-trofimova).
