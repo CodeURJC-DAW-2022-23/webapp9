@@ -12,6 +12,7 @@ services:
     ports:
       - 8443:8443
   database:
+    platform: linux/x86_64
     image: mysql:8.0.22
     environment:
       - MYSQL_ROOT_PASSWORD=password
