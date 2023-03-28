@@ -1,9 +1,11 @@
 package com.tripscanner.TripScanner.model;
 
-import java.sql.Blob;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tripscanner.TripScanner.model.rest.UserDTO;
 
 import javax.persistence.*;
+import java.sql.Blob;
+import java.util.List;
 
 @Entity
 @Table(name = "UserTable")
@@ -21,11 +23,13 @@ public class User {
 
     private String email;
 
+    @JsonIgnore
     private String passwordHash;
 
     private String nationality;
 
     @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     private boolean image;
@@ -34,12 +38,25 @@ public class User {
     private List<String> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Itinerary> itineraries;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Review> reviews;
 
     public User() {
+    }
+
+    public User(UserDTO userDTO) {
+        super();
+        this.username = userDTO.getUsername();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.email = userDTO.getEmail();
+        this.passwordHash = userDTO.getPasswordHash();
+        this.nationality = userDTO.getNationality();
+        this.roles = List.of("USER");
     }
 
     public User(String username, String firstName, String lastName, String email, String passwordHash, String nationality, String... roles) {
@@ -149,4 +166,23 @@ public class User {
         this.reviews = reviews;
     }
 
+    public boolean hasUserName() {
+        return !this.username.isEmpty() || !this.username.isBlank();
+    }
+
+    public boolean hasFirstName() {
+        return !this.firstName.isEmpty() || !this.firstName.isBlank();
+    }
+
+    public boolean hasLastName() {
+        return !this.lastName.isEmpty() || !this.lastName.isBlank();
+    }
+
+    public boolean hasEmail() {
+        return !this.email.isEmpty() || !this.email.isBlank();
+    }
+
+    public boolean hasPasswordHash() {
+        return !this.passwordHash.isEmpty() || !this.passwordHash.isBlank();
+    }
 }

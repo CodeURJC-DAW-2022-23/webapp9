@@ -1,18 +1,15 @@
 package com.tripscanner.TripScanner.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.repository.ItineraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.tripscanner.TripScanner.model.Itinerary;
-import com.tripscanner.TripScanner.repository.ItineraryRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItineraryService implements AbstractService<Itinerary> {
@@ -54,8 +51,29 @@ public class ItineraryService implements AbstractService<Itinerary> {
         repository.deleteById(id);
     }
 
-    public Page<Itinerary> findAllByNameOrDescriptionLike(String name, String description, Pageable pageable) {
-        return repository.findAllByNameOrDescriptionLike(name, description, pageable);
+    public Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
 
+    public Page<Itinerary> findAllByUserOrPublic(String user, Pageable pageable) {
+        return repository.findAllByUserOrPublic(user, pageable); 
+    }
+
+    public Page<Itinerary> findFromPlace(long id, Pageable pageable) {
+        return repository.findFromPlace(id, pageable);
+    }
+
+    public Page<Itinerary> findFromUser(long id, Pageable pageable) {
+        return repository.findFromUser(id, pageable);
+    }
+    
+    public Page<Itinerary> findAllByNameOrDescriptionAndUserOrPublicLikeIgnoreCase(String name, String description, String user, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionAndUserOrPublicLikeIgnoreCase(name, description, user, pageable);
+    }
+
+    public Page<Itinerary> findAllByNameOrDescriptionLikeIgnoreCasePublic(String name, String description, Pageable pageable) {
+        return repository.findAllByNameOrDescriptionLikeIgnoreCasePublic(name, description, pageable);
+    }
+
+    public Page<Itinerary> findAllByUsername(String username, Pageable pageable) { return repository.findAllByUsername(username, pageable); }
 }

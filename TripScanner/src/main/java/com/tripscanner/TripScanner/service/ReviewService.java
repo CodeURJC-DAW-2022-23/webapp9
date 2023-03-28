@@ -1,18 +1,15 @@
 package com.tripscanner.TripScanner.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.model.Review;
+import com.tripscanner.TripScanner.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import com.tripscanner.TripScanner.model.Review;
-import com.tripscanner.TripScanner.repository.ReviewRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService implements AbstractService<Review> {
@@ -40,8 +37,8 @@ public class ReviewService implements AbstractService<Review> {
         return repository.findAll(pageable);
     }
 
-    public Page<Review> getItinReviews(Itinerary i, Pageable pageable) {
-        return repository.getItinReviews(i, pageable);
+    public Page<Review> findFromItinerary(long id, Pageable pageable) {
+        return repository.findFromItinerary(id, pageable);
     }
 
     public void save(Review review) {
@@ -50,6 +47,10 @@ public class ReviewService implements AbstractService<Review> {
 
     public void delete(long id) {
         repository.deleteById(id);
+    }
+
+    public Page<Review> findFromUser(long id, Pageable pageable) {
+        return repository.findFromUser(id, pageable);
     }
 
 }

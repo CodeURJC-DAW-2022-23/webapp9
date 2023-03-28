@@ -1,10 +1,12 @@
 package com.tripscanner.TripScanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
+
+import javax.persistence.*;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.*;
 
 @Entity
 public class Itinerary implements Information {
@@ -24,18 +26,19 @@ public class Itinerary implements Information {
 
     private boolean isPublic;
 
+    @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     @ManyToMany
+    @JsonIgnore
     private List<Place> places;
 
     @ManyToOne
     private User user;
 
-    // @OneToMany(mappedBy = "itinerary")
-
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
-
+    @JsonIgnore
     private List<Review> reviews;
 
     public Itinerary() {
@@ -45,6 +48,16 @@ public class Itinerary implements Information {
         super();
         this.name = name;
         this.description = description;
+        this.user = user;
+        this.isPublic = isPublic;
+        this.setImage(false);
+        this.setViews(0L);
+    }
+
+    public Itinerary(ItineraryDTO itineraryDTO, User user, boolean isPublic) {
+        super();
+        this.name = itineraryDTO.getName();
+        this.description = itineraryDTO.getDescription();
         this.user = user;
         this.isPublic = isPublic;
         this.setImage(false);
@@ -83,7 +96,7 @@ public class Itinerary implements Information {
 
     @Override
     public String getFlag() {
-        if (places.isEmpty()) {
+        if (places == null || places.isEmpty()) {
             return "https://flagicons.lipis.dev/flags/4x3/xx.svg";
         } else {
             return places.get(0).getFlag();
@@ -163,6 +176,14 @@ public class Itinerary implements Information {
 
         toReturn.setPlaces(placeCopy);
         return toReturn;
+    }
+
+    public boolean hasName() {
+        return !this.name.isBlank() || !this.name.isEmpty() || !(this.name == null);
+    }
+
+    public boolean hasDescription() {
+        return !(this.description == null);
     }
 
 }

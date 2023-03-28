@@ -1,15 +1,15 @@
 package com.tripscanner.TripScanner.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.tripscanner.TripScanner.model.User;
+import com.tripscanner.TripScanner.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import com.tripscanner.TripScanner.model.User;
-import com.tripscanner.TripScanner.repository.UserRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements AbstractService<User> {
@@ -51,6 +51,15 @@ public class UserService implements AbstractService<User> {
 
     public void delete(long id) {
         repository.deleteById(id);
+    }
+
+    public Page<User> findFromItinerary(long id, Pageable pageable) {
+        return repository.findFromItinerary(id, pageable);
+    }
+
+    public boolean existName(String username) {
+        Optional<User> user = findByUsername(username);
+        return user.isPresent();
     }
 
 }

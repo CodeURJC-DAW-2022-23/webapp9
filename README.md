@@ -1,6 +1,16 @@
 # webapp9 | TripScanner
 
-## Team members and info
+## Index
+
+1. [Phase 0 additions](#phase0)
+2. [Phase 1 additions](#phase1)
+3. [Phase 2 additions](#phase2)
+4. [Phase 3 additions](#phase3)
+
+<a name="phase0"></a>
+## Phase 0 additions
+
+### Team members and info
 
 Here you can find information about the members that form the developer team for TripScanner
 
@@ -11,18 +21,17 @@ Here you can find information about the members that form the developer team for
 | Iván        | Penedo Ventosa | i.penedo.2020@alumnos.urjc.es    | [@xIvqn](https://github.com/xIvqn)                   |
 | Adaya María | Ruíz Mayoral   | a.ruiz.2020@alumnos.urjc.es      | [@AdayaUwU](https://github.com/AdayaUwU)             |
 
-## Team Organization
+### Team Organization
 
 The team will be organized using the intregration with the native GitHub Projects. That way, team members can use GitHub Issues and other GitHub options to automate the workflow of the web application development. GitHub Project can be accessed through the following [link](https://github.com/orgs/CodeURJC-DAW-2022-23/projects/3/views/1?layout=board).
 
-## App features
+### App features
 
 Here you can see the features of our web application TripScanner.
 
-### Entities
+#### Entities
 
 We'll have the following entities **users**, **places**, **destinations** and **itineraries**.
-
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/72264031/217202549-74b12ef3-274f-477a-935e-f8d553fb5e04.svg">
@@ -30,7 +39,7 @@ We'll have the following entities **users**, **places**, **destinations** and **
   <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
 </picture>
 
-### User privileges
+#### User privileges
 
 Our web app will have the following types of users:
 
@@ -40,15 +49,15 @@ Our web app will have the following types of users:
 
 - **Administrator:** Administrators can do all the previous tasks. They can also edit the public itineraries and create new ones, add new places and destinations.
 
-### Images
+#### Images
 
 Out of our four entities, three of them will have images asociated to them. Users will have a profile picture of their liking, places will have a photo of them and destinations will have a picture of an iconic landmark they have.
 
-### Graphs
+#### Graphs
 
 Inside each destination, users will be able to see a bar graph containing the most popular places inside them. There will also be a graph in the main page where you can see the most popular destinations.
 
-### Aditional technologies
+#### Aditional technologies
 
 The app will be able to send confirmation emails to users when they register, and anytime they save or edit an itinerary.
 
@@ -56,13 +65,14 @@ It will also be able to generate pdf documents with a selected itinerary that a 
 
 Our app will use the OpenStreetMap API which is an Open Source map API. We will also be using SkyScanner's and TripAdvisor API to get information about hotels, destinations and flights.
 
-### Advanced algorithms
+#### Advanced algorithms
 
 TripScanner will have a selection of algorithms. These are:
 
 - An algorithm to search for the shortest path between places of an itinerary.
 - A search algorithm with different search criteria, for both places and destinations.
 
+<a name="phase1"></a>
 ## Phase 1 aditions
 
 ### Webpage screenshots
@@ -101,6 +111,7 @@ At last, administrators can see a panel with the options they have. This panel (
 
 ![Diagrama DAW-3-1](https://user-images.githubusercontent.com/102818341/218516781-fdaf6302-f9dd-4d04-948e-cc64230ff477.png)
 
+<a name="phase2"></a>
 ## Phase 2 additions
 
 ### Webpage screenshots
@@ -187,10 +198,10 @@ Below there is an entity-relationship diagram that shows the database entities, 
 ![Entity-Relationship Diagram](https://user-images.githubusercontent.com/102818341/224564564-71b8c637-e8cc-4bf5-8cbf-e0659c1897e3.svg)
 
 ### Class and templates diagram
+
 This is the class diagram of TripScanner.
 
 ![Diagrama de clases y templates](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/diagrams/svgs/templates2.svg)
-
 
 ### Members participation
 
@@ -215,11 +226,11 @@ Here, each member of the team shows what they have contributed to during the dev
     - **Description of tasks:** I've been in charge of deploying the H2 database at the begining of the stage to start working with it and at the end, when everything was implemented, migrating it to MySQL. Also, I've been developing the pagination section in all pages that required it such as details (for information and reviews for the itineraries) and search results; the controller for downloading database images, aditional technologies (pdf exportation and email sending), private/public itinerary visibility functionality and some diagrams (such as the database entity-relationship diagram) for the documentation. Apart from that, I've been reviewing code and helping others.
     - **5 biggest commits:** Note that I usually upload more commits with less changes each, so I have a lot of contributions but each one has less changes. These commits are:
         - [Feat: Load images on pages](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/98cfbaa6a1adeb4dd533fcb74550d79d67cb59bc)
-        - [Feat: Log In forms ](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/03548dd901a82f822346aff19d4fbdd3dc9cf7ab)
+        - [Feat: Log In forms](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/03548dd901a82f822346aff19d4fbdd3dc9cf7ab)
         - [Feat: Itinerary review pagination](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/6ee2806f59e3355919a15d96786cd8560201541f)
         - [Feat: Search pagination](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/0ca1c2a5e6cc8ca10d149907aded673645fade46)
-        - [ Feat: PDF exporter class](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/57457eb49da909e7979c78ef18f9d06537e7b52b)
-        
+        - [Feat: PDF exporter class](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/57457eb49da909e7979c78ef18f9d06537e7b52b)
+
     - **5 files with most participation:** These files are:
         - [/java/../controller/SearchController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/SearchController.java)
         - [/java/../utils/PdfGenerator.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/utils/PdfGenerator.java)
@@ -257,3 +268,130 @@ Here, each member of the team shows what they have contributed to during the dev
         - [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/WebSecurityConfig.java)
         - [profile.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/profile.html)
         
+<a name="phase3"></a>
+# Phase 3 additions
+
+
+### API REST Documentation
+
+The API REST documentation has been generated using OpenAPI specification. As so, it has been automatically generated into a `.yml` and `.html` file. Both files are accessible from this repository, through the following links:
+
+* [**api-docs.yml**](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/api-docs/api-docs.yaml)
+* [**api-docs.html**](https://raw.githack.com/CodeURJC-DAW-2022-23/webapp9/dev/TripScanner/api-docs/api-docs.html)
+
+### Updated classes and templates diagram
+
+The classes and templates diagram has been updated with the new `@RestController` classes. Please note that the `@Service` classes have been implemented before, in the *Stage 2*.
+
+![Phase3DAW](https://user-images.githubusercontent.com/103607990/228073072-d75470f1-8616-49de-88e1-09d99020b0db.svg)
+
+### Docker
+
+In the following sections, it'll be explaned everything about the Docker usage in the application, including the execution of the dockerized webapp and the building of the docker image
+
+#### Executing dockerized application
+
+To run the Docker image using the `docker-compose.yml` file you might need to install Docker first:
+
+* Windows:
+  * Microsoft Windows 10 Professional or Enterprise 64-bit or Windows 10:
+    * https://store.docker.com/editions/community/docker-ce-desktop-windows
+    * https://docs.docker.com/docker-for-windows/install-windows-home/
+* Linux:
+  * Ubuntu: https://store.docker.com/editions/community/docker-ce-server-ubuntu
+  * Fedora: https://store.docker.com/editions/community/docker-ce-server-fedora
+  * Debian: https://store.docker.com/editions/community/docker-ce-server-debian
+  * CentOS: https://store.docker.com/editions/community/docker-ce-server-centos
+* Mac:
+  * Apple macOS Mojave (10.14) or newer:
+    * https://store.docker.com/editions/community/docker-ce-desktop-mac
+    * Apple M1 chip: https://docs.docker.com/docker-for-mac/apple-m1/
+
+These are the instructions to run it: 
+
+1. Open a terminal.
+2. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
+3. Go to the docker folder using `cd webapp9/docker`.
+4. If you use Mac M1, you also need to run command `docker pull --platform linux/x86_64 mysql`.
+5. Run the `docker-compose.yml` file using `docker-compose up`.
+6. Now you've got both webapp and API running on `https://localhost:8443`.
+
+
+#### Building docker image
+
+To build the Docker image using the `create_image.sh` file you might need to install Docker first as the previous step shows.
+
+After that, you should:
+
+1. Cretae an account on DockerHub and log-in locally.
+2. Open a terminal.
+3. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
+4. Go to the docker folder using `cd webapp9/docker`.
+5. Run `./create_image.sh %username%/tripscanner-webapp` replacing %username% with your DockerHub username.
+
+
+### Members participation
+
+Here, each member of the team shows what they have contributed to during the development of this phase.
+
+1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
+    - **Description of tasks:** In this phase I have been in charge of the admin functionality for places and users in the API. Initially I was going to work on Railway too, but since it was removed, I was also in charge of the documentation (README, diagrams and API) and of checking that everything was working properly and fixing errors.
+    - **5 biggest commits:** These commits are:
+        - [Feat: Upload and edit image methods](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/e5f1175200b391c4c7d176cc0f168a28246132e0)
+        - [Feat: get, add, edit and delete Places](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/9a201c60ef490b6e20df1bdcd8bb13409e63b575)
+        - [Feat: get, add, edit and delete Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/d57f59571e951ba7a65f09895347f891ae8bb051)
+        - [Feat: API upload and edit image](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/32214c5a7d44a92e04e50ccd4ccfe86de271a9cb)
+        - [Feat: authentication needed URLs](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/139106c173d97eed396c5a35cbd47f8300e8103c)
+    - **5 files with most participation:** These files are:
+        - [UserManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/UserManagementRestController.java)
+        - [PlaceManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/PlaceManagementRestController.java)
+        - [RestSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/security/restSecurity/RestSecurityConfig.java)
+        - [PlaceDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/PlaceDTO.java)
+        - [UserDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/UserDTO.java)
+
+2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
+    - **Description of tasks:** In this phase I have been in charge of the unregistered user's funcitonality in the API REST, such as Destinations, Places and Itineraries search and details. Also, I've developed the the sign-up request and the graph's controller. Initially I was going to work on Railway with @AdayaUwU , but since it was removed frmo this stage, I was also in charge of the documentation (README, diagrams and API) and of checking that everything was working properly and fixing errors for the Docker section. Apart from that, I've been lending a hand to other members when they required any help.
+    - **5 biggest commits:** These commits are:
+        - [Feat: Details views](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/14439c6c03588b0c6079e2722578f97fefeacd15)
+        - [Feat: Graphs rest controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/a7550a9532771c263e551b3d59f205fb6b019d79)
+        - [Feat: Destinations REST controllers](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/0b7c15377e5472692de5ffddbc59329411510e8b)
+        - [Feat: Destinations, Itineraries and Places images](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/4582944779e28c34f1d86a0cdb7fe6aaecbfb67f)
+        - [Feat: Itinerary REST controllers](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/96c70f607cad14e55f883b363516f2f129a9913d)
+    - **5 files with most participation:** These files are:
+        - [DestinationRestController.java]()
+        - [PlaceRestController.java]()
+        - [GraphsRestController.java]()
+        - [ItineraryRestController.java]()
+        - [ItineraryDTO.java]()
+
+3. [Anna Trofimova](https://github.com/anna-trofimova)
+    - **Description of tasks:** In this phase I participated in creating manager rest controllers for destinations and itineraries. Also i was in charge of docker and adding more items to database. Apart from it, I did API documantation and Postman requests for my rest controllers. 
+    - **5 biggest commits:** These commits are:
+        - [Fixed: delete destination and create itinerary](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/9155c5ade8638f3a99785e4261ce2244e78b42ba)
+        - [Added: Management Rest Controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/8bb397d9562eb1b9acf5cd730eb2ae1b3ed2954c)
+        - [Added: Destination Mangement Rest Controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/afa3e0c5de18554a7ff3db9909d44318a40a1774)
+        - [Update: itinerary user](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/2d894ac34be4a9828fc6cdadecf2c1629e5c8e72)
+        - [Create:docker-compose.yml](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/647bee8f6bc731ced1571d2d20fd6edd7ed4a7a8)
+    - **5 files with most participation:** These files are:
+        - [DestinationManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blame/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/DestinationManagementRestController.java)
+        - [ItineraryManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/ItineraryManagementRestController.java)
+        - [ItineraryDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ItineraryDTO.java)
+        - [DatabaseInitializer.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/service/DatabaseInitializer.java)
+        - [Docker-compose.yml](URL)
+
+4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
+    - **Description of tasks:** This phase, I've been in charge of coding the Rest Controllers used by registered users, as well as its documentation. This controllers implement functionalities such as managing your itineraries and creating new ones, and editing your profile info. I've also been in charge of developing the Docker functionalities with [@anna-trofimova](https://github.com/anna-trofimova).
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+

@@ -1,17 +1,15 @@
 package com.tripscanner.TripScanner.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.tripscanner.TripScanner.model.Itinerary;
+import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.repository.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.tripscanner.TripScanner.model.Destination;
-import com.tripscanner.TripScanner.repository.DestinationRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DestinationService implements AbstractService<Destination> {
@@ -55,9 +53,19 @@ public class DestinationService implements AbstractService<Destination> {
         repository.deleteById(id);
     }
 
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+
     public Page<Destination> findAllByNameOrDescriptionLikeIgnoreCase(String name, String description, Pageable pageable) {
         return repository.findAllByNameOrDescriptionLikeIgnoreCase(name, description, pageable);
     }
+
+    public Page<Destination> findFromPlace(long id, Pageable pageable) {
+        return repository.findFromPlace(id, pageable);
+    }
+
 
 
 }

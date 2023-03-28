@@ -1,0 +1,1628 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8443
+  description: Generated server url
+paths:
+  /api/users/me:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Shows the logged user's profile
+      operationId: getUser
+      parameters:
+      - name: pageItineraries
+        in: query
+        description: itineraries page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: pageReviews
+        in: query
+        description: reviews page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "400":
+          description: Operation not available when no user is logged in
+        "200":
+          description: Displayed profile properly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      tags:
+      - user-rest-controller
+      summary: Edits the user's information
+      operationId: editUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "403":
+          description: No user is logged in
+        "200":
+          description: Successfully edited user's data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Email does not match against correct mail format
+        "500":
+          description: Empty body of request
+  /api/users/me/image:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Get a logged user's profile picture
+      operationId: downloadProfileImage
+      responses:
+        "404":
+          description: User does not have an image
+        "400":
+          description: Operation not available when no user is logged in
+        "200":
+          description: User obtained successfully
+          content:
+            image/jpeg: {}
+    put:
+      tags:
+      - user-rest-controller
+      summary: Edits logged user's profile picture
+      operationId: editImage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+      responses:
+        "403":
+          description: Operation not available for not logged in users
+        "200":
+          description: Image edited successfully
+          content:
+            image/jpeg: {}
+  /api/management/users/{id}:
+    put:
+      tags:
+      - user-management-rest-controller
+      summary: Edit existing user
+      operationId: editUser_1
+      parameters:
+      - name: id
+        in: path
+        description: id of user to be edited
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "404":
+          description: User not found
+        "200":
+          description: User was correctly edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "403":
+          description: Not authorized
+    delete:
+      tags:
+      - user-management-rest-controller
+      summary: Delete user
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        description: id of user to be deleted
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: User not found
+        "204":
+          description: User was correctly deleted
+        "403":
+          description: Not authorized
+  /api/management/users/{id}/image:
+    put:
+      tags:
+      - user-management-rest-controller
+      summary: Edit existing user's image
+      operationId: editImage_1
+      parameters:
+      - name: id
+        in: path
+        description: id of user to edit its image
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  description: image to be uploaded
+                  format: binary
+      responses:
+        "404":
+          description: User not found
+        "200":
+          description: User's image was edited correctly
+          content:
+            image/jpeg:
+              schema:
+                $ref: '#/components/schemas/User'
+        "403":
+          description: Not authorized
+  /api/management/places/{id}:
+    put:
+      tags:
+      - place-management-rest-controller
+      summary: Edit existing place
+      operationId: editPlace
+      parameters:
+      - name: id
+        in: path
+        description: id of place to be edited
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceDTO'
+        required: true
+      responses:
+        "403":
+          description: Not authorized
+        "200":
+          description: Place was correctly edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        "404":
+          description: Place not found
+    delete:
+      tags:
+      - place-management-rest-controller
+      summary: Delete place
+      operationId: deletePlace
+      parameters:
+      - name: id
+        in: path
+        description: id of place to be deleted
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Place was correctly deleted
+        "403":
+          description: Not authorized
+        "404":
+          description: Place not found
+  /api/management/places/{id}/image:
+    put:
+      tags:
+      - place-management-rest-controller
+      summary: Edit existing place's image
+      operationId: editImage_2
+      parameters:
+      - name: id
+        in: path
+        description: id of place to edit its image
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  description: image to be uploaded
+                  format: binary
+      responses:
+        "200":
+          description: Place's image was edited correctly
+          content:
+            image/jpeg:
+              schema:
+                $ref: '#/components/schemas/Place'
+        "403":
+          description: Not authorized
+        "404":
+          description: Place not found
+  /api/management/itineraries/{id}:
+    put:
+      tags:
+      - itinerary-management-rest-controller
+      summary: Edit itinerary
+      operationId: editItinerary
+      parameters:
+      - name: id
+        in: path
+        description: edited item
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItineraryDTO'
+        required: true
+      responses:
+        "200":
+          description: Itinerary is edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "403":
+          description: Not authorized
+        "404":
+          description: Destination not found
+    delete:
+      tags:
+      - itinerary-management-rest-controller
+      summary: Delete itinerary by id
+      operationId: deleteItinerary
+      parameters:
+      - name: id
+        in: path
+        description: delete itinerary by id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: itinerary is deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "403":
+          description: Not authorized
+        "404":
+          description: Destination not found
+  /api/management/itineraries/{id}/image:
+    put:
+      tags:
+      - itinerary-management-rest-controller
+      summary: Edit itinerary`s image
+      operationId: editImage_3
+      parameters:
+      - name: id
+        in: path
+        description: edit image
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Image is edited
+          content:
+            image/jpeg:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "404":
+          description: Image not found
+        "403":
+          description: Not authorized
+  /api/management/destinations/{id}:
+    put:
+      tags:
+      - destination-management-rest-controller
+      summary: Edit destination
+      operationId: editDestination
+      parameters:
+      - name: id
+        in: path
+        description: edited destination
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination'
+        required: true
+      responses:
+        "204":
+          description: Destination is edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+        "403":
+          description: Not authorized
+        "404":
+          description: Destination not found
+    delete:
+      tags:
+      - destination-management-rest-controller
+      summary: Delete destination by id
+      operationId: deleteDestination
+      parameters:
+      - name: id
+        in: path
+        description: if of destination to delete
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Destination is deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+        "403":
+          description: Not authorized
+        "404":
+          description: Destination not found
+  /api/management/destinations/{id}/image:
+    put:
+      tags:
+      - destination-management-rest-controller
+      summary: Edit destination`s image
+      operationId: editImage_4
+      parameters:
+      - name: id
+        in: path
+        description: edited image
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+      responses:
+        "404":
+          description: Image not found
+        "403":
+          description: Not authorized
+        "200":
+          description: Image is edited
+          content:
+            image/jpeg:
+              schema:
+                $ref: '#/components/schemas/Destination'
+  /api/itineraries/{id}:
+    get:
+      tags:
+      - itinerary-rest-controller
+      summary: Get Detailed information about a specific Itinerary.
+      operationId: itinerary
+      parameters:
+      - name: id
+        in: path
+        description: itinerary id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: placesPage
+        in: query
+        description: places page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: reviewsPage
+        in: query
+        description: reviews page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "403":
+          description: Invalid permissions to request places from a private Itinerary.
+        "404":
+          description: Requested a non-existing Itinerary.
+        "200":
+          description: Successfully searched the desired Itineraries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItineraryDetailsDTO'
+        "400":
+          description: Invalid arguments.
+    put:
+      tags:
+      - itinerary-rest-controller
+      summary: Edit an itinerary given its id
+      operationId: editItineraryById
+      parameters:
+      - name: id
+        in: path
+        description: id of the itinerary to edit
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItineraryDTO'
+        required: true
+      responses:
+        "200":
+          description: Itinerary edited successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "403":
+          description: Login needed to perform operation or User is not owner of the
+            itinerary
+        "404":
+          description: Itinerary not found
+    delete:
+      tags:
+      - itinerary-rest-controller
+      summary: Delete an itinerary given its id
+      operationId: deleteItinerary_1
+      parameters:
+      - name: id
+        in: path
+        description: id of the itinerary to be deleted
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Successfully deleted the itinerary
+        "403":
+          description: Operation not supported for not registered users
+        "404":
+          description: Itinerary not found
+  /api/itineraries/{id}/image:
+    get:
+      tags:
+      - itinerary-rest-controller
+      summary: Returns the image of the desired Itinerary.
+      operationId: downloadImage_2
+      parameters:
+      - name: id
+        in: path
+        description: itinerary id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Requested a non-existing Itinerary's image.
+        "200":
+          description: Sucessfully returned the Itinerary's image.
+          content:
+            image/jpeg: {}
+    put:
+      tags:
+      - itinerary-rest-controller
+      summary: Edit the image of an itinerary
+      operationId: editItineraryImage
+      parameters:
+      - name: id
+        in: path
+        description: id of the itinerary you want to add an image to
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  description: image to set as itinerary image
+                  format: binary
+          image/jpeg:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  description: image to set as itinerary image
+                  format: binary
+          image/png:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  description: image to set as itinerary image
+                  format: binary
+      responses:
+        "200":
+          description: Image edited successfully
+          content:
+            image/jpeg: {}
+        "403":
+          description: Login needed to perform operation or User is not owner of the
+            itinerary
+        "404":
+          description: Itinerary not found
+  /api/users:
+    post:
+      tags:
+      - user-rest-controller
+      summary: Create a new user account
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "403":
+          description: Username already in use
+        "400":
+          description: Invalid arguments or required arguments missing
+        "201":
+          description: Successfully signed up the new user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/management/users:
+    get:
+      tags:
+      - user-management-rest-controller
+      summary: Get a page with all users
+      operationId: getUsers
+      parameters:
+      - name: page
+        in: query
+        description: page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: Users page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: Users not found
+        "403":
+          description: Not authorized
+    post:
+      tags:
+      - user-management-rest-controller
+      summary: Create a new user
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "403":
+          description: Not authorized
+        "201":
+          description: New user was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/management/places:
+    get:
+      tags:
+      - place-management-rest-controller
+      summary: Get a page with all places
+      operationId: getPlaces
+      parameters:
+      - name: page
+        in: query
+        description: page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: Places page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        "404":
+          description: Places not found
+        "403":
+          description: Not authorized
+    post:
+      tags:
+      - place-management-rest-controller
+      summary: Create a new place
+      operationId: createPlace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceDTO'
+        required: true
+      responses:
+        "201":
+          description: New place was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        "403":
+          description: Not authorized
+  /api/management/itineraries:
+    get:
+      tags:
+      - itinerary-management-rest-controller
+      summary: Get all itineraries
+      operationId: getItinerary
+      parameters:
+      - name: page
+        in: query
+        description: page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "403":
+          description: Forbidden
+        "401":
+          description: Unauthorized
+        "200":
+          description: Found the itinerary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "404":
+          description: Itinerary not found
+    post:
+      tags:
+      - itinerary-management-rest-controller
+      summary: Create a new itinerary
+      operationId: createNewItinerary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItineraryDTO'
+        required: true
+      responses:
+        "403":
+          description: Not authorized
+        "204":
+          description: Itinerary is created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+  /api/management/destinations:
+    get:
+      tags:
+      - destination-management-rest-controller
+      summary: Get all destinations
+      operationId: getDestination
+      parameters:
+      - name: page
+        in: query
+        description: page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: Found the destination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+        "403":
+          description: Not authorized
+        "404":
+          description: Destination not found
+    post:
+      tags:
+      - destination-management-rest-controller
+      summary: Create a new destination
+      operationId: createDestination
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination'
+        required: true
+      responses:
+        "201":
+          description: Destination is created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+        "403":
+          description: Not authorized
+  /api/itineraries:
+    get:
+      tags:
+      - itinerary-rest-controller
+      summary: Searches for Itineraries in the database. Filters can be applied optionally.
+      operationId: getItineraries
+      parameters:
+      - name: name
+        in: query
+        description: search query
+        required: false
+        schema:
+          type: string
+          default: ""
+      - name: sort
+        in: query
+        description: "sorting type: id, name, views"
+        required: false
+        schema:
+          type: string
+          default: id
+      - name: order
+        in: query
+        description: order specifier
+        required: false
+        schema:
+          type: string
+          default: DESC
+      - name: page
+        in: query
+        description: page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: Successfully searched the desired Itinerary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "400":
+          description: Invalid arguments.
+    post:
+      tags:
+      - itinerary-rest-controller
+      summary: "Creates a new itinerary if itiDTO is present. If it is not present\
+        \ and there is a copyFrom id, copies the itinerary with id = copyFrom"
+      operationId: createOrCopyItinerary
+      parameters:
+      - name: copyFrom
+        in: query
+        description: id of the itinerary to copy
+        required: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItineraryDTO'
+      responses:
+        "201":
+          description: Newly created itinerary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "404":
+          description: Itinerary to copy from not found
+        "400":
+          description: itiDTO data missing for POSTing new itinerary
+        "403":
+          description: Operation not supported for users without an account
+  /api/itineraries/{itineraryId}/places:
+    post:
+      tags:
+      - itinerary-rest-controller
+      summary: Add a place to an owned itinerary
+      operationId: editPlaces
+      parameters:
+      - name: itineraryId
+        in: path
+        description: id of the itinerary you want to add a place to
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              description: id of the place you want to add to the itinerary
+              format: int64
+        required: true
+      responses:
+        "200":
+          description: Place added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        "404":
+          description: Itinerary or place not found
+        "403":
+          description: Login needed to perform operation or User is not owner of the
+            itinerary
+  /api/auth/refresh:
+    post:
+      tags:
+      - rest-login-controller
+      summary: Refresh your session
+      operationId: refreshToken
+      parameters:
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Session refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/auth/logout:
+    post:
+      tags:
+      - rest-login-controller
+      summary: Logout from Tripscanner
+      operationId: logOut
+      responses:
+        "200":
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/auth/login:
+    post:
+      tags:
+      - rest-login-controller
+      summary: Login to Tripscanner
+      operationId: login
+      parameters:
+      - name: accessToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/users/{id}/image:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Returns the profile image of the desired user
+      operationId: downloadImage
+      parameters:
+      - name: id
+        in: path
+        description: user id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Requested a non-existing User's image.
+        "200":
+          description: Successfully returned the user image
+          content:
+            image/jpeg: {}
+  /api/users/me/itineraries:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Get the logged user's owned itineraries
+      operationId: getUserItineraries
+      parameters:
+      - name: page
+        in: query
+        description: itineraries page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: Itineraries returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        "400":
+          description: Operation not available when no user is logged in
+  /api/places:
+    get:
+      tags:
+      - place-rest-controller
+      summary: Searches for Places in the database. Filters can be applied optionally.
+      operationId: places
+      parameters:
+      - name: name
+        in: query
+        description: search query
+        required: false
+        schema:
+          type: string
+          default: ""
+      - name: sort
+        in: query
+        description: "sorting type: id, name, views"
+        required: false
+        schema:
+          type: string
+          default: id
+      - name: order
+        in: query
+        description: order specifier
+        required: false
+        schema:
+          type: string
+          default: DESC
+      - name: page
+        in: query
+        description: page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "400":
+          description: Invalid arguments.
+        "200":
+          description: Successfully searched the desired Places.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+  /api/places/{id}:
+    get:
+      tags:
+      - place-rest-controller
+      summary: Searches for Places in the database. Filters can be applied optionally.
+      operationId: place
+      parameters:
+      - name: id
+        in: path
+        description: place id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: itineraries page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "400":
+          description: Invalid arguments.
+        "200":
+          description: Successfully searched the desired Place.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaceDetailsDTO'
+  /api/places/{id}/image:
+    get:
+      tags:
+      - place-rest-controller
+      summary: Returns the image of the desired Place.
+      operationId: downloadImage_1
+      parameters:
+      - name: id
+        in: path
+        description: place id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Sucessfully returned the Place's image.
+          content:
+            image/jpeg: {}
+        "404":
+          description: Requested a non-existing Place's image.
+  /api/itineraries/{id}/places:
+    get:
+      tags:
+      - itinerary-rest-controller
+      summary: Get Detailed information about a specific Itinerary.
+      operationId: getPlacesInUserItinerary
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "403":
+          description: Invalid permissions to request places from a private Itinerary.
+        "404":
+          description: Requested a non-existing Itinerary.
+        "400":
+          description: Invalid arguments.
+        "200":
+          description: Successfully searched the desired Places frmo an Itinerary.
+  /api/itineraries/{id}/pdf:
+    get:
+      tags:
+      - itinerary-rest-controller
+      summary: Generate a pdf for an itinerary
+      operationId: getPdfFromItinerary
+      parameters:
+      - name: id
+        in: path
+        description: id of the itinerary to be exported
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Itinerary with specified id not found
+        "200":
+          description: Itinerary successfully exported to pdf
+          content:
+            application/pdf: {}
+        "403":
+          description: Operation not supported for users without an account
+  /api/graphs/index:
+    get:
+      tags:
+      - graphs-rest-controller
+      summary: Get needed information to build the top 5 destinations graph with its
+        views.
+      operationId: indexGraph
+      responses:
+        "200":
+          description: Returns requested data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphDetailsDTO'
+  /api/destinations:
+    get:
+      tags:
+      - destination-rest-controller
+      summary: Searches for destinations in the database. Filters can be applied optionally.
+      operationId: destinations
+      parameters:
+      - name: name
+        in: query
+        description: search query
+        required: false
+        schema:
+          type: string
+          default: ""
+      - name: sort
+        in: query
+        description: "sorting type: id, name, views"
+        required: false
+        schema:
+          type: string
+          default: id
+      - name: order
+        in: query
+        description: order specifier
+        required: false
+        schema:
+          type: string
+          default: DESC
+      - name: page
+        in: query
+        description: page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "400":
+          description: Invalid arguments.
+        "200":
+          description: Successfully searched the desired destinations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+  /api/destinations/{id}:
+    get:
+      tags:
+      - destination-rest-controller
+      summary: Get Detailed information about a specific Destination.
+      operationId: destination
+      parameters:
+      - name: id
+        in: path
+        description: destination id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: placesPage
+        in: query
+        description: places page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "404":
+          description: Requested a non-existing Destination.
+        "200":
+          description: Successfully searched the desired destinations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationDetailsDTO'
+        "400":
+          description: Invalid arguments.
+  /api/destinations/{id}/image:
+    get:
+      tags:
+      - destination-rest-controller
+      summary: Returns the image of the desired Destination.
+      operationId: downloadImage_3
+      parameters:
+      - name: id
+        in: path
+        description: destination id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Requested a non-existing Destination's image.
+        "200":
+          description: Successfully returned the Destination's image.
+          content:
+            image/jpeg: {}
+  /api/itineraries/{itineraryId}/places/{placeId}:
+    delete:
+      tags:
+      - itinerary-rest-controller
+      summary: Remove a place from an owned itinerary
+      operationId: deletePlacesFromItinerary
+      parameters:
+      - name: itineraryId
+        in: path
+        description: id of the itinerary to modify
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: placeId
+        in: path
+        description: id of the place to remove
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Place removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        "404":
+          description: Itinerary or place not found
+        "403":
+          description: Login needed to perform operation or User is not owner of the
+            itinerary
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        nationality:
+          type: string
+        image:
+          type: boolean
+        roles:
+          type: array
+          items:
+            type: string
+    UserDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        passwordHash:
+          type: string
+        nationality:
+          type: string
+      description: new user's information
+    PlaceDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        destination:
+          type: string
+      description: new page's information
+    Destination:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        views:
+          type: integer
+          format: int64
+        image:
+          type: boolean
+        flagCode:
+          type: string
+        type:
+          type: string
+        typeLowercase:
+          type: string
+        flag:
+          type: string
+    Place:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        views:
+          type: integer
+          format: int64
+        image:
+          type: boolean
+        destination:
+          $ref: '#/components/schemas/Destination'
+        type:
+          type: string
+        typeLowercase:
+          type: string
+        flag:
+          type: string
+    ItineraryDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        user:
+          type: string
+        public:
+          type: boolean
+      description: data of the itinerary to create
+    Itinerary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        views:
+          type: integer
+          format: int64
+        image:
+          type: boolean
+        user:
+          $ref: '#/components/schemas/User'
+        public:
+          type: boolean
+        type:
+          type: string
+        typeLowercase:
+          type: string
+        flag:
+          type: string
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - FAILURE
+        message:
+          type: string
+        error:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    PageItinerary:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Itinerary'
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    Pageable:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          $ref: '#/components/schemas/Sort'
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    PlaceDetailsDTO:
+      type: object
+      properties:
+        place:
+          $ref: '#/components/schemas/Place'
+        itineraries:
+          $ref: '#/components/schemas/PageItinerary'
+    Sort:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        unsorted:
+          type: boolean
+        sorted:
+          type: boolean
+    ItineraryDetailsDTO:
+      type: object
+      properties:
+        itinerary:
+          $ref: '#/components/schemas/Itinerary'
+        places:
+          $ref: '#/components/schemas/PagePlace'
+    PagePlace:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Place'
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    GraphDetailsDTO:
+      type: object
+      properties:
+        destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination'
+        views:
+          type: array
+          items:
+            type: integer
+            format: int64
+    DestinationDetailsDTO:
+      type: object
+      properties:
+        destination:
+          $ref: '#/components/schemas/Destination'
+        places:
+          $ref: '#/components/schemas/PagePlace'
