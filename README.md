@@ -349,19 +349,19 @@ Here, each member of the team shows what they have contributed to during the dev
         - [UserDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/UserDTO.java)
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
-    - **Description of tasks:** 
+    - **Description of tasks:** In this phase I have been in charge of the unregistered user's funcitonality in the API REST, such as Destinations, Places and Itineraries search and details. Also, I've developed the the sign-up request and the graph's controller. Initially I was going to work on Railway with @AdayaUwU , but since it was removed frmo this stage, I was also in charge of the documentation (README, diagrams and API) and of checking that everything was working properly and fixing errors for the Docker section. Apart from that, I've been lending a hand to other members when they required any help.
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Feat: Details views](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/14439c6c03588b0c6079e2722578f97fefeacd15)
+        - [Feat: Graphs rest controller](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/a7550a9532771c263e551b3d59f205fb6b019d79)
+        - [Feat: Destinations REST controllers](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/0b7c15377e5472692de5ffddbc59329411510e8b)
+        - [Feat: Destinations, Itineraries and Places images](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/4582944779e28c34f1d86a0cdb7fe6aaecbfb67f)
+        - [Feat: Itinerary REST controllers](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/96c70f607cad14e55f883b363516f2f129a9913d)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [DestinationRestController.java]()
+        - [PlaceRestController.java]()
+        - [GraphsRestController.java]()
+        - [ItineraryRestController.java]()
+        - [ItineraryDTO.java]()
 
 3. [Anna Trofimova](https://github.com/anna-trofimova)
     - **Description of tasks:** 
