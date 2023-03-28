@@ -312,8 +312,9 @@ These are the instructions to run it:
 1. Open a terminal.
 2. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
 3. Go to the docker folder using `cd webapp9/docker`.
-4. Run the `docker-compose.yml` file using `docker-compose up`.
-5. Now you've got both webapp and API running on `https://localhost:8443`.
+4. If you use Mac M1, you also need to run command `docker pull --platform linux/x86_64 mysql`.
+5. Run the `docker-compose.yml` file using `docker-compose up`.
+6. Now you've got both webapp and API running on `https://localhost:8443`.
 
 
 #### Building docker image
