@@ -2,9 +2,11 @@ package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
+import com.tripscanner.TripScanner.model.Review;
 import com.tripscanner.TripScanner.model.User;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
 import com.tripscanner.TripScanner.model.rest.ItineraryDetailsDTO;
+import com.tripscanner.TripScanner.model.rest.ReviewDTO;
 import com.tripscanner.TripScanner.service.ItineraryService;
 import com.tripscanner.TripScanner.service.PlaceService;
 import com.tripscanner.TripScanner.service.ReviewService;
@@ -260,6 +262,10 @@ public class ItineraryRestController {
         Itinerary itinerary = optionalItinerary.get();
 
         if (!itinerary.getUser().getUsername().equals(user.getUsername())) return new ResponseEntity(HttpStatus.FORBIDDEN);
+        for (Review r : itinerary.getReviews()) {
+            reviewService.delete(r.getId());
+        }
+
         itineraryService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -414,6 +420,71 @@ public class ItineraryRestController {
         return ResponseEntity.ok().body(placeService.findFromItinerary(itinerary.getId(), PageRequest.of(0, 10)));
     }
 
+    @Operation(summary = "Add a review to an itinerary")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Review created successfully",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ReviewDTO.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Review's score is not between 0 and 5",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Operation not allowed for unregistered users or the itinerary is private",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary not found",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Needed fields for review not found",
+                    content = @Content
+            )
+    })
+
+    @PostMapping("/{id}/reviews")
+    public ResponseEntity<ReviewDTO> addReview(HttpServletRequest request,
+                                               @Parameter(description = "id of the itinerary to add a review to")
+                                               @PathVariable long id,
+                                               @Parameter(description = "body of the review object to be added to the itinerary")
+                                               @RequestBody ReviewDTO review) {
+        Principal userPrincipal = request.getUserPrincipal();
+        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
+        if (userPrincipal == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (review.getTitle().isEmpty() || review.getTitle().isBlank() || review.getDescription().isEmpty() || review.getDescription().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (review.getScore() < 0 || review.getScore() > 5) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        User user = userService.findByUsername(userPrincipal.getName()).get();
+        Itinerary itinerary = optionalItinerary.get();
+
+        if (!itinerary.isPublic()) {
+            if (!itinerary.getUser().getUsername().equals(user.getUsername()) && !user.getRoles().contains("ADMIN")) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        List<Review> reviews = itinerary.getReviews();
+        Review newReview = new Review(review.getTitle(), review.getDescription(), review.getScore());
+        newReview.setUser(user);
+        newReview.setItinerary(itinerary);
+        reviewService.save(newReview);
+        reviews.add(newReview);
+        itineraryService.save(itinerary);
+
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(newReview.getId()).toUri();
+
+        return ResponseEntity.created(location).body(new ReviewDTO(newReview));
+    }
+
     @Operation(summary = "Edit the image of an itinerary")
     @ApiResponses(value = {
             @ApiResponse(
@@ -490,6 +561,7 @@ public class ItineraryRestController {
                     content = @Content
             )
     })
+
     @GetMapping("/{id}")
     public ResponseEntity<ItineraryDetailsDTO> itinerary(HttpServletRequest request,
                                                       @Parameter(description="itinerary id") @PathVariable int id,
@@ -570,7 +642,9 @@ public class ItineraryRestController {
     })
     @GetMapping("/{id}/places")
     public ResponseEntity<Page<Place>> getPlacesInUserItinerary(HttpServletRequest request,
+                                                                @Parameter(description = "id of the itinerary to view places of")
                                                                 @PathVariable long id,
+                                                                @Parameter(description = "places page number")
                                                                 @RequestParam(defaultValue = "0") int page) {
         Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
         if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -585,4 +659,44 @@ public class ItineraryRestController {
         return new ResponseEntity<>(placeService.findFromItinerary(id, PageRequest.of(page, 10)), HttpStatus.OK);
     }
 
+    @Operation(summary = "Shows detailed information about an itinerary's reviews")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Itinerary's reviews obtained successfully",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Review.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Operation not available on private itineraries not owned by the current logged in user",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Itinerary not found",
+                    content = @Content
+            )
+    })
+
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<Page<Review>> getReviewsInItinerary(HttpServletRequest request,
+                                                              @Parameter(description = "id of the itinerary to view reviews of")
+                                                              @PathVariable long id,
+                                                              @Parameter(description = "reviews page number")
+                                                              @RequestParam(defaultValue = "0") int page) {
+        Principal userPrincipal = request.getUserPrincipal();
+        Optional<Itinerary> optionalItinerary = itineraryService.findById(id);
+        if (!optionalItinerary.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Itinerary itinerary = optionalItinerary.get();
+        if (!itinerary.isPublic()) {
+            if (userPrincipal == null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            if (!itinerary.getUser().getUsername().equals(userPrincipal.getName()) && !userService.findByUsername(userPrincipal.getName()).get().getRoles().contains("ADMIN")) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        return new ResponseEntity<>(reviewService.findFromItinerary(id, PageRequest.of(page, 10)), HttpStatus.OK);
+    }
 }

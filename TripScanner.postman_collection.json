@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "3a427152-8e38-4c86-99b9-74ccf0f0cecc",
+		"_postman_id": "3c7c8579-0188-47fc-b594-228064119aab",
 		"name": "TripScanner",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26345701"
+		"_exporter_id": "26403198"
 	},
 	"item": [
 		{
@@ -460,6 +460,28 @@
 							"response": []
 						},
 						{
+							"name": "reviews from itinerary",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:8443/api/itineraries/28/reviews",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"itineraries",
+										"28",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "itinerary image",
 							"request": {
 								"method": "GET",
@@ -786,6 +808,37 @@
 									"key": "copyFrom",
 									"value": "10"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST new review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Great itinerary!\",\n    \"description\": \"Had so much fun doing this itinerary\",\n    \"score\": 4.5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/itineraries/28/reviews",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"itineraries",
+								"28",
+								"reviews"
 							]
 						}
 					},
