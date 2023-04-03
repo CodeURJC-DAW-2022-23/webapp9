@@ -1,0 +1,211 @@
+<div class="container-fluid p-0 my-4">
+
+    <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true"
+                aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <a href="#destinations">
+                    <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{topDestinationName}}">
+                </a>
+                <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
+                    <h5>Destinations</h5>
+                    <p>Click to view our most liked destinations!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <a href="#places">
+                    <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{topPlaceName}}">
+                </a>
+                <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
+                    <h5>Places to visit</h5>
+                    <p>Click to view our most liked places to visit!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <a href="#itineraries">
+                    <img src="https://picsum.photos/1920/1080" class="d-block w-100" alt="{{topItineraryName}}">
+                </a>
+                <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
+                    <h5>Itineraries</h5>
+                    <p>Click to view our most liked itineraries!</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+</div>
+
+
+<div class="container bg-secondary rounded-3 padded mb-2">
+    <div class="row">
+        <h2 class="text-center col"> Our most visited destinations</h2>
+    </div>
+    <div class="row">
+        <a class="col-md-6"><img src="img/placeholder-graph.png" alt="Most viewed detinations" height="400px"
+                width="300px" /></a>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{nameResult}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{nameResult}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{nameResult}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{nameResult}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{nameResult}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-secondary rounded-3 padded mt-2" id="destinations">
+    <div class="row">
+        <div class="col-2"></div>
+        <h2 class="text-center col-8">Destinations</h2>
+        <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more destinations</a>
+    </div>
+
+    <hr class="text-light">
+    <div id="search-results">
+        <div class="row row-cols-md-3">
+            <div class="col">
+                <div class="card">
+                    <img src="https://picsum.photos/1920/1080" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{nameResult}}</h5>
+                        <p class="card-text">{{descriptionResult}}</p>
+                        <a href="details.html" class="btn btn-primary">More details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="https://picsum.photos/1920/1080" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{nameResult}}</h5>
+                        <p class="card-text">{{descriptionResult}}</p>
+                        <a href="details.html" class="btn btn-primary">More details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-secondary rounded-3 padded mt-2" id="places">
+    <div class="row">
+        <div class="col-2"></div>
+        <h2 class="text-center col-8">Places to visit</h2>
+        <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more places</a>
+    </div>
+    <hr class="text-light">
+    <div id="search-results">
+        <div class="row row-cols-md-3">
+            <div class="col">
+                <div class="card">
+                    <img src="https://picsum.photos/1920/1080" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{nameResult}}</h5>
+                        <p class="card-text">{{descriptionResult}}</p>
+                        <a href="details.html" class="btn btn-primary">More details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="https://picsum.photos/1920/1080" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{nameResult}}</h5>
+                        <p class="card-text">{{descriptionResult}}</p>
+                        <a href="details.html" class="btn btn-primary">More details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-secondary rounded-3 padded mt-2" id="itineraries">
+    <div class="row">
+        <div class="col-2"></div>
+        <h2 class="text-center col-8">Popular itineraries</h2>
+        <a href='search.html' role="button" class="btn btn-secondary col-2 float-end">View more itineraries</a>
+    </div>
+    <hr class="text-light">
+    <div id="search-results">
+        <div class="row row-cols-md-3">
+            <div class="col">
+                <div class="card">
+                    <img src="https://picsum.photos/1920/1080" class="card-img-top" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{nameResult}}</h5>
+                        <p class="card-text">{{descriptionResult}}</p>
+                        <a href="details.html" class="btn btn-primary">More details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="https://picsum.photos/1920/1080" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{nameResult}}</h5>
+                        <p class="card-text">{{descriptionResult}}</p>
+                        <a href="details.html" class="btn btn-primary">More details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</div>
