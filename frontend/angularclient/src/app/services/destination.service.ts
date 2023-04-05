@@ -5,20 +5,18 @@ import { catchError } from 'rxjs/operators';
 
 import { Destination } from '../models/destination.model';
 
-const BASE_URL = "/api/destinations"
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class DestinationService {
+  private baseUrl = "https://localhost:8443/api/destinations/"
 
   constructor(private httpClient: HttpClient) { }
 
   getDestinations(): Observable<Destination[]> {
-    return this.httpClient.get(BASE_URL).pipe(
-    ) as Observable<Destination[]>;
+ 
+    return this.httpClient.get<Destination[]>(`${this.baseUrl}`);
   }
 
 }
