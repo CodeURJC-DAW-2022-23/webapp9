@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Destination } from 'src/app/models/destination.model';
+import { Page } from 'src/app/models/page.models';
 import { DestinationService } from 'src/app/services/destination.service';
+
 
 @Component({
   selector: 'app-home',
@@ -15,9 +17,9 @@ export class HomeComponent implements OnInit{
   constructor(private service: DestinationService) { }
 
   ngOnInit(): void{
-    this.service.getDestinations().subscribe((data: Destination[]) => {
+    this.service.getDestinations().subscribe((data) => {
       console.log(data);
-      this.destinations = data;
+      this.destinations = data.content;
     });
   }
 }
