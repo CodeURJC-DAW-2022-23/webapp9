@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Destination } from 'src/app/models/destination.model';
-import { Page } from 'src/app/models/page.models';
 import { DestinationService } from 'src/app/services/destination.service';
 
 
@@ -18,7 +17,6 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void{
     this.service.getDestinations().subscribe((data) => {
-      console.log(data);
       this.destinations = data.content;
     });
   }
