@@ -4,13 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms'; 
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SearchComponent } from './components/search/search.component';
 
-import { RouterModule } from '@angular/router';
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,8 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      {path:"", component:HomeComponent},
-      {path:"logIn", component:LogInComponent},
-      {path:"search", component:SearchComponent}
-    ])
+    FormsModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]
