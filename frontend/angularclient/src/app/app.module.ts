@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SearchComponent } from './components/search/search.component';
+import { DetailComponent } from './components/detail/detail.component';
 
 import { routing } from './app.routing';
 
@@ -19,7 +20,8 @@ import { routing } from './app.routing';
     NavbarComponent,
     HomeComponent,
     LogInComponent,
-    SearchComponent
+    SearchComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
