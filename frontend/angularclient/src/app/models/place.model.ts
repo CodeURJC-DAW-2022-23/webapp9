@@ -1,13 +1,6 @@
 import { Destination } from "./destination.model"
+import { Information } from "./information.model"
 
-export interface Place {
-    id: number,
-    name: string,
-    description: string,
-    views: number,
-    image: boolean,
-    destination: Destination,
-    type: string,
-    typeLowercase: string,
-    flag: string 
+export interface Place extends Information {
+    destination: Destination
 }

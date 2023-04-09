@@ -1,11 +1,5 @@
-export interface Destination {
-    id: number,
-    name: string,
-    description: string;
-    flagCode: string,
-    views: number,
-    image: boolean,
-    type: string,
-    typeLowercase: string,
-    flag: string
+import { Information } from "./information.model";
+
+export interface Destination extends Information {
+    flagCode: string
 }
