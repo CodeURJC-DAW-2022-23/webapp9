@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
+import { Observable } from 'rxjs';
+import { Page } from '../models/page.models';
 
 
 const BASE_URL = '/api/auth'
@@ -10,11 +12,11 @@ const BASE_URL = '/api/auth'
 })
 export class LogInService {
 
-  logged!: boolean
+  logged = false
   user!: User
 
   constructor(private httpClient: HttpClient) {
-    this.reqIsLogged();
+  this.reqIsLogged();  
   }
 
 
@@ -24,26 +26,23 @@ export class LogInService {
 
 
   reqIsLogged() {
-
-    this.httpClient.get('/api/users/me', {responseType: 'json'}).subscribe(
-      response => {
+    this.httpClient.get('/api/users/me', { responseType:"json" }).subscribe( {
+      next: (response) => {
         this.user = response as User;
         this.logged = true;
-      },
-      error => {
-        if (error.status != 404) {
-          console.error('Error when asking if logged: ' + JSON.stringify(error));
+      }, 
+      error: (err) => {
+        if (err.status != 404) {
+          console.error('Error when asking if logged: ' + JSON.stringify(err));
         }
-      }
-    );
-
-  }
-
-  getMe(){
-    
-  }
+    }   
+      });
+      console.log("end reqIsLogged")
+    }
+  
 
   isLogged() {
+    this.reqIsLogged();
     return this.logged;
   } 
 }
