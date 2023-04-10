@@ -7,12 +7,12 @@
 
             <div>
 
-                <form class="form-inline float-end m-3">
+                <form class="form-inline float-end m-3" *ngIf="loginService.isLogged()">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" routerLink="/logIn">Log
                         In</button>
                 </form>
 
-                <form class="form-inline float-end my-3 ms-3">
+                <form class="form-inline float-end my-3 ms-3" *ngIf="!loginService.isLogged()">
                     <button type="button" class="btn btn-outline-secondary" routerLink="">My
                         itineraries</button>
                 </form>
