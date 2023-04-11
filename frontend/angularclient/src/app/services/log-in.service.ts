@@ -12,11 +12,11 @@ const BASE_URL = '/api/auth'
 })
 export class LogInService {
 
-  logged = false
+  public logged = false
   user!: User
 
-  constructor(private httpClient: HttpClient) {
-  this.reqIsLogged();  
+  constructor(private httpClient: HttpClient) { 
+    this.reqIsLogged();
   }
 
 
@@ -37,12 +37,11 @@ export class LogInService {
         }
     }   
       });
-      console.log("end reqIsLogged")
     }
   
 
   isLogged() {
-    this.reqIsLogged();
+    /* this.reqIsLogged(); */
     return this.logged;
   } 
 }
