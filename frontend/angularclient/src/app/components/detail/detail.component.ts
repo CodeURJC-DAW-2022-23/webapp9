@@ -56,11 +56,11 @@ export class DetailComponent {
         this.information.places = data["places"];
       }
       else if ("place" in data) {
-        this.information = data["destination"];
+        this.information = data["place"];
         this.information.itineraries = data["itineraries"];
       }
       else if ("itinerary" in data) {
-        this.information = data["destination"];
+        this.information = data["itinerary"];
         this.information.places = data["places"];
         this.information.reviews = data["reviews"];
       }
