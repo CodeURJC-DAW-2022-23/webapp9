@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Page } from '../models/rest/page.model';
 import { Destination } from '../models/destination.model';
 
-import { InformationService } from '../services/information.service';
+import { InformationService } from './information.service';
 
 const baseUrl = '/api/destinations';
 
@@ -21,7 +21,7 @@ export class DestinationService implements InformationService {
   }
 
   getItem(id: number): Observable<Destination> {
-    return this.httpClient.get<Destination>(baseUrl + "/" + id);
+    return this.httpClient.get<Destination>(`${baseUrl}/${id}`);
   }
 
 	getImage(destination: Destination): string {

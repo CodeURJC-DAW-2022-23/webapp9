@@ -21,7 +21,7 @@ export class ItineraryService implements InformationService {
   }
 
   getItem(id: number): Observable<Itinerary> {
-    return this.httpClient.get<Itinerary>(baseUrl + "/" + id);
+    return this.httpClient.get<Itinerary>(`${baseUrl}/${id}`);
   }
 
 	getImage(itinerary: Itinerary): string {

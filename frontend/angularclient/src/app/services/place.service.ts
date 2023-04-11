@@ -21,7 +21,7 @@ export class PlaceService implements InformationService {
   }
 
   getItem(id: number): Observable<Place> {
-    return this.httpClient.get<Place>(baseUrl + "/" + id);
+    return this.httpClient.get<Place>(`${baseUrl}/${id}`);
   }
 
 	getImage(place: Place): string {
