@@ -7,7 +7,7 @@ import { Page } from '../models/rest/page.model';
 
 import { InformationService } from './information.service';
 
-const baseUrl = '/api/place';
+const baseUrl = '/api/places';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,9 @@ export class PlaceService implements InformationService {
   getItem(id: number): Observable<Place> {
     return this.httpClient.get<Place>(baseUrl + "/" + id);
   }
+
+	getImage(place: Place): string {
+		return place.image ? `${baseUrl}/${place.id}/image` : '/assets/images/no_image.png';
+	}
 
 }

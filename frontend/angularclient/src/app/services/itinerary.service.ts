@@ -7,7 +7,7 @@ import { Page } from '../models/rest/page.model';
 
 import { InformationService } from './information.service';
 
-const baseUrl = '/api/itinerary';
+const baseUrl = '/api/itineraries';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,9 @@ export class ItineraryService implements InformationService {
   getItem(id: number): Observable<Itinerary> {
     return this.httpClient.get<Itinerary>(baseUrl + "/" + id);
   }
+
+	getImage(itinerary: Itinerary): string {
+		return itinerary.image ? `${baseUrl}/${itinerary.id}/image` : '/assets/images/no_image.png';
+	}
 
 }
