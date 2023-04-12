@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit{
   itineraries!:Itinerary[]
 
 
-  constructor(private serviceDest: DestinationService, private servicePlaces: PlacesService, private serviceItineraries: ItinerariesService ) { }
+  constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItinerariesService ) { }
 
   ngOnInit(): void{
     this.serviceDest.getDestinations().subscribe((data) => {

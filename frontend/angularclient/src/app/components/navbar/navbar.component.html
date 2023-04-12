@@ -2,7 +2,7 @@
 
     <div class="navbar sticky-top navbar-light bg-white bg-opacity-75">
         <div class="container-fluid justify-content-between">
-            <a class="navbar-brand float-start" href="index.html"><img src="/angularclient/src/assets/Image/logo-placeholder-image.png"
+            <a class="navbar-brand float-start" href="index.html"><img src="/assets/Image/logo-placeholder-image.png"
                     alt="Placeholder logo" widht="80px" height="80px"></a>
 
             <div>
@@ -12,11 +12,16 @@
                         In</button>
                 </form>
 
-                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged()">
+                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && !loginService.isAdmin()">
                     <button type="button" class="btn btn-outline-secondary" routerLink="">My
                         itineraries</button>
                 </form>
 
+                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && loginService.isAdmin()">
+                    <button type="button" class="btn btn-outline-secondary" routerLink="">
+                        Management
+                    </button>
+                </form>
                 <form class="d-flex float-end m-3">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button type="button" class="btn btn-outline-secondary" routerLink="/search">Search</button>
