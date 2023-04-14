@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -12,6 +12,7 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { SearchComponent } from './components/search/search.component';
 
 import { routing } from './app.routing';
+import { ManagementComponent } from './components/management/management.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { routing } from './app.routing';
     NavbarComponent,
     HomeComponent,
     LogInComponent,
-    SearchComponent
+    SearchComponent,
+    ManagementComponent
   ],
   imports: [
     BrowserModule,
