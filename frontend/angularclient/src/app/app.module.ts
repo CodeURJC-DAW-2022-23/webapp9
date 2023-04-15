@@ -14,6 +14,7 @@ import { DetailComponent } from './components/detail/detail.component';
 
 import { routing } from './app.routing';
 import { ErrorComponent } from './components/error/error.component';
+import { InformationComponent } from './components/information/information.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ErrorComponent } from './components/error/error.component';
     LogInComponent,
     SearchComponent,
     DetailComponent,
-    ErrorComponent
+    ErrorComponent,
+    InformationComponent
   ],
   imports: [
     BrowserModule,
