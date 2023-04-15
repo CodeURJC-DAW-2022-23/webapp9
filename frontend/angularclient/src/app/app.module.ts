@@ -12,6 +12,7 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { SearchComponent } from './components/search/search.component';
 
 import { routing } from './app.routing';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { routing } from './app.routing';
     NavbarComponent,
     HomeComponent,
     LogInComponent,
-    SearchComponent
+    SearchComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
