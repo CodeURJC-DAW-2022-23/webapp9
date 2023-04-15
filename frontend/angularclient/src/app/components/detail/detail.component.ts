@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Information } from 'src/app/models/information.model';
 
@@ -30,7 +30,8 @@ export class DetailComponent {
   registered: boolean = false;
   user: UserDetailsDTO | undefined = undefined;
 
-  constructor(private activatedRouter: ActivatedRoute, 
+  constructor(private activatedRouter: ActivatedRoute,
+              private router: Router, 
               private itineraryService: ItineraryService, 
               private placeService: PlaceService, 
               private destinationService: DestinationService, 
@@ -50,19 +51,24 @@ export class DetailComponent {
   }
 
   update(id: number) {
-    this.service.getItem(id).subscribe((data) => {
-      if ("destination" in data) {
-        this.information = data["destination"];
-        this.information.places = data["places"];
-      }
-      else if ("place" in data) {
-        this.information = data["place"];
-        this.information.itineraries = data["itineraries"];
-      }
-      else if ("itinerary" in data) {
-        this.information = data["itinerary"];
-        this.information.places = data["places"];
-        this.information.reviews = data["reviews"];
+    this.service.getItem(id).subscribe({
+      next: (data) => {
+        if ("destination" in data) {
+          this.information = data["destination"];
+          this.information.places = data["places"];
+        }
+        else if ("place" in data) {
+          this.information = data["place"];
+          this.information.itineraries = data["itineraries"];
+        }
+        else if ("itinerary" in data) {
+          this.information = data["itinerary"];
+          this.information.places = data["places"];
+          this.information.reviews = data["reviews"];
+        }
+      }, 
+      error: () => {
+        window.location.href = '/error/404';
       }
     });
   }
