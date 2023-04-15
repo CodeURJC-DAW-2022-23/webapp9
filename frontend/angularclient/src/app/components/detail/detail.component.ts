@@ -10,9 +10,6 @@ import { DestinationService } from 'src/app/services/destination.service';
 import { LogInService } from 'src/app/services/log-in.service';
 import { InformationService } from 'src/app/services/information.service';
 import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
-import { Destination } from 'src/app/models/destination.model';
-import { Itinerary } from 'src/app/models/itinerary.model';
-import { Place } from 'src/app/models/place.model';
 import { InformationDeatilsDTO } from 'src/app/models/rest/information-details-dto';
 
 @Component({
@@ -55,16 +52,16 @@ export class DetailComponent {
       next: (data) => {
         if ("destination" in data) {
           this.information = data["destination"];
-          this.information.places = data["places"];
+          this.information.related = data["places"].content;
         }
         else if ("place" in data) {
           this.information = data["place"];
-          this.information.itineraries = data["itineraries"];
+          this.information.related = data["itineraries"].content;
         }
         else if ("itinerary" in data) {
           this.information = data["itinerary"];
-          this.information.places = data["places"];
-          this.information.reviews = data["reviews"];
+          this.information.related = data["places"].content;
+          this.information.reviews = data["reviews"].content;
         }
       }, 
       error: (error) => {

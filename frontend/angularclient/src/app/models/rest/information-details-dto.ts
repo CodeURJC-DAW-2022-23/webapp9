@@ -1,6 +1,4 @@
-import { Destination } from "../destination.model";
-import { Itinerary } from "../itinerary.model";
-import { Place } from "../place.model";
+import { Information } from "../information.model";
 import { Review } from "../review.model";
 
 export interface InformationDeatilsDTO {
@@ -12,8 +10,6 @@ export interface InformationDeatilsDTO {
     type: string,
     typeLowercase: string,
     flag: string,
-    places: Place[],
-    itineraries: Itinerary[],
-    destinations: Destination[],
+    related: Information[],
     reviews: Review[]
 }
