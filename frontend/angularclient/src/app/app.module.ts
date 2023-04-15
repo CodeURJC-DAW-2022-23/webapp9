@@ -13,6 +13,7 @@ import { SearchComponent } from './components/search/search.component';
 import { DetailComponent } from './components/detail/detail.component';
 
 import { routing } from './app.routing';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { routing } from './app.routing';
     HomeComponent,
     LogInComponent,
     SearchComponent,
-    DetailComponent
+    DetailComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
