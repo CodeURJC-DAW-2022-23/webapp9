@@ -67,8 +67,8 @@ export class DetailComponent {
           this.information.reviews = data["reviews"];
         }
       }, 
-      error: () => {
-        window.location.href = '/error/404';
+      error: (error) => {
+        window.location.href = `/error/${error.status}`;
       }
     });
   }
