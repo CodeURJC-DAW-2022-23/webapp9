@@ -71,10 +71,7 @@ export class DetailComponent {
   }
 
   loadImage(information: Information): string {
-    if (information.typeLowercase === "destination") return this.service.getImage(information);
-    if (information.typeLowercase === "place") return this.service.getImage(information);
-    if (information.typeLowercase === "itinerary") return this.service.getImage(information);
-    return "";
+    return this.service.getImage(information);
   }
 
 }
