@@ -25,8 +25,8 @@ export class LogInService {
 
   reqIsLogged() {
     this.httpClient.get('/api/users/me', { responseType: "json" }).subscribe({
-      next: (response) => {
-        this.user = response as User;
+      next: (response: any) => {
+        this.user = response.user as User;
         this.logged = true;
       },
       error: (err) => {
@@ -49,5 +49,9 @@ export class LogInService {
   isAdmin() {
     return this.user && this.user.roles.indexOf('ADMIN') !== -1;
   }
+
+  getImage(user: User): string {
+		return user.image ? `/api/users/${user.id}/image` : '/assets/images/no_image.png';
+	}
 
 }

@@ -6,6 +6,10 @@
                     alt="Placeholder logo" widht="80px" height="80px"></a>
 
             <div>
+            
+                <form class="form-inline float-end m-3" *ngIf="loginService.isLogged()">
+                    <img [src]="profileImage()"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 ">
+                </form>
 
                 <form class="form-inline float-end m-3" *ngIf="!loginService.isLogged()">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" routerLink="/logIn">Log
