@@ -45,10 +45,10 @@
             </div>
             <form action="/itinerary/add/place/{{information.id}}" method="post" class="row text-center justify-content-between" *ngIf="information.type === 'place' && registered">
                 <div class="col-9 col-md-10 col-xxl-11">
-                    <select class="form-select" name="itineraryList" *ngIf="user !== undefined && user.itineraries.numberOfElements > 0">
+                    <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length > 0">
                         <option value="{{itinerary.id}}" *ngFor="for let itinerary in user.itineraries.content">{{itinerary.name}}</option>
                     </select>
-                    <select class="form-select" name="itineraryList" *ngIf="user !== undefined && user.itineraries.numberOfElements === 0" disabled>
+                    <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length === 0" disabled>
                         <option disabled>No itineraries</option>
                     </select>
                 </div>
@@ -63,7 +63,7 @@
         <div class="p-4 mb-4 bg-secondary rounded-3 text-dark">
             <section id="info-item-bg">
                 <h3 class="text-center mb-3">Related Information</h3>
-                <app-information [information]="i" *ngFor="let i of information.related" [owned]="i.typeLowercase === 'itinerary'"></app-information>
+                <app-information [user]="user" [information]="i" *ngFor="let i of information.related" [fromItinerary]="(information.typeLowercase === 'itinerary') ? information.id : -1"></app-information>
             </section>
     
             <div class="d-none align-items-center" id="information-spinner">

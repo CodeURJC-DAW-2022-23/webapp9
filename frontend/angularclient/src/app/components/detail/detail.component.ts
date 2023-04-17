@@ -7,10 +7,10 @@ import { ItineraryService } from 'src/app/services/itinerary.service';
 import { PlaceService } from 'src/app/services/place.service';
 import { DestinationService } from 'src/app/services/destination.service';
 
-import { LogInService } from 'src/app/services/log-in.service';
 import { InformationService } from 'src/app/services/information.service';
-import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
 import { InformationDeatilsDTO } from 'src/app/models/rest/information-details-dto';
+import { UserService } from 'src/app/services/user.service';
+import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
 
 @Component({
   selector: 'app-detail',
@@ -25,7 +25,8 @@ export class DetailComponent {
 
   admin: boolean = false;
   registered: boolean = false;
-  user: UserDetailsDTO | undefined = undefined;
+  user!: UserDetailsDTO;
+  ownedItinerary: boolean = false;
 
   infoPage: number = 0;
   reviewsPage: number = 0;
@@ -35,19 +36,22 @@ export class DetailComponent {
               private itineraryService: ItineraryService, 
               private placeService: PlaceService, 
               private destinationService: DestinationService, 
-              private logInService: LogInService) {
+              private userService: UserService) {
     activatedRouter.url.subscribe((data) => {
-      if (data[1].path === "itinerary") this.service = this.itineraryService;
+      if (data[1].path === "itinerary") {
+        this.service = this.itineraryService;
+        this.ownedItinerary = true;
+      }
       else if (data[1].path === "place") this.service = this.placeService;
       else if (data[1].path === "destination") this.service = this.destinationService;
     });
-
-    // Set user attributes if log in.
   }
 
   ngOnInit(): void {
     const id = this.activatedRouter.snapshot.params['id'];
     this.update(id);
+
+    this.loadUser();
   }
 
   update(id: number) {
@@ -75,6 +79,34 @@ export class DetailComponent {
 
   loadImage(information: Information): string {
     return this.service.getImage(information);
+  }
+
+  loadUser() {
+    this.userService.getMe().subscribe((data) => {
+      this.user = data;
+
+      if (!this.ownedItinerary) {
+        return;
+      }
+      this.ownedItinerary = false; 
+
+      this.user.itineraries.totalPages;
+
+      for (let i = 0; i < this.user.itineraries.totalPages; i++) {
+        this.userService.moreItineraries(i).subscribe((request) => {
+          request.itineraries.content.forEach((itinerary) => {
+            if (i > 0) this.user.itineraries.content.push(itinerary);
+            console.warn(itinerary.id + " " + this.information.id);
+            
+          
+            if (itinerary.id === this.information.id) {
+              this.ownedItinerary = true; 
+              return;
+            }
+          })
+        });
+      }
+    });
   }
 
 }

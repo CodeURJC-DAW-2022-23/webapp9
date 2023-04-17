@@ -5,8 +5,8 @@ import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
 import { DestinationService } from 'src/app/services/destination.service';
 import { InformationService } from 'src/app/services/information.service';
 import { ItineraryService } from 'src/app/services/itinerary.service';
-import { LogInService } from 'src/app/services/log-in.service';
 import { PlaceService } from 'src/app/services/place.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-information',
@@ -16,24 +16,24 @@ import { PlaceService } from 'src/app/services/place.service';
 export class InformationComponent {
 
   @Input() information!: Information;
-  @Input() owned!: boolean;
+  @Input() fromItinerary!: number;
+  @Input() user!: UserDetailsDTO;
+  owned: boolean = false;
 
   service!: InformationService;
 
   registered: boolean = false;
-  user: UserDetailsDTO | undefined = undefined;
 
   constructor(private itineraryService: ItineraryService, 
               private placeService: PlaceService, 
-              private destinationService: DestinationService, 
-              private logInService: LogInService) { }
+              private destinationService: DestinationService) { }
 
   ngOnInit() {
     if (this.information.typeLowercase === "itinerary") this.service = this.itineraryService;
     else if (this.information.typeLowercase === "place") this.service = this.placeService;
     else if (this.information.typeLowercase === "destination") this.service = this.destinationService;
 
-    // Set user attributes if log in.
+    this.user.itineraries.content.forEach((i) => { if (i.id === this.fromItinerary) this.owned = true; });
   }
 
   loadImage(information: Information): string {
