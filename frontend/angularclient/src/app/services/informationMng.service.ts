@@ -7,4 +7,5 @@ export interface InformationMngService {
 
   getList(page: number): Observable<Page<Information>>;
 
+  deleteItem(id: number): any;
 }

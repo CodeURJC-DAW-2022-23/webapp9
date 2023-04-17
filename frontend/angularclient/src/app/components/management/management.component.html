@@ -124,7 +124,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger float-end ms-2"
-                onclick="location.href='/management/[i.typeLowercase]/delete/[i.id]'"
+                (click)="deleteItem(i.id)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +193,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger float-end ms-2"
-                onclick="location.href='/management/user/delete/[u.id]'"
+                (click)="deleteUser(u.id)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

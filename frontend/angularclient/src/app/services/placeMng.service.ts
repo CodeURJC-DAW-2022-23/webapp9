@@ -20,7 +20,7 @@ export class PlaceMngService implements InformationMngService {
     >;
   }
 
-  createPlace(name: string, description: string, destination: string) {
+  createItem(name: string, description: string, destination: string) {
     return this.httpClient.post(baseUrl, {
       name: name,
       description: description,
@@ -28,11 +28,11 @@ export class PlaceMngService implements InformationMngService {
     });
   }
 
-  editPlace(
+  editItem(
     id: number,
-    name: string,
-    description: string,
-    destination: string
+    name?: string,
+    description?: string,
+    destination?: string
   ) {
     return this.httpClient.put(baseUrl + '/' + id, {
       name: name,
@@ -41,7 +41,7 @@ export class PlaceMngService implements InformationMngService {
     });
   }
 
-  deletePlace(id: number) {
+  deleteItem(id: number) {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 

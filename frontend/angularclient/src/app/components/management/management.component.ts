@@ -60,4 +60,16 @@ export class ManagementComponent {
   changeFunc(value: string) {
     window.location.replace("/management/" + value);
   }
+
+  deleteItem(id: number){
+    this.service.deleteItem(id).subscribe(() => {
+      window.location.href = `/management/${this.type}`
+    });
+  }
+
+  deleteUser(id: number){
+    this.service.deleteItem(id).subscribe(() => {
+      window.location.href = `/management/${this.type}`
+    });
+  }
 }

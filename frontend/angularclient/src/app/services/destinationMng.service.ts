@@ -20,7 +20,7 @@ export class DestinationMngService implements InformationMngService {
     >;
   }
 
-  createDestination(name: string, description: string, flagCode: string) {
+  createItem(name: string, description: string, flagCode: string) {
     return this.httpClient.post(baseUrl, {
       name: name,
       description: description,
@@ -28,7 +28,7 @@ export class DestinationMngService implements InformationMngService {
     });
   }
 
-  editDestination(
+  editItem(
     id: number,
     name: string,
     description: string,
@@ -41,7 +41,7 @@ export class DestinationMngService implements InformationMngService {
     });
   }
 
-  deleteDestination(id: number) {
+  deleteItem(id: number) {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
