@@ -4,35 +4,55 @@ import { Observable } from 'rxjs';
 
 import { User } from '../models/user.model';
 import { Page } from '../models/rest/page.model';
-import { InformationMngService } from './informationMng.service';
 
-const baseUrl = '/api/management/user';
+const baseUrl = '/api/management/users';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UserMngService implements InformationMngService{
-
+export class UserMngService {
   constructor(private httpClient: HttpClient) { }
 
-  getList(): Observable<Page<User>> {
-    return this.httpClient.get<Page<User>>(baseUrl);
+  getList(page: number) {
+    return this.httpClient.get(baseUrl + '/?page=' + page).pipe() as Observable<
+      Page<User>
+    >;
   }
 
-  createUser(username: string, firstName: string, lastName: string, email: string, password: string){
-    return this.httpClient.post(baseUrl, {'username': username, 'firstName': firstName, 'lastName': lastName, 'email': email, 'password': password});
+  createUser(
+    username: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) {
+    return this.httpClient.post(baseUrl, {
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+    });
   }
 
-  editUser(id: number, username: string, firstName: string, lastName: string, email: string){
-    return this.httpClient.put(baseUrl + '/' + id, {'username': username, 'firstName': firstName, 'lastName': lastName, 'email': email});
+  editUser(
+    id: number,
+    username: string,
+    firstName: string,
+    lastName: string,
+    email: string
+  ) {
+    return this.httpClient.put(baseUrl + '/' + id, {
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+    });
   }
 
-  deleteUser(id: number){
+  deleteUser(id: number) {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage(){
-
-  }
-
+  editImage() { }
 }

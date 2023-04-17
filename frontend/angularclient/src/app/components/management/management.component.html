@@ -88,47 +88,30 @@
         <div class="float-start text-end w-100 px-3 pt-2">
           <h5 class="mb-3">Type of item:</h5>
         </div>
-        <!--<div class="float-end w-50">
-                    <select class="form-select" aria-label="Management selection" onChange="changeFunc(value);">
-                        <option selected>Select...</option>
-                        <option value="itinerary">Itineraries</option>
-                        <option value="user">Users</option>
-                        <option value="destination">Destinations</option>
-                        <option value="place">Places</option>
-                    </select>
-                </div>-->
-        <div mdbDropdown class="dropdown">
-          <button
-            class="btn btn-primary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            aria-expanded="false"
-            mdbDropdownToggle
+        <div class="float-end w-50">
+          <select #selectType
+            class="form-select"
+            aria-label="Management selection"
+            (change)='changeFunc(selectType.value);'
           >
-            Dropdown button
-          </button>
-          <ul
-            mdbDropdownMenu
-            class="dropdown-menu"
-            aria-labelledby="dropdownMenuButton"
-          >
-            <li><a class="dropdown-item" href="#">Itineraries</a></li>
-            <li><a class="dropdown-item" href="#">Users</a></li>
-            <li><a class="dropdown-item" href="#">Destinations</a></li>
-            <li><a class="dropdown-item" href="#">Places</a></li>
-          </ul>
+            <option selected>Select...</option>
+            <option value="itinerary">Itineraries</option>
+            <option value="user">Users</option>
+            <option value="destination">Destinations</option>
+            <option value="place">Places</option>
+          </select>
         </div>
       </div>
     </div>
   </div>
   <!--If not user-->
-  <ng-template ngIf="type!='user'">
-    <section class="" id="info-item-bg" *ngFor="let i of items">
+  <ng-template ngIf="type!='user';else userList">
+    <section class="" id="info-item-bg" *ngFor="let i of items.content">
       <!--Item -->
       <div class="card m-3" id="item-1">
         <div class="card-body g-0 text-black bg-light">
           <img
-            *ngIf="i.hasFlag()"
+            *ngIf="i.flag != null"
             src="{{ i.flag }}"
             class="rounded float-end item-flag"
             alt="{{ i.name }}"
@@ -197,8 +180,8 @@
     </section>
   </ng-template>
   <!--If user-->
-  <ng-template ngIf="type=='user'">
-    <section class="" id="info-item-bg" *ngFor="let u of users">
+  <ng-template #userList>
+    <section class="" id="info-item-bg" *ngFor="let u of users.content">
       <!--Item -->
       <div class="card m-3" id="item">
         <div class="card-body g-0 text-black bg-light">
@@ -256,8 +239,4 @@
     </section>
   </ng-template>
 </div>
-<script type="text/javascript">
-  function changeFunc(value) {
-    window.location.replace("/management/" + value);
-  }
-</script>
+

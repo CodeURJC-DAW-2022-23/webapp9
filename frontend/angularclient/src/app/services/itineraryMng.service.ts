@@ -7,34 +7,52 @@ import { Page } from '../models/rest/page.model';
 
 import { InformationMngService } from './informationMng.service';
 
-const baseUrl = '/api/management/itinerary';
+const baseUrl = '/api/management/itineraries';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ItineraryMngService implements InformationMngService{
-
+export class ItineraryMngService implements InformationMngService {
   constructor(private httpClient: HttpClient) { }
 
-  getList(): Observable<Page<Itinerary>> {
-    return this.httpClient.get<Page<Itinerary>>(baseUrl);
+  getList(page: number) {
+    return this.httpClient.get(baseUrl + '/?page=' + page).pipe() as Observable<
+      Page<Itinerary>
+    >;
   }
 
-  createItem(isPublic: boolean, name: string, description: string, username: string){
-    return this.httpClient.post(baseUrl, {'public': isPublic, 'name': name, 'description': description, 'username': username});
+  createItem(
+    isPublic: boolean,
+    name: string,
+    description: string,
+    username: string
+  ) {
+    return this.httpClient.post(baseUrl, {
+      public: isPublic,
+      name: name,
+      description: description,
+      username: username,
+    });
   }
 
-  editItem(id: number, isPublic: boolean, name: string, description: string, username: string){
-    return this.httpClient.put(baseUrl + '/' + id, {'public': isPublic, 'name': name, 'description': description, 'username': username});
+  editItem(
+    id: number,
+    isPublic: boolean,
+    name: string,
+    description: string,
+    username: string
+  ) {
+    return this.httpClient.put(baseUrl + '/' + id, {
+      public: isPublic,
+      name: name,
+      description: description,
+      username: username,
+    });
   }
 
-  deleteItem(id: number){
+  deleteItem(id: number) {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage(){
-
-  }
-
-
+  editImage() { }
 }

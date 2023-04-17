@@ -5,6 +5,6 @@ import { Information } from "../models/information.model";
 
 export interface InformationMngService {
 
-    getList(): Observable<Page<any>>;
+  getList(page: number): Observable<Page<Information>>;
 
 }

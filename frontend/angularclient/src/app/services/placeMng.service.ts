@@ -6,34 +6,44 @@ import { Place } from '../models/place.model';
 import { Page } from '../models/rest/page.model';
 import { InformationMngService } from './informationMng.service';
 
-const baseUrl = '/api/management/place';
+const baseUrl = '/api/management/places';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class PlaceMngService implements InformationMngService{
+export class PlaceMngService implements InformationMngService {
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) { }
-
-  getList(): Observable<Page<Place>> {
-    return this.httpClient.get<Page<Place>>(baseUrl);
+  getList(page: number) {
+    return this.httpClient.get(baseUrl + '/?page=' + page).pipe() as Observable<
+      Page<Place>
+    >;
   }
 
-  createPlace(name: string, description: string, destination: string){
-    return this.httpClient.post(baseUrl, {'name': name, 'description': description, 'destination': destination});
+  createPlace(name: string, description: string, destination: string) {
+    return this.httpClient.post(baseUrl, {
+      name: name,
+      description: description,
+      destination: destination,
+    });
   }
 
-  editPlace(id: number, name: string, description: string, destination: string){
-    return this.httpClient.put(baseUrl + '/' + id, {'name': name, 'description': description, 'destination': destination});
+  editPlace(
+    id: number,
+    name: string,
+    description: string,
+    destination: string
+  ) {
+    return this.httpClient.put(baseUrl + '/' + id, {
+      name: name,
+      description: description,
+      destination: destination,
+    });
   }
 
-  deletePlace(id: number){
+  deletePlace(id: number) {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage(){
-
-  }
-
-
+  editImage() {}
 }
