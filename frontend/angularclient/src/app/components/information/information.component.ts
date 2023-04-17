@@ -5,8 +5,8 @@ import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
 import { DestinationService } from 'src/app/services/destination.service';
 import { InformationService } from 'src/app/services/information.service';
 import { ItineraryService } from 'src/app/services/itinerary.service';
-import { LogInService } from 'src/app/services/log-in.service';
 import { PlaceService } from 'src/app/services/place.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-information',
@@ -16,12 +16,13 @@ import { PlaceService } from 'src/app/services/place.service';
 export class InformationComponent {
 
   @Input() information!: Information;
-  @Input() owned!: boolean;
+  @Input() fromItinerary!: number;
+  @Input() user!: UserDetailsDTO;
+  owned: boolean = false;
 
   service!: InformationService;
 
   registered: boolean = false;
-  user: UserDetailsDTO | undefined = undefined;
 
   constructor(private itineraryService: ItineraryService, 
               private placeService: PlaceService, 
