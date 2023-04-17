@@ -26,18 +26,36 @@ export class InformationComponent {
 
   constructor(private itineraryService: ItineraryService, 
               private placeService: PlaceService, 
-              private destinationService: DestinationService) { }
+              private destinationService: DestinationService, 
+              private userService: UserService) { }
 
   ngOnInit() {
     if (this.information.typeLowercase === "itinerary") this.service = this.itineraryService;
     else if (this.information.typeLowercase === "place") this.service = this.placeService;
     else if (this.information.typeLowercase === "destination") this.service = this.destinationService;
 
-    this.user.itineraries.content.forEach((i) => { if (i.id === this.fromItinerary) this.owned = true; });
+    this.loadUser();
   }
 
   loadImage(information: Information): string {
     return information.flag;
+  }
+
+  loadUser() {
+    this.userService.getMe().subscribe((data) => {
+      if (this.fromItinerary === -1) return;
+
+      for (let i = 0; i < data.itineraries.totalPages; i++) {
+        this.userService.moreItineraries(i).subscribe((request) => {
+          request.itineraries.content.forEach((itinerary) => {
+            if (itinerary.id === this.fromItinerary) {
+              this.owned = true; 
+              return;
+            }
+          })
+        });
+      }
+    });
   }
 
 }
