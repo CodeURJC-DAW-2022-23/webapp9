@@ -96,9 +96,7 @@ export class DetailComponent {
         this.userService.moreItineraries(i).subscribe((request) => {
           request.itineraries.content.forEach((itinerary) => {
             if (i > 0) this.user.itineraries.content.push(itinerary);
-            console.warn(itinerary.id + " " + this.information.id);
             
-          
             if (itinerary.id === this.information.id) {
               this.ownedItinerary = true; 
               return;
