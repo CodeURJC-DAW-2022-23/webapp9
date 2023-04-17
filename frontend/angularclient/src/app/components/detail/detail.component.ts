@@ -27,6 +27,9 @@ export class DetailComponent {
   registered: boolean = false;
   user: UserDetailsDTO | undefined = undefined;
 
+  infoPage: number = 0;
+  reviewsPage: number = 0;
+
   constructor(private activatedRouter: ActivatedRoute,
               private router: Router, 
               private itineraryService: ItineraryService, 
