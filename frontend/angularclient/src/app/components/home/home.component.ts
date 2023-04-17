@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit{
   constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItinerariesService ) { }
 
   ngOnInit(): void{
-    this.service.getList().subscribe((data) => {
+    this.serviceDest.getList().subscribe((data) => {
       this.destinations = data.content;
     });
 
