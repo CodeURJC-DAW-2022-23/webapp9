@@ -27,5 +27,9 @@ export class ItineraryService implements InformationService {
 	getImage(itinerary: Itinerary): string {
 		return itinerary.image ? `${baseUrl}/${itinerary.id}/image` : '/assets/images/no_image.png';
 	}
+  
+  copy(id: number): Observable<Itinerary> {
+    return this.httpClient.post(`${baseUrl}?copyFrom=${id}`, undefined) as Observable<Itinerary>;
+	}
 
 }

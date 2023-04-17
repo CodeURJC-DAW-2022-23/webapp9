@@ -84,6 +84,8 @@ export class DetailComponent {
   loadUser() {
     this.userService.getMe().subscribe((data) => {
       this.user = data;
+      this.registered = true;
+      this.admin = this.user.user.roles.indexOf('ADMIN') !== -1;
 
       if (!this.ownedItinerary) {
         return;
@@ -96,7 +98,7 @@ export class DetailComponent {
         this.userService.moreItineraries(i).subscribe((request) => {
           request.itineraries.content.forEach((itinerary) => {
             if (i > 0) this.user.itineraries.content.push(itinerary);
-            
+
             if (itinerary.id === this.information.id) {
               this.ownedItinerary = true; 
               return;
@@ -104,6 +106,13 @@ export class DetailComponent {
           })
         });
       }
+    });
+  }
+
+  copyItinerary(id: number) {
+    if (this.service instanceof ItineraryService) this.service.copy(id).subscribe({
+      next: (response) => window.location.href = `/details/itinerary/${response.id}`,
+      error: (error) => window.location.href = `/error/${error.status}`
     });
   }
 
