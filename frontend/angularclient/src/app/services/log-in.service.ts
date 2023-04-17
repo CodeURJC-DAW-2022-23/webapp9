@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
 
 
 const BASE_URL = '/api/auth'
@@ -12,32 +10,48 @@ const BASE_URL = '/api/auth'
 })
 export class LogInService {
 
-  logged!:boolean
-  user!:User
+  public logged = false
+  user!: User
 
-  constructor( private httpClient: HttpClient) { 
-   
+  constructor(private httpClient: HttpClient) {
+    this.reqIsLogged();
   }
- 
-  
-  logIn(user: string, pass: string){
-    return this.httpClient.post(BASE_URL + '/login', {'username':user, 'password':pass})
-}
+
+
+  logIn(user: string, pass: string) {
+    return  this.httpClient.post(BASE_URL + '/login', { 'username': user, 'password': pass })
+  }
 
 
   reqIsLogged() {
-
-    this.httpClient.get('/api/users/me', { withCredentials: true }).subscribe(
-        response => {
-            this.user = response as User;
-            this.logged = true;
-        },
-        error => {
-            if (error.status != 404) {
-                console.error('Error when asking if logged: ' + JSON.stringify(error));
-            }
+    this.httpClient.get('/api/users/me', { responseType: "json" }).subscribe({
+      next: (response: any) => {
+        this.user = response.user as User;
+        this.logged = true;
+      },
+      error: (err) => {
+        if (err.status != 404) {
+          console.error('Error when asking if logged: ' + JSON.stringify(err));
         }
-    );
+      }
+    });
+  }
 
-}
+
+  isLogged() {
+    return this.logged;
+  }
+
+  currentUser() {
+    return this.user;
+  }
+
+  isAdmin() {
+    return this.user && this.user.roles.indexOf('ADMIN') !== -1;
+  }
+
+  getImage(user: User): string {
+		return user.image ? `/api/users/${user.id}/image` : '/assets/images/no_image.png';
+	}
+
 }

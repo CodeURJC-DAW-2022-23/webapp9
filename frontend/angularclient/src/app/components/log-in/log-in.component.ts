@@ -26,8 +26,11 @@ export class LogInComponent {
   logIn() {
     this.loginService.logIn(this.username, this.password).subscribe( data => {
       console.log(data);
+      this.loginService.logged = true;
       this.router.navigateByUrl('');
     });
   }
+
+  
 
 }

@@ -15,6 +15,7 @@ import { DetailComponent } from './components/detail/detail.component';
 import { routing } from './app.routing';
 import { ErrorComponent } from './components/error/error.component';
 import { InformationComponent } from './components/information/information.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { InformationComponent } from './components/information/information.compo
     NavbarComponent,
     HomeComponent,
     LogInComponent,
+    SignUpComponent,
     SearchComponent,
     DetailComponent,
     ErrorComponent,
