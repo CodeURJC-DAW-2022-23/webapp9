@@ -38,22 +38,22 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-2 mt-5" *ngIf="information.type === 'place' && registered">
+            <div class="row mb-2 mt-5" *ngIf="information.typeLowercase === 'place' && registered">
                 <div class="col-12 text-center">
                     <h5>Add to your itinerary</h5>
                 </div>
             </div>
-            <form action="/itinerary/add/place/{{information.id}}" method="post" class="row text-center justify-content-between" *ngIf="information.type === 'place' && registered">
+            <div class="row text-center justify-content-between" *ngIf="information.typeLowercase === 'place' && registered">
                 <div class="col-9 col-md-10 col-xxl-11">
                     <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length > 0">
-                        <option value="{{itinerary.id}}" *ngFor="for let itinerary in user.itineraries.content">{{itinerary.name}}</option>
+                        <option [value]="i.id" *ngFor="let i of user.itineraries.content">{{i.name}}</option>
                     </select>
                     <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length === 0" disabled>
                         <option disabled>No itineraries</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary col-3 col-md-2 col-xxl-1 text-center">Add</button>
-            </form>
+            </div>
         </section>
     </div>
     
