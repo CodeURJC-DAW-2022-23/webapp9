@@ -1,7 +1,7 @@
 import { Information } from "../information.model";
 import { Review } from "../review.model";
 
-export interface InformationDeatilsDTO {
+export interface InformationDetailsDTO {
     id: number,
     name: string,
     description: string,

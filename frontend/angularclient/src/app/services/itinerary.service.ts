@@ -6,6 +6,7 @@ import { Itinerary } from '../models/itinerary.model';
 import { Page } from '../models/rest/page.model';
 
 import { InformationService } from './information.service';
+import { Review } from '../models/review.model';
 
 const baseUrl = '/api/itineraries';
 
@@ -31,5 +32,13 @@ export class ItineraryService implements InformationService {
   copy(id: number): Observable<Itinerary> {
     return this.httpClient.post(`${baseUrl}?copyFrom=${id}`, undefined) as Observable<Itinerary>;
 	}
+  
+  loadMoreInformation(id: number, page: number = 0): Observable<Itinerary> {
+    return this.httpClient.get<Itinerary>(`${baseUrl}/${id}?placesPage=${page}`);
+  }
+  
+  loadMoreReviews(id: number, page: number = 0): Observable<Review[]> {
+    return this.httpClient.get<Review[]>(`${baseUrl}/${id}/reviews?page=${page}`);
+  }
 
 }

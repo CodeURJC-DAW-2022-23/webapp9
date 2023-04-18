@@ -27,5 +27,9 @@ export class DestinationService implements InformationService {
 	getImage(destination: Destination): string {
 		return destination.image ? `${baseUrl}/${destination.id}/image` : '/assets/images/no_image.png';
 	}
+  
+  loadMoreInformation(id: number, page: number = 0): Observable<Destination> {
+    return this.httpClient.get<Destination>(`${baseUrl}/${id}?placesPage=${page}`);
+  }
 
 }

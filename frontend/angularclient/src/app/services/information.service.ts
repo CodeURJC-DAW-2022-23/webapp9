@@ -11,4 +11,6 @@ export interface InformationService {
 
     getImage(information: Information): string;
 
+    loadMoreInformation(id: number, page: number): Observable<any>;
+
 }
