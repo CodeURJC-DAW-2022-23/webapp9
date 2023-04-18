@@ -3,10 +3,9 @@
     <h3 class="text-center">Trip Scanner Management</h3>
     <div class="row mt-5">
       <div class="col-12 col-lg-8">
-        <button
+        <a [routerLink]="['/management/destination/add']"><button
           type="button"
           class="btn btn-success"
-          onclick="location.href='/management/destination/add'"
           id="btn-dest"
         >
           Add new destination
@@ -22,11 +21,10 @@
               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
             />
           </svg>
-        </button>
-        <button
+        </button></a>
+        <a [routerLink]="['/management/itinerary/add']"><button
           type="button"
           class="btn btn-success"
-          onclick="location.href='/management/itinerary/add'"
           id="btn-itin"
         >
           Add new itinerary
@@ -42,11 +40,10 @@
               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
             />
           </svg>
-        </button>
-        <button
+        </button></a>
+        <a [routerLink]="['/management/place/add']"><button
           type="button"
           class="btn btn-success"
-          onclick="location.href='/management/place/add'"
           id="btn-place"
         >
           Add new place
@@ -62,11 +59,10 @@
               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
             />
           </svg>
-        </button>
-        <button
+        </button></a>
+        <a [routerLink]="['/management/user/add']"><button
           type="button"
           class="btn btn-success"
-          onclick="location.href='/management/user/add'"
           id="btn-user"
         >
           Add new user
@@ -82,7 +78,7 @@
               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
             />
           </svg>
-        </button>
+        </button></a>
       </div>
       <div class="col-12 col-lg-4 d-flex justify-content-between">
         <div class="float-start text-end w-100 px-3 pt-2">
@@ -141,10 +137,9 @@
                 </svg>
               </button>
               <!--edit button-->
-              <button
+              <a [routerLink]="['/management/' + i.typeLowercase + '/edit/' + i.id]"><button
                 type="button"
                 class="btn btn-outline-secondary float-end ms-2"
-                onclick="location.href='/management/[i.typeLowercase]/edit/[i.id]'"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -162,15 +157,14 @@
                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
                   />
                 </svg>
-              </button>
+              </button></a>
               <!--details button-->
-              <button
+              <a [routerLink]="['/details/' + i.typeLowercase + '/' + i.id]"><button
                 type="button"
                 class="btn btn-primary float-end ms-2"
-                onclick="location.href='/details/[i.typeLowercase]/[i.id]'"
               >
                 Details
-              </button>
+              </button></a>
             </div>
             <p class="card-text">
               <small class="text-muted">{{ i.type }}</small>
@@ -210,10 +204,9 @@
                 </svg>
               </button>
               <!--edit button-->
-              <button
+              <a [routerLink]="['/management/user/edit/', u.id]"><button
                 type="button"
                 class="btn btn-outline-secondary float-end ms-2"
-                onclick="location.href='/management/user/edit/[u.id]'"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -231,7 +224,7 @@
                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
                   />
                 </svg>
-              </button>
+              </button></a>
             </div>
             <p class="card-text"><small class="text-muted">User</small></p>
           </div>
