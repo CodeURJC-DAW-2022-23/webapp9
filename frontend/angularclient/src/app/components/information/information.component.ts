@@ -61,12 +61,14 @@ export class InformationComponent {
   removeFromItinerary(id: number) {
     if (this.fromItinerary === -1) return;
 
-    if (this.service instanceof ItineraryService)
-      this.service.removePlace(this.fromItinerary, id).subscribe({
-        error: (error) => {
-          window.location.href = `/error/${error.status}`
-        }
-      })
+    this.itineraryService.removePlace(this.fromItinerary, id).subscribe({
+      next: () => {
+        window.location.href = `/details/itinerary/${this.fromItinerary}`
+      },
+      error: (error) => {
+        window.location.href = `/error/${error.status}`
+      }
+    })
   }
 
 }
