@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 
 import { Destination } from 'src/app/models/destination.model';
 import { Itinerary } from 'src/app/models/itinerary.model';
@@ -17,6 +18,8 @@ export class HomeComponent implements OnInit{
   destinations!: Destination[]
   places!: Place[]
   itineraries!:Itinerary[]
+  chart!: Destination[]
+  chartData:any 
 
 
   constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItinerariesService ) { }
@@ -33,6 +36,36 @@ export class HomeComponent implements OnInit{
     this.serviceItineraries.getItineraries().subscribe((data) => {
       this.itineraries = data.content;
     });
+
+    this.serviceDest.getChart().subscribe((data) => {
+      this.chart = data.destinations;
+      console.log(this.chart.map((d: any) => d.views))
+      this.barChartData = {
+        labels: this.chart.map((d: any) => d.name),
+        datasets: [{
+          data: this.chart.map((d: any) => d.views)
+        }]
+      }
+  }); 
   }
 
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    scales: {
+      x: {},
+      y: {
+        beginAtZero: true
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+      }
+    }
+  };
+  public barChartType: ChartType = 'bar';
+  
+  public barChartData!: ChartData<'bar'>;
+
+  
 }

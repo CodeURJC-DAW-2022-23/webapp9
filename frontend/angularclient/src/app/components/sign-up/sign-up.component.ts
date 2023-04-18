@@ -32,6 +32,7 @@ export class SignUpComponent {
     })
   }
 
+ 
   signUp(){
     this.service.signUp(this.username, this.firstName, this.lastName, this.email, this.nationality, this.password).subscribe(
       data => {
@@ -39,6 +40,11 @@ export class SignUpComponent {
         this.router.navigate(['/logIn']);
       });
       
+  }
+
+  downloadPhoto(){
+    this.service.downloadImage();
+
   }
 
 }

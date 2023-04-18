@@ -13,6 +13,8 @@ import { SearchComponent } from './components/search/search.component';
 
 import { routing } from './app.routing';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    routing
+    routing,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

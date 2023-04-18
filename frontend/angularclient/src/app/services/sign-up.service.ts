@@ -18,4 +18,8 @@ export class SignUpService {
   getImage(user: User): string {
 		return user.image ? `${BASE_URL}/${user.id}/image` : '/assets/images/no_image.png';
 	}
+
+  downloadImage(){
+    return this.httpClient.post(BASE_URL + '/me/image', File)
+  }
 }

@@ -1,3 +1,31 @@
+<div class="pt-3 pb-5" >
+
+    <div class="container bg-secondary rounded-3 padded my-3" >
+        <div class="row">
+            <h2 class="text-center col"> Our most visited destinations</h2>
+        </div>
+        <div class="row" id="chart_div">
+
+            <a class="col-md-6" *ngIf="barChartData">
+                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'">
+                     </canvas>
+            </a>
+            <div class="col-md-6">
+                <div class="card mb-3" *ngFor="let c of chart">
+                    <div class="card-body row">
+                        <div class="col-8 col-10">
+                            <h5 class="card-title"></h5>
+                        </div>
+                        <div class="col-4 col-lg-2" >
+                            <img [src]="c.flag" class="rounded float-end item-flag"
+                                 alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <div class="container bg-secondary rounded-3 padded mt-5" id="destinations">
     <div class="row">
         <div class="col-2"></div>
