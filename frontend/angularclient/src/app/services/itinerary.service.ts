@@ -45,4 +45,8 @@ export class ItineraryService implements InformationService {
     return `${baseUrl}/${id}/pdf`
   }
 
+  removePlace(itineraryId: number, placeId: number) {
+    return this.httpClient.delete(`${baseUrl}/${itineraryId}/places/${placeId}`);
+  }
+
 }

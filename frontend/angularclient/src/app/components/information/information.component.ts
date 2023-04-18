@@ -58,4 +58,15 @@ export class InformationComponent {
     });
   }
 
+  removeFromItinerary(id: number) {
+    if (this.fromItinerary === -1) return;
+
+    if (this.service instanceof ItineraryService)
+      this.service.removePlace(this.fromItinerary, id).subscribe({
+        error: (error) => {
+          window.location.href = `/error/${error.status}`
+        }
+      })
+  }
+
 }
