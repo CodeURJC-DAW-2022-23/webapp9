@@ -77,6 +77,39 @@ public class UserManagementRestController {
         }
     }
 
+    @Operation(summary = "Get the specified user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation=User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Not authorized",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found",
+                    content = @Content
+            )
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(
+            @Parameter(description="id of user")
+            @PathVariable long id){
+        Optional<User> user = userService.findById(id);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @Operation(summary = "Create a new user")
     @ApiResponses(value = {
             @ApiResponse(
