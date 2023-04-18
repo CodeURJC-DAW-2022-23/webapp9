@@ -89,10 +89,11 @@
           <h5 class="mb-3">Type of item:</h5>
         </div>
         <div class="float-end w-50">
-          <select #selectType
+          <select
+            #selectType
             class="form-select"
             aria-label="Management selection"
-            (change)='changeFunc(selectType.value);'
+            (change)="changeFunc(selectType.value)"
           >
             <option selected>Select...</option>
             <option value="itinerary">Itineraries</option>
@@ -105,8 +106,8 @@
     </div>
   </div>
   <!--If not user-->
-  <ng-template ngIf="type!='user';else userList">
-    <section class="" id="info-item-bg" *ngFor="let i of items.content">
+  <ng-template ngIf="type!='user'">
+    <section class="" id="info-item-bg" *ngFor="let i of items">
       <!--Item -->
       <div class="card m-3" id="item-1">
         <div class="card-body g-0 text-black bg-light">
@@ -180,8 +181,8 @@
     </section>
   </ng-template>
   <!--If user-->
-  <ng-template #userList>
-    <section class="" id="info-item-bg" *ngFor="let u of users.content">
+  <ng-template ngIf="type=='user'">
+    <section class="" id="info-item-bg" *ngFor="let u of users">
       <!--Item -->
       <div class="card m-3" id="item">
         <div class="card-body g-0 text-black bg-light">
@@ -238,5 +239,9 @@
       </div>
     </section>
   </ng-template>
-</div>
 
+    <button (click)="loadMore()" class="btn btn-primary" id="btn-more-information">
+      Load more
+    </button>
+  <div *ngIf="loader" class="lds-dual-ring overlay"></div>
+</div>

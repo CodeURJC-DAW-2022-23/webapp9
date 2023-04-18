@@ -16,11 +16,12 @@ import { UserMngService } from 'src/app/services/userMng.service';
 })
 export class ManagementComponent {
   type!: String;
-  items!: Page<Information>;
-  users!: Page<User>;
+  items: Information[] = [];
+  users: User[] = [];
   service!: InformationMngService;
   userService!: UserMngService;
   page: number = 0;
+  loader: boolean = false;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -46,13 +47,17 @@ export class ManagementComponent {
   ngOnInit(): void {
     if (this.type != 'user') {
       this.service.getList(this.page).subscribe((response) => {
-        this.items = response;
+        response.content.forEach(item => {
+          this.items.push(item);
+        });
       });
     }
 
     if (this.type == 'user') {
       this.userService.getList(this.page).subscribe((response) => {
-        this.users = response;
+        response.content.forEach(user => {
+          this.users.push(user);
+        });
       });
     }
   }
@@ -72,4 +77,37 @@ export class ManagementComponent {
       window.location.href = `/management/${this.type}`
     });
   }
+
+  loadMore() {
+    this.loader = true;
+    this.page += 1;
+    if (this.type != 'user') {
+      this.service.getList(this.page).subscribe(
+        response => {
+            response.content.forEach(item => {
+                this.items.push(item);
+            });
+            this.loader = false;
+        },
+        error => {
+            console.log(error);
+            this.loader = false;
+        }
+    )
+    }else{
+      this.userService.getList(this.page).subscribe(
+        response => {
+            response.content.forEach(user => {
+                this.users.push(user);
+            });
+            this.loader = false;
+        },
+        error => {
+            console.log(error);
+            this.loader = false;
+        }
+    )
+    }
+
+}
 }
