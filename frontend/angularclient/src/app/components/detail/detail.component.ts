@@ -159,4 +159,9 @@ export class DetailComponent {
       })
   }
 
+  getPdfUrl(id: number) {
+    if (this.service instanceof ItineraryService)
+      window.location.href = this.service.getPdfUrl(id);
+  }
+
 }
