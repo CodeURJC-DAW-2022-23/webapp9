@@ -295,6 +295,7 @@ public class UserRestController {
 
             userService.save(user);
             URI location = fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+            emailService.sendRegistrationEmail(user);
 
             return ResponseEntity.created(location).body(user);
         } else {
