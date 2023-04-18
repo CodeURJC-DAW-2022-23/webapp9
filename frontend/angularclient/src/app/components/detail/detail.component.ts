@@ -29,6 +29,7 @@ export class DetailComponent {
   registered: boolean = false;
   user!: UserDetailsDTO;
   ownedItinerary: boolean = false;
+  toItinerary!: number;
 
   infoPage: number = 0;
   reviewsPage: number = 0;
@@ -162,6 +163,13 @@ export class DetailComponent {
   getPdfUrl(id: number) {
     if (this.service instanceof ItineraryService)
       window.location.href = this.service.getPdfUrl(id);
+  }
+
+  addPlace(itinerary: number) {
+    this.itineraryService.addPlace(itinerary, this.information.id).subscribe({
+      next: () => window.location.href = `/details/place/${this.information.id}`,
+      error: (error) => window.location.href = `/error/${error.status}`
+    });
   }
 
 }

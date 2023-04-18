@@ -45,14 +45,14 @@
             </div>
             <div class="row text-center justify-content-between" *ngIf="information.typeLowercase === 'place' && registered">
                 <div class="col-9 col-md-10 col-xxl-11">
-                    <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length > 0">
+                    <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length > 0" [(ngModel)]="toItinerary">
                         <option [value]="i.id" *ngFor="let i of user.itineraries.content">{{i.name}}</option>
                     </select>
                     <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length === 0" disabled>
                         <option disabled>No itineraries</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary col-3 col-md-2 col-xxl-1 text-center">Add</button>
+                <button (click)="addPlace(toItinerary)" class="btn btn-primary col-3 col-md-2 col-xxl-1 text-center">Add</button>
             </div>
         </section>
     </div>

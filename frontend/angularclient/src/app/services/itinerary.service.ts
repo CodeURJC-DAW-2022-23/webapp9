@@ -49,4 +49,8 @@ export class ItineraryService implements InformationService {
     return this.httpClient.delete(`${baseUrl}/${itineraryId}/places/${placeId}`);
   }
 
+  addPlace(itineraryId: number, placeId: number) {
+    return this.httpClient.post(`${baseUrl}/${itineraryId}/places`, placeId);
+  }
+
 }
