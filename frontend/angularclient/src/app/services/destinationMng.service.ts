@@ -20,6 +20,10 @@ export class DestinationMngService implements InformationMngService {
     >;
   }
 
+  getItem(id: number): Observable<{destination: Destination}> {
+    return this.httpClient.get<{destination: Destination}>('/api/destinations/' + id);
+  }
+
   createItem(name: string, description: string, flagCode: string) {
     return this.httpClient.post(baseUrl, {
       name: name,

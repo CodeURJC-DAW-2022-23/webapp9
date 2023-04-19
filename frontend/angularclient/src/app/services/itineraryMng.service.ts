@@ -21,6 +21,10 @@ export class ItineraryMngService implements InformationMngService {
     >;
   }
 
+  getItem(id: number): Observable<{itinerary: Itinerary}> {
+    return this.httpClient.get<{itinerary: Itinerary}>('/api/itineraries/' + id);
+  }
+
   createItem(
     name: string,
     description: string,
@@ -36,13 +40,12 @@ export class ItineraryMngService implements InformationMngService {
 
   editItem(
     id: number,
-    isPublic: boolean,
     name: string,
     description: string,
     username: string
   ) {
     return this.httpClient.put(baseUrl + '/' + id, {
-      public: isPublic,
+      public: true,
       name: name,
       description: description,
       username: username,

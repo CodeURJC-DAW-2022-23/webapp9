@@ -20,6 +20,10 @@ export class PlaceMngService implements InformationMngService {
     >;
   }
 
+  getItem(id: number): Observable<{place: Place}> {
+    return this.httpClient.get<{place: Place}>('/api/places/' + id);
+  }
+
   createItem(name: string, description: string, destination: string) {
     return this.httpClient.post(baseUrl, {
       name: name,

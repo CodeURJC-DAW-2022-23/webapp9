@@ -19,6 +19,10 @@ export class UserMngService {
     >;
   }
 
+  getUser(id: number): Observable<User> {
+    return this.httpClient.get<User>(baseUrl + '/' + id);
+  }
+
   createUser(
     username: string,
     firstName: string,
@@ -42,13 +46,15 @@ export class UserMngService {
     username: string,
     firstName: string,
     lastName: string,
-    email: string
+    email: string,
+    nationality: string
   ) {
     return this.httpClient.put(baseUrl + '/' + id, {
       username: username,
       firstName: firstName,
       lastName: lastName,
       email: email,
+      nationality: nationality
     });
   }
 
