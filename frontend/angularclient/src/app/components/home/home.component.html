@@ -9,7 +9,7 @@
         </div>
         <div class="carousel-inner">
 
-            <div class="carousel-item active" *ngFor="let d of destinations"> 
+            <div class="carousel-item active" *ngFor="let d of destinations | slice:0:1"> 
                 <a href="#destinations">
                     <img [src]="serviceDest.getImage(d)"  class="d-block w-100" alt="">
                 </a>
@@ -18,7 +18,7 @@
                     <p>Click to view our most liked destinations!</p>
                 </div>
             </div>
-            <div class="carousel-item" *ngFor="let p of places">
+            <div class="carousel-item" *ngFor="let p of places | slice:0:1">
                 <a href="#places">
                     <img [src]="servicePlaces.getImage(p)" class="d-block w-100" alt="">
                 </a>
@@ -27,7 +27,7 @@
                     <p>Click to view our most liked places to visit!</p>
                 </div>
             </div>
-            <div class="carousel-item" *ngFor="let i of itineraries">
+            <div class="carousel-item" *ngFor="let i of itineraries | slice:0:1">
                 <a href="#itineraries">
                     <img [src]="serviceItineraries.getImage(i)" class="d-block w-100" alt="">
                 </a>
