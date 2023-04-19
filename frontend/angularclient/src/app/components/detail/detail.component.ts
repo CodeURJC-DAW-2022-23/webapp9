@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
 import { Page } from 'src/app/models/rest/page.model';
 import { Review } from 'src/app/models/review.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-detail',
@@ -168,6 +169,19 @@ export class DetailComponent {
   addPlace(itinerary: number) {
     this.itineraryService.addPlace(itinerary, this.information.id).subscribe({
       next: () => window.location.href = `/details/place/${this.information.id}`,
+      error: (error) => window.location.href = `/error/${error.status}`
+    });
+  }
+
+  addReview(f: NgForm, id: number) {
+    if (parseInt(f.value.score) < 0 || parseInt(f.value.score) > 5) return;
+
+    this.itineraryService.addReview(id, { 
+        title: f.value.title,
+        description: f.value.description,
+        score: f.value.score,
+        user: this.user.user.username}).subscribe({
+      next: () => window.location.href = `/details/itinerary/${this.information.id}`,
       error: (error) => window.location.href = `/error/${error.status}`
     });
   }

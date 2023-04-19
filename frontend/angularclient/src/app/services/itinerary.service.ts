@@ -53,4 +53,13 @@ export class ItineraryService implements InformationService {
     return this.httpClient.post(`${baseUrl}/${itineraryId}/places`, placeId);
   }
 
+  addReview(id: number, review: { 
+      title: string,
+      description: string,
+      score: number,
+      user: string}) {
+        
+    return this.httpClient.post(`${baseUrl}/${id}/reviews`, review);
+  }
+
 }

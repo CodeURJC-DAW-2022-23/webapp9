@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 import { ErrorComponent } from './components/error/error.component';
 import { InformationComponent } from './components/information/information.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     SearchComponent,
     DetailComponent,
     ErrorComponent,
-    InformationComponent
+    InformationComponent,
+    ReviewComponent
   ],
   imports: [
     BrowserModule,

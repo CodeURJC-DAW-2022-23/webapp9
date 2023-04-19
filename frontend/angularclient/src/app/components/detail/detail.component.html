@@ -83,20 +83,20 @@
         <div class="p-4 mb-4 bg-secondary rounded-3 text-dark">
             <section id="info-review-bg">
                 <h3 class="text-center mb-3">Reviews</h3>
-    
+
                 <div class="card m-3" id="new-review-form" *ngIf="registered">
-                    <form action="/reviews/add/{{information.id}}/" method="post" class="card-body g-0 text-black bg-light row">
+                    <form #f="ngForm" (ngSubmit)="addReview(f, information.id)" novalidate class="card-body g-0 text-black bg-light row">
     
                         <h5 class="mb-3">Add your review!</h5>
     
                         <div class="mb-3 row">
                             <div class="col-9">
                                 <label for="review-title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="review-title" name="title">
+                                <input type="text" class="form-control" id="review-title" name="title" ngModel>
                             </div>
                             <div class="col-3">
                                 <label for="review-score" class="form-label">Score</label>
-                                <input type="text" class="form-control" id="review-score" name="score">
+                                <input type="text" class="form-control" id="review-score" name="score" ngModel>
                                 <div id="score-review-help" class="form-text">Write a score from 0-5</div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                         <div class="mb-3 row">
                             <div class="col-12">
                                 <label for="review-title" class="form-label">Body</label>
-                                <textarea class="form-control" id="review-body" name="description"></textarea>
+                                <textarea class="form-control" id="review-body" name="description" ngModel></textarea>
                             </div>
                         </div>
     
@@ -112,6 +112,8 @@
     
                     </form>
                 </div>
+
+                <app-review [review]="r" *ngFor="let r of information.reviews" [user]="user.user"></app-review>
     
             </section>
     
