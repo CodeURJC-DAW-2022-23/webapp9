@@ -1,3 +1,56 @@
+<div class="container-fluid p-0 my-4">
+
+    <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true"
+                    aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+
+            <div class="carousel-item active" *ngFor="let d of destinations"> 
+                <a href="#destinations">
+                    <img [src]="serviceDest.getImage(d)"  class="d-block w-100" alt="">
+                </a>
+                <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
+                    <h5>Destinations</h5>
+                    <p>Click to view our most liked destinations!</p>
+                </div>
+            </div>
+            <div class="carousel-item" *ngFor="let p of places">
+                <a href="#places">
+                    <img [src]="servicePlaces.getImage(p)" class="d-block w-100" alt="">
+                </a>
+                <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
+                    <h5>Places to visit</h5>
+                    <p>Click to view our most liked places to visit!</p>
+                </div>
+            </div>
+            <div class="carousel-item" *ngFor="let i of itineraries">
+                <a href="#itineraries">
+                    <img [src]="serviceItineraries.getImage(i)" class="d-block w-100" alt="">
+                </a>
+                <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
+                    <h5>Itineraries</h5>
+                    <p>Click to view our most liked itineraries!</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+</div>
+
+
+
 <div class="pt-3 pb-5" >
 
     <div class="container bg-secondary rounded-3 padded my-3" >
@@ -14,11 +67,11 @@
                 <div class="card mb-3" *ngFor="let c of chart">
                     <div class="card-body row">
                         <div class="col-8 col-10">
-                            <h5 class="card-title"></h5>
+                            <h5 class="card-title">{{c.name}}</h5>
                         </div>
                         <div class="col-4 col-lg-2" >
                             <img [src]="c.flag" class="rounded float-end item-flag"
-                                 alt="">
+                                 alt="{{c.name}}">
                         </div>
                     </div>
                 </div>

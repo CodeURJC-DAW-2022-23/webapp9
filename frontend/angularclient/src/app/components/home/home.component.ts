@@ -6,6 +6,7 @@ import { Itinerary } from 'src/app/models/itinerary.model';
 import { Place } from 'src/app/models/place.model';
 import { DestinationService } from 'src/app/services/destination.service';
 import { ItinerariesService } from 'src/app/services/itineraries.service';
+import { LogInService } from 'src/app/services/log-in.service';
 import { PlacesService } from 'src/app/services/places.service';
 
 
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit{
   chartData:any 
 
 
-  constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItinerariesService ) { }
+  constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItinerariesService, private logService:LogInService ) { }
 
   ngOnInit(): void{
     this.serviceDest.getDestinations().subscribe((data) => {
@@ -39,7 +40,6 @@ export class HomeComponent implements OnInit{
 
     this.serviceDest.getChart().subscribe((data) => {
       this.chart = data.destinations;
-      console.log(this.chart.map((d: any) => d.views))
       this.barChartData = {
         labels: this.chart.map((d: any) => d.name),
         datasets: [{
