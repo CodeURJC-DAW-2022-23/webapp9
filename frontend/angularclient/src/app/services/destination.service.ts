@@ -24,8 +24,8 @@ export class DestinationService implements InformationService {
     return this.httpClient.get<Destination>(`${baseUrl}/${id}`);
   }
 
-	getImage(destination: Destination): string {
-		return destination.image ? `${baseUrl}/${destination.id}/image` : '/assets/images/no_image.png';
-	}
+  getImage(destination: Destination): string {
+    return destination.image ? `${baseUrl}/${destination.id}/image` : '/assets/images/no_image.png';
+  }
 
 }

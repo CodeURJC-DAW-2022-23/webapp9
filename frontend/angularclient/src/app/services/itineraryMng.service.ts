@@ -21,8 +21,8 @@ export class ItineraryMngService implements InformationMngService {
     >;
   }
 
-  getItem(id: number): Observable<{itinerary: Itinerary}> {
-    return this.httpClient.get<{itinerary: Itinerary}>('/api/itineraries/' + id);
+  getItem(id: number): Observable<{ itinerary: Itinerary }> {
+    return this.httpClient.get<{ itinerary: Itinerary }>('/api/itineraries/' + id);
   }
 
   createItem(

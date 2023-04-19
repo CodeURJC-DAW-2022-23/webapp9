@@ -8,9 +8,9 @@ describe('AddEditMngComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddEditMngComponent ]
+      declarations: [AddEditMngComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AddEditMngComponent);
     component = fixture.componentInstance;

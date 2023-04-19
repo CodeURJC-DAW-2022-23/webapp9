@@ -44,7 +44,8 @@ img.item-flag {
 }
 
 .modal-header {
-  background: #0d6efd;;
+  background: #0d6efd;
+  ;
   color: #fff;
 }
 
@@ -73,31 +74,30 @@ img.item-flag {
   background-color: #F6FAEF !important;
 }
 
-.all-private{
-display: flex;
+.all-private {
+  display: flex;
 }
 
-.modal-content{
+.modal-content {
   background-color: #A1C6EA !important;
   margin: 70px;
   border-radius: 18px;
 }
 
-.modal-header{
-align-self: center;
+.modal-header {
+  align-self: center;
 }
 
 .modal-title {
-background-color: #A1C6EA !important;
-color: black;
+  background-color: #A1C6EA !important;
+  color: black;
 }
 
-.form-control{
-border-radius: 2.375rem;
+.form-control {
+  border-radius: 2.375rem;
 }
 
-.modal-footer{
-display: block;
-margin-left: 45px;
+.modal-footer {
+  display: block;
+  margin-left: 45px;
 }
-

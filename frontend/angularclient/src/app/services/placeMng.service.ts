@@ -12,7 +12,7 @@ const baseUrl = '/api/management/places';
   providedIn: 'root',
 })
 export class PlaceMngService implements InformationMngService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getList(page: number) {
     return this.httpClient.get(baseUrl + '/?page=' + page).pipe() as Observable<
@@ -20,8 +20,8 @@ export class PlaceMngService implements InformationMngService {
     >;
   }
 
-  getItem(id: number): Observable<{place: Place}> {
-    return this.httpClient.get<{place: Place}>('/api/places/' + id);
+  getItem(id: number): Observable<{ place: Place }> {
+    return this.httpClient.get<{ place: Place }>('/api/places/' + id);
   }
 
   createItem(name: string, description: string, destination: string) {
@@ -49,5 +49,5 @@ export class PlaceMngService implements InformationMngService {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage() {}
+  editImage() { }
 }

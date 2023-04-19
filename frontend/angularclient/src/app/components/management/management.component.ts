@@ -66,13 +66,13 @@ export class ManagementComponent {
     window.location.replace("/management/" + value);
   }
 
-  deleteItem(id: number){
+  deleteItem(id: number) {
     this.service.deleteItem(id).subscribe(() => {
       window.location.href = `/management/${this.type}`
     });
   }
 
-  deleteUser(id: number){
+  deleteUser(id: number) {
     this.service.deleteItem(id).subscribe(() => {
       window.location.href = `/management/${this.type}`
     });
@@ -84,30 +84,30 @@ export class ManagementComponent {
     if (this.type != 'user') {
       this.service.getList(this.page).subscribe(
         response => {
-            response.content.forEach(item => {
-                this.items.push(item);
-            });
-            this.loader = false;
+          response.content.forEach(item => {
+            this.items.push(item);
+          });
+          this.loader = false;
         },
         error => {
-            console.log(error);
-            this.loader = false;
+          console.log(error);
+          this.loader = false;
         }
-    )
-    }else{
+      )
+    } else {
       this.userService.getList(this.page).subscribe(
         response => {
-            response.content.forEach(user => {
-                this.users.push(user);
-            });
-            this.loader = false;
+          response.content.forEach(user => {
+            this.users.push(user);
+          });
+          this.loader = false;
         },
         error => {
-            console.log(error);
-            this.loader = false;
+          console.log(error);
+          this.loader = false;
         }
-    )
+      )
     }
 
-}
+  }
 }
