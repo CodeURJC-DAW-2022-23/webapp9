@@ -37,8 +37,8 @@ export class ItineraryService implements InformationService {
     return this.httpClient.get<Itinerary>(`${baseUrl}/${id}?placesPage=${page}`);
   }
   
-  loadMoreReviews(id: number, page: number = 0): Observable<Review[]> {
-    return this.httpClient.get<Review[]>(`${baseUrl}/${id}/reviews?page=${page}`);
+  loadMoreReviews(id: number, page: number = 0): Observable<Page<Review>> {
+    return this.httpClient.get<Page<Review>>(`${baseUrl}/${id}/reviews?page=${page}`);
   }
 
   getPdfUrl(id: number) {
@@ -58,7 +58,7 @@ export class ItineraryService implements InformationService {
       description: string,
       score: number,
       user: string}) {
-        
+
     return this.httpClient.post(`${baseUrl}/${id}/reviews`, review);
   }
 

@@ -146,19 +146,20 @@ export class DetailComponent {
   loadMoreReviews() {
     this.reviewsLoader = true;
     this.reviewsPage += 1;
-    if (this.service instanceof ItineraryService)
-      this.service.loadMoreReviews(this.information.id, this.reviewsPage).subscribe({
-        next: (response) => {
-          response.forEach((review: Review) => {
-            this.information.reviews.push(review);
-          });
-          this.reviewsLoader = false;
-        },
-        error: (error) => {
-          console.log(error);
-          this.reviewsLoader = false;
-        }
-      })
+    this.itineraryService.loadMoreReviews(this.information.id, this.reviewsPage).subscribe({
+      next: (response) => {
+        console.log(response);
+        
+        response.content.forEach((review: Review) => {
+          this.information.reviews.push(review);
+        });
+        this.infoLoader = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.infoLoader = false;
+      }
+    })
   }
 
   getPdfUrl(id: number) {
