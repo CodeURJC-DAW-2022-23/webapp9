@@ -2,9 +2,15 @@ package com.tripscanner.TripScanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tripscanner.TripScanner.model.rest.ItineraryDTO;
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,9 +171,15 @@ public class Itinerary implements Information {
         this.isPublic = aPublic;
     }
 
-    public Itinerary copy(User newUser) {
+    public Itinerary copy(User newUser)  {
         Itinerary toReturn = new Itinerary(this.name, this.description, newUser, newUser.getRoles().contains("ADMIN"));
-        toReturn.setImageFile(this.getImageFile());
+        try {
+            byte[] imageBytes = this.getImageFile().getBytes(1L, (int) this.getImageFile().length());
+            toReturn.setImageFile(BlobProxy.generateProxy(imageBytes));
+            toReturn.setImage(true);
+        } catch (SQLException e) {
+            toReturn.setImage(false);
+        }
         List<Place> placeCopy = new ArrayList<>();
 
         for (Place item : this.getPlaces()) {
