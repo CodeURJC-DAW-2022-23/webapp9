@@ -22,16 +22,15 @@ export class ItineraryMngService implements InformationMngService {
   }
 
   createItem(
-    isPublic: boolean,
     name: string,
     description: string,
     username: string
   ) {
     return this.httpClient.post(baseUrl, {
-      public: isPublic,
+      public: true,
       name: name,
       description: description,
-      username: username,
+      user: username,
     });
   }
 

@@ -13,6 +13,7 @@ import { SearchComponent } from './components/search/search.component';
 
 import { routing } from './app.routing';
 import { ManagementComponent } from './components/management/management.component';
+import { AddEditMngComponent } from './add-edit-mng/add-edit-mng.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ManagementComponent } from './components/management/management.componen
     HomeComponent,
     LogInComponent,
     SearchComponent,
-    ManagementComponent
+    ManagementComponent,
+    AddEditMngComponent
   ],
   imports: [
     BrowserModule,

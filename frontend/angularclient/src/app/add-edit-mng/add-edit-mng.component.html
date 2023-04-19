@@ -1,0 +1,163 @@
+<div class="container p-4">
+  <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg1">
+    <!-- <div *ngIf="mode=='edit';else add"> -->
+      <h3 *ngIf="mode=='edit'" class="text-center mb-3">Edit {{type}}</h3>
+    <!-- </div> -->
+
+    <!-- <div #add> -->
+      <h3 *ngIf="mode=='add'" class="text-center mb-3">Add new {{type}}</h3>
+    <!-- </div> -->
+
+    <!--DESTINATION-->
+    <div [hidden]="!(type=='destination')">
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend1">Name</span>
+          <input type="text" class="form-control" value="{{name}}" name='name' #itemNameInput aria-describedby="inputGroupPrepend"
+            required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend2">Description</span>
+          <input type="text" class="form-control" value="{{description}}" name='description' #itemDescriptionInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend3">Flag Code</span>
+          <input type="text" class="form-control" value="{{flagCode}}" name='flagCode' #itemFlagCodeInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrependImg1">Image</span>
+          <div *ngIf="mode=='edit'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+          </div>
+          <div *ngIf="mode=='add'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+          </div>
+        </div>
+        <div class="col-12">
+          <input class="btn btn-primary" type='submit' (click)="submitDestination()" value='Submit'>
+        </div>
+      <!-- </form> -->
+    </div>
+
+    <!--ITINERARY-->
+    <div *ngIf="type=='itinerary'">
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend4">Name</span>
+          <input type="text" class="form-control" value="{{name}}" name='name' #itemNameInputIt aria-describedby="inputGroupPrepend"
+            required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend5">Description</span>
+          <input type="text" class="form-control" value="{{description}}" name='description' #itemDescriptionInputIt
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend6">User</span>
+          <input type="text" class="form-control" value="{{itemUser}}" name='itemUser' #itemUserInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrependImg2">Image</span>
+          <div *ngIf="mode=='edit'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+          </div>
+          <div *ngIf="mode=='add'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+          </div>
+        </div>
+        <div class="col-12">
+          <input class="btn btn-primary" type='submit' (click)="submitItinerary()" value='Submit'>
+        </div>
+    </div>
+
+    <!--PLACE-->
+    <div *ngIf="type=='place'">
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend7">Name</span>
+          <input type="text" class="form-control" value="{{name}}" name='name' #itemNameInputPl aria-describedby="inputGroupPrepend"
+            required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend8">Description</span>
+          <input type="text" class="form-control" value="{{description}}" name='description' #itemDescriptionInputPl
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend9">Destination</span>
+          <input type="text" class="form-control" value="{{itemDestination}}" name='itemDestination' #itemDestinationInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrependImg3">Image</span>
+          <div *ngIf="mode=='edit'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+          </div>
+          <div *ngIf="mode=='add'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+          </div>
+        </div>
+        <div class="col-12">
+          <input class="btn btn-primary" type='submit' (click)="submitPlace()" value='Submit'>
+        </div>
+    </div>
+
+    <!--USER-->
+    <div *ngIf="type=='user'">
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend10">Username</span>
+          <input type="text" class="form-control" value="{{username}}" name='username' #usernameInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend11">First name</span>
+          <input type="text" class="form-control" value="{{firstName}}" name='firstName' #firstNameInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend12">Last name</span>
+          <input type="text" class="form-control" value="{{lastName}}" name='lastName' #lastNameInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend12">Nationality</span>
+          <input type="text" class="form-control" value="{{nationality}}" name='nationality' #nationalityInput
+            aria-describedby="inputGroupPrepend" required>
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend13">Email</span>
+          <input type="text" class="form-control" value="{{email}}" name='email' #userEmailInput aria-describedby="inputGroupPrepend"
+            required>
+        </div>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrependImg4">Image</span>
+          <div *ngIf="mode=='edit'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png">
+          </div>
+          <div *ngIf="mode=='add'">
+            <input type="file" class="form-control" name='imageFile' accept=".jpg, .jpeg, .png" required>
+          </div>
+        </div>
+
+        <div *ngIf="mode=='add'">
+          <div class="input-group has-validation">
+            <span class="input-group-text" id="inputGroupPrepend14">Password</span>
+            <input type="text" class="form-control" name='password' #passwordInput aria-describedby="inputGroupPrepend" required>
+          </div>
+        </div>
+        <div class="col-12">
+          <input class="btn btn-primary" type='submit' (click)="submitUser()" value='Submit'>
+        </div>
+    </div>
+  </section>
+</div>

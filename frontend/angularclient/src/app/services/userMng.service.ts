@@ -24,14 +24,16 @@ export class UserMngService {
     firstName: string,
     lastName: string,
     email: string,
-    password: string
+    password: string,
+    nationality: string
   ) {
     return this.httpClient.post(baseUrl, {
       username: username,
       firstName: firstName,
       lastName: lastName,
       email: email,
-      password: password,
+      passwordHash: password,
+      nationality: nationality
     });
   }
 
