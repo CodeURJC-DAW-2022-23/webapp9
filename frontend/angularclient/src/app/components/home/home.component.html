@@ -1,3 +1,4 @@
+
 <div class="container-fluid p-0 my-4">
 
     <div id="carousel" class="carousel slide" data-bs-ride="carousel">
@@ -9,9 +10,9 @@
         </div>
         <div class="carousel-inner">
 
-            <div class="carousel-item active" *ngFor="let d of destinations | slice:0:1"> 
+            <div class="carousel-item active" *ngFor="let d of destinations | slice:0:1">
                 <a href="#destinations">
-                    <img [src]="serviceDest.getImage(d)"  class="d-block w-100" alt="">
+                    <img [src]="serviceDest.getImage(d)"  class="d-block w-100" alt="{{d.name}}">
                 </a>
                 <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                     <h5>Destinations</h5>
@@ -20,7 +21,7 @@
             </div>
             <div class="carousel-item" *ngFor="let p of places | slice:0:1">
                 <a href="#places">
-                    <img [src]="servicePlaces.getImage(p)" class="d-block w-100" alt="">
+                    <img [src]="servicePlaces.getImage(p)" class="d-block w-100" alt="{{p.name}}">
                 </a>
                 <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                     <h5>Places to visit</h5>
@@ -29,7 +30,7 @@
             </div>
             <div class="carousel-item" *ngFor="let i of itineraries | slice:0:1">
                 <a href="#itineraries">
-                    <img [src]="serviceItineraries.getImage(i)" class="d-block w-100" alt="">
+                    <img [src]="serviceItineraries.getImage(i)" class="d-block w-100" alt="{{i.name}}">
                 </a>
                 <div class="carousel-caption d-none d-md-block bg-black bg-opacity-50">
                     <h5>Itineraries</h5>
@@ -50,18 +51,15 @@
 </div>
 
 
+<div class="pt-3 pb-5">
 
-<div class="pt-3 pb-5" >
-
-    <div class="container bg-secondary rounded-3 padded my-3" >
+    <div class="container bg-secondary rounded-3 padded my-3">
         <div class="row">
             <h2 class="text-center col"> Our most visited destinations</h2>
         </div>
         <div class="row" id="chart_div">
-
             <a class="col-md-6" *ngIf="barChartData">
-                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'">
-                     </canvas>
+                <canvas id="views-chart" baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
             </a>
             <div class="col-md-6">
                 <div class="card mb-3" *ngFor="let c of chart">
@@ -69,8 +67,8 @@
                         <div class="col-8 col-10">
                             <h5 class="card-title">{{c.name}}</h5>
                         </div>
-                        <div class="col-4 col-lg-2" >
-                            <img [src]="c.flag" class="rounded float-end item-flag"
+                        <div class="col-4 col-lg-2">
+                            <img src="{{c.flag}}" class="rounded float-end item-flag"
                                  alt="{{c.name}}">
                         </div>
                     </div>
@@ -79,24 +77,75 @@
         </div>
     </div>
 
-<div class="container bg-secondary rounded-3 padded mt-5" id="destinations">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Destinations</h2>
-        <div class="col-2 float-end">
-            <a href='' role="button" class="btn btn-secondary">View more destinations</a>
+    <div class="container bg-secondary rounded-3 padded mt-5" id="destinations">
+        <div class="row">
+            <div class="col-2"></div>
+            <h2 class="text-center col-8">Destinations</h2>
+            <div class="col-2 float-end">
+                <a href='/search?name=&type=destination&sort=id&order=DESC&page=0' role="button" class="btn btn-secondary">View more destinations</a>
+            </div>
+        </div>
+        <hr class="text-light">
+        <div id="search-results">
+            <div class="row row-cols-md-3">
+                <div class="col" *ngFor="let d of destinations | slice:0:3">
+                    <div class="card">
+                        <img [src]="serviceDest.getImage(d)" class="card-img-top" alt="{{d.name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{d.name}}</h5>
+                            <p class="card-text">{{d.description}}</p>
+                            <a href="" class="btn btn-primary">More details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            <div class="col">
-                <div class="card" *ngFor="let d of destinations | slice:0:3">
-                    <img [src]="serviceDest.getImage(d)" class="card-img-top" alt="{{d.name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{d.name}}</h5>
-                        <p class="card-text">{{d.description}}</p>
-                        <a href="" class="btn btn-primary">More details</a>
+
+    <div class="container bg-secondary rounded-3 padded mt-4" id="places">
+        <div class="row">
+            <div class="col-2"></div>
+            <h2 class="text-center col-8">Places to visit</h2>
+            <div class="col-2 float-end">
+                <a href='/search?name=&type=place&sort=id&order=DESC&page=0' role="button" class="btn btn-secondary">View more places</a>
+            </div>
+        </div>
+        <hr class="text-light">
+        <div id="search-results">
+            <div class="row row-cols-md-3">
+                <div class="col" *ngFor="let p of places | slice:0:3">
+                    <div class="card">
+                        <img [src]="servicePlaces.getImage(p)" class="card-img-top" alt="{{p.name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{p.name}}</h5>
+                            <p class="card-text">{{p.description}}</p>
+                            <a href="" class="btn btn-primary">More details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg-secondary rounded-3 padded mt-4" id="itineraries">
+        <div class="row">
+            <div class="col-2"></div>
+            <h2 class="text-center col-8">Itineraries</h2>
+            <div class="col-2 float-end">
+                <a href='/search?name=&type=itinerary&sort=id&order=DESC&page=0' role="button" class="btn btn-secondary">View more itineraries</a>
+            </div>
+        </div>
+        <hr class="text-light">
+        <div id="search-results">
+            <div class="row row-cols-md-3">
+                <div class="col" *ngFor="let i of itineraries | slice:0:3">
+                    <div class="card">
+                        <img [src]="serviceItineraries.getImage(i)" class="card-img-top" alt="{{i.name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{i.name}}</h5>
+                            <p class="card-text">{{i.description}}</p>
+                            <a href="" class="btn btn-primary">More details</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,54 +153,3 @@
     </div>
 </div>
 
-
-<div class="container bg-secondary rounded-3 padded mt-4" id="places">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Places to visit</h2>
-        <div class="col-2 float-end">
-            <a href='/search?name=&type=place&sort=id&order=DESC&page=0' role="button" class="btn btn-secondary">View more places</a>
-        </div>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            <div class="col">
-                <div class="card" *ngFor="let p of places | slice:0:3">
-                    <img [src]="servicePlaces.getImage(p)" class="card-img-top" alt="{{p.name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{p.name}}</h5>
-                        <p class="card-text">{{p.description}}</p>
-                        <a href="" class="btn btn-primary">More details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="container bg-secondary rounded-3 padded mt-4" id="itineraries">
-    <div class="row">
-        <div class="col-2"></div>
-        <h2 class="text-center col-8">Itineraries</h2>
-        <div class="col-2 float-end">
-            <a href='/search?name=&type=itinerary&sort=id&order=DESC&page=0' role="button" class="btn btn-secondary">View more itineraries</a>
-        </div>
-    </div>
-    <hr class="text-light">
-    <div id="search-results">
-        <div class="row row-cols-md-3">
-            <div class="col">
-                <div class="card" *ngFor="let i of itineraries | slice:0:3">
-                    <img [src]="serviceItineraries.getImage(i)" class="card-img-top" alt="{{i.name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{i.name}}</h5>
-                        <p class="card-text">{{i.description}}</p>
-                        <a href="" class="btn btn-primary">More details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

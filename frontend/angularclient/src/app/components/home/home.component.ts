@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit{
 
     this.serviceItineraries.getItineraries().subscribe((data) => {
       this.itineraries = data.content;
+      console.log(this.itineraries)
     });
 
     this.serviceDest.getChart().subscribe((data) => {

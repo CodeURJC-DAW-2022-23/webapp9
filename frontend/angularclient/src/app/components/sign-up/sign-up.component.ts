@@ -44,9 +44,7 @@ export class SignUpComponent {
         console.log(data);
         this.uploadImage;
         this.router.navigate(['/logIn']);
-      });
-    
-      
+      });     
   }
 
 
