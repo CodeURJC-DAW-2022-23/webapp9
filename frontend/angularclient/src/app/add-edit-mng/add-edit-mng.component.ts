@@ -1,10 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DestinationMngService } from '../services/destinationMng.service';
 import { InformationMngService } from '../services/informationMng.service';
 import { ItineraryMngService } from '../services/itineraryMng.service';
 import { PlaceMngService } from '../services/placeMng.service';
 import { UserMngService } from '../services/userMng.service';
+import { Information } from '../models/information.model';
 
 @Component({
   selector: 'app-add-edit-mng',
@@ -41,8 +42,12 @@ export class AddEditMngComponent {
   @ViewChild('itemDescriptionInputIt') itemDescriptionInputIt!: ElementRef;
   @ViewChild('itemNameInputPl') itemNameInputPl!: ElementRef;
   @ViewChild('itemDescriptionInputPl') itemDescriptionInputPl!: ElementRef;
+  @ViewChild('destinationFile') destinationFile: any;
+  @ViewChild('itineraryFile') itineraryFile: any;
+  @ViewChild('placeFile') placeFile: any;
+  @ViewChild('userFile') userFile: any;
 
-  constructor(private activatedRouter: ActivatedRoute, private itineraryService: ItineraryMngService,
+  constructor(private activatedRouter: ActivatedRoute, private router: Router, private itineraryService: ItineraryMngService,
     private placeService: PlaceMngService,
     private destinationService: DestinationMngService,
     private userService: UserMngService) {
@@ -114,12 +119,26 @@ export class AddEditMngComponent {
   submitDestination() {
 
     if (this.mode == "add") {
-      this.destinationService.createItem(this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/destination"
+      this.destinationService.createItem(this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe((data) => {
+        const image = this.destinationFile.nativeElement.files[0];
+        if (image) {
+          let formData = new FormData();
+          formData.append("imageFile", image);
+          this.destinationService.editImage(data.id, formData).subscribe(_ => this.redirect());
+        } else{
+          window.location.href = "/management/destination"
+        }
       })
     } else if (this.mode == "edit") {
-      this.destinationService.editItem(this.id, this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/destination"
+      this.destinationService.editItem(this.id, this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe((data) => {
+        const image = this.destinationFile.nativeElement.files[0];
+        if (image) {
+          let formData = new FormData();
+          formData.append("imageFile", image);
+          this.destinationService.editImage(data.id, formData).subscribe(_ => this.redirect());
+        } else{
+          window.location.href = "/management/destination"
+        }
       })
     }
 
@@ -157,6 +176,10 @@ export class AddEditMngComponent {
       })
     }
 
+  }
+
+  redirect(){
+    this.router.navigate(['/management/', this.type]);
   }
 
 }

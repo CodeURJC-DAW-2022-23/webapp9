@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Page } from '../models/rest/page.model';
 import { Destination } from '../models/destination.model';
 import { InformationMngService } from './informationMng.service';
+import { Form } from '@angular/forms';
 
 const baseUrl = '/api/management/destinations';
 
@@ -24,8 +25,8 @@ export class DestinationMngService implements InformationMngService {
     return this.httpClient.get<{ destination: Destination }>('/api/destinations/' + id);
   }
 
-  createItem(name: string, description: string, flagCode: string) {
-    return this.httpClient.post(baseUrl, {
+  createItem(name: string, description: string, flagCode: string): Observable<Destination> {
+    return this.httpClient.post<Destination>(baseUrl, {
       name: name,
       description: description,
       flagCode: flagCode,
@@ -37,8 +38,8 @@ export class DestinationMngService implements InformationMngService {
     name: string,
     description: string,
     flagCode: string
-  ) {
-    return this.httpClient.put(baseUrl + '/' + id, {
+  ): Observable<Destination> {
+    return this.httpClient.put<Destination>(baseUrl + '/' + id, {
       name: name,
       description: description,
       flagCode: flagCode,
@@ -49,5 +50,7 @@ export class DestinationMngService implements InformationMngService {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage() { }
+  editImage(id: number, formData: FormData) {
+    return this.httpClient.put(baseUrl + '/' + id + '/image', formData)
+   }
 }
