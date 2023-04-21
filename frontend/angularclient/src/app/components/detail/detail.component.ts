@@ -78,7 +78,7 @@ export class DetailComponent {
         }
       },
       error: (error) => {
-        window.location.href = `/error/${error.status}`;
+        this.router.navigate(['/error/', error.status]);
       }
     });
   }
@@ -117,8 +117,8 @@ export class DetailComponent {
 
   copyItinerary(id: number) {
     if (this.service instanceof ItineraryService) this.service.copy(id).subscribe({
-      next: (response) => window.location.href = `/details/itinerary/${response.id}`,
-      error: (error) => window.location.href = `/error/${error.status}`
+      next: (response) => this.router.navigate(['/details/itinerary/', response.id]),
+      error: (error) => this.router.navigate(['/error/', error.status])
     });
   }
 
@@ -164,13 +164,14 @@ export class DetailComponent {
 
   getPdfUrl(id: number) {
     if (this.service instanceof ItineraryService)
-      window.location.href = this.service.getPdfUrl(id);
+      this.router.navigate([this.service.getPdfUrl(id)]);
   }
 
   addPlace(itinerary: number) {
     this.itineraryService.addPlace(itinerary, this.information.id).subscribe({
-      next: () => window.location.href = `/details/place/${this.information.id}`,
-      error: (error) => window.location.href = `/error/${error.status}`
+      next: () => 
+      this.router.navigate(['/details/place/', this.information.id]),
+      error: (error) => this.router.navigate(['/error/', error.status])
     });
   }
 
@@ -182,8 +183,8 @@ export class DetailComponent {
         description: f.value.description,
         score: f.value.score,
         user: this.user.user.username}).subscribe({
-      next: () => window.location.href = `/details/itinerary/${this.information.id}`,
-      error: (error) => window.location.href = `/error/${error.status}`
+      next: () => this.router.navigate(['/details/itinerary/', this.information.id]),
+      error: (error) => this.router.navigate(['/error/', error.status])
     });
   }
 

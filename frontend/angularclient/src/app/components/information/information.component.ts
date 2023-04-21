@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Information } from 'src/app/models/information.model';
 import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
@@ -24,7 +25,8 @@ export class InformationComponent {
 
   registered: boolean = false;
 
-  constructor(private itineraryService: ItineraryService, 
+  constructor(private router: Router,
+              private itineraryService: ItineraryService, 
               private placeService: PlaceService, 
               private destinationService: DestinationService, 
               private userService: UserService) { }
@@ -63,10 +65,10 @@ export class InformationComponent {
 
     this.itineraryService.removePlace(this.fromItinerary, id).subscribe({
       next: () => {
-        window.location.href = `/details/itinerary/${this.fromItinerary}`
+        this.router.navigate(['/details/itineary/', this.fromItinerary])
       },
       error: (error) => {
-        window.location.href = `/error/${error.status}`
+        this.router.navigate(['/error/', error.status])
       }
     })
   }
