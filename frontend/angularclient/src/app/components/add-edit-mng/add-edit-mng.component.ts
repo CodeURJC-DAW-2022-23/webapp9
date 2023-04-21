@@ -1,11 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DestinationMngService } from '../services/destinationMng.service';
-import { InformationMngService } from '../services/informationMng.service';
-import { ItineraryMngService } from '../services/itineraryMng.service';
-import { PlaceMngService } from '../services/placeMng.service';
-import { UserMngService } from '../services/userMng.service';
-import { Information } from '../models/information.model';
+import { DestinationMngService } from '../../services/destinationMng.service';
+import { InformationMngService } from '../../services/informationMng.service';
+import { ItineraryMngService } from '../../services/itineraryMng.service';
+import { PlaceMngService } from '../../services/placeMng.service';
+import { UserMngService } from '../../services/userMng.service';
+import { Information } from '../../models/information.model';
 
 @Component({
   selector: 'app-add-edit-mng',

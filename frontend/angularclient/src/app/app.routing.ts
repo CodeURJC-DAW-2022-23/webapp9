@@ -4,7 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SearchComponent } from './components/search/search.component';
 import { ManagementComponent } from './components/management/management.component';
-import { AddEditMngComponent } from './add-edit-mng/add-edit-mng.component';
+import { AddEditMngComponent } from './components/add-edit-mng/add-edit-mng.component';
 
 const appRoutes = [
     {path:"", component:HomeComponent},

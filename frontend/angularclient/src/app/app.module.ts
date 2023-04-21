@@ -13,7 +13,7 @@ import { SearchComponent } from './components/search/search.component';
 
 import { routing } from './app.routing';
 import { ManagementComponent } from './components/management/management.component';
-import { AddEditMngComponent } from './add-edit-mng/add-edit-mng.component';
+import { AddEditMngComponent } from './components/add-edit-mng/add-edit-mng.component';
 
 @NgModule({
   declarations: [
