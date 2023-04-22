@@ -4,6 +4,7 @@ import { LogInService } from 'src/app/services/log-in.service';
 import { UserService } from 'src/app/services/user.service';
 import { Itinerary } from 'src/app/models/itinerary.model';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-myitineraries',
@@ -17,14 +18,14 @@ export class MyitinerariesComponent implements OnInit {
 
   @ViewChild('userFile') userFile: any;
 
-  constructor(private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
+  constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
 
   ngOnInit() {
     this.loadMyItineraries();
   }
 
   loadMyItineraries() {
-    if (this.logInService.isLogged()) this.itineraryService.getUserItineraries().subscribe((response) => {
+    this.itineraryService.getUserItineraries().subscribe((response) => {
       response.content.forEach(item => {
         this.items.push(item);
       })
@@ -35,21 +36,34 @@ export class MyitinerariesComponent implements OnInit {
     const name = (<HTMLInputElement>document.getElementById('nameField')).value;
     const description = (<HTMLInputElement>document.getElementById('descriptionField')).value;
     const isPrivate = (<HTMLInputElement>document.getElementById('privacyField')).checked;
-
+  
     const newItinerary: any = {};
     newItinerary.name = name.trim();
     newItinerary.description = description.trim();
     newItinerary.isPrivate = isPrivate.valueOf();
-
-    if (this.logInService.isLogged()) this.id = this.userService.addUserItinerary(JSON.stringify(newItinerary));
-    const img = this.userFile.nativeElement.file[0];
-    if (img) {
-      let formData = new FormData();
-      formData.append("imageFile", img);
-      this.itineraryService.setItineraryImage(this.id, formData).subscribe();
+  
+    if (this.logInService.isLogged()) {
+      this.userService.addUserItinerary(JSON.stringify(newItinerary)).subscribe({
+        next: (response: any) => {
+          this.id = response.id;
+          const img = this.userFile.nativeElement.file[0];
+          if (img) {
+            let formData = new FormData();
+            formData.append("imageFile", img);
+            this.itineraryService.setItineraryImage(this.id, formData).subscribe({
+              next: () => {
+                this.loadMyItineraries();
+                this.router.navigate(["/myItineraries"]);
+              }
+            });
+          } else {
+            this.loadMyItineraries();
+            this.router.navigate(["/myItineraries"]);
+          }
+        }
+      });
     }
-
-    this.loadMyItineraries();
+    window.location.reload()
   }
 
   editItinerary(id: number) {
@@ -69,7 +83,7 @@ export class MyitinerariesComponent implements OnInit {
         }
       }
     });
-    this.loadMyItineraries();
+    window.location.reload();
   }
 
   onEdit() {
@@ -90,6 +104,7 @@ export class MyitinerariesComponent implements OnInit {
       this.itineraryService.setItineraryImage(this.id, formData).subscribe();
     }
 
-    this.loadMyItineraries();
+    this.isEditing = false;
+    window.location.reload();
   }
 }

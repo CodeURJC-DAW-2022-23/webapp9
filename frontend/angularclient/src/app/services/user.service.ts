@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
 import { User } from '../models/user.model';
+import { Itinerary } from '../models/itinerary.model';
 
 
 const baseUrl = '/api/users/me';
@@ -39,22 +40,10 @@ export class UserService {
     });
   }
 
-  addUserItinerary(data: string): number {
+  addUserItinerary(data: string) {
     console.log("updating new itinerary. data looks like this:");
     console.log(JSON.parse(data));
-    let val: number = -1;
-    this.httpClient.post(itiUrl, JSON.parse(data)).subscribe({
-      next: (response: any) => {
-        console.log("response was:");
-        console.log(response);
-        val = response.id;
-      },
-      error: (err) => {
-        console.error("Error when making new itinerary; " + JSON.stringify(err));
-      }
-    })
-
-    return val;
+    return this.httpClient.post(itiUrl, JSON.parse(data));
   }
 
   editUserItinerary(id: number, data: string) {
