@@ -37,8 +37,8 @@ import { NgChartsModule } from 'ng2-charts';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    routing,
-    NgChartsModule
+    NgChartsModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]
