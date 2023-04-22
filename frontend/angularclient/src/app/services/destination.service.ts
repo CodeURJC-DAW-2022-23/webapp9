@@ -27,8 +27,8 @@ export class DestinationService implements InformationService {
     return this.httpClient.get<Destination>(`${baseUrl}/${id}`);
   }
 
-  getDestinations(): Observable<Page> {
-    return this.httpClient.get<Page>(baseUrl);
+  getDestinations(): Observable<Page<Destination>> {
+    return this.httpClient.get<Page<Destination>>(baseUrl);
   }
 
   getChart():Observable<Graphic>{
