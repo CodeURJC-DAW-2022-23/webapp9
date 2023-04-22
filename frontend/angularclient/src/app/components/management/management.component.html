@@ -134,8 +134,12 @@
     </section>
   </ng-template>
 
+  <div class="align-items-center" id="information-spinner" *ngIf="loader">
+    <strong>Loading...</strong>
+    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+  </div>
+
   <button (click)="loadMore()" class="btn btn-primary" id="btn-more-information">
     Load more
   </button>
-  <div *ngIf="loader" class="lds-dual-ring overlay"></div>
 </div>
