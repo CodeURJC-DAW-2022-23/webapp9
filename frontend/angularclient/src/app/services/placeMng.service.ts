@@ -24,8 +24,8 @@ export class PlaceMngService implements InformationMngService {
     return this.httpClient.get<{ place: Place }>('/api/places/' + id);
   }
 
-  createItem(name: string, description: string, destination: string) {
-    return this.httpClient.post(baseUrl, {
+  createItem(name: string, description: string, destination: string): Observable<Place> {
+    return this.httpClient.post<Place>(baseUrl, {
       name: name,
       description: description,
       destination: destination,
@@ -37,8 +37,8 @@ export class PlaceMngService implements InformationMngService {
     name?: string,
     description?: string,
     destination?: string
-  ) {
-    return this.httpClient.put(baseUrl + '/' + id, {
+  ): Observable<Place> {
+    return this.httpClient.put<Place>(baseUrl + '/' + id, {
       name: name,
       description: description,
       destination: destination,
@@ -49,5 +49,7 @@ export class PlaceMngService implements InformationMngService {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage() { }
+  editImage(id: number, formData: FormData) {
+    return this.httpClient.put(baseUrl + '/' + id + '/image', formData)
+   }
 }

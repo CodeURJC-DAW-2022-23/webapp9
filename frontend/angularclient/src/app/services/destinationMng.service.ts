@@ -52,5 +52,5 @@ export class DestinationMngService implements InformationMngService {
 
   editImage(id: number, formData: FormData) {
     return this.httpClient.put(baseUrl + '/' + id + '/image', formData)
-   }
+  }
 }

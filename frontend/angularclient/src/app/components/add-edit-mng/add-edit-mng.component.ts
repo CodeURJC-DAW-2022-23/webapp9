@@ -1,11 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DestinationMngService } from '../../services/destinationMng.service';
-import { InformationMngService } from '../../services/informationMng.service';
 import { ItineraryMngService } from '../../services/itineraryMng.service';
 import { PlaceMngService } from '../../services/placeMng.service';
 import { UserMngService } from '../../services/userMng.service';
-import { Information } from '../../models/information.model';
 
 @Component({
   selector: 'app-add-edit-mng',
@@ -119,15 +117,15 @@ export class AddEditMngComponent {
   submitDestination() {
 
     if (this.mode == "add") {
-      this.destinationService.createItem(this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe((data) => {
-        _: () => {
+      this.destinationService.createItem(this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe({
+        next: (data) => {
           const image = this.destinationFile.nativeElement.files[0];
           if (image) {
             let formData = new FormData();
             formData.append("imageFile", image);
             this.destinationService.editImage(data.id, formData).subscribe({
-              next: _ => this.redirect(),
-              error: (error: any) => {
+              next: () => this.redirect(),
+              error: (error) => {
                 if (error.status == 200) {
                   this.redirect()
                 } else {
@@ -136,20 +134,33 @@ export class AddEditMngComponent {
               },
             })
           }
-        }
-        error: (error: any) => {
+        },
+        error: (error) => {
           this.router.navigate(['/error/', error.status])
         }
       })
+
     } else if (this.mode == "edit") {
-      this.destinationService.editItem(this.id, this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe((data) => {
-        const image = this.destinationFile.nativeElement.files[0];
-        if (image) {
-          let formData = new FormData();
-          formData.append("imageFile", image);
-          this.destinationService.editImage(data.id, formData).subscribe(_ => this.redirect());
-        } else {
-          window.location.href = "/management/destination"
+      this.destinationService.editItem(this.id, this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe({
+        next: (data) => {
+          const image = this.destinationFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.destinationService.editImage(data.id, formData).subscribe({
+              next: () => this.redirect(),
+              error: (error) => {
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
+                  this.router.navigate(['/error/', error.status])
+                }
+              },
+            })
+          }
+        },
+        error: (error) => {
+          this.router.navigate(['/error/', error.status])
         }
       })
     }
@@ -157,34 +168,148 @@ export class AddEditMngComponent {
   }
   submitItinerary() {
     if (this.mode == "add") {
-      this.itineraryService.createItem(this.itemNameInputIt.nativeElement.value, this.itemDescriptionInputIt.nativeElement.value, this.itemUserInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/itinerary"
+      this.itineraryService.createItem(this.itemNameInputIt.nativeElement.value, this.itemDescriptionInputIt.nativeElement.value, this.itemUserInput.nativeElement.value).subscribe({
+        next: (data) => {
+          const image = this.itineraryFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.itineraryService.editImage(data.id, formData).subscribe({
+              next: () => this.redirect(),
+              error: (error) => {
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
+                  this.router.navigate(['/error/', error.status])
+                }
+              },
+            })
+          }
+        },
+        error: (error) => {
+          this.router.navigate(['/error/', error.status])
+        }
       })
     } else if (this.mode == "edit") {
-      this.itineraryService.editItem(this.id, this.itemNameInputIt.nativeElement.value, this.itemDescriptionInputIt.nativeElement.value, this.itemUserInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/itinerary"
+      this.itineraryService.editItem(this.id, this.itemNameInputIt.nativeElement.value, this.itemDescriptionInputIt.nativeElement.value, this.itemUserInput.nativeElement.value).subscribe({
+        next: (data) => {
+          const image = this.itineraryFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.itineraryService.editImage(data.id, formData).subscribe({
+              next: () => this.redirect(),
+              error: (error) => {
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
+                  this.router.navigate(['/error/', error.status])
+                }
+              },
+            })
+          }
+        },
+        error: (error) => {
+          this.router.navigate(['/error/', error.status])
+        }
       })
     }
   }
   submitPlace() {
     if (this.mode == "add") {
-      this.placeService.createItem(this.itemNameInputPl.nativeElement.value, this.itemDescriptionInputPl.nativeElement.value, this.itemDestinationInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/place"
+      this.placeService.createItem(this.itemNameInputPl.nativeElement.value, this.itemDescriptionInputPl.nativeElement.value, this.itemDestinationInput.nativeElement.value).subscribe({
+        next: (data) => {
+          const image = this.placeFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.placeService.editImage(data.id, formData).subscribe({
+              next: () => this.redirect(),
+              error: (error) => {
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
+                  this.router.navigate(['/error/', error.status])
+                }
+              },
+            })
+          }
+        },
+        error: (error) => {
+          this.router.navigate(['/error/', error.status])
+        }
       })
     } else if (this.mode == "edit") {
-      this.placeService.editItem(this.id, this.itemNameInputPl.nativeElement.value, this.itemDescriptionInputPl.nativeElement.value, this.itemDestinationInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/place"
+      this.placeService.editItem(this.id, this.itemNameInputPl.nativeElement.value, this.itemDescriptionInputPl.nativeElement.value, this.itemDestinationInput.nativeElement.value).subscribe({
+        next: (data) => {
+          const image = this.placeFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.placeService.editImage(data.id, formData).subscribe({
+              next: () => this.redirect(),
+              error: (error) => {
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
+                  this.router.navigate(['/error/', error.status])
+                }
+              },
+            })
+          }
+        },
+        error: (error) => {
+          this.router.navigate(['/error/', error.status])
+        }
       })
     }
   }
   submitUser() {
     if (this.mode == "add") {
-      this.userService.createUser(this.usernameInput.nativeElement.value, this.firstNameInput.nativeElement.value, this.lastNameInput.nativeElement.value, this.userEmailInput.nativeElement.value, this.passwordInput.nativeElement.value, this.nationalityInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/user"
+      this.userService.createUser(this.usernameInput.nativeElement.value, this.firstNameInput.nativeElement.value, this.lastNameInput.nativeElement.value, this.userEmailInput.nativeElement.value, this.passwordInput.nativeElement.value, this.nationalityInput.nativeElement.value).subscribe({
+        next: (data) => {
+          const image = this.userFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.userService.editImage(data.id, formData).subscribe({
+              next: () => this.redirect(),
+              error: (error) => {
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
+                  this.router.navigate(['/error/', error.status])
+                }
+              },
+            })
+          }
+        },
+        error: (error) => {
+          this.router.navigate(['/error/', error.status])
+        }
       })
     } else if (this.mode == "edit") {
-      this.userService.editUser(this.id, this.usernameInput.nativeElement.value, this.firstNameInput.nativeElement.value, this.lastNameInput.nativeElement.value, this.userEmailInput.nativeElement.value, this.nationalityInput.nativeElement.value).subscribe(() => {
-        window.location.href = "/management/user"
+      this.userService.editUser(this.id, this.usernameInput.nativeElement.value, this.firstNameInput.nativeElement.value, this.lastNameInput.nativeElement.value, this.userEmailInput.nativeElement.value, this.nationalityInput.nativeElement.value).subscribe({
+        next: (data) => {
+          const image = this.itineraryFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.itineraryService.editImage(data.id, formData).subscribe({
+              next: () => this.redirect(),
+              error: (error) => {
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
+                  this.router.navigate(['/error/', error.status])
+                }
+              },
+            })
+          }
+        },
+        error: (error) => {
+          this.router.navigate(['/error/', error.status])
+        }
       })
     }
 

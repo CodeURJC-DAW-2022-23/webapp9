@@ -29,8 +29,8 @@ export class ItineraryMngService implements InformationMngService {
     name: string,
     description: string,
     username: string
-  ) {
-    return this.httpClient.post(baseUrl, {
+  ): Observable<Itinerary> {
+    return this.httpClient.post<Itinerary>(baseUrl, {
       public: true,
       name: name,
       description: description,
@@ -43,8 +43,8 @@ export class ItineraryMngService implements InformationMngService {
     name: string,
     description: string,
     username: string
-  ) {
-    return this.httpClient.put(baseUrl + '/' + id, {
+  ): Observable<Itinerary> {
+    return this.httpClient.put<Itinerary>(baseUrl + '/' + id, {
       public: true,
       name: name,
       description: description,
@@ -56,5 +56,7 @@ export class ItineraryMngService implements InformationMngService {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage() { }
+  editImage(id: number, formData: FormData) {
+    return this.httpClient.put(baseUrl + '/' + id + '/image', formData)
+   }
 }

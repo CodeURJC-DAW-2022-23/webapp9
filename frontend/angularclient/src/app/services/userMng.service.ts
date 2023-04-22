@@ -30,8 +30,8 @@ export class UserMngService {
     email: string,
     password: string,
     nationality: string
-  ) {
-    return this.httpClient.post(baseUrl, {
+  ): Observable<User> {
+    return this.httpClient.post<User>(baseUrl, {
       username: username,
       firstName: firstName,
       lastName: lastName,
@@ -48,8 +48,8 @@ export class UserMngService {
     lastName: string,
     email: string,
     nationality: string
-  ) {
-    return this.httpClient.put(baseUrl + '/' + id, {
+  ): Observable<User> {
+    return this.httpClient.put<User>(baseUrl + '/' + id, {
       username: username,
       firstName: firstName,
       lastName: lastName,
@@ -62,5 +62,7 @@ export class UserMngService {
     return this.httpClient.delete(baseUrl + '/' + id);
   }
 
-  editImage() { }
+  editImage(id: number, formData: FormData) {
+    return this.httpClient.put(baseUrl + '/' + id + '/image', formData)
+  }
 }
