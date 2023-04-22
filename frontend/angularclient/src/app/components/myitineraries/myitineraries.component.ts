@@ -17,9 +17,13 @@ export class MyitinerariesComponent implements OnInit {
 
   @ViewChild('userFile') userFile: any;
 
-  constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
+  constructor(private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
 
   ngOnInit() {
+    this.loadMyItineraries();
+  }
+
+  loadMyItineraries() {
     if (this.logInService.isLogged()) this.itineraryService.getUserItineraries().subscribe((response) => {
       response.content.forEach(item => {
         this.items.push(item);
@@ -45,7 +49,7 @@ export class MyitinerariesComponent implements OnInit {
       this.itineraryService.setItineraryImage(this.id, formData).subscribe();
     }
 
-    this.router.navigate(['/myItineraries']);
+    this.loadMyItineraries();
   }
 
   editItinerary(id: number) {
@@ -65,7 +69,7 @@ export class MyitinerariesComponent implements OnInit {
         }
       }
     });
-    this.router.navigate(['/myItineraries']);
+    this.loadMyItineraries();
   }
 
   onEdit() {
@@ -86,6 +90,6 @@ export class MyitinerariesComponent implements OnInit {
       this.itineraryService.setItineraryImage(this.id, formData).subscribe();
     }
 
-    this.router.navigate(['/myItineraries']);
+    this.loadMyItineraries();
   }
 }
