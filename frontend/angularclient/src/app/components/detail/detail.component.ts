@@ -149,7 +149,7 @@ export class DetailComponent {
     this.itineraryService.loadMoreReviews(this.information.id, this.reviewsPage).subscribe({
       next: (response) => {
         console.log(response);
-        
+
         response.content.forEach((review: Review) => {
           this.information.reviews.push(review);
         });
@@ -169,8 +169,8 @@ export class DetailComponent {
 
   addPlace(itinerary: number) {
     this.itineraryService.addPlace(itinerary, this.information.id).subscribe({
-      next: () => 
-      this.router.navigate(['/details/place/', this.information.id]),
+      next: () =>
+      this.router.navigate(['/details/itinerary/', itinerary]),
       error: (error) => this.router.navigate(['/error/', error.status])
     });
   }
@@ -178,7 +178,7 @@ export class DetailComponent {
   addReview(f: NgForm, id: number) {
     if (parseInt(f.value.score) < 0 || parseInt(f.value.score) > 5) return;
 
-    this.itineraryService.addReview(id, { 
+    this.itineraryService.addReview(id, {
         title: f.value.title,
         description: f.value.description,
         score: f.value.score,
