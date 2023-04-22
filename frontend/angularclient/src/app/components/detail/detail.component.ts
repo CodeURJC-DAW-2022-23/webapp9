@@ -42,8 +42,10 @@ export class DetailComponent {
     private itineraryService: ItineraryService,
     private placeService: PlaceService,
     private destinationService: DestinationService,
-    private userService: UserService) {
-    activatedRouter.url.subscribe((data) => {
+    private userService: UserService) { }
+
+  ngOnInit(): void {
+    this.activatedRouter.url.subscribe((data) => {
       if (data[1].path === "itinerary") {
         this.service = this.itineraryService;
         this.ownedItinerary = true;
@@ -51,9 +53,7 @@ export class DetailComponent {
       else if (data[1].path === "place") this.service = this.placeService;
       else if (data[1].path === "destination") this.service = this.destinationService;
     });
-  }
 
-  ngOnInit(): void {
     const id = this.activatedRouter.snapshot.params['id'];
     this.update(id);
 
