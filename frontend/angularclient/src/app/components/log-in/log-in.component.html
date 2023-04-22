@@ -1,0 +1,39 @@
+<div class="h-100 d-flex justify-content-center align-items-center">
+  <div class="col-md-6">
+    <div class="card-body p-md-5 text-black">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Log In</h5>
+        </div>
+        <form action="/login" method="post">
+          <div class="modal-body">
+            <div class="form-outline mb-4" style="padding-left: 40px;padding-right: 40px;">
+              <label class="form-label required">UserName</label>
+              <input type="email"
+              [(ngModel)]="username"
+              name="email"
+              placeholder="Email"
+              required="required" class="form-control">
+              <input type="hidden" name="_csrf"/>
+            </div>
+            <div class="form-outline mb-4" style="padding-left: 40px;padding-right: 40px;">
+              <label class="form-label required">Password</label>
+              <input type="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Password"
+              required="required" class="form-control">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="logIn()">LogIn</button>
+          </div>
+        </form>
+        <form action="/sign" method="get">
+          <input type="hidden" name="_csrf"/>
+          <button type="submit" class="btn btn-danger" style="margin-left: 45px; margin-top: 10px; margin-bottom: 10px;" routerLink="/signUp">Not a member yet? Sign Up!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
