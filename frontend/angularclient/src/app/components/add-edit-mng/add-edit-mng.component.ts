@@ -120,14 +120,29 @@ export class AddEditMngComponent {
 
     if (this.mode == "add") {
       this.destinationService.createItem(this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe((data) => {
-        const image = this.destinationFile.nativeElement.files[0];
-        if (image) {
-          let formData = new FormData();
-          formData.append("imageFile", image);
-          this.destinationService.editImage(data.id, formData).subscribe(_ => this.redirect());
-        } else{
-          window.location.href = "/management/destination"
+        _: () => {
+          const image = this.destinationFile.nativeElement.files[0];
+          if (image) {
+            let formData = new FormData();
+            formData.append("imageFile", image);
+            this.destinationService.editImage(data.id, formData).subscribe({
+              next: _ => this.redirect(),
+              error: (error: any) => {
+                console.log(error);
+                  this.router.navigate(['/error/', error.status])
+              },
+              complete: () => {
+                this.redirect();
+              },
+            })
+          } else {
+            window.location.href = "/management/destination"
+          }
         }
+        error: (error: any) => {
+          console.log(error);
+                  this.router.navigate(['/error/', error.status])
+              }
       })
     } else if (this.mode == "edit") {
       this.destinationService.editItem(this.id, this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe((data) => {
@@ -136,7 +151,7 @@ export class AddEditMngComponent {
           let formData = new FormData();
           formData.append("imageFile", image);
           this.destinationService.editImage(data.id, formData).subscribe(_ => this.redirect());
-        } else{
+        } else {
           window.location.href = "/management/destination"
         }
       })
@@ -178,7 +193,7 @@ export class AddEditMngComponent {
 
   }
 
-  redirect(){
+  redirect() {
     this.router.navigate(['/management/', this.type]);
   }
 
