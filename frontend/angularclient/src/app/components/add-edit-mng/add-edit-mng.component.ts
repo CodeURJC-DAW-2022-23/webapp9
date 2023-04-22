@@ -4,6 +4,8 @@ import { DestinationMngService } from '../../services/destinationMng.service';
 import { ItineraryMngService } from '../../services/itineraryMng.service';
 import { PlaceMngService } from '../../services/placeMng.service';
 import { UserMngService } from '../../services/userMng.service';
+import { UserService } from 'src/app/services/user.service';
+import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
 
 @Component({
   selector: 'app-add-edit-mng',
@@ -25,6 +27,8 @@ export class AddEditMngComponent {
   lastName: string = "";
   email: string = "";
   nationality: string = "";
+  currentUser!: UserDetailsDTO;
+  admin: boolean = false;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('itemNameInput') itemNameInput!: ElementRef;
   @ViewChild('itemDescriptionInput') itemDescriptionInput!: ElementRef;
@@ -48,7 +52,8 @@ export class AddEditMngComponent {
   constructor(private activatedRouter: ActivatedRoute, private router: Router, private itineraryService: ItineraryMngService,
     private placeService: PlaceMngService,
     private destinationService: DestinationMngService,
-    private userService: UserMngService) {
+    private userService: UserMngService,
+    private uService: UserService) {
     activatedRouter.url.subscribe((data) => {
       this.type = data[1].path;
       this.mode = data[2].path;
@@ -57,6 +62,8 @@ export class AddEditMngComponent {
   }
 
   ngOnInit(): void {
+    this.checkUser();
+
     if (this.mode == "edit") {
       switch (this.type) {
         case "destination":
@@ -75,6 +82,19 @@ export class AddEditMngComponent {
           break;
       }
     }
+  }
+
+  checkUser(){
+    this.uService.getMe().subscribe({
+      next: (data) =>  {
+        this.currentUser = data;
+        this.admin = this.currentUser.user.roles.indexOf('ADMIN') !== -1;
+        if (this.admin == false){
+          window.location.href = "/error/403"
+        }
+      },
+      error: () => window.location.href = "/logIn"
+    })
   }
 
   editDestinationInit() {
