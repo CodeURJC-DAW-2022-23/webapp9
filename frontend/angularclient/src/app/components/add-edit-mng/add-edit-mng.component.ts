@@ -167,7 +167,7 @@ export class AddEditMngComponent {
           if (image) {
             let formData = new FormData();
             formData.append("imageFile", image);
-            this.destinationService.editImage(data.id, formData).subscribe({
+            this.destinationService.editImage(this.id, formData).subscribe({
               next: () => this.redirect(),
               error: (error) => {
                 if (error.status == 200) {
@@ -217,7 +217,7 @@ export class AddEditMngComponent {
           if (image) {
             let formData = new FormData();
             formData.append("imageFile", image);
-            this.itineraryService.editImage(data.id, formData).subscribe({
+            this.itineraryService.editImage(this.id, formData).subscribe({
               next: () => this.redirect(),
               error: (error) => {
                 if (error.status == 200) {
@@ -266,7 +266,7 @@ export class AddEditMngComponent {
           if (image) {
             let formData = new FormData();
             formData.append("imageFile", image);
-            this.placeService.editImage(data.id, formData).subscribe({
+            this.placeService.editImage(this.id, formData).subscribe({
               next: () => this.redirect(),
               error: (error) => {
                 if (error.status == 200) {
@@ -311,11 +311,11 @@ export class AddEditMngComponent {
     } else if (this.mode == "edit") {
       this.userService.editUser(this.id, this.usernameInput.nativeElement.value, this.firstNameInput.nativeElement.value, this.lastNameInput.nativeElement.value, this.userEmailInput.nativeElement.value, this.nationalityInput.nativeElement.value).subscribe({
         next: (data) => {
-          const image = this.itineraryFile.nativeElement.files[0];
+          const image = this.userFile.nativeElement.files[0];
           if (image) {
             let formData = new FormData();
             formData.append("imageFile", image);
-            this.itineraryService.editImage(data.id, formData).subscribe({
+            this.userService.editImage(this.id, formData).subscribe({
               next: () => this.redirect(),
               error: (error) => {
                 if (error.status == 200) {

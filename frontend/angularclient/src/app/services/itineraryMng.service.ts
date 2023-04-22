@@ -43,8 +43,8 @@ export class ItineraryMngService implements InformationMngService {
     name: string,
     description: string,
     username: string
-  ): Observable<Itinerary> {
-    return this.httpClient.put<Itinerary>(baseUrl + '/' + id, {
+  ): Observable<any> {
+    return this.httpClient.put<any>(baseUrl + '/' + id, {
       public: true,
       name: name,
       description: description,
