@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 
 
 const baseUrl = '/api/users/me';
+const itiUrl = '/api/itineraries';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,11 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  setUserImage(image: File) {
-    const formData = new FormData();
-    formData.append('imageFile', image, image.name);
-    
+  setUserImage(image: FormData) {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
   
-    return this.httpClient.post(baseUrl + '/image', formData, { headers });
+    return this.httpClient.post(baseUrl + '/image', image, { headers });
   }
 
   updateUserData(data: string) {
@@ -39,5 +37,37 @@ export class UserService {
         }
       }
     });
+  }
+
+  addUserItinerary(data: string): number {
+    console.log("updating new itinerary. data looks like this:");
+    console.log(JSON.parse(data));
+    let val: number = -1;
+    this.httpClient.post(itiUrl, JSON.parse(data)).subscribe({
+      next: (response: any) => {
+        console.log("response was:");
+        console.log(response);
+        val = response.id;
+      },
+      error: (err) => {
+        console.error("Error when making new itinerary; " + JSON.stringify(err));
+      }
+    })
+
+    return val;
+  }
+
+  editUserItinerary(id: number, data: string) {
+    console.log("updating new itinerary. data looks like this:");
+    console.log(JSON.parse(data));
+    this.httpClient.put(itiUrl + "/" + id, JSON.parse(data)).subscribe({
+      next: (response: any) => {
+        console.log("response was:");
+        console.log(response);
+      },
+      error: (err) => {
+        console.error("Error when making new itinerary; " + JSON.stringify(err));
+      }
+    })
   }
 }

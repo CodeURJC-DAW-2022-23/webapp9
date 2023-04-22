@@ -5,6 +5,6 @@ export interface Itinerary {
         flagCode:number,
         views:number,
         image:boolean
-        isPublic:boolean
-    
+        isPublic:boolean,
+        typeLowercase:string
 }

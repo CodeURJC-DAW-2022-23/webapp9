@@ -138,20 +138,13 @@ public class ItineraryRestController {
         if (!optionalItinerary.isPresent()) return new ResponseEntity(HttpStatus.NOT_FOUND);
         if (principalUser == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
-        Itinerary itinerary = optionalItinerary.get();
-        PdfGenerator generator = new PdfGenerator();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        generator.generate(itinerary, response);
-
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=itinerary-" + id + ".pdf");
-        response.setContentLength(baos.size());
+        Optional<Itinerary> itinerary = itineraryService.findById(id);
+        PdfGenerator generator = new PdfGenerator();
+        generator.generate(itinerary.get(), response);
 
-        ServletOutputStream outputStream = response.getOutputStream();
-        baos.writeTo(outputStream);
-        outputStream.flush();
-
-        return ResponseEntity.ok().body(baos.toByteArray());
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Creates a new itinerary if itiDTO is present. If it is not present and there is a copyFrom id, copies the itinerary with id = copyFrom")
