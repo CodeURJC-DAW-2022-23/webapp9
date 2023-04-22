@@ -29,7 +29,12 @@ To view this help page, call create_image.sh script as follows:
     exit 0
 
 else
-    docker build -f Dockerfile -t $1 ../TripScanner
+    cd ../frontend/angularclients
+    npm install
+    npm run buiñd --prod --basae-href="/new/"
+    cp -r dist/TripScanner/* ../../backend/src/main/resources/public/new
+    cd ../../docker
+    docker build -f Dockerfile -t $1 ../backend
     docker push $1
     exit 0
 fi
