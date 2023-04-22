@@ -164,7 +164,7 @@ export class DetailComponent {
 
   getPdfUrl(id: number) {
     if (this.service instanceof ItineraryService)
-      this.router.navigate([this.service.getPdfUrl(id)]);
+      window.location.href = this.service.getPdfUrl(id);
   }
 
   addPlace(itinerary: number) {
