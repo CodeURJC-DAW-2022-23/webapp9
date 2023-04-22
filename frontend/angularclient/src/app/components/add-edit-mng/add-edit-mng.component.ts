@@ -128,21 +128,18 @@ export class AddEditMngComponent {
             this.destinationService.editImage(data.id, formData).subscribe({
               next: _ => this.redirect(),
               error: (error: any) => {
-                console.log(error);
+                if (error.status == 200) {
+                  this.redirect()
+                } else {
                   this.router.navigate(['/error/', error.status])
-              },
-              complete: () => {
-                this.redirect();
+                }
               },
             })
-          } else {
-            window.location.href = "/management/destination"
           }
         }
         error: (error: any) => {
-          console.log(error);
-                  this.router.navigate(['/error/', error.status])
-              }
+          this.router.navigate(['/error/', error.status])
+        }
       })
     } else if (this.mode == "edit") {
       this.destinationService.editItem(this.id, this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe((data) => {
