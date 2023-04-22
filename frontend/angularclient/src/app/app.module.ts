@@ -17,6 +17,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { InformationComponent } from './components/information/information.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ReviewComponent } from './review/review.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ReviewComponent } from './review/review.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    routing
+    routing,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

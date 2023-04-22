@@ -1,4 +1,4 @@
-<body class="bg-light">
+
 
     <div class="navbar sticky-top navbar-light bg-white bg-opacity-75">
         <div class="container-fluid justify-content-between">
@@ -22,13 +22,13 @@
                 </form>
 
                 <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && loginService.isAdmin()">
-                    <button type="button" class="btn btn-outline-secondary" routerLink="">
+                    <a type="button" class="btn btn-outline-secondary" href="/management/itinerary">
                         Management
-                    </button>
+                    </a>
                 </form>
                 <form class="d-flex float-end m-3">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button type="button" class="btn btn-outline-secondary" routerLink="/search">Search</button>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" #nameInput>
+                    <a type="button" class="btn btn-outline-secondary" href="/search?name={{name}}&type=itinerary&sort=id&order=DESC&page=0">Search</a>
                 </form>
 
             </div>
