@@ -39,20 +39,22 @@ export class SignUpComponent {
   }
   
   signUp(){
+    this.uploadImage; 
     this.service.signUp(this.username, this.firstName, this.lastName, this.email, this.nationality, this.password).subscribe(
       data => {
         console.log(data);
-        this.uploadImage;
         this.router.navigate(['/logIn']);
-      });     
+      });      
   }
 
 
   uploadImage(): void {
     const image = this.file.nativeElement.files[0];
+    console.log(image)
     if (image) {
       let formData = new FormData();
       formData.append("imageFile", image);
+      console.log(formData);
       this.service.downloadImage(formData)
     } 
   }
