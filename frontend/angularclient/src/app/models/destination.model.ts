@@ -4,6 +4,6 @@ export interface Destination {
     description:string;
     flag:string,
     views:number,
-    image:boolean
-
+    image:boolean,
+    typeLowercase:string
 }

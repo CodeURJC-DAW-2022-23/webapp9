@@ -4,6 +4,6 @@ export interface Place {
         description:string;
         flagCode:number,
         views:number,
-        image:boolean
-    
+        image:boolean,
+        typeLowercase:string
     }
