@@ -65,7 +65,7 @@ export class InformationComponent {
 
     this.itineraryService.removePlace(this.fromItinerary, id).subscribe({
       next: () => {
-        this.router.navigate(['/details/itineary/', this.fromItinerary])
+        window.location.href = `/details/itinerary/${this.fromItinerary}`;
       },
       error: (error) => {
         this.router.navigate(['/error/', error.status])
