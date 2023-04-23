@@ -14,6 +14,9 @@ import { Observable } from 'rxjs';
 export class MyitinerariesComponent implements OnInit {
   items: Itinerary[] = [];
   id: number = -1;
+  name: String = "";
+  description: String = "";
+  isPublic: boolean | undefined = undefined;
   isEditing: boolean = false;
 
   @ViewChild('userFile') userFile: any;
@@ -21,7 +24,9 @@ export class MyitinerariesComponent implements OnInit {
   constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
 
   ngOnInit() {
-    this.loadMyItineraries();
+    this.logInService.reqIsLogged();
+    if (!this.logInService.isLogged()) window.location.href = "/error/403";
+    else this.loadMyItineraries();
   }
 
   loadMyItineraries() {
@@ -52,23 +57,26 @@ export class MyitinerariesComponent implements OnInit {
             formData.append("imageFile", img);
             this.itineraryService.setItineraryImage(this.id, formData).subscribe({
               next: () => {
-                this.loadMyItineraries();
-                this.router.navigate(["/myItineraries"]);
+                window.location.href = "/myItineraries";
+              }, error: (err) => {
+                if (err.status == 400) window.location.href = "/error/400";
               }
             });
           } else {
-            this.loadMyItineraries();
-            this.router.navigate(["/myItineraries"]);
+            window.location.href = "/myItineraries";
           }
         }
       });
     }
-    window.location.reload()
+    window.location.href = "/myItineraries";
   }
 
-  editItinerary(id: number) {
+  editItinerary(id: number, name: String, description: String, isPublic: boolean) {
     this.isEditing = true;
     this.id = id;
+    this.name = name;
+    this.description = description;
+    this.isPublic = isPublic;
   }
 
   deleteItinerary(id: number) {
@@ -80,10 +88,11 @@ export class MyitinerariesComponent implements OnInit {
       error: (err) => {
         if (err.status != 404) {
           console.error('Error when asking if logged: ' + JSON.stringify(err));
+          window.location.href = "/error/" + err.status;
         }
       }
     });
-    window.location.reload();
+    window.location.href = "/myItineraries";
   }
 
   onEdit() {
@@ -105,6 +114,6 @@ export class MyitinerariesComponent implements OnInit {
     }
 
     this.isEditing = false;
-    window.location.reload();
+    window.location.href = "/myItineraries";
   }
 }
