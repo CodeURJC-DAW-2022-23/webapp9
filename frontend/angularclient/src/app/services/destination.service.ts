@@ -6,9 +6,6 @@ import { Page } from '../models/rest/page.model';
 import { Destination } from '../models/destination.model';
 import { Graphic } from '../models/graphic.modul';
 
-
-
-
 import { InformationService } from './information.service';
 
 const baseUrl = '/api/destinations';
@@ -30,16 +27,19 @@ export class DestinationService implements InformationService {
 
   getDestinations(): Observable<Page<Destination>> {
     return this.httpClient.get<Page<Destination>>(baseUrl);
-
   }
 
   getChart():Observable<Graphic>{
     return this.httpClient.get<Graphic>('/api/graphs/index');
   }
 
-  getImage(destination: Destination): string {
+	getImage(destination: Destination): string {
 		return destination.image ? `${baseUrl}/${destination.id}/image` : '/assets/images/no_image.png';
 	}
+  
+  loadMoreInformation(id: number, page: number = 0): Observable<Destination> {
+    return this.httpClient.get<Destination>(`${baseUrl}/${id}?placesPage=${page}`);
+  }
 
 
 }
