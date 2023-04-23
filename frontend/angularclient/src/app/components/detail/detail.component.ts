@@ -65,11 +65,13 @@ export class DetailComponent {
       next: (data) => {
         if ("destination" in data) {
           this.information = data["destination"];
-          this.information.related = data["places"].content;
+          this.information.related = [];
+          this.loadMoreInformation();
         }
         else if ("place" in data) {
           this.information = data["place"];
-          this.information.related = data["itineraries"].content;
+          this.information.related = [];
+          this.loadMoreInformation();
         }
         else if ("itinerary" in data) {
           this.information = data["itinerary"];
