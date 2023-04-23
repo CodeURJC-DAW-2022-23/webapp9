@@ -15,6 +15,9 @@ import { routing } from './app.routing';
 import { ManagementComponent } from './components/management/management.component';
 import { AddEditMngComponent } from './components/add-edit-mng/add-edit-mng.component';
 import { ErrorComponent } from './components/error/error.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -26,13 +29,15 @@ import { ErrorComponent } from './components/error/error.component';
     ErrorComponent,
     ManagementComponent,
     AddEditMngComponent
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    routing
+    routing,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
