@@ -24,4 +24,8 @@ export class UserService {
     return this.httpClient.get<UserDetailsDTO>(`${BASE_URL}/me?pageReviews=${page}`, { withCredentials: true });
   }
 
+	getImage(userId: number): string {
+		return `${BASE_URL}/${userId}/image`;
+	}
+
 }
