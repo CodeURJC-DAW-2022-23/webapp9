@@ -22,13 +22,30 @@ export class MyitinerariesComponent implements OnInit {
   user: User | undefined;
 
   @ViewChild('userFile') userFile: any;
+  imgError: boolean = false;
 
   constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
 
   ngOnInit() {
-    this.user = this.logInService.currentUser();
-    if (this.user == undefined) window.location.href = "/error/403";
-    else this.loadMyItineraries();
+    this.userService.getMe().subscribe({
+      next: (response: any) => {
+        this.loadMyItineraries();
+      },
+      error: (err) => {
+        window.location.href = "/error/" + err.status;
+      }
+    });
+  }
+
+  afterViewInit() {
+    this.userService.getMe().subscribe({
+      next: (response: any) => {
+        this.loadMyItineraries();
+      },
+      error: (err) => {
+        window.location.href = "/error/" + err.status;
+      }
+    });
   }
 
   loadMyItineraries() {
@@ -52,6 +69,7 @@ export class MyitinerariesComponent implements OnInit {
     if (this.logInService.isLogged()) {
       this.userService.addUserItinerary(JSON.stringify(newItinerary)).subscribe({
         next: (response: any) => {
+          window.location.reload();
           this.id = response.id;
           const img = this.userFile.nativeElement.file[0];
           if (img) {
@@ -59,18 +77,16 @@ export class MyitinerariesComponent implements OnInit {
             formData.append("imageFile", img);
             this.itineraryService.setItineraryImage(this.id, formData).subscribe({
               next: () => {
-                window.location.href = "/myItineraries";
+                window.location.reload();
               }, error: (err) => {
                 if (err.status == 400) window.location.href = "/error/400";
+                window.location.reload();
               }
             });
-          } else {
-            window.location.href = "/myItineraries";
           }
         }
       });
     }
-    window.location.href = "/myItineraries";
   }
 
   editItinerary(id: number, name: String, description: String, isPublic: boolean) {
@@ -86,15 +102,15 @@ export class MyitinerariesComponent implements OnInit {
       next: (response: any) => {
         console.log("response was:");
         console.log(response);
+        window.location.reload();
       },
       error: (err) => {
         if (err.status != 404) {
-          console.error('Error when asking if logged: ' + JSON.stringify(err));
+          console.error('Error: ' + JSON.stringify(err));
           window.location.href = "/error/" + err.status;
         }
       }
     });
-    window.location.href = "/myItineraries";
   }
 
   onEdit() {
@@ -112,10 +128,12 @@ export class MyitinerariesComponent implements OnInit {
     if (img) {
       let formData = new FormData();
       formData.append("imageFile", img);
-      this.itineraryService.setItineraryImage(this.id, formData).subscribe();
+      this.itineraryService.setItineraryImage(this.id, formData).subscribe({
+        next: (response: any) => {
+          this.isEditing = false;
+          window.location.reload();
+        }
+      });
     }
-
-    this.isEditing = false;
-    window.location.href = "/myItineraries";
   }
 }
