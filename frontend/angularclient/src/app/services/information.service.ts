@@ -13,4 +13,6 @@ export interface InformationService {
 
     search(name: string, type: string, sort: string, order: string, page: number): Observable<Page<any>>;
 
+    loadMoreInformation(id: number, page: number): Observable<any>;
+
 }

@@ -38,5 +38,9 @@ export class PlaceService implements InformationService {
 	getImage(place: Place): string {
 		return place.image ? `${baseUrl}/${place.id}/image` : '/assets/images/no_image.png';
 	}
+  
+  loadMoreInformation(id: number, page: number = 0): Observable<Place> {
+    return this.httpClient.get<Place>(`${baseUrl}/${id}?page=${page}`);
+  }
 
 }
