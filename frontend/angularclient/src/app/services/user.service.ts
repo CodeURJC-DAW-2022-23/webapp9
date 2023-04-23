@@ -28,17 +28,7 @@ export class UserService {
     console.log("updating user data");
     console.log("data looks like this:");
     console.log(JSON.parse(data));
-    this.httpClient.put(baseUrl, JSON.parse(data)).subscribe({
-      next: (response: any) => {
-        console.log("response was:");
-        console.log(response);
-      },
-      error: (err) => {
-        if (err.status != 404) {
-          console.error('Error when asking if logged: ' + JSON.stringify(err));
-        }
-      }
-    });
+    return this.httpClient.put(baseUrl, JSON.parse(data));
   }
 
   addUserItinerary(data: string) {
