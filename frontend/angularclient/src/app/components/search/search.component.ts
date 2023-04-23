@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Information } from 'src/app/models/information.model';
+import { Page } from 'src/app/models/rest/page.model';
 import { DestinationService } from 'src/app/services/destination.service';
 import { InformationService } from 'src/app/services/information.service';
 import { ItineraryService } from 'src/app/services/itinerary.service';
@@ -25,8 +27,8 @@ export class SearchComponent {
   constructor(private activatedRoute: ActivatedRoute,
     private destinationService: DestinationService,
     private itineraryService: ItineraryService,
-    private placeService: PlaceService) {
-  }
+    private placeService: PlaceService,
+    private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
@@ -42,12 +44,31 @@ export class SearchComponent {
       } else if (this.type == 'place') {
         this.service = this.placeService
       }
+
+      this.service.search(this.name, this.type, this.sort, this.order, this.page).subscribe({
+        next: (response: Page<Information>) => {
+          response.content.forEach(i => this.items.push(i));
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      })
     });
 
   }
 
   getImage(i: Information): string {
     return this.service.getImage(i)
+  }
+
+  search(f: NgForm) {
+    this.name = f.value.name ? f.value.name : "";
+    this.type = f.value.type ? f.value.type : "itinerary";
+    this.sort = f.value.sort ? f.value.sort : "id";
+    this.order = f.value.order ? f.value.order : "DESC";
+    this.page = f.value.page ? f.value.page : "0";
+
+    window.location.href = `search?name=${this.name}&type=${this.type}&sort=${this.sort}&order=${this.order}&page=${this.page}`;
   }
 
   loadMore() {
@@ -66,6 +87,7 @@ export class SearchComponent {
       }
     )
   }
+
 }
 
 
