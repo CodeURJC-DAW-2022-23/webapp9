@@ -32,8 +32,8 @@ export class DetailComponent {
   ownedItinerary: boolean = false;
   toItinerary!: number;
 
-  infoPage: number = 0;
-  reviewsPage: number = 0;
+  infoPage: number = -1;
+  reviewsPage: number = -1;
   infoLoader: boolean = false;
   reviewsLoader: boolean = false;
 
@@ -73,8 +73,10 @@ export class DetailComponent {
         }
         else if ("itinerary" in data) {
           this.information = data["itinerary"];
-          this.information.related = data["places"].content;
-          this.information.reviews = data["reviews"].content;
+          this.information.related = [];
+          this.loadMoreInformation();
+          this.information.reviews = [];
+          this.loadMoreReviews();
         }
       },
       error: (error) => {
@@ -153,11 +155,11 @@ export class DetailComponent {
         response.content.forEach((review: Review) => {
           this.information.reviews.push(review);
         });
-        this.infoLoader = false;
+        this.reviewsLoader = false;
       },
       error: (error) => {
         console.log(error);
-        this.infoLoader = false;
+        this.reviewsLoader = false;
       }
     })
   }

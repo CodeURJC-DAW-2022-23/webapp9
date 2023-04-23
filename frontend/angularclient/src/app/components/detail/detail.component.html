@@ -113,7 +113,7 @@
                     </form>
                 </div>
 
-                <app-review [review]="r" *ngFor="let r of information.reviews" [user]="user.user"></app-review>
+                <app-review *ngFor="let r of information.reviews" [review]="r" [user]="r.user"></app-review>
     
             </section>
     
