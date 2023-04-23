@@ -28,7 +28,8 @@ export class ProfileComponent implements OnInit{
           if (this.user != undefined) this.image = this.logInService.getImage(this.user);
         },
         error: (err) => {
-          window.location.href = "/error/403"
+          if (err.status == 500) window.location.href = "/error/500";
+          else window.location.href = "/error/403";
         }
       });
       if (this.user != undefined) this.image = this.logInService.getImage(this.user);
@@ -44,7 +45,8 @@ export class ProfileComponent implements OnInit{
           if (this.user != undefined) this.image = this.logInService.getImage(this.user);
         },
         error: (err) => {
-          window.location.href = "/error/403"
+          if (err.status == 500) window.location.href = "/error/500";
+          else window.location.href = "/error/403";
         }
       });
       if (this.user != undefined) this.image = this.logInService.getImage(this.user);
