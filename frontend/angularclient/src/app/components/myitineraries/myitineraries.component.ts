@@ -123,17 +123,27 @@ export class MyitinerariesComponent implements OnInit {
     newItinerary.description = description.trim();
     newItinerary.isPrivate = isPrivate.valueOf();
 
-    if (this.logInService.isLogged()) this.userService.editUserItinerary(this.id, JSON.stringify(newItinerary));
-    const img = this.userFile.nativeElement.file[0];
-    if (img) {
-      let formData = new FormData();
-      formData.append("imageFile", img);
-      this.itineraryService.setItineraryImage(this.id, formData).subscribe({
-        next: (response: any) => {
-          this.isEditing = false;
-          window.location.reload();
+    if (this.logInService.isLogged()) this.userService.editUserItinerary(this.id, JSON.stringify(newItinerary)).subscribe({
+      next: (response: any) => {
+        window.location.reload();
+        console.log("response was:");
+        console.log(response);
+        const img = this.userFile.nativeElement.file[0];
+        this.isEditing = false;
+        if (img) {
+          let formData = new FormData();
+          formData.append("imageFile", img);
+          this.itineraryService.setItineraryImage(this.id, formData).subscribe({
+            next: (response: any) => {
+              this.isEditing = false;
+              window.location.reload();
+            }
+          });
         }
-      });
-    }
+      },
+      error: (err) => {
+        console.error("Error when making new itinerary; " + JSON.stringify(err));
+      }
+    });
   }
 }
