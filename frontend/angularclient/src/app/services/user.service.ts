@@ -40,15 +40,7 @@ export class UserService {
   editUserItinerary(id: number, data: string) {
     console.log("updating new itinerary. data looks like this:");
     console.log(JSON.parse(data));
-    this.httpClient.put(itiUrl + "/" + id, JSON.parse(data)).subscribe({
-      next: (response: any) => {
-        console.log("response was:");
-        console.log(response);
-      },
-      error: (err) => {
-        console.error("Error when making new itinerary; " + JSON.stringify(err));
-      }
-    })
+    return this.httpClient.put(itiUrl + "/" + id, JSON.parse(data));
   }
 
   getMe(): Observable<UserDetailsDTO> {
