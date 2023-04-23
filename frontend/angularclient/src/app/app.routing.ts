@@ -6,7 +6,6 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SearchComponent } from './components/search/search.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { ErrorComponent } from './components/error/error.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AddEditMngComponent } from './components/add-edit-mng/add-edit-mng.component';
 import { ManagementComponent } from './components/management/management.component';
 

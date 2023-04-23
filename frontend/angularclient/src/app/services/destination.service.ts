@@ -6,10 +6,6 @@ import { Page } from '../models/rest/page.model';
 import { Destination } from '../models/destination.model';
 import { Graphic } from '../models/graphic.modul';
 
-
-
-import { InformationService } from './information.service';
-
 import { InformationService } from './information.service';
 
 const baseUrl = '/api/destinations';
