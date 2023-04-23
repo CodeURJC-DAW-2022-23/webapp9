@@ -13,7 +13,7 @@
       <form class="" method="get" action="/search">
         <div class="row pb-4">
           <div class="col-12 col-md-9 col-xl-10 pe-2">
-            <input class="form-control" type="search" value="{{#name}}{{.}}{{/name}}" aria-label="Search" name="name">
+            <input class="form-control" type="search" value="{{name}}" aria-label="Search" name="name">
           </div>
           <div class="col-12 col-md-3 col-xl-2">
             <input class="w-100 h-100" type='submit' value='Search' />
@@ -23,24 +23,24 @@
           <div class="col">
             <h6>Filter by:</h6>
             <select class="form-select" aria-label="Filter by" name="type">
-              <option value="itinerary" {{#isItinerary}}selected{{/isItinerary}}>Itineraries</option>
-              <option value="place" {{#isPlace}}selected{{/isPlace}}>Places</option>
-              <option value="destination" {{#isDestination}}selected{{/isDestination}}>Destinations</option>
+              <option value="itinerary" >Itineraries</option>
+              <option value="place" >Places</option>
+              <option value="destination" >Destinations</option>
             </select>
           </div>
           <div class="col">
             <h6>Order by:</h6>
             <select class="form-select" aria-label="Order by" name="sort">
-              <option value="id" {{#isId}}selected{{/isId}}>Newest</option>
-              <option value="views" {{#isViews}}selected{{/isViews}}>Most watched</option>
-              <option value="name" {{#isName}}selected{{/isName}}>Alphabetical</option>
+              <option value="id">Newest</option>
+              <option value="views">Most watched</option>
+              <option value="name">Alphabetical</option>
             </select>
           </div>
           <div class="col">
             <h6>Direction:</h6>
             <select class="form-select" aria-label="Order by" name="order">
-              <option value="DESC" {{#isDesc}}selected{{/isDesc}}>Descending</option>
-              <option value="ASC" {{#isAsc}}selected{{/isAsc}}>Ascending</option>
+              <option value="DESC">Descending</option>
+              <option value="ASC">Ascending</option>
             </select>
           </div>
         </div>
@@ -50,32 +50,30 @@
   </div>
   <hr class="text-light">
   <div id="search-results">
-    {{#information}}
-    <div class="card mb-3">
+    <div class="card mb-3" *ngFor="let i of items">
       <div class="row g-0">
         <div class="col-md-4">
-          <img class="img-fluid rounded-start" src="{{typeLowercase}}/{{id}}/image" alt="" id="header-item-image">
+          <img class="img-fluid rounded-start" [src]="service.getImage(i)" alt="" id="header-item-image">
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <img src="{{flag}}" class="rounded float-end item-flag" alt="...">
-            <h5 class="card-title">{{name}}</h5>
-            <p class="card-text">{{description}}</p>
-            <p class="card-text"><small class="text-muted">{{type}}</small></p>
-            <a href='/details/{{typeLowercase}}/{{id}}' class="btn btn-secondary">Details</a>
+            <img src="{{i.flag}}" class="rounded float-end item-flag" alt="...">
+            <h5 class="card-title">{{i.name}}</h5>
+            <p class="card-text">{{i.description}}</p>
+            <p class="card-text"><small class="text-muted">{{i.type}}</small></p>
+            <a [routerLink]="['/details/' + i.typeLowercase + '/' + i.id]" class="btn btn-secondary">Details</a>
           </div>
         </div>
       </div>
     </div>
-    {{/information}}
 
   </div>
-  <div class="d-none align-items-center" id="search-spinner">
+  <div class="align-items-center" id="information-spinner" *ngIf="loader">
     <strong>Loading...</strong>
     <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
   </div>
   <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-primary" id="btn-more-search">
+    <button (click)="loadMore()" class="btn btn-primary" id="btn-more-search">
       Load more
     </button>
   </div>
