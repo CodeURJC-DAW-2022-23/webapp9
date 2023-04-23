@@ -11,4 +11,6 @@ export interface InformationService {
 
     getImage(information: Information): string;
 
+    search(name: string, type: string, sort: string, order: string, page: number): Observable<Page<any>>;
+
 }
