@@ -20,7 +20,7 @@ export class UserService {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
   
-    return this.httpClient.post(baseUrl + '/image', image, { headers });
+    return this.httpClient.put(baseUrl + '/image', image, { headers });
   }
 
   updateUserData(data: string) {
