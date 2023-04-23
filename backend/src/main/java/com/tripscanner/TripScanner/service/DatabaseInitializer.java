@@ -138,6 +138,7 @@ public class DatabaseInitializer {
 
         // Sample users
         User user = new User("user", "User1", "User2", "user@example.org", passwordEncoder.encode("pass"), "Spanish", "USER");
+        setImage(user, "/static/img/userPhoto.png");
         userRepository.save(user);
         User admin = new User("admin", "Admin2", "Admin2", "admin@example.org", passwordEncoder.encode("adminpass"), "Spanish", "USER", "ADMIN");
         setImage(admin, "/img-samples/madrid-sol.jpeg");
@@ -181,6 +182,7 @@ public class DatabaseInitializer {
 
         Review review = new Review("Review", "Nice itinerary around some of the most well-known places in Spain.", 5);
         review.setItinerary(itinerary);
+        review.setUser(user);
         reviewRepository.save(review);
     }
 

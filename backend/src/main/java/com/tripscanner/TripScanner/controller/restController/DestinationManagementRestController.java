@@ -30,6 +30,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.io.File;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -219,7 +220,7 @@ public class DestinationManagementRestController {
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
             Resource file = new InputStreamResource(imageFile.getInputStream());
             URI location = new URI(baseUrl + "/api/destinations/" + id + "/image");
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/" + imageFile.getOriginalFilename().split("\\.")[1], HttpHeaders.CONTENT_LOCATION, location.toString())
                     .contentLength(newDestination.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
