@@ -12,7 +12,6 @@ import { User } from 'src/app/models/user.model';
 export class ProfileComponent implements OnInit{
   user: User | undefined;
   image: string | undefined;
-  registered: boolean = false;
   isEditing: boolean = false;
 
   @ViewChild('userFile') userFile: any;
@@ -20,37 +19,27 @@ export class ProfileComponent implements OnInit{
   constructor(private logInService: LogInService, private router: Router, private userService: UserService) {  }
 
   ngOnInit(): void {
-    this.registered = this.logInService.isLogged();
-    if (this.registered) {
-      this.userService.getMe().subscribe({
-        next: (response: any) => {
-          this.user = response.user;
-          if (this.user != undefined) this.image = this.logInService.getImage(this.user);
-        },
-        error: (err) => {
-          if (err.status == 500) window.location.href = "/error/500";
-          else window.location.href = "/error/403";
-        }
-      });
-      if (this.user != undefined) this.image = this.logInService.getImage(this.user);
-    }
+    this.userService.getMe().subscribe({
+      next: (response: any) => {
+        this.user = response.user;
+        if (this.user != undefined) this.image = this.logInService.getImage(this.user);
+      },
+      error: (err) => {
+        window.location.href = "/error/" + err.status;
+      }
+    });
   }
 
   afterViewInit(): void {
-    this.registered = this.logInService.isLogged();
-    if (this.registered) {
-      this.userService.getMe().subscribe({
-        next: (response: any) => {
-          this.user = response.user;
-          if (this.user != undefined) this.image = this.logInService.getImage(this.user);
-        },
-        error: (err) => {
-          if (err.status == 500) window.location.href = "/error/500";
-          else window.location.href = "/error/403";
-        }
-      });
-      if (this.user != undefined) this.image = this.logInService.getImage(this.user);
-    }
+    this.userService.getMe().subscribe({
+      next: (response: any) => {
+        this.user = response.user;
+        if (this.user != undefined) this.image = this.logInService.getImage(this.user);
+      },
+      error: (err) => {
+        window.location.href = "/error/" + err;
+      }
+    });
   }
 
   onLogout() {
