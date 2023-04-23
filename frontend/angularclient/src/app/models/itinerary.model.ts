@@ -1,10 +1,7 @@
-export interface Itinerary {
-        id:number,
-        name:string,
-        description:string;
-        flagCode:number,
-        views:number,
-        image:boolean
-        isPublic:boolean,
-        typeLowercase:string
+import { Information } from "./information.model"
+import { User } from "./user.model"
+
+export interface Itinerary extends Information {
+    user: User,
+    public: boolean
 }
