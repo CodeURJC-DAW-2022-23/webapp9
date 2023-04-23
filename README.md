@@ -1,4 +1,9 @@
+<a name="top"></a>
 # webapp9 | TripScanner
+
+### Showcase video
+
+[![Showcase video](https://img.youtube.com/vi/(URL)/maxresdefault.jpg)](https://youtu.be/(URL))
 
 ## Index
 
@@ -6,6 +11,7 @@
 2. [Phase 1 additions](#phase1)
 3. [Phase 2 additions](#phase2)
 4. [Phase 3 additions](#phase3)
+5. [Phase 4 additions](#phase4)
 
 <a name="phase0"></a>
 ## Phase 0 additions
@@ -72,6 +78,8 @@ TripScanner will have a selection of algorithms. These are:
 - An algorithm to search for the shortest path between places of an itinerary.
 - A search algorithm with different search criteria, for both places and destinations.
 
+[Back to top](#top)
+
 <a name="phase1"></a>
 ## Phase 1 aditions
 
@@ -110,6 +118,8 @@ At last, administrators can see a panel with the options they have. This panel (
 ### Navigation diagram
 
 ![Diagrama DAW-3-1](https://user-images.githubusercontent.com/102818341/218516781-fdaf6302-f9dd-4d04-948e-cc64230ff477.png)
+
+[Back to top](#top)
 
 <a name="phase2"></a>
 ## Phase 2 additions
@@ -267,9 +277,11 @@ Here, each member of the team shows what they have contributed to during the dev
         - [CSRFHandlerConfiguration.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/CSRFHandlerConfiguration.java)
         - [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/WebSecurityConfig.java)
         - [profile.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/profile.html)
+
+[Back to top](#top)
         
 <a name="phase3"></a>
-# Phase 3 additions
+## Phase 3 additions
 
 
 ### API REST Documentation
@@ -393,3 +405,89 @@ Here, each member of the team shows what they have contributed to during the dev
         - [UserRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/UserRestController.java)
         - [ReviewDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ReviewDTO.java)
         - [create_image.sh](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/docker/create_image.sh)
+
+[Back to top](#top)
+
+<a name="phase4"></a>
+## Phase 4 additions
+
+### Development Environment Instructions
+
+
+### Classes and templates diagram (SPA)
+
+
+### Deployment instructions
+
+
+### Showcase video
+
+[![Showcase video](https://img.youtube.com/vi/(URL)/maxresdefault.jpg)](https://youtu.be/(URL))
+
+
+### Members participation
+
+Here, each member of the team shows what they have contributed to during the development of this phase.
+
+1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+3. [Anna Trofimova](https://github.com/anna-trofimova)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        
+
+[Back to top](#top)
