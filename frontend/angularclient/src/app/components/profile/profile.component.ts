@@ -104,13 +104,20 @@ export class ProfileComponent implements OnInit{
       this.userService.setUserImage(formData).subscribe();
     }
 
-    if (this.logInService.isLogged()) this.userService.updateUserData(JSON.stringify(updatedValues));
+    if (this.logInService.isLogged()) this.userService.updateUserData(JSON.stringify(updatedValues)).subscribe({
+      next: (response: any) => {
+        console.log("response was:");
+        console.log(response);
+        this.isEditing = false;
+        this.router.navigate(['/profile'])
+      },
+      error: (err) => {
+        window.location.href = "/error/" + err.status;
+      }
+    });
     if (logout) {
       this.logout();
       this.router.navigate(['/login']);
-    } else {
-      this.isEditing = false;
-      window.location.href = "/profile";
     }
   }
 }
