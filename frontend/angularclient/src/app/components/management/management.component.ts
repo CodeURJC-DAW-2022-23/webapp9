@@ -96,7 +96,7 @@ export class ManagementComponent {
   }
 
   deleteUser(id: number) {
-    this.service.deleteItem(id).subscribe(() => {
+    this.userService.deleteUser(id).subscribe(() => {
       window.location.href = `/management/${this.type}`
     });
   }

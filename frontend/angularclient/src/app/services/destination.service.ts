@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Observable, throwError } from 'rxjs';
 
 import { Page } from '../models/rest/page.model';
@@ -29,8 +28,8 @@ export class DestinationService implements InformationService {
     return this.httpClient.get<Destination>(`${baseUrl}/${id}`);
   }
 
-  getDestinations(): Observable<Page> {
-    return this.httpClient.get<Page>(baseUrl);
+  getDestinations(): Observable<Page<Destination>> {
+    return this.httpClient.get<Page<Destination>>(baseUrl);
 
   }
 

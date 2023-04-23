@@ -28,7 +28,7 @@ import { NgChartsModule } from 'ng2-charts';
     SearchComponent,
     ErrorComponent,
     ManagementComponent,
-    AddEditMngComponent
+    AddEditMngComponent,
     SignUpComponent
   ],
   imports: [
