@@ -1,7 +1,7 @@
 <div class="card m-3" id="review-1">
     <div class="card-body g-0 text-black bg-light row">
         <div class="col-1">
-            <img class="img-fluid rounded-start" src="/user/{{user.id}}/image" alt="{{user.username}}"
+            <img class="img-fluid rounded-start" [src]="loadUserImage(user.id)" alt="{{user.username}}"
                  width="75" height="75">
         </div>
         <div class="col-11">
