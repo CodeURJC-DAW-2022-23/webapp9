@@ -36,19 +36,19 @@
                 <h5 class="mb-3">Editing itinerary {{this.id}}</h5>
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend4">Name</span>
-                    <input type="text" id="editNameField" class="form-control" name='name' aria-describedby="inputGroupPrepend" required/>
+                    <input type="text" id="editNameField" [value]="this.name" class="form-control" name='name' aria-describedby="inputGroupPrepend" required/>
                 </div>
 
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend5">Description</span>
-                    <input type="text" id="editDescriptionField" class="form-control" name='description' aria-describedby="inputGroupPrepend" required/>
+                    <input type="text" id="editDescriptionField" [value]="this.description" class="form-control" name='description' aria-describedby="inputGroupPrepend" required/>
                 </div>
 
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrependImg">Image</span>
                     <input type="file" class="form-control" #userFile name='imageFile' accept=".jpg, .jpeg, .png" required/>
                     <span class="input-group-text" id="inputGroupPrepend6">Make itinerary private
-                    <input class="form-check-input" id="editPrivacyField" type="checkbox" value="" name="isPrivate"/>
+                    <input class="form-check-input" id="editPrivacyField" [value]="!this.isPublic" type="checkbox" value="" name="isPrivate"/>
                     </span>
                 </div>
 
@@ -83,7 +83,7 @@
                     More details
                 </button>
                 <!-- Edit button -->
-                <form (ngSubmit)="editItinerary(i.id)" method="post">
+                <form (ngSubmit)="editItinerary(i.id, i.name, i.description, i.public)" method="post">
                 <button type="submit" class="btn btn-outline-secondary float-end ms-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                          class="bi bi-pencil-square" viewBox="0 0 16 16">
