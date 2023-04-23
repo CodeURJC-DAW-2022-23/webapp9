@@ -10,6 +10,8 @@ import { Graphic } from '../models/graphic.modul';
 
 import { InformationService } from './information.service';
 
+import { InformationService } from './information.service';
+
 const baseUrl = '/api/destinations';
 
 @Injectable({
