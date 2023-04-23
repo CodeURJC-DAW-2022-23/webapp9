@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Itinerary } from 'src/app/models/itinerary.model';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-myitineraries',
@@ -18,14 +19,15 @@ export class MyitinerariesComponent implements OnInit {
   description: String = "";
   isPublic: boolean | undefined = undefined;
   isEditing: boolean = false;
+  user: User | undefined;
 
   @ViewChild('userFile') userFile: any;
 
   constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
 
   ngOnInit() {
-    this.logInService.reqIsLogged();
-    if (!this.logInService.isLogged()) window.location.href = "/error/403";
+    this.user = this.logInService.currentUser();
+    if (this.user == undefined) window.location.href = "/error/403";
     else this.loadMyItineraries();
   }
 
