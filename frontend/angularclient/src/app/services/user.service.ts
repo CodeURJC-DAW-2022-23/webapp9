@@ -65,10 +65,6 @@ export class UserService {
     return this.httpClient.get<UserDetailsDTO>(`${BASE_URL}/me`, { withCredentials: true });
   }
 
-  getCurrUser(): Observable<User> {
-    return this.httpClient.get<User>(baseUrl);
-  }
-
   moreItineraries(page: number): Observable<UserDetailsDTO> {
     return this.httpClient.get<UserDetailsDTO>(`${BASE_URL}/me?pageItineraries=${page}`, { withCredentials: true });
   }

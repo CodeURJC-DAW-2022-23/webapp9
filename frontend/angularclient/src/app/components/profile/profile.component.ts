@@ -1,10 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
-import { User } from 'src/app/models/user.model';
 import { LogInService } from 'src/app/services/log-in.service';
 import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +22,15 @@ export class ProfileComponent implements OnInit{
   ngOnInit(): void {
     this.registered = this.logInService.isLogged();
     if (this.registered) {
-      this.user = this.logInService.currentUser();
+      this.userService.getMe().subscribe({
+        next: (response: any) => {
+          this.user = response.user;
+          if (this.user != undefined) this.image = this.logInService.getImage(this.user);
+        },
+        error: (err) => {
+          window.location.href = "/error/403"
+        }
+      });
       if (this.user != undefined) this.image = this.logInService.getImage(this.user);
     }
   }
@@ -32,7 +38,15 @@ export class ProfileComponent implements OnInit{
   afterViewInit(): void {
     this.registered = this.logInService.isLogged();
     if (this.registered) {
-      this.user = this.logInService.currentUser();
+      this.userService.getMe().subscribe({
+        next: (response: any) => {
+          this.user = response.user;
+          if (this.user != undefined) this.image = this.logInService.getImage(this.user);
+        },
+        error: (err) => {
+          window.location.href = "/error/403"
+        }
+      });
       if (this.user != undefined) this.image = this.logInService.getImage(this.user);
     }
   }
@@ -92,7 +106,9 @@ export class ProfileComponent implements OnInit{
     if (logout) {
       this.logout();
       this.router.navigate(['/login']);
+    } else {
+      this.isEditing = false;
+      window.location.href = "/profile";
     }
-    this.isEditing = false;
   }
 }
