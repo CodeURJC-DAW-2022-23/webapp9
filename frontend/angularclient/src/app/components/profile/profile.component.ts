@@ -91,7 +91,9 @@ export class ProfileComponent implements OnInit{
       let formData = new FormData();
       formData.append("imageFile", img);
       this.userService.setUserImage(formData).subscribe({
-        next: (response: any) => { this.router.navigate(['/profile']) },
+        next: (response: any) => { 
+          this.router.navigate(['/profile'])
+        },
         error: (err) => {
           if (err.status != 200) this.router.navigate(['/error/' + err.status]);
         }
