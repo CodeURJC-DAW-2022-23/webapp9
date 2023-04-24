@@ -9,14 +9,14 @@ import { User } from 'src/app/models/user.model';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit {
   user: User | undefined;
   image: string | undefined;
   isEditing: boolean = false;
 
   @ViewChild('userFile') userFile: any;
 
-  constructor(private logInService: LogInService, private router: Router, private userService: UserService) {  }
+  constructor(private logInService: LogInService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.getMe().subscribe({
@@ -91,9 +91,20 @@ export class ProfileComponent implements OnInit{
       let formData = new FormData();
       formData.append("imageFile", img);
       this.userService.setUserImage(formData).subscribe({
-        next: (response: any) => { this.router.navigate(['/profile']) },
+        next: () => {
+          if (this.user != undefined) {
+            this.image = '/assets/images/no_image.png';
+            this.image = this.userService.getImage(this.user.id);
+          }
+          this.router.navigate(['/profile']);
+        },
         error: (err) => {
           if (err.status != 200) this.router.navigate(['/error/' + err.status]);
+          else if (this.user != undefined) {
+            this.image = '/assets/images/no_image.png';
+            this.image = this.userService.getImage(this.user.id);
+            this.router.navigate(['/profile']);
+          }
         }
       });
     }
