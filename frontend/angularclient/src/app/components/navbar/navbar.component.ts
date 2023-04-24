@@ -39,7 +39,7 @@ export class NavbarComponent {
   }
 
   search(f: NgForm) {
-    this.router.navigate(["/search?name=",f.value.name+'&type=itinerary&sort=id&order=DESC&page=0']);
+    this.router.navigate(["/search"], { queryParams: { name: f.value.name, type: "itinerary", sort: "id", order: "DESC", page: 0 } });
   }
 
 }
