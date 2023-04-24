@@ -214,7 +214,6 @@ export class DetailComponent {
     for (let i = 0; i <= this.infoPage; i++) {
       this.service.loadMoreInformation(this.information.id, i).subscribe({
         next: (response) => {
-          console.log(response)
           if ("places" in response) response.places.content.forEach((information: Information) => {
             this.information.related.push(information);
           });
@@ -227,7 +226,6 @@ export class DetailComponent {
           this.infoLoader = false;
         },
         error: (error) => {
-          console.log(error);
           this.infoLoader = false;
         }
       })
