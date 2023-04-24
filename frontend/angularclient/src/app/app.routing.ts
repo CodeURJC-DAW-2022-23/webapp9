@@ -8,6 +8,8 @@ import { DetailComponent } from './components/detail/detail.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AddEditMngComponent } from './components/add-edit-mng/add-edit-mng.component';
 import { ManagementComponent } from './components/management/management.component';
+import { MyitinerariesComponent } from './components/myitineraries/myitineraries.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const appRoutes = [
   { path: "", component: HomeComponent },
@@ -20,7 +22,9 @@ const appRoutes = [
   { path: 'management/:type', component:ManagementComponent },
   { path: 'management/:type/edit/:id', component:AddEditMngComponent },
   { path: 'management/:type/add', component:AddEditMngComponent },
-  { path: 'error/:id', component: ErrorComponent }
+  { path: 'error/:id', component: ErrorComponent },
+  { path: 'myItineraries', component: MyitinerariesComponent },
+  { path: 'profile', component: ProfileComponent }
 ]
 
   export const routing = RouterModule.forRoot(appRoutes);
