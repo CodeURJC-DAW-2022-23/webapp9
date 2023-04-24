@@ -6,7 +6,7 @@ public class ItineraryDTO {
 
     private String description;
 
-    private boolean isPublic;
+    private boolean publicValue;
 
     private String user;
 
@@ -19,10 +19,10 @@ public class ItineraryDTO {
         this.user = user;
     }
 
-    public ItineraryDTO(String name, String description, boolean isPublic) {
+    public ItineraryDTO(String name, String description, boolean publicValue) {
         this.name = name;
         this.description = description;
-        this.isPublic = isPublic;
+        this.publicValue = publicValue;
     }
 
     public String getName() {
@@ -42,7 +42,7 @@ public class ItineraryDTO {
     }
 
     public boolean isPublic() {
-        return isPublic;
+        return publicValue;
     }
 
     public String getUser() {
@@ -53,8 +53,8 @@ public class ItineraryDTO {
         this.user = user;
     }
 
-    public void setPublic(boolean aPublic) {
-        this.isPublic = aPublic;
+    public void setPublicValue(boolean publicValue) {
+        this.publicValue = publicValue;
     }
 
     public boolean hasName() {

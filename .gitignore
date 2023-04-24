@@ -26,3 +26,9 @@ hs_err_pid*
 # docker mysql folder
 /docker/mysql
 
+# target folder
+TripScanner/target/*
+
+# IntelliJ .idea folder
+TripScanner/.idea/*
+

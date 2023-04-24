@@ -212,6 +212,7 @@ public class ItineraryRestController {
 
         Itinerary newItinerary = new Itinerary(itineraryDTO, user, user.getRoles().contains("ADMIN"));
         newItinerary.setImage(true);
+        newItinerary.setPublic(itiDTO.get().isPublic());
         Resource image = new ClassPathResource("/static/img/placeholder.jpeg");
         newItinerary.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 

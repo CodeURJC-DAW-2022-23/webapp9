@@ -11,7 +11,7 @@ const BASE_URL = '/api/auth'
 export class LogInService {
 
   public logged = false
-  user!: User
+  user?: User
 
   constructor(private httpClient: HttpClient) {
     this.reqIsLogged();
@@ -58,4 +58,12 @@ export class LogInService {
     window.location.reload();
   }
 
+  logOut() {
+    return this.httpClient.post(BASE_URL + '/logout', { withCredentials: true })
+        .subscribe((resp: any) => {
+            console.log("LOGOUT: Successfully");
+            this.logged = false;
+            this.user = undefined;
+      });
+  }
 }
