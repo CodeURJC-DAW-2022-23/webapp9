@@ -55,11 +55,9 @@ export class MyitinerariesComponent implements OnInit {
     this.itineraryService.getUserItineraries(this.page).subscribe((response) => {
       response.content.forEach(item => {
         this.items.push(item);
-        console.log(item);
       })
     });
     this.loader = false;
-    console.log("value of box is" + this.publicValue);
   }
 
   onSubmit() {
@@ -108,7 +106,6 @@ export class MyitinerariesComponent implements OnInit {
     this.name = name;
     this.description = description;
     this.publicValue = publicValue;
-    console.log(this.publicValue);
   }
 
   deleteItinerary(id: number) {
@@ -117,12 +114,9 @@ export class MyitinerariesComponent implements OnInit {
         this.router.navigate(["/myItineraries"])
         this.items = [];
         this.loadMyItineraries();
-        console.log("response was:");
-        console.log(response);
       },
       error: (err) => {
         if (err.status != 404) {
-          console.error('Error: ' + JSON.stringify(err));
           this.router.navigate(["/error/" + err.status]);
         }
       }
@@ -147,8 +141,6 @@ export class MyitinerariesComponent implements OnInit {
         this.router.navigate(["/myItineraries"])
         this.items = [];
         this.loadMyItineraries();
-        console.log("response was:");
-        console.log(response);
         const img = this.editFile.nativeElement.files[0];
         this.isEditing = false;
         if (img) {
@@ -174,7 +166,6 @@ export class MyitinerariesComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error("Error when editing itinerary; " + JSON.stringify(err));
       }
     });
   }

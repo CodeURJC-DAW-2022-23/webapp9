@@ -22,21 +22,14 @@ export class UserService {
   }
 
   updateUserData(data: string) {
-    console.log("updating user data");
-    console.log("data looks like this:");
-    console.log(JSON.parse(data));
     return this.httpClient.put(baseUrl, JSON.parse(data));
   }
 
   addUserItinerary(data: string) {
-    console.log("updating new itinerary. data looks like this:");
-    console.log(JSON.parse(data));
     return this.httpClient.post(itiUrl, JSON.parse(data));
   }
 
   editUserItinerary(id: number, data: string) {
-    console.log("updating new itinerary. data looks like this:");
-    console.log(JSON.parse(data));
     return this.httpClient.put(itiUrl + "/" + id, JSON.parse(data));
   }
 

@@ -100,8 +100,6 @@ export class ProfileComponent implements OnInit{
 
     if (this.logInService.isLogged()) this.userService.updateUserData(JSON.stringify(updatedValues)).subscribe({
       next: (response: any) => {
-        console.log("response was:");
-        console.log(response);
         this.isEditing = false;
         this.router.navigate(['/profile'])
       },
