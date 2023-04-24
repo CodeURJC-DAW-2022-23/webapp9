@@ -30,14 +30,14 @@ paths:
           format: int32
           default: 0
       responses:
+        "400":
+          description: Operation not available when no user is logged in
         "200":
           description: Displayed profile properly
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        "400":
-          description: Operation not available when no user is logged in
     put:
       tags:
       - user-rest-controller
@@ -50,18 +50,18 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       responses:
-        "500":
-          description: Empty body of request
+        "400":
+          description: Email does not match against correct mail format
+        "403":
+          description: No user is logged in
         "200":
           description: Successfully edited user's data
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        "403":
-          description: No user is logged in
-        "400":
-          description: Email does not match against correct mail format
+        "500":
+          description: Empty body of request
   /api/users/me/image:
     get:
       tags:
@@ -69,14 +69,14 @@ paths:
       summary: Get a logged user's profile picture
       operationId: downloadProfileImage
       responses:
-        "404":
-          description: User does not have an image
+        "400":
+          description: Operation not available when no user is logged in
         "200":
           description: User obtained successfully
           content:
             image/jpeg: {}
-        "400":
-          description: Operation not available when no user is logged in
+        "404":
+          description: User does not have an image
     put:
       tags:
       - user-rest-controller
@@ -101,6 +101,30 @@ paths:
         "403":
           description: Operation not available for not logged in users
   /api/management/users/{id}:
+    get:
+      tags:
+      - user-management-rest-controller
+      summary: Get the specified user
+      operationId: getUser_1
+      parameters:
+      - name: id
+        in: path
+        description: id of user
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "403":
+          description: Not authorized
+        "404":
+          description: User not found
     put:
       tags:
       - user-management-rest-controller
@@ -233,12 +257,12 @@ paths:
           type: integer
           format: int64
       responses:
+        "204":
+          description: Place was correctly deleted
         "404":
           description: Place not found
         "403":
           description: Not authorized
-        "204":
-          description: Place was correctly deleted
   /api/management/places/{id}/image:
     put:
       tags:
@@ -297,14 +321,14 @@ paths:
               $ref: '#/components/schemas/ItineraryDTO'
         required: true
       responses:
+        "404":
+          description: Destination not found
         "200":
           description: Itinerary is edited
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Itinerary'
-        "404":
-          description: Destination not found
         "403":
           description: Not authorized
     delete:
@@ -321,14 +345,14 @@ paths:
           type: integer
           format: int64
       responses:
-        "404":
-          description: Destination not found
         "204":
           description: itinerary is deleted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Itinerary'
+        "404":
+          description: Destination not found
         "403":
           description: Not authorized
   /api/management/itineraries/{id}/image:
@@ -357,8 +381,6 @@ paths:
                   type: string
                   format: binary
       responses:
-        "403":
-          description: Not authorized
         "200":
           description: Image is edited
           content:
@@ -367,6 +389,8 @@ paths:
                 $ref: '#/components/schemas/Itinerary'
         "404":
           description: Image not found
+        "403":
+          description: Not authorized
   /api/management/destinations/{id}:
     put:
       tags:
@@ -454,10 +478,10 @@ paths:
             image/jpeg:
               schema:
                 $ref: '#/components/schemas/Destination'
-        "403":
-          description: Not authorized
         "404":
           description: Image not found
+        "403":
+          description: Not authorized
   /api/itineraries/{id}:
     get:
       tags:
@@ -489,18 +513,18 @@ paths:
           format: int32
           default: 0
       responses:
-        "400":
-          description: Invalid arguments.
-        "403":
-          description: Invalid permissions to request places from a private Itinerary.
         "404":
           description: Requested a non-existing Itinerary.
+        "403":
+          description: Invalid permissions to request places from a private Itinerary.
         "200":
           description: Successfully searched the desired Itineraries.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ItineraryDetailsDTO'
+        "400":
+          description: Invalid arguments.
     put:
       tags:
       - itinerary-rest-controller
@@ -521,6 +545,9 @@ paths:
               $ref: '#/components/schemas/ItineraryDTO'
         required: true
       responses:
+        "403":
+          description: Login needed to perform operation or User is not owner of the
+            itinerary
         "200":
           description: Itinerary edited successfully
           content:
@@ -529,9 +556,6 @@ paths:
                 $ref: '#/components/schemas/Itinerary'
         "404":
           description: Itinerary not found
-        "403":
-          description: Login needed to perform operation or User is not owner of the
-            itinerary
     delete:
       tags:
       - itinerary-rest-controller
@@ -546,12 +570,12 @@ paths:
           type: integer
           format: int64
       responses:
-        "404":
-          description: Itinerary not found
-        "403":
-          description: Operation not supported for not registered users
         "200":
           description: Successfully deleted the itinerary
+        "403":
+          description: Operation not supported for not registered users
+        "404":
+          description: Itinerary not found
   /api/itineraries/{id}/image:
     get:
       tags:
@@ -567,12 +591,12 @@ paths:
           type: integer
           format: int64
       responses:
+        "404":
+          description: Requested a non-existing Itinerary's image.
         "200":
           description: Sucessfully returned the Itinerary's image.
           content:
             image/jpeg: {}
-        "404":
-          description: Requested a non-existing Itinerary's image.
     put:
       tags:
       - itinerary-rest-controller
@@ -619,15 +643,15 @@ paths:
                   description: image to set as itinerary image
                   format: binary
       responses:
+        "403":
+          description: Login needed to perform operation or User is not owner of the
+            itinerary
         "404":
           description: Itinerary not found
         "200":
           description: Image edited successfully
           content:
             image/jpeg: {}
-        "403":
-          description: Login needed to perform operation or User is not owner of the
-            itinerary
   /api/users:
     post:
       tags:
@@ -641,16 +665,16 @@ paths:
               $ref: '#/components/schemas/UserDTO'
         required: true
       responses:
-        "400":
-          description: Invalid arguments or required arguments missing
-        "403":
-          description: Username already in use
         "201":
           description: Successfully signed up the new user
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        "403":
+          description: Username already in use
+        "400":
+          description: Invalid arguments or required arguments missing
   /api/management/users:
     get:
       tags:
@@ -715,14 +739,14 @@ paths:
       responses:
         "404":
           description: Places not found
-        "403":
-          description: Not authorized
         "200":
           description: Places page
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Place'
+        "403":
+          description: Not authorized
     post:
       tags:
       - place-management-rest-controller
@@ -759,6 +783,8 @@ paths:
           format: int32
           default: 0
       responses:
+        "403":
+          description: Forbidden
         "404":
           description: Itinerary not found
         "200":
@@ -767,8 +793,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Itinerary'
-        "403":
-          description: Forbidden
         "401":
           description: Unauthorized
     post:
@@ -783,14 +807,14 @@ paths:
               $ref: '#/components/schemas/ItineraryDTO'
         required: true
       responses:
+        "403":
+          description: Not authorized
         "204":
           description: Itinerary is created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Itinerary'
-        "403":
-          description: Not authorized
   /api/management/destinations:
     get:
       tags:
@@ -874,14 +898,14 @@ paths:
           format: int32
           default: 0
       responses:
-        "400":
-          description: Invalid arguments.
         "200":
           description: Successfully searched the desired Itinerary.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Itinerary'
+        "400":
+          description: Invalid arguments.
     post:
       tags:
       - itinerary-rest-controller
@@ -904,16 +928,16 @@ paths:
       responses:
         "400":
           description: itiDTO data missing for POSTing new itinerary
-        "403":
-          description: Operation not supported for users without an account
-        "404":
-          description: Itinerary to copy from not found
         "201":
           description: Newly created itinerary
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Itinerary'
+        "403":
+          description: Operation not supported for users without an account
+        "404":
+          description: Itinerary to copy from not found
   /api/itineraries/{itineraryId}/places:
     post:
       tags:
@@ -971,17 +995,17 @@ paths:
           format: int32
           default: 0
       responses:
-        "404":
-          description: Itinerary not found
-        "403":
-          description: Operation not available on private itineraries not owned by
-            the current logged in user
         "200":
           description: Itinerary's reviews obtained successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Review'
+        "404":
+          description: Itinerary not found
+        "403":
+          description: Operation not available on private itineraries not owned by
+            the current logged in user
     post:
       tags:
       - itinerary-rest-controller
@@ -1002,8 +1026,6 @@ paths:
               $ref: '#/components/schemas/ReviewDTO'
         required: true
       responses:
-        "400":
-          description: Review's score is not between 0 and 5
         "404":
           description: Itinerary not found
         "201":
@@ -1014,6 +1036,8 @@ paths:
                 $ref: '#/components/schemas/ReviewDTO'
         "500":
           description: Needed fields for review not found
+        "400":
+          description: Review's score is not between 0 and 5
         "403":
           description: Operation not allowed for unregistered users or the itinerary
             is private
@@ -1161,14 +1185,14 @@ paths:
           format: int32
           default: 0
       responses:
-        "400":
-          description: Invalid arguments.
         "200":
           description: Successfully searched the desired Places.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Place'
+        "400":
+          description: Invalid arguments.
   /api/places/{id}:
     get:
       tags:
@@ -1192,14 +1216,14 @@ paths:
           format: int32
           default: 0
       responses:
-        "400":
-          description: Invalid arguments.
         "200":
           description: Successfully searched the desired Place.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlaceDetailsDTO'
+        "400":
+          description: Invalid arguments.
   /api/places/{id}/image:
     get:
       tags:
@@ -1244,14 +1268,14 @@ paths:
           format: int32
           default: 0
       responses:
-        "200":
-          description: Successfully searched the desired Places frmo an Itinerary.
-        "400":
-          description: Invalid arguments.
-        "403":
-          description: Invalid permissions to request places from a private Itinerary.
         "404":
           description: Requested a non-existing Itinerary.
+        "200":
+          description: Successfully searched the desired Places frmo an Itinerary.
+        "403":
+          description: Invalid permissions to request places from a private Itinerary.
+        "400":
+          description: Invalid arguments.
   /api/itineraries/{id}/pdf:
     get:
       tags:
@@ -1267,14 +1291,14 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: Itinerary successfully exported to pdf
-          content:
-            application/pdf: {}
         "404":
           description: Itinerary with specified id not found
         "403":
           description: Operation not supported for users without an account
+        "200":
+          description: Itinerary successfully exported to pdf
+          content:
+            application/pdf: {}
   /api/graphs/index:
     get:
       tags:
@@ -1326,14 +1350,14 @@ paths:
           format: int32
           default: 0
       responses:
-        "400":
-          description: Invalid arguments.
         "200":
           description: Successfully searched the desired destinations.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Destination'
+        "400":
+          description: Invalid arguments.
   /api/destinations/{id}:
     get:
       tags:
@@ -1357,16 +1381,49 @@ paths:
           format: int32
           default: 0
       responses:
-        "400":
-          description: Invalid arguments.
+        "404":
+          description: Requested a non-existing Destination.
         "200":
           description: Successfully searched the desired destinations.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationDetailsDTO'
+        "400":
+          description: Invalid arguments.
+  /api/destinations/{id}/places:
+    get:
+      tags:
+      - destination-rest-controller
+      summary: Get Places from a specific Destination.
+      operationId: destinationPlaces
+      parameters:
+      - name: id
+        in: path
+        description: destination id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: placesPage
+        in: query
+        description: places page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
         "404":
           description: Requested a non-existing Destination.
+        "200":
+          description: Successfully searched the desired destinations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationDetailsDTO'
+        "400":
+          description: Invalid arguments.
   /api/destinations/{id}/image:
     get:
       tags:
@@ -1382,12 +1439,12 @@ paths:
           type: integer
           format: int64
       responses:
-        "404":
-          description: Requested a non-existing Destination's image.
         "200":
           description: Successfully returned the Destination's image.
           content:
             image/jpeg: {}
+        "404":
+          description: Requested a non-existing Destination's image.
   /api/itineraries/{itineraryId}/places/{placeId}:
     delete:
       tags:
@@ -1410,17 +1467,17 @@ paths:
           type: integer
           format: int64
       responses:
+        "403":
+          description: Login needed to perform operation or User is not owner of the
+            itinerary
+        "404":
+          description: Itinerary or place not found
         "200":
           description: Place removed successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Place'
-        "403":
-          description: Login needed to perform operation or User is not owner of the
-            itinerary
-        "404":
-          description: Itinerary or place not found
 components:
   schemas:
     User:
@@ -1490,9 +1547,9 @@ components:
           type: string
         type:
           type: string
-        typeLowercase:
-          type: string
         flag:
+          type: string
+        typeLowercase:
           type: string
     Place:
       type: object
@@ -1513,9 +1570,9 @@ components:
           $ref: '#/components/schemas/Destination'
         type:
           type: string
-        typeLowercase:
-          type: string
         flag:
+          type: string
+        typeLowercase:
           type: string
     ItineraryDTO:
       type: object
@@ -1524,6 +1581,9 @@ components:
           type: string
         description:
           type: string
+        publicValue:
+          type: boolean
+          writeOnly: true
         user:
           type: string
         public:
@@ -1550,9 +1610,9 @@ components:
           type: boolean
         type:
           type: string
-        typeLowercase:
-          type: string
         flag:
+          type: string
+        typeLowercase:
           type: string
     ReviewDTO:
       type: object
@@ -1608,8 +1668,6 @@ components:
           format: int32
         sort:
           $ref: '#/components/schemas/Sort'
-        pageable:
-          $ref: '#/components/schemas/Pageable'
         first:
           type: boolean
         last:
@@ -1617,6 +1675,8 @@ components:
         numberOfElements:
           type: integer
           format: int32
+        pageable:
+          $ref: '#/components/schemas/Pageable'
         empty:
           type: boolean
     Pageable:
@@ -1633,9 +1693,9 @@ components:
         pageSize:
           type: integer
           format: int32
-        paged:
-          type: boolean
         unpaged:
+          type: boolean
+        paged:
           type: boolean
     PlaceDetailsDTO:
       type: object
@@ -1683,8 +1743,6 @@ components:
           format: int32
         sort:
           $ref: '#/components/schemas/Sort'
-        pageable:
-          $ref: '#/components/schemas/Pageable'
         first:
           type: boolean
         last:
@@ -1692,6 +1750,8 @@ components:
         numberOfElements:
           type: integer
           format: int32
+        pageable:
+          $ref: '#/components/schemas/Pageable'
         empty:
           type: boolean
     PageReview:
@@ -1715,8 +1775,6 @@ components:
           format: int32
         sort:
           $ref: '#/components/schemas/Sort'
-        pageable:
-          $ref: '#/components/schemas/Pageable'
         first:
           type: boolean
         last:
@@ -1724,6 +1782,8 @@ components:
         numberOfElements:
           type: integer
           format: int32
+        pageable:
+          $ref: '#/components/schemas/Pageable'
         empty:
           type: boolean
     Review:
