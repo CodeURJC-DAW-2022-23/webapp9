@@ -10,7 +10,7 @@ FROM maven:3-openjdk-11 AS backend
 WORKDIR /tmp
 COPY backend/pom.xml /tmp/
 COPY backend/src /tmp/src
-COPY --from=frontend /ang/dist/angularclient/* /tmp/src/main/resources/static/new
+COPY --from=frontend /ang/dist/angularclient/* /tmp/src/main/resources/static/new/
 RUN mvn package -DskipTests
 
 # Final stage
