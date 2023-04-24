@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { LogInService } from 'src/app/services/log-in.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -14,16 +15,28 @@ export class NavbarComponent {
   user!: User;
   name: string = "";
   isSearch: boolean = false;
+  image!: string;
+  admin: boolean = false;
+  error: boolean = false;
 
   @ViewChild('nameInput') nameInput!: ElementRef;
-  
+
   constructor(private router: Router,
-    public loginService: LogInService) {
+    public loginService: LogInService,
+    public userService: UserService) {
 
     this.router.events.subscribe(
       (event) => {
         if (event instanceof NavigationStart) {
-          this.isSearch = event.url.startsWith("/search")
+          this.isSearch = event.url.startsWith("/search");
+          this.error = event.url.startsWith("/error");
+          this.userService.getMe().subscribe(
+            (data) => {
+              this.user = data.user;
+              this.image = this.userService.getImage(this.user.id);
+              this.admin = this.user.roles.indexOf('ADMIN') !== -1;
+            }
+          )
         }
       });
   }

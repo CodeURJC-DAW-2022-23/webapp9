@@ -1,5 +1,5 @@
 
-
+<div *ngIf="!error">
     <div class="navbar sticky-top navbar-light bg-white bg-opacity-75">
         <div class="container-fluid justify-content-between">
             <a class="navbar-brand float-start" routerLink="/"><img src="/assets/Image/logo-placeholder-image.png"
@@ -8,7 +8,7 @@
             <div>
 
                 <form class="form-inline float-end m-3" *ngIf="loginService.isLogged()">
-                    <img [src]="profileImage()"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 ">
+                    <img [src]="image"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 ">
                 </form>
 
                 <form class="form-inline float-end m-3" *ngIf="!loginService.isLogged()">
@@ -21,7 +21,7 @@
                         itineraries</button>
                 </form>
 
-                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && loginService.isAdmin()">
+                <form class="form-inline float-end my-3 ms-3" *ngIf="admin">
                     <a type="button" class="btn btn-outline-secondary" routerLink="/management/itinerary">
                         Management
                     </a>
@@ -34,3 +34,4 @@
             </div>
         </div>
     </div>
+  </div>
