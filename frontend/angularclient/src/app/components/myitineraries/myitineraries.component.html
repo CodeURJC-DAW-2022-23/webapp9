@@ -34,7 +34,7 @@
     <h3 class="text-center mb-3" *ngIf="this.isEditing">Edit Itinerary</h3>
     <div class="card m-3" id="edit-itinerary-form" *ngIf="this.isEditing">
       <form method="post" class="card-body g-0 text-black bg-light row" enctype="multipart/form-data">
-        <h5 class="mb-3">Editing itinerary {{this.id}}</h5>
+        <h5 class="mb-3">Editing itinerary {{this.name}}</h5>
         <div class="input-group has-validation">
           <span class="input-group-text" id="inputGroupPrepend4">Name</span>
           <input type="text" id="editNameField" [value]="this.name" class="form-control" name='name'
