@@ -9,7 +9,7 @@
                         </div>           
 
                         <div *ngIf="isEditing">
-                            <input type="file" class="form-control" #userFile name='imageFile' accept=".jpg, .jpeg, .png" required>
+                            <input type="file" class="form-control mt-5 mx-3" #userFile name='imageFile' accept=".jpg, .jpeg, .png" required>
                         </div>
 
                         <form (ngSubmit)="onLogout()" action="/logout" method="post" class="m-5 p-5">
