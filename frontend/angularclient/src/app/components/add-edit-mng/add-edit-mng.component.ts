@@ -90,10 +90,10 @@ export class AddEditMngComponent {
         this.currentUser = data;
         this.admin = this.currentUser.user.roles.indexOf('ADMIN') !== -1;
         if (this.admin == false){
-          window.location.href = "/error/403"
+          this.router.navigate(['/error/403']);
         }
       },
-      error: () => window.location.href = "/logIn"
+      error: () => this.router.navigate(['/logIn'])
     })
   }
 
@@ -113,10 +113,7 @@ export class AddEditMngComponent {
     })
   }
   editPlaceInit() {
-    console.log(this.id);
     this.placeService.getItem(this.id).subscribe((place) => {
-      console.log(place);
-
       this.name = place.place.name;
       this.description = place.place.description;
       this.itemDestination = place.place.destination.name;
@@ -124,8 +121,6 @@ export class AddEditMngComponent {
   }
   editUserInit() {
     this.userService.getUser(this.id).subscribe((user) => {
-      console.log(user);
-
       this.username = user.username;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
