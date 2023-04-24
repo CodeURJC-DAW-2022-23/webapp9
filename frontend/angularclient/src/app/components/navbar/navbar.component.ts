@@ -36,7 +36,7 @@ export class NavbarComponent {
   profileImage() {
     if (this.loginService.currentUser() != undefined) {
       this.user = this.loginService.currentUser();
-      if (this.user != undefined)  return this.loginService.getImage(this.user);
+      if (this.user != undefined) return this.loginService.getImage(this.user);
     }
     return undefined;
   }

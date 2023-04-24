@@ -35,7 +35,7 @@ export class MyitinerariesComponent implements OnInit {
         this.loadMyItineraries();
       },
       error: (err) => {
-        window.location.href = "/error/" + err.status;
+        this.router.navigate(["/error/" + err.status]);
       }
     });
   }
@@ -46,7 +46,7 @@ export class MyitinerariesComponent implements OnInit {
         this.loadMyItineraries();
       },
       error: (err) => {
-        window.location.href = "/error/" + err.status;
+        this.router.navigate(["/error/" + err.status]);
       }
     });
   }
@@ -78,7 +78,8 @@ export class MyitinerariesComponent implements OnInit {
     if (this.logInService.isLogged()) {
       this.userService.addUserItinerary(JSON.stringify(newItinerary)).subscribe({
         next: (response: any) => {
-          //window.location.reload();
+          this.items = [];
+          this.loadMyItineraries();
           this.id = response.id;
           const img = this.addFile.nativeElement.files[0];
           if (img) {
@@ -86,13 +87,12 @@ export class MyitinerariesComponent implements OnInit {
             formData.append("imageFile", img);
             this.itineraryService.setItineraryImage(this.id, formData).subscribe({
               next: () => {
-                window.location.reload();
+                this.router.navigate(['/myItineraries']);
               }, error: (err) => {
                 if (err.status != 200) {
-                  window.location.href = "/error/" + err.status;
-                  window.location.reload();
+                  this.router.navigate(["/error/" + err.status]);
                 } else {
-                  window.location.reload();
+                  this.router.navigate(["/myItineraries"]);
                 }
               }
             });
@@ -114,14 +114,16 @@ export class MyitinerariesComponent implements OnInit {
   deleteItinerary(id: number) {
     this.itineraryService.deleteItineraryById(id).subscribe({
       next: (response: any) => {
+        this.router.navigate(["/myItineraries"])
+        this.items = [];
+        this.loadMyItineraries();
         console.log("response was:");
         console.log(response);
-        window.location.reload();
       },
       error: (err) => {
         if (err.status != 404) {
           console.error('Error: ' + JSON.stringify(err));
-          window.location.href = "/error/" + err.status;
+          this.router.navigate(["/error/" + err.status]);
         }
       }
     });
@@ -142,7 +144,9 @@ export class MyitinerariesComponent implements OnInit {
 
     if (this.logInService.isLogged()) this.userService.editUserItinerary(this.id, JSON.stringify(newItinerary)).subscribe({
       next: (response: any) => {
-        window.location.reload();
+        this.router.navigate(["/myItineraries"])
+        this.items = [];
+        this.loadMyItineraries();
         console.log("response was:");
         console.log(response);
         const img = this.editFile.nativeElement.files[0];
@@ -153,14 +157,17 @@ export class MyitinerariesComponent implements OnInit {
           this.itineraryService.setItineraryImage(this.id, formData).subscribe({
             next: (response: any) => {
               this.isEditing = false;
-              window.location.reload();
+              this.router.navigate(["/myItineraries"]);
+              this.items = [];
+              this.loadMyItineraries();
             },
             error: (err) => {
               if (err.status != 200) {
-                window.location.href = "/error/" + err.status;
-                window.location.reload();
+                this.router.navigate(["/error/" + err.status]);
               } else {
-                window.location.reload();
+                this.router.navigate(["/myItineraries"])
+                this.items = [];
+                this.loadMyItineraries();
               }
             }
           });

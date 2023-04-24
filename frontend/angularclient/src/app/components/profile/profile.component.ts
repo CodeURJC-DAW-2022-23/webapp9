@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit{
         if (this.user != undefined) this.image = this.logInService.getImage(this.user);
       },
       error: (err) => {
-        window.location.href = "/error/" + err.status;
+        this.router.navigate(['/error/' + err.status])
       }
     });
   }
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit{
         if (this.user != undefined) this.image = this.logInService.getImage(this.user);
       },
       error: (err) => {
-        window.location.href = "/error/" + err;
+        this.router.navigate(['/error/' + err.status])
       }
     });
   }
@@ -106,7 +106,7 @@ export class ProfileComponent implements OnInit{
         this.router.navigate(['/profile'])
       },
       error: (err) => {
-        window.location.href = "/error/" + err.status;
+        this.router.navigate(['/error/' + err.status])
       }
     });
     if (logout) {
