@@ -9,6 +9,7 @@ import { InformationService } from './information.service';
 import { Review } from '../models/review.model';
 
 const baseUrl = '/api/itineraries';
+const userItiUrl = '/api/users/me/itineraries';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,22 @@ const baseUrl = '/api/itineraries';
 export class ItineraryService implements InformationService {
 
   constructor(private httpClient: HttpClient) { }
+
+  getItineraries(): Observable<Page<Itinerary>> {
+    return this.httpClient.get<Page<Itinerary>>(baseUrl);
+  }
+
+  deleteItineraryById(id: number) {
+    return this.httpClient.delete(baseUrl + "/" + id);
+  }
+
+  getUserItineraries(page: number) {
+    return this.httpClient.get(userItiUrl + '/?page=' + page).pipe() as Observable<Page<Itinerary>>;
+  }
+
+  setItineraryImage(id: number, data: FormData) {
+    return this.httpClient.put(baseUrl + '/' + id + '/image', data)
+  }
 
   search(name: string, type: string, sort: string, order: string, page: number): Observable<Page<Itinerary>> {
     let params = new HttpParams();

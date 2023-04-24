@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ItinerariesService } from 'src/app/services/itineraries.service';
+import { ItineraryService } from 'src/app/services/itinerary.service';
 import { LogInService } from 'src/app/services/log-in.service';
 import { UserService } from 'src/app/services/user.service';
 import { Itinerary } from 'src/app/models/itinerary.model';
@@ -27,7 +27,7 @@ export class MyitinerariesComponent implements OnInit {
   imgError: boolean = false;
   loader: boolean = false;
 
-  constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) { }
+  constructor(private router: Router, private logInService: LogInService, private itineraryService: ItineraryService, private userService: UserService) { }
 
   ngOnInit() {
     this.userService.getMe().subscribe({
