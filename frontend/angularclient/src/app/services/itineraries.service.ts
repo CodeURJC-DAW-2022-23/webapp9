@@ -34,6 +34,6 @@ export class ItinerariesService {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
   
-    return this.httpClient.post(baseUrl + '/image', data, { headers });
+    return this.httpClient.post(baseUrl + '/image/' + id, data);
   }
 }

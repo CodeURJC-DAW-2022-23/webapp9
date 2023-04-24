@@ -79,8 +79,10 @@ export class MyitinerariesComponent implements OnInit {
               next: () => {
                 window.location.reload();
               }, error: (err) => {
-                if (err.status == 400) window.location.href = "/error/400";
-                window.location.reload();
+                if (err.status != 200) {
+                  window.location.href = "/error/" + err.status;
+                  window.location.reload();
+                }
               }
             });
           }
