@@ -66,6 +66,20 @@ export class MyitinerariesComponent implements OnInit {
     const description = (<HTMLInputElement>document.getElementById('descriptionField')).value;
     const publicValue = (<HTMLInputElement>document.getElementById('publicValue')).checked.valueOf();
 
+    if (!name) {
+      alert('Please fill out a name for the itinerary');
+      return;
+    }
+    if (!description) {
+      alert('Please fill out a description for the itinerary');
+      return;
+    }
+
+    const img = this.addFile.nativeElement.files[0];
+    if (!img) {
+      alert('Please upload an image for the itinerary');
+      return;
+    }
 
     this.publicValue = publicValue;
     const newItinerary: any = {};
@@ -80,7 +94,7 @@ export class MyitinerariesComponent implements OnInit {
           this.items = [];
           this.loadMyItineraries();
           this.id = response.id;
-          const img = this.addFile.nativeElement.files[0];
+          
           if (img) {
             let formData = new FormData();
             formData.append("imageFile", img);
