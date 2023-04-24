@@ -154,7 +154,6 @@ public class ItineraryManagementRestController {
             if (newItineraries.getUser() != null) {
                 itinerary.get().setUser(userService.findByUsername(newItineraries.getUser()).get());
             }
-            itinerary.get().setPublic(newItineraries.isPublic());
             itinerary.get().setId(id);
             itineraryService.save(itinerary.get());
             return new ResponseEntity(HttpStatus.OK);
