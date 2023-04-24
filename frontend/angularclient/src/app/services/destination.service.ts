@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
 import { Page } from '../models/rest/page.model';
@@ -16,6 +16,17 @@ const baseUrl = '/api/destinations';
 export class DestinationService implements InformationService {
 
   constructor(private httpClient: HttpClient) { }
+
+  search(name: string, type: string, sort: string, order: string, page: number): Observable<Page<Destination>> {
+    let params = new HttpParams();
+    params = params.append('name', name);
+    params = params.append('type', type);
+    params = params.append('sort', sort);
+    params = params.append('order', order);
+    params = params.append('page', page);
+
+    return this.httpClient.get<Page<Destination>>(baseUrl, {params: params});
+  }
 
   getList(): Observable<Page<Destination>> {
     return this.httpClient.get<Page<Destination>>(baseUrl);

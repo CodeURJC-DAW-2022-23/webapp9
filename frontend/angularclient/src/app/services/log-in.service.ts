@@ -63,4 +63,8 @@ export class LogInService {
             this.user = undefined;
       });
   }
+  reload() {
+    window.location.reload();
+  }
+
 }

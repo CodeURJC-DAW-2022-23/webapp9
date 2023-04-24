@@ -6,7 +6,7 @@
                     alt="Placeholder logo" widht="80px" height="80px"></a>
 
             <div>
-            
+
                 <form class="form-inline float-end m-3" *ngIf="loginService.isLogged()">
                     <img [src]="profileImage()"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 " routerLink="/profile">
                 </form>
@@ -16,7 +16,7 @@
                         In</button>
                 </form>
 
-                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && !loginService.isAdmin()">
+                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() || loginService.isAdmin()">
                     <button type="button" class="btn btn-outline-secondary" routerLink="/myItineraries">My
                         itineraries</button>
                 </form>
@@ -26,9 +26,9 @@
                         Management
                     </button>
                 </form>
-                <form class="d-flex float-end m-3">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button type="button" class="btn btn-outline-secondary" routerLink="/search">Search</button>
+                <form class="d-flex float-end m-3" #f="ngForm" (ngSubmit)="search(f)" novalidate *ngIf="!isSearch">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="name" [(ngModel)]="name">
+                    <input class="btn btn-outline-secondary" type='submit' value='Search' />
                 </form>
 
             </div>

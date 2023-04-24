@@ -415,6 +415,9 @@ Here, each member of the team shows what they have contributed to during the dev
 
 
 ### Classes and templates diagram (SPA)
+New classes and templates diagram has been created with Angular componenets, templates and services. 
+
+![Phase4DAW](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/diagrams/svgs/diagramaTemplatesFase4.svg)
 
 
 ### Deployment instructions

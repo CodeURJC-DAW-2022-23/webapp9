@@ -133,4 +133,10 @@ export class ManagementComponent {
     }
 
   }
+
+  isPublic(i: Information) {
+    if (this.type!='itinerary') return true;
+    if (this.type=='itinerary' && "public" in i) return i.public;
+    else return false;
+  }
 }

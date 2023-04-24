@@ -4,7 +4,8 @@ import { Destination } from 'src/app/models/destination.model';
 import { Itinerary } from 'src/app/models/itinerary.model';
 import { Place } from 'src/app/models/place.model';
 import { DestinationService } from 'src/app/services/destination.service';
-import { ItinerariesService } from 'src/app/services/itineraries.service';
+import { ItineraryService } from 'src/app/services/itinerary.service';
+import { LogInService } from 'src/app/services/log-in.service';
 import { PlacesService } from 'src/app/services/places.service';
 
 
@@ -17,9 +18,11 @@ export class HomeComponent implements OnInit{
   destinations!: Destination[]
   places!: Place[]
   itineraries!:Itinerary[]
+  chart: any[] | undefined;
+  barChartData: { labels: any[]; datasets: { data: any[]; label: string; }[]; } | undefined;
 
 
-  constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItinerariesService ) { }
+  constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItineraryService, private logService: LogInService) { }
 
 
   ngOnInit(): void {
@@ -31,8 +34,19 @@ export class HomeComponent implements OnInit{
       this.places = data.content
     })
 
-    this.serviceItineraries.getItineraries().subscribe((data) => {
+    this.serviceItineraries.getList().subscribe((data) => {
       this.itineraries = data.content;
+    });
+
+    this.serviceDest.getChart().subscribe((data) => {
+      this.chart = data.destinations;
+      this.barChartData = {
+        labels: this.chart.map((d: any) => d.name),
+        datasets: [{
+          data: this.chart.map((d: any) => d.views),
+          label: "Views"
+        }]
+      }
     });
   }
 
