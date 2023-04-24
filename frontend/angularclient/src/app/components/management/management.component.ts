@@ -40,8 +40,6 @@ export class ManagementComponent {
 
     activatedRouter.url.subscribe({
       next: (data) => {
-        console.log(this.type, data[1].path, this.type == data[1].path)
-        if (this.type != data[1].path) {this.items = []; this.users = []; this.page = 0}
         this.type = data[1].path;
         if (data[1].path === 'itinerary') {
           this.service = this.itineraryService;
@@ -52,7 +50,7 @@ export class ManagementComponent {
         } else if (data[1].path === 'user') {
           this.userService = this.usrService;
         }
-    
+
         if (this.type != 'user') {
           this.service.getList(this.page).subscribe((response) => {
             response.content.forEach(item => {
@@ -60,7 +58,7 @@ export class ManagementComponent {
             });
           });
         }
-    
+
         if (this.type == 'user') {
           this.userService.getList(this.page).subscribe((response) => {
             response.content.forEach(user => {
@@ -91,6 +89,9 @@ export class ManagementComponent {
   }
 
   changeFunc(value: string) {
+    this.items = []; 
+    this.users = []; 
+    this.page = 0;
     this.router.navigate(['/management/' + value]);
   }
 
@@ -139,7 +140,7 @@ export class ManagementComponent {
   }
 
   reloadData() {
-    
+
     if (this.type != 'user') {
       this.items = [];
       for (let i = 0; i <= this.page; i++) {

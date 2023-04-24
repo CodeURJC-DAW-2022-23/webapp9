@@ -42,7 +42,7 @@
         </div>
         <div class="float-end w-50">
           <select #selectType class="form-select" aria-label="Management selection"
-            (change)="changeFunc(selectType.value)">
+            (change)="changeFunc(selectType.value)" [(ngModel)]="type">
             <option selected>Select...</option>
             <option value="itinerary">Itineraries</option>
             <option value="user">Users</option>
