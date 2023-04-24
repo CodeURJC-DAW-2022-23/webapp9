@@ -12,16 +12,18 @@ export class NavbarComponent {
   user!: User;
   name: string = "";
   @ViewChild('nameInput') nameInput!: ElementRef;
-  constructor(public loginService: LogInService) { 
+  constructor(public loginService: LogInService) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.name = this.nameInput.nativeElement.value;
+    this.loginService.reload;
   }
 
   profileImage() {
     this.user = this.loginService.currentUser();
     return this.loginService.getImage(this.user);
-}
+  }
+
 
 }

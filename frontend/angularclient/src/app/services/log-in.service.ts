@@ -54,4 +54,8 @@ export class LogInService {
 		return user.image ? `/api/users/${user.id}/image` : '/assets/images/no_image.png';
 	}
 
+  reload() {
+    window.location.reload();
+  }
+
 }
