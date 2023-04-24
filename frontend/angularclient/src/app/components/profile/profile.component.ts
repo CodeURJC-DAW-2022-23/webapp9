@@ -102,14 +102,14 @@ export class ProfileComponent implements OnInit{
       next: (response: any) => {
         this.isEditing = false;
         this.router.navigate(['/profile'])
+        if (logout) {
+          this.logout();
+          this.router.navigate(['/logIn']);
+        }
       },
       error: (err) => {
         this.router.navigate(['/error/' + err.status])
       }
     });
-    if (logout) {
-      this.logout();
-      this.router.navigate(['/login']);
-    }
   }
 }
