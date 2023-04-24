@@ -121,7 +121,7 @@ export class DetailComponent {
 
   copyItinerary(id: number) {
     if (this.service instanceof ItineraryService) this.service.copy(id).subscribe({
-      next: (response) => window.location.href = `/details/itinerary/${response.id}`,
+      next: (response) => this.router.navigate(['/details/itinerary/', response.id]),
       error: (error) => this.router.navigate(['/error/', error.status])
     });
   }
@@ -168,7 +168,7 @@ export class DetailComponent {
 
   getPdfUrl(id: number) {
     if (this.service instanceof ItineraryService)
-      window.location.href = this.service.getPdfUrl(id);
+      this.router.navigate([this.service.getPdfUrl(id)]);
   }
 
   addPlace(itinerary: number) {
@@ -182,11 +182,12 @@ export class DetailComponent {
     if (parseInt(f.value.score) < 0 || parseInt(f.value.score) > 5) return;
 
     this.itineraryService.addReview(id, {
-        title: f.value.title,
-        description: f.value.description,
-        score: f.value.score,
-        user: this.user.user.username}).subscribe({
-      next: () => window.location.href = `/details/itinerary/${id}`,
+      title: f.value.title,
+      description: f.value.description,
+      score: f.value.score,
+      user: this.user.user.username
+    }).subscribe({
+      next: () => this.router.navigate(['/details/itinerary/', id]),
       error: (error) => this.router.navigate(['/error/', error.status])
     });
   }

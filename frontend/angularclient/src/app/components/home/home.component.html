@@ -94,7 +94,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{d.name}}</h5>
                             <p class="card-text">{{d.description}}</p>
-                            <a href="/details/{{d.typeLowercase}}/{{d.id}}" class="btn btn-primary">More details</a>
+                            <a [routerLink]="'/details/'+d.typeLowercase+'/'+d.id" class="btn btn-primary">More details</a>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
             <div class="col-2"></div>
             <h2 class="text-center col-8">Places to visit</h2>
             <div class="col-2 float-end">
-                <a href='/search?name=&type=place&sort=id&order=DESC&page=0' role="button" class="btn btn-secondary">View more places</a>
+                <a routerLink="/search?name=&type=place&sort=id&order=DESC&page=0" role="button" class="btn btn-secondary">View more places</a>
             </div>
         </div>
         <hr class="text-light">
@@ -119,7 +119,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{p.name}}</h5>
                             <p class="card-text">{{p.description}}</p>
-                            <a href="/details/{{p.typeLowercase}}/{{p.id}}" class="btn btn-primary">More details</a>
+                            <a [routerLink]="'/details/'+p.typeLowercase+'/'+p.id" class="btn btn-primary">More details</a>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
             <div class="col-2"></div>
             <h2 class="text-center col-8">Itineraries</h2>
             <div class="col-2 float-end">
-                <a href='/search?name=&type=itinerary&sort=id&order=DESC&page=0' role="button" class="btn btn-secondary">View more itineraries</a>
+                <a routerLink="/search?name=&type=itinerary&sort=id&order=DESC&page=0" role="button" class="btn btn-secondary">View more itineraries</a>
             </div>
         </div>
         <hr class="text-light">
@@ -144,7 +144,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{i.name}}</h5>
                             <p class="card-text">{{i.description}}</p>
-                            <a href="/details/{{i.typeLowercase}}/{{i.id}}" class="btn btn-primary">More details</a>
+                            <a [routerLink]="'/details/'+i.typeLowercase+'/'+i.id" class="btn btn-primary">More details</a>
                         </div>
                     </div>
                 </div>

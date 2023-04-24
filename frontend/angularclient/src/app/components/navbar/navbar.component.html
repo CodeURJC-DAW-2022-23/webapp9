@@ -2,7 +2,7 @@
 
     <div class="navbar sticky-top navbar-light bg-white bg-opacity-75">
         <div class="container-fluid justify-content-between">
-            <a class="navbar-brand float-start" href="index.html"><img src="/assets/Image/logo-placeholder-image.png"
+            <a class="navbar-brand float-start" routerLink="/"><img src="/assets/Image/logo-placeholder-image.png"
                     alt="Placeholder logo" widht="80px" height="80px"></a>
 
             <div>
@@ -22,7 +22,7 @@
                 </form>
 
                 <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && loginService.isAdmin()">
-                    <a type="button" class="btn btn-outline-secondary" href="/management/itinerary">
+                    <a type="button" class="btn btn-outline-secondary" routerLink="/management/itinerary">
                         Management
                     </a>
                 </form>

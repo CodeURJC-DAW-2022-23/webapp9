@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Information } from 'src/app/models/information.model';
 import { Page } from 'src/app/models/rest/page.model';
 import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
@@ -34,7 +34,8 @@ export class ManagementComponent {
     private placeService: PlaceMngService,
     private destinationService: DestinationMngService,
     private usrService: UserMngService,
-    private usService: UserService
+    private usService: UserService,
+    private router: Router
   ) {
 
     activatedRouter.url.subscribe((data) => {
@@ -78,10 +79,10 @@ export class ManagementComponent {
         this.currentUser = data;
         this.admin = this.currentUser.user.roles.indexOf('ADMIN') !== -1;
         if (this.admin == false){
-          window.location.href = "/error/403"
+          this.router.navigate(['/error/403']);
         }
       },
-      error: () => window.location.href = "/logIn"
+      error: () => this.router.navigate(["/logIn"])
     })
   }
 
@@ -91,13 +92,13 @@ export class ManagementComponent {
 
   deleteItem(id: number) {
     this.service.deleteItem(id).subscribe(() => {
-      window.location.href = `/management/${this.type}`
+      this.router.navigate(['/management/'+this.type])
     });
   }
 
   deleteUser(id: number) {
     this.userService.deleteUser(id).subscribe(() => {
-      window.location.href = `/management/${this.type}`
+      this.router.navigate(["/management/", this.type])
     });
   }
 

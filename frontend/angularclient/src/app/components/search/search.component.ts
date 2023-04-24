@@ -68,7 +68,7 @@ export class SearchComponent {
     this.order = f.value.order ? f.value.order : "DESC";
     this.page = f.value.page ? f.value.page : "0";
 
-    window.location.href = `search?name=${this.name}&type=${this.type}&sort=${this.sort}&order=${this.order}&page=${this.page}`;
+    this.router.navigate(["search?name=", this.name + "&type=", this.type, "&sort=", this.sort, "&order=", this.order, "&page=", this.page]);
   }
 
   loadMore() {

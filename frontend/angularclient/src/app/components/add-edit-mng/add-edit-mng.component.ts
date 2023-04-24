@@ -90,10 +90,10 @@ export class AddEditMngComponent {
         this.currentUser = data;
         this.admin = this.currentUser.user.roles.indexOf('ADMIN') !== -1;
         if (this.admin == false){
-          window.location.href = "/error/403"
+          this.router.navigate(['/error/403']);
         }
       },
-      error: () => window.location.href = "/logIn"
+      error: () => this.router.navigate(['/logIn'])
     })
   }
 
