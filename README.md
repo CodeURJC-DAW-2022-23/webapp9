@@ -3,7 +3,7 @@
 
 ### Showcase video
 
-[![Showcase video](https://img.youtube.com/vi/(URL)/maxresdefault.jpg)](https://youtu.be/(URL))
+[![Showcase video](https://img.youtube.com/vi/PTDQu7yZiKU/maxresdefault.jpg)](https://youtu.be/PTDQu7yZiKU)
 
 ## Index
 
@@ -425,7 +425,7 @@ New classes and templates diagram has been created with Angular componenets, tem
 
 ### Showcase video
 
-[![Showcase video](https://img.youtube.com/vi/(URL)/maxresdefault.jpg)](https://youtu.be/(URL))
+[![Showcase video](https://img.youtube.com/vi/PTDQu7yZiKU/maxresdefault.jpg)](https://youtu.be/PTDQu7yZiKU)
 
 
 ### Members participation
