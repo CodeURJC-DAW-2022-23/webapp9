@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  user!: User;
+  user?: User;
   name: string = "";
   isSearch: boolean = false;
   image!: string;
@@ -47,8 +47,11 @@ export class NavbarComponent {
   }
 
   profileImage() {
-    this.user = this.loginService.currentUser();
-    return this.loginService.getImage(this.user);
+    if (this.loginService.currentUser() != undefined) {
+      this.user = this.loginService.currentUser();
+      if (this.user != undefined) return this.loginService.getImage(this.user);
+    }
+    return undefined;
   }
 
   search(f: NgForm) {

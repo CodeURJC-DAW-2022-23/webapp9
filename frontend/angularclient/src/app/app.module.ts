@@ -20,6 +20,8 @@ import { InformationComponent } from './components/information/information.compo
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ReviewComponent } from './components/review/review.component';
 import { NgChartsModule } from 'ng2-charts';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MyitinerariesComponent } from './components/myitineraries/myitineraries.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { NgChartsModule } from 'ng2-charts';
     ManagementComponent,
     AddEditMngComponent,
     SignUpComponent,
+    ProfileComponent,
+    MyitinerariesComponent,
     ReviewComponent
   ],
   imports: [
