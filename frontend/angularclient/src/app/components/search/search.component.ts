@@ -28,32 +28,34 @@ export class SearchComponent {
     private destinationService: DestinationService,
     private itineraryService: ItineraryService,
     private placeService: PlaceService,
-    private router: Router) { }
+    private router: Router) { 
+      this.activatedRoute.queryParams.subscribe((params: Params) => {
+        this.name = params['name'] ? params['name'] : "";
+        this.type = params['type'] ? params['type'] : "itinerary";
+        this.sort = params['sort'] ? params['sort'] : "id";
+        this.order = params['order'] ? params['order'] : "DESC";
+        this.page = params['page'] ? params['page'] : "0";
+        if (this.type == 'destination') {
+          this.service = this.destinationService
+        } else if (this.type == 'itinerary') {
+          this.service = this.itineraryService
+        } else if (this.type == 'place') {
+          this.service = this.placeService
+        }
+
+        this.items = [];
+        this.service.search(this.name, this.type, this.sort, this.order, this.page).subscribe({
+          next: (response: Page<Information>) => {
+            response.content.forEach(i => this.items.push(i));
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        })
+      });
+    }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
-      this.name = params['name'] ? params['name'] : "";
-      this.type = params['type'] ? params['type'] : "itinerary";
-      this.sort = params['sort'] ? params['sort'] : "id";
-      this.order = params['order'] ? params['order'] : "DESC";
-      this.page = params['page'] ? params['page'] : "0";
-      if (this.type == 'destination') {
-        this.service = this.destinationService
-      } else if (this.type == 'itinerary') {
-        this.service = this.itineraryService
-      } else if (this.type == 'place') {
-        this.service = this.placeService
-      }
-
-      this.service.search(this.name, this.type, this.sort, this.order, this.page).subscribe({
-        next: (response: Page<Information>) => {
-          response.content.forEach(i => this.items.push(i));
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      })
-    });
 
   }
 
@@ -68,7 +70,7 @@ export class SearchComponent {
     this.order = f.value.order ? f.value.order : "DESC";
     this.page = f.value.page ? f.value.page : "0";
 
-    this.router.navigate(["search?name=", this.name + "&type=", this.type, "&sort=", this.sort, "&order=", this.order, "&page=", this.page]);
+    this.router.navigate(["/search"], { queryParams: { name: f.value.name, type: this.type, sort: this.sort, order: this.order, page: this.page } });
   }
 
   loadMore() {
