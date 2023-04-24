@@ -32,7 +32,7 @@ export class MyitinerariesComponent implements OnInit {
   ngOnInit() {
     this.userService.getMe().subscribe({
       next: (response: any) => {
-        this.loadMyItineraries(this.page);
+        this.loadMyItineraries();
       },
       error: (err) => {
         this.router.navigate(["/error/" + err.status]);
@@ -43,7 +43,7 @@ export class MyitinerariesComponent implements OnInit {
   afterViewInit() {
     this.userService.getMe().subscribe({
       next: (response: any) => {
-        this.loadMyItineraries(this.page);
+        this.loadMyItineraries();
       },
       error: (err) => {
         this.router.navigate(["/error/" + err.status]);
@@ -51,14 +51,14 @@ export class MyitinerariesComponent implements OnInit {
     });
   }
 
-  loadMyItineraries(page: number) {
-    this.itineraryService.getUserItineraries(page).subscribe((response) => {
+  loadMyItineraries() {
+    this.page = 0;
+    this.itineraryService.getUserItineraries(this.page).subscribe((response) => {
       response.content.forEach(item => {
         this.items.push(item);
       })
     });
     this.loader = false;
-    this.page = page;
   }
 
   onSubmit() {
@@ -78,7 +78,7 @@ export class MyitinerariesComponent implements OnInit {
       this.userService.addUserItinerary(JSON.stringify(newItinerary)).subscribe({
         next: (response: any) => {
           this.items = [];
-          this.loadMyItineraries(this.page);
+          this.loadMyItineraries();
           this.id = response.id;
           const img = this.addFile.nativeElement.files[0];
           if (img) {
@@ -114,7 +114,7 @@ export class MyitinerariesComponent implements OnInit {
       next: (response: any) => {
         this.router.navigate(["/myItineraries"])
         this.items = [];
-        this.loadMyItineraries(this.page);
+        this.loadMyItineraries();
       },
       error: (err) => {
         if (err.status != 404) {
@@ -141,7 +141,7 @@ export class MyitinerariesComponent implements OnInit {
       next: (response: any) => {
         this.router.navigate(["/myItineraries"])
         this.items = [];
-        this.loadMyItineraries(this.page);
+        this.loadMyItineraries();
         const img = this.editFile.nativeElement.files[0];
         this.isEditing = false;
         if (img) {
@@ -152,7 +152,7 @@ export class MyitinerariesComponent implements OnInit {
               this.isEditing = false;
               this.router.navigate(["/myItineraries"]);
               this.items = [];
-              this.loadMyItineraries(this.page);
+              this.loadMyItineraries();
             },
             error: (err) => {
               if (err.status != 200) {
@@ -160,7 +160,7 @@ export class MyitinerariesComponent implements OnInit {
               } else {
                 this.router.navigate(["/myItineraries"])
                 this.items = [];
-                this.loadMyItineraries(this.page);
+                this.loadMyItineraries();
               }
             }
           });
@@ -174,6 +174,11 @@ export class MyitinerariesComponent implements OnInit {
   loadMore() {
     this.loader = true;
     this.page += 1;
-    this.loadMyItineraries(this.page);
+    this.itineraryService.getUserItineraries(this.page).subscribe((response) => {
+      response.content.forEach(item => {
+        this.items.push(item);
+      })
+      this.loader = false;
+    });
   }
 }
