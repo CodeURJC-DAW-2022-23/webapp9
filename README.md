@@ -444,19 +444,19 @@ In order to connect to our app, these are the links that can be used:
 Here, each member of the team shows what they have contributed to during the development of this phase.
 
 1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
-    - **Description of tasks:** ... .
+    - **Description of tasks:** In this phase I have been in charge of the management general page and the adding and editing items page. I have also developed the search page with my partner Iván. Also, I have been correcting errors and merging all the changes, and finally, I have been in charge of the deployment as well as my partner Iván.
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Feat: Management html](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/79f6ab722e4a649ec2b392f804e04a64cbc40854)
+        - [Feat: Updated models and services](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/7d4722f4b003a9b3708fdd81696bc40ce1a719af)
+        - [Feat: Add feature for Destinations, Places, Itineraries and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/288796a7e6c5f4d0de2bc84cb7e0318ef5a5f207)
+        - [Feat: Management typescript and minor fixes](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/2bb294ff4cf363e64fcc7830f30dfd45748a5a9c)
+        - [Feat: Edit feature for Destinations, Places, Itineraries and Users](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/13adb6fc44e7c76ad00b4de9550a9c54361c48e8)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [add-edit-mng.component.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/add-edit-mng/add-edit-mng.component.html)
+        - [add-edit-mng.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/add-edit-mng/add-edit-mng.component.ts)
+        - [management.component.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/management/management.component.html)
+        - [management.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/management/management.component.ts)
+        - [search.component.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/search/search.component.html)
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
     - **Description of tasks:** ... .
