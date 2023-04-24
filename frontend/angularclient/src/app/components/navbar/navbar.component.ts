@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { LogInService } from 'src/app/services/log-in.service';
 
@@ -11,6 +12,7 @@ import { LogInService } from 'src/app/services/log-in.service';
 export class NavbarComponent {
   user!: User;
   name: string = "";
+
   @ViewChild('nameInput') nameInput!: ElementRef;
   constructor(public loginService: LogInService) { 
   }
@@ -22,6 +24,10 @@ export class NavbarComponent {
   profileImage() {
     this.user = this.loginService.currentUser();
     return this.loginService.getImage(this.user);
-}
+  }
+
+  search(f: NgForm) {
+    window.location.href = `/search?name=${f.value.name}&type=itinerary&sort=id&order=DESC&page=0`;
+  }
 
 }
