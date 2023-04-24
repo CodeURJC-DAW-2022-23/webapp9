@@ -98,7 +98,7 @@ export class ProfileComponent implements OnInit {
           }
           this.router.navigate(['/profile']);
         },
-        error: (err) => {          
+        error: (err) => {
           if (err.status != 200) this.router.navigate(['/error/' + err.status]);
           else if (this.user != undefined) {
             this.image = '/assets/images/no_image.png';
