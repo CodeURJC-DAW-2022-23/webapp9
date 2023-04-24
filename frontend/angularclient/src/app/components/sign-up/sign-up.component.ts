@@ -23,7 +23,9 @@ export class SignUpComponent {
   @ViewChild('file') file: any;
   uploadedImage!: File;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private service: SignUpService, private loginService: LogInService){   }
+
+  constructor(private formBuilder: FormBuilder, private router: Router, private service: SignUpService, private loginService: LogInService) {
+  }
 
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
@@ -59,7 +61,7 @@ export class SignUpComponent {
               this.logout();
               this.router.navigate(['/logIn'])
             },
-              error: (error: { status: number; }) => {
+              error: (error) => {
                 if (error.status == 200) {
                   this.logout();
                   this.router.navigate(['/logIn']);
@@ -76,6 +78,6 @@ export class SignUpComponent {
   }
 
   logout() {
-    this.loginService.logOut();
+
   }
 }

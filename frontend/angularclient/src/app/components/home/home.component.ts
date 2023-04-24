@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 
 import { Destination } from 'src/app/models/destination.model';
 import { Itinerary } from 'src/app/models/itinerary.model';
@@ -14,12 +15,12 @@ import { PlacesService } from 'src/app/services/places.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   destinations!: Destination[]
   places!: Place[]
-  itineraries!:Itinerary[]
-  chart: any[] | undefined;
-  barChartData: { labels: any[]; datasets: { data: any[]; label: string; }[]; } | undefined;
+  itineraries!: Itinerary[]
+  chart!: Destination[]
+  chartData: any
 
 
   constructor(public serviceDest: DestinationService, public servicePlaces: PlacesService, public serviceItineraries: ItineraryService, private logService: LogInService) { }
@@ -49,5 +50,24 @@ export class HomeComponent implements OnInit{
       }
     });
   }
+
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    scales: {
+      x: {},
+      y: {
+        beginAtZero: true
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+      }
+    }
+  };
+  public barChartType: ChartType = 'bar';
+
+  public barChartData!: ChartData<'bar'>;
+
 
 }

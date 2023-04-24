@@ -11,7 +11,7 @@ import { LogInService } from 'src/app/services/log-in.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  user!: User | undefined;
+  user?: User;
   name: string = "";
   isSearch: boolean = false;
 
@@ -30,13 +30,15 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.name = this.nameInput.nativeElement.value;
-    this.loginService.reload();
+    this.loginService.reload;
   }
 
   profileImage() {
-    this.user = this.loginService.currentUser();
-    if (this.user != undefined) return this.loginService.getImage(this.user);
-    else return undefined;
+    if (this.loginService.currentUser() != undefined) {
+      this.user = this.loginService.currentUser();
+      if (this.user != undefined)  return this.loginService.getImage(this.user);
+    }
+    return undefined;
   }
 
   search(f: NgForm) {

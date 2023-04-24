@@ -13,7 +13,7 @@ export class SignUpService {
   constructor(private httpClient: HttpClient) { }
 
   signUp(user: string, firstName: string, lastName:string, email:string, nationality:string, password:string){
-    return this.httpClient.post(BASE_URL, { 'username': user, 'firstName': firstName, 'lastName':lastName, 'email∫':email, 'nationality':nationality, 'passwordHash':password});
+    return this.httpClient.post(BASE_URL, { 'username': user, 'firstName': firstName, 'lastName':lastName, 'email':email, 'nationality':nationality, 'passwordHash':password});
   }
 
   getImage(user: User): string {

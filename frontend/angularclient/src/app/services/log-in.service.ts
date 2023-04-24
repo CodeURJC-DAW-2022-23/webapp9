@@ -11,7 +11,7 @@ const BASE_URL = '/api/auth'
 export class LogInService {
 
   public logged = false
-  user: User | undefined;
+  user?: User
 
   constructor(private httpClient: HttpClient) {
     this.reqIsLogged();
@@ -47,13 +47,16 @@ export class LogInService {
   }
 
   isAdmin() {
-    if (this.user == undefined) return 
-    else return this.user && this.user.roles.indexOf('ADMIN') !== -1;
+    return this.user && this.user.roles.indexOf('ADMIN') !== -1;
   }
 
   getImage(user: User): string {
 		return user.image ? `/api/users/${user.id}/image` : '/assets/images/no_image.png';
 	}
+
+  reload() {
+    window.location.reload();
+  }
 
   logOut() {
     return this.httpClient.post(BASE_URL + '/logout', { withCredentials: true })
@@ -63,8 +66,4 @@ export class LogInService {
             this.user = undefined;
       });
   }
-  reload() {
-    window.location.reload();
-  }
-
 }

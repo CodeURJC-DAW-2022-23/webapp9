@@ -52,4 +52,5 @@ export class DestinationService implements InformationService {
     return this.httpClient.get<Destination>(`${baseUrl}/${id}?placesPage=${page}`);
   }
 
+
 }
