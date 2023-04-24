@@ -17,12 +17,14 @@ export class MyitinerariesComponent implements OnInit {
   id: number = -1;
   name: String = "";
   description: String = "";
+  page: number = 0;
   isPublic: boolean | undefined = undefined;
   isEditing: boolean = false;
   user: User | undefined;
 
   @ViewChild('userFile') userFile: any;
   imgError: boolean = false;
+  loader: boolean = false;
 
   constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
 
@@ -49,22 +51,24 @@ export class MyitinerariesComponent implements OnInit {
   }
 
   loadMyItineraries() {
-    this.itineraryService.getUserItineraries().subscribe((response) => {
+    this.itineraryService.getUserItineraries(this.page).subscribe((response) => {
       response.content.forEach(item => {
         this.items.push(item);
+        console.log(item);
       })
     });
+    this.loader = false;
   }
 
   onSubmit() {
     const name = (<HTMLInputElement>document.getElementById('nameField')).value;
     const description = (<HTMLInputElement>document.getElementById('descriptionField')).value;
-    const isPrivate = (<HTMLInputElement>document.getElementById('privacyField')).checked;
+    const publicValue  = (<HTMLInputElement>document.getElementById('publicValue')).checked;
   
     const newItinerary: any = {};
     newItinerary.name = name.trim();
     newItinerary.description = description.trim();
-    newItinerary.isPrivate = isPrivate.valueOf();
+    newItinerary.publicValue = publicValue.valueOf();
   
     if (this.logInService.isLogged()) {
       this.userService.addUserItinerary(JSON.stringify(newItinerary)).subscribe({
@@ -141,7 +145,7 @@ export class MyitinerariesComponent implements OnInit {
               window.location.reload();
             },
             error: (err) => {
-              if (err.status != 200) this.router.navigate(['/error/' + err.status])
+              if (err.status != 200) this.router.navigate(['/error/' + err.status]);
             }
           });
         }
@@ -150,5 +154,11 @@ export class MyitinerariesComponent implements OnInit {
         console.error("Error when making new itinerary; " + JSON.stringify(err));
       }
     });
+  }
+
+  loadMore() {
+    this.loader = true;
+    this.page += 1;
+    this.loadMyItineraries();
   }
 }
