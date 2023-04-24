@@ -57,11 +57,16 @@ export class SignUpComponent {
           formData.append("imageFile", image);
           console.log(formData);
           this.service.downloadImage(formData).subscribe(
-            { next: () => this.router.navigate(['/logIn']),
+            { next: () => {
+              this.logout();
+              this.router.navigate(['/logIn'])
+            },
               error: (error) => {
                 if (error.status == 200) {
+                  this.logout();
                   this.router.navigate(['/logIn']);
                 } else {
+                  this.logout();
                   this.router.navigate(['/error/', error.status])
                 }
               }
@@ -70,6 +75,9 @@ export class SignUpComponent {
       },
 
     });
-    //logout aquí!!!!!
+  }
+
+  logout() {
+
   }
 }
