@@ -1,6 +1,7 @@
 package com.tripscanner.TripScanner.controller.restController;
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.rest.DestinationDetailsDTO;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.PlaceService;
@@ -95,7 +96,6 @@ public class DestinationRestController {
 
         if (optionalDestination.isPresent()) {
             Destination destination = optionalDestination.get();
-
             destination.setViews(destination.getViews() + 1);
             destinationService.save(destination);
 
@@ -103,6 +103,40 @@ public class DestinationRestController {
                     placeService.findFromDestination(destination.getId(), PageRequest.of(placesPage, 10)));
 
             return ResponseEntity.ok(destinationDetailsDTO);
+        }
+        else return ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "Get Places from a specific Destination.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully searched the desired destinations.",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = DestinationDetailsDTO.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid arguments.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Requested a non-existing Destination.",
+                    content = @Content
+            )
+    })
+    @GetMapping("/{id}/places")
+    public ResponseEntity<Page<Place>> destinationPlaces(@Parameter(description="destination id") @PathVariable int id,
+                                                         @Parameter(description="places page number") @RequestParam(defaultValue = "0") int placesPage) {
+        Optional<Destination> optionalDestination = destinationService.findById(id);
+
+        if (optionalDestination.isPresent()) {
+            Destination destination = optionalDestination.get();
+
+            return ResponseEntity.ok(placeService.findFromDestination(destination.getId(), PageRequest.of(placesPage, 10)));
         }
         else return ResponseEntity.notFound().build();
     }

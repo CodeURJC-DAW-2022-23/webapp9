@@ -1,36 +1,56 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
-
-import { Page } from '../models/page.models';
+import { Page } from '../models/rest/page.model';
 import { Destination } from '../models/destination.model';
 import { Graphic } from '../models/graphic.modul';
 
-
-
+import { InformationService } from './information.service';
+import { Place } from '../models/place.model';
 
 const baseUrl = '/api/destinations';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DestinationService {
+export class DestinationService implements InformationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getDestinations(): Observable<Page> {
-    return this.httpClient.get<Page>(baseUrl);
+  search(name: string, type: string, sort: string, order: string, page: number): Observable<Page<Destination>> {
+    let params = new HttpParams();
+    params = params.append('name', name);
+    params = params.append('type', type);
+    params = params.append('sort', sort);
+    params = params.append('order', order);
+    params = params.append('page', page);
+
+    return this.httpClient.get<Page<Destination>>(baseUrl, {params: params});
   }
 
+  getList(): Observable<Page<Destination>> {
+    return this.httpClient.get<Page<Destination>>(baseUrl);
+  }
+
+  getItem(id: number): Observable<Destination> {
+    return this.httpClient.get<Destination>(`${baseUrl}/${id}`);
+  }
+
+  getDestinations(): Observable<Page<Destination>> {
+    return this.httpClient.get<Page<Destination>>(baseUrl);
+  }
 
   getChart():Observable<Graphic>{
     return this.httpClient.get<Graphic>('/api/graphs/index');
   }
 
-  getImage(destination: Destination): string {
+	getImage(destination: Destination): string {
 		return destination.image ? `${baseUrl}/${destination.id}/image` : '/assets/images/no_image.png';
 	}
 
+  loadMoreInformation(id: number, page: number = 0): Observable<Page<Place>> {
+    return this.httpClient.get<Page<Place>>(`${baseUrl}/${id}/places?placesPage=${page}`);
+  }
 
 }

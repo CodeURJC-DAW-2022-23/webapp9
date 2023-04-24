@@ -1,6 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { NavigationStart, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { LogInService } from 'src/app/services/log-in.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -11,17 +14,45 @@ import { LogInService } from 'src/app/services/log-in.service';
 export class NavbarComponent {
   user!: User;
   name: string = "";
+  isSearch: boolean = false;
+  image!: string;
+  admin: boolean = false;
+  error: boolean = false;
+
   @ViewChild('nameInput') nameInput!: ElementRef;
-  constructor(public loginService: LogInService) { 
+
+  constructor(private router: Router,
+    public loginService: LogInService,
+    public userService: UserService) {
+
+    this.router.events.subscribe(
+      (event) => {
+        if (event instanceof NavigationStart) {
+          this.isSearch = event.url.startsWith("/search");
+          this.error = event.url.startsWith("/error");
+          this.userService.getMe().subscribe(
+            (data) => {
+              this.user = data.user;
+              this.image = this.userService.getImage(this.user.id);
+              this.admin = this.user.roles.indexOf('ADMIN') !== -1;
+            }
+          )
+        }
+      });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.name = this.nameInput.nativeElement.value;
+    this.loginService.reload;
   }
 
   profileImage() {
     this.user = this.loginService.currentUser();
     return this.loginService.getImage(this.user);
-}
+  }
+
+  search(f: NgForm) {
+    this.router.navigate(["/search"], { queryParams: { name: f.value.name, type: "itinerary", sort: "id", order: "DESC", page: 0 } });
+  }
 
 }

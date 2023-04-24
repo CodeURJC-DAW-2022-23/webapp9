@@ -1,0 +1,132 @@
+<ng-container>
+
+    <div class="container p-4">
+        <section class="p-5 mb-4 bg-secondary rounded-3 text-dark" id="header-item-bg">
+            <div class="row">
+                <!-- Item Image -->
+                <div class="col-12 col-md-5 pe-0 pe-md-5" id="header-graph">
+                    <img [src]="loadImage(information)" alt="{{information.name}}" id="header-item-image"
+                        class="rounded-3">         
+                </div>
+                <!-- Item Data -->
+                <div class="col-12 col-md-7 py-4 p-md-0" id="header-data">
+                    <div class="row pb-2 justify-content-between">
+                        <!-- Item Name -->
+                        <h1 class="col-9 display-5 fw-bold ps-4 p-md-0" id="header-item-name">{{information.name}}</h1>
+    
+                        <div class="col-3" id="header-buttons" *ngIf="information.typeLowercase === 'itinerary' && registered">
+                            <button type="button" class="btn btn-primary float-end m-1" (click)="getPdfUrl(information.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                </svg>
+                            </button>
+    
+                            <!-- Save Button -->
+                            <button type="button" class="btn btn-primary float-end m-1" (click)="copyItinerary(information.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- Item Description -->
+                    <div class="row">
+                        <p class="fs-5 ps-4 p-md-0">{{information.description}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2 mt-5" *ngIf="information.typeLowercase === 'place' && registered">
+                <div class="col-12 text-center">
+                    <h5>Add to your itinerary</h5>
+                </div>
+            </div>
+            <div class="row text-center justify-content-between" *ngIf="information.typeLowercase === 'place' && registered">
+                <div class="col-9 col-md-10 col-xxl-11">
+                    <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length > 0" [(ngModel)]="toItinerary">
+                        <option [value]="i.id" *ngFor="let i of user.itineraries.content">{{i.name}}</option>
+                    </select>
+                    <select class="form-select" name="itineraryList" *ngIf="user.itineraries.content.length === 0" disabled>
+                        <option disabled>No itineraries</option>
+                    </select>
+                </div>
+                <button (click)="addPlace(toItinerary)" class="btn btn-primary col-3 col-md-2 col-xxl-1 text-center">Add</button>
+            </div>
+        </section>
+    </div>
+    
+    
+    <!-- Destination Information -->
+    <div class="container p-4">
+        <div class="p-4 mb-4 bg-secondary rounded-3 text-dark">
+            <section id="info-item-bg">
+                <h3 class="text-center mb-3">Related Information</h3>
+                <app-information [information]="i" *ngFor="let i of information.related" [fromItinerary]="(information.typeLowercase === 'itinerary') ? information.id : -1" (deleted)="onDeletion($event)"></app-information>
+            </section>
+    
+            <div class="align-items-center" id="information-spinner" *ngIf="infoLoader">
+                <strong>Loading...</strong>
+                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" id="btn-more-information" (click)="loadMoreInformation()">
+                    Load more
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews -->
+    <div class="container p-4" *ngIf="information.typeLowercase === 'itinerary'">
+        <div class="p-4 mb-4 bg-secondary rounded-3 text-dark">
+            <section id="info-review-bg">
+                <h3 class="text-center mb-3">Reviews</h3>
+
+                <div class="card m-3" id="new-review-form" *ngIf="registered">
+                    <form #f="ngForm" (ngSubmit)="addReview(f, information.id)" novalidate class="card-body g-0 text-black bg-light row">
+    
+                        <h5 class="mb-3">Add your review!</h5>
+    
+                        <div class="mb-3 row">
+                            <div class="col-9">
+                                <label for="review-title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="review-title" name="title" ngModel>
+                            </div>
+                            <div class="col-3">
+                                <label for="review-score" class="form-label">Score</label>
+                                <input type="text" class="form-control" id="review-score" name="score" ngModel>
+                                <div id="score-review-help" class="form-text">Write a score from 0-5</div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 row">
+                            <div class="col-12">
+                                <label for="review-title" class="form-label">Body</label>
+                                <textarea class="form-control" id="review-body" name="description" ngModel></textarea>
+                            </div>
+                        </div>
+    
+                        <button type="submit" class="btn btn-primary">Submit</button>
+    
+                    </form>
+                </div>
+
+                <app-review *ngFor="let r of information.reviews" [review]="r" [user]="r.user"></app-review>
+    
+            </section>
+    
+            <div class="align-items-center" id="reviews-spinner" *ngIf="reviewsLoader">
+                <strong>Loading...</strong>
+                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" id="btn-more-reviews" (click)="loadMoreReviews()">
+                    Load more
+                </button>
+            </div>
+        </div>
+    </div>
+
+</ng-container>

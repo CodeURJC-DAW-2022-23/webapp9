@@ -223,7 +223,7 @@ public class PlaceManagementRestController {
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
             URI location = new URI(baseUrl + "/api/places/" + id + "/image");
             Resource file = new InputStreamResource(imageFile.getInputStream());
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,  "image/" + imageFile.getOriginalFilename().split("\\.")[1], HttpHeaders.CONTENT_LOCATION, location.toString())
                     .contentLength(newPlace.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

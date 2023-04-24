@@ -154,7 +154,6 @@ public class ItineraryManagementRestController {
             if (newItineraries.getUser() != null) {
                 itinerary.get().setUser(userService.findByUsername(newItineraries.getUser()).get());
             }
-            itinerary.get().setPublic(newItineraries.isPublic());
             itinerary.get().setId(id);
             itineraryService.save(itinerary.get());
             return new ResponseEntity(HttpStatus.OK);
@@ -231,7 +230,7 @@ public class ItineraryManagementRestController {
             String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
             URI location = new URI(baseUrl + "/api/itineraries/" + id + "/image");
             Resource file = new InputStreamResource(imageFile.getInputStream());
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg", HttpHeaders.CONTENT_LOCATION, location.toString())
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,  "image/" + imageFile.getOriginalFilename().split("\\.")[1], HttpHeaders.CONTENT_LOCATION, location.toString())
                     .contentLength(newitinerary.getImageFile().length()).body(file);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
