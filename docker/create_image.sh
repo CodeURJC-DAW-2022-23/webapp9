@@ -29,7 +29,7 @@ To view this help page, call create_image.sh script as follows:
     exit 0
 
 else
-    docker build -f Dockerfile -t $1 ../TripScanner
+    docker build -f Dockerfile -t $1 ../
     docker push $1
     exit 0
 fi

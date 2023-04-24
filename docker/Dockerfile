@@ -1,19 +1,22 @@
-FROM maven:3-openjdk-11 as builder
+# Build stage for frontend
+FROM node:18-alpine AS frontend
+WORKDIR /ang
+COPY frontend/angularclient/ /ang/
+RUN npm install
+RUN npm install -g @angular/cli@15.2.4
+RUN ng build --configuration production --base-href="/new/"
 
+# Build stage for backend
+FROM maven:3-openjdk-11 AS backend
 WORKDIR /tmp
+COPY backend/pom.xml /tmp/
+COPY backend/src /tmp/src
+COPY --from=frontend /ang/dist/angularclient/* /tmp/src/main/resources/static/new/
+RUN mvn package -DskipTests
 
-COPY pom.xml /tmp/
-
-COPY /src /tmp/src
-
-RUN mvn package -DskipTests=true
-
+# Final stage
 FROM openjdk:11
-
 WORKDIR /usr/src/app
-
-COPY --from=builder /tmp/target/*.jar /usr/src/app/
-
+COPY --from=backend /tmp/target/*.jar /usr/src/app
 EXPOSE 8443
-
-CMD ["java", "-jar", "Backend-0.0.1-SNAPSHOT.jar" ]
+CMD [ "java", "-jar", "Backend-0.0.1-SNAPSHOT.jar" ]

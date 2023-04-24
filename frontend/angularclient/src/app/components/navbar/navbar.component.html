@@ -1,0 +1,37 @@
+
+<div *ngIf="!error">
+    <div class="navbar sticky-top navbar-light bg-white bg-opacity-75">
+        <div class="container-fluid justify-content-between">
+            <a class="navbar-brand float-start" routerLink="/"><img src="/assets/Image/logo-placeholder-image.png"
+                    alt="Placeholder logo" widht="80px" height="80px"></a>
+
+            <div>
+
+                <form class="form-inline float-end m-3" *ngIf="loginService.isLogged()">
+                    <img [src]="this.image"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3" routerLink="/profile">
+                </form>
+
+                <form class="form-inline float-end m-3" *ngIf="!loginService.isLogged()">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" routerLink="/logIn">Log
+                        In</button>
+                </form>
+
+                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() || loginService.isAdmin()">
+                    <button type="button" class="btn btn-outline-secondary" routerLink="/myItineraries">My
+                        itineraries</button>
+                </form>
+
+                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && admin">
+                    <a type="button" class="btn btn-outline-secondary" routerLink="/management/itinerary">
+                        Management
+                    </a>
+                </form>
+                <form class="d-flex float-end m-3" #f="ngForm" (ngSubmit)="search(f)" novalidate *ngIf="!isSearch">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="name" [(ngModel)]="name">
+                    <input class="btn btn-outline-secondary" type='submit' value='Search' />
+                </form>
+
+            </div>
+        </div>
+    </div>
+  </div>

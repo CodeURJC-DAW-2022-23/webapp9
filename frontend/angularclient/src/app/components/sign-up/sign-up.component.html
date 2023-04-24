@@ -1,0 +1,80 @@
+
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+            <form action="/sign" method="post" enctype="multipart/form-data">
+            <div class="card card-registration my-4">
+                <div class="row g-0" style="background-color: #A1C6EA">
+                    <div class="col-xl-6 d-none d-xl-block">
+
+                            <input type="hidden" name="_csrf"/>
+                            <div class="photoCard m-5 p-5">
+                                <img src="/assets/Image/userPhoto.png" alt="Sample photo" class="img-fluid rounded mb-3" width="400px"/>
+                                <input #file type="file" name="imageField" accept=".png, .jpg, .jpeg" required>
+                                <label rel="stylesheet" href="css/signUp.css">Choose photo</label>
+                            </div>
+
+
+                    </div>
+                    <div class="col-xl-6">
+
+                            <div class="card-body p-md-5 text-black">
+                                <h3 class="mb-5 text-uppercase">Registration form</h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="hidden" name="_csrf" value=""/>
+                                            <input [(ngModel)]="firstName" type="text" id="form3Example1m" class="form-control form-control-lg"
+                                                placeholder="First Name*" name="firstName"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input [(ngModel)]="lastName" type="text" id="form3Example1n" class="form-control form-control-lg"
+                                                placeholder="Last Name*" name="lastName" required/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input [(ngModel)]="username" type="text" id="form3Example8" class="form-control form-control-lg"
+                                        placeholder="User Name*" name="userame" required/>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input [(ngModel)]="nationality" type="text" id="form3Example8" class="form-control form-control-lg"
+                                        placeholder="Nationality" name="nationality"/>
+                                </div>
+
+
+                                <div class="form-outline mb-4">
+                                    <input [(ngModel)]="email" type="text" id="form3Example9" class="form-control form-control-lg"
+                                        placeholder="Email*" name="email" required/>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input [(ngModel)]="password" type="password" id="form3Example90" class="form-control form-control-lg"
+                                        placeholder="Password*" name="passwordHash" required/>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="form3Example99" class="form-control form-control-lg"
+                                        placeholder="Repeat your password*" name="repeatedPassword" required/>
+                                </div>
+
+                                <div class="btn-submit">
+                                    <button (click)="signUp()"type="submit" class="btn btn-warning btn-lg ms-2">Register</button>
+                                </div>
+
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

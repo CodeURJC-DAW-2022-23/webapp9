@@ -1,4 +1,9 @@
+<a name="top"></a>
 # webapp9 | TripScanner
+
+### Showcase video
+
+[![Showcase video](https://img.youtube.com/vi/PTDQu7yZiKU/maxresdefault.jpg)](https://youtu.be/PTDQu7yZiKU)
 
 ## Index
 
@@ -6,6 +11,7 @@
 2. [Phase 1 additions](#phase1)
 3. [Phase 2 additions](#phase2)
 4. [Phase 3 additions](#phase3)
+5. [Phase 4 additions](#phase4)
 
 <a name="phase0"></a>
 ## Phase 0 additions
@@ -72,6 +78,8 @@ TripScanner will have a selection of algorithms. These are:
 - An algorithm to search for the shortest path between places of an itinerary.
 - A search algorithm with different search criteria, for both places and destinations.
 
+[Back to top](#top)
+
 <a name="phase1"></a>
 ## Phase 1 aditions
 
@@ -110,6 +118,8 @@ At last, administrators can see a panel with the options they have. This panel (
 ### Navigation diagram
 
 ![Diagrama DAW-3-1](https://user-images.githubusercontent.com/102818341/218516781-fdaf6302-f9dd-4d04-948e-cc64230ff477.png)
+
+[Back to top](#top)
 
 <a name="phase2"></a>
 ## Phase 2 additions
@@ -267,9 +277,11 @@ Here, each member of the team shows what they have contributed to during the dev
         - [CSRFHandlerConfiguration.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/CSRFHandlerConfiguration.java)
         - [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/security/WebSecurityConfig.java)
         - [profile.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/resources/templates/profile.html)
+
+[Back to top](#top)
         
 <a name="phase3"></a>
-# Phase 3 additions
+## Phase 3 additions
 
 
 ### API REST Documentation
@@ -377,7 +389,7 @@ Here, each member of the team shows what they have contributed to during the dev
         - [ItineraryManagementRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/ItineraryManagementRestController.java)
         - [ItineraryDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ItineraryDTO.java)
         - [DatabaseInitializer.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/TripScanner/src/main/java/com/tripscanner/TripScanner/service/DatabaseInitializer.java)
-        - [Docker-compose.yml](URL)
+        - [Docker-compose.yml](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/docker/docker-compose.yml)
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
     - **Description of tasks:** This phase, I've been in charge of coding the Rest Controllers used by registered users, as well as its documentation. This controllers implement functionalities such as managing your itineraries and creating new ones, and editing your profile info. I've also been in charge of developing the Docker functionalities with [@anna-trofimova](https://github.com/anna-trofimova).
@@ -393,3 +405,103 @@ Here, each member of the team shows what they have contributed to during the dev
         - [UserRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/controller/restController/UserRestController.java)
         - [ReviewDTO.java](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/TripScanner/src/main/java/com/tripscanner/TripScanner/model/rest/ReviewDTO.java)
         - [create_image.sh](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/docker/create_image.sh)
+
+[Back to top](#top)
+
+<a name="phase4"></a>
+## Phase 4 additions
+
+### Development Environment Instructions
+
+
+### Classes and templates diagram (SPA)
+New classes and templates diagram has been created with Angular componenets, templates and services. 
+
+![Phase4DAW](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/diagrams/svgs/diagramaTemplatesFase4.svg)
+
+
+### Deployment instructions
+
+In this section we will explain the steps that we have taken to achieve the deployment of our app on a URJC virtual machine.
+
+1. We connected to the machine via SSH using the following command: ```ssh -i appWeb-09 vmuser@10.100.139.31```
+2. We installed Docker and Docker Compose on said machine. Since the machine's operating system is Ubuntu 22.04, we followed the instructions provided on the [Docker docs website](https://docs.docker.com/engine/install/ubuntu/) for that operating system.
+3. We cloned our app repository using the following GIT command: ```git clone https://github.com/CodeURJC-DAW-2022-23/webapp9```
+4. We finally deployed our application by using the docker-compose.yml file and, in order for the app to keep running after closing the SSH connection, we ran it in background by using the following command: ```docker compose up -d```
+
+In order to connect to our app, these are the links that can be used: 
+  - https://10.100.139.31:8443
+  - https://10.100.139.31:8443/new
+
+
+### Showcase video
+
+[![Showcase video](https://img.youtube.com/vi/PTDQu7yZiKU/maxresdefault.jpg)](https://youtu.be/PTDQu7yZiKU)
+
+
+### Members participation
+
+Here, each member of the team shows what they have contributed to during the development of this phase.
+
+1. [Adaya María Ruiz Mayoral](https://github.com/AdayaUwU)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+3. [Anna Trofimova](https://github.com/anna-trofimova)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+
+4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
+    - **Description of tasks:** ... .
+    - **5 biggest commits:** These commits are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+    - **5 files with most participation:** These files are:
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        - [NAME](URL)
+        
+
+[Back to top](#top)
