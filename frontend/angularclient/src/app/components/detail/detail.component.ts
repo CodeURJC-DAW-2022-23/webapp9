@@ -44,23 +44,25 @@ export class DetailComponent {
     private itineraryService: ItineraryService,
     private placeService: PlaceService,
     private destinationService: DestinationService,
-    private userService: UserService) { }
+    private userService: UserService) {
+      this.activatedRouter.url.subscribe((data) => {
+        if (data[1].path === "itinerary") {
+          this.service = this.itineraryService;
+          this.ownedItinerary = true;
+        }
+        else if (data[1].path === "place") this.service = this.placeService;
+        else if (data[1].path === "destination") this.service = this.destinationService;
+      });
+      this.activatedRouter.params.subscribe((data) => {
+        this.infoPage = -1;
+        this.reviewsPage = -1;
 
-  ngOnInit(): void {
-    this.activatedRouter.url.subscribe((data) => {
-      if (data[1].path === "itinerary") {
-        this.service = this.itineraryService;
-        this.ownedItinerary = true;
-      }
-      else if (data[1].path === "place") this.service = this.placeService;
-      else if (data[1].path === "destination") this.service = this.destinationService;
-    });
+        this.update(data['id']);
+        this.loadUser();
+      })
+    }
 
-    const id = this.activatedRouter.snapshot.params['id'];
-    this.update(id);
-
-    this.loadUser();
-  }
+  ngOnInit(): void { }
 
   update(id: number) {
     this.service.getItem(id).subscribe({
@@ -123,7 +125,12 @@ export class DetailComponent {
 
   copyItinerary(id: number) {
     if (this.service instanceof ItineraryService) this.service.copy(id).subscribe({
-      next: (response) => this.router.navigate(['/details/itinerary/', response.id]),
+      next: (response) => { 
+        this.router.navigate(['/details/itinerary/', response.id]).then(()=> {
+          this.reloadInformation();
+          this.reloadReviews();
+        }); 
+      },
       error: (error) => this.router.navigate(['/error/', error.status])
     });
   }

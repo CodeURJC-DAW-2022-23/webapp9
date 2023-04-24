@@ -141,18 +141,21 @@ export class ManagementComponent {
 
     if (this.type != 'user') {
       this.items = [];
-      for (let i = 0; i <= this.page; i++) {
-        this.service.getList(this.page).subscribe({
-          next: (response) => {
-            response.content.forEach(item => {
-              this.items.push(item);
-            });
-            this.loader = false;
-          },
-          error: (error) => {
-            this.loader = false;
-          }
-        })
+      this.page = 0;
+      if (this.type != 'user') {
+        this.service.getList(this.page).subscribe((response) => {
+          response.content.forEach(item => {
+            this.items.push(item);
+          });
+        });
+      }
+
+      if (this.type == 'user') {
+        this.userService.getList(this.page).subscribe((response) => {
+          response.content.forEach(user => {
+            this.users.push(user);
+          });
+        });
       }
     }
 
