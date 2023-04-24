@@ -201,7 +201,7 @@ export class DetailComponent {
     this.information.reviews = [];
 
     for (let i = 0; i <= this.reviewsPage; i++) {
-      this.itineraryService.loadMoreReviews(this.information.id, this.reviewsPage).subscribe({
+      this.itineraryService.loadMoreReviews(this.information.id, i).subscribe({
         next: (response) => {
           console.log(response);
 
@@ -213,6 +213,38 @@ export class DetailComponent {
           console.log(error);
         }
       })
+    }
+  }
+
+  reloadInformation() {
+    this.information.related = [];
+
+    for (let i = 0; i <= this.infoPage; i++) {
+      this.service.loadMoreInformation(this.information.id, i).subscribe({
+        next: (response) => {
+          console.log(response)
+          if ("places" in response) response.places.content.forEach((information: Information) => {
+            this.information.related.push(information);
+          });
+          else if ("itineraries" in response) response.itineraries.content.forEach((information: Information) => {
+            this.information.related.push(information);
+          });
+          else if (this.information.typeLowercase == "destination") response.content.forEach((information: Information) => {
+            this.information.related.push(information);
+          });
+          this.infoLoader = false;
+        },
+        error: (error) => {
+          console.log(error);
+          this.infoLoader = false;
+        }
+      })
+    }
+  }
+
+  onDeletion(deleted: boolean) {
+    if (deleted) {
+      this.reloadInformation();
     }
   }
 

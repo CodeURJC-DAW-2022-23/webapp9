@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Information } from 'src/app/models/information.model';
@@ -19,6 +19,7 @@ export class InformationComponent {
   @Input() information!: Information;
   @Input() fromItinerary!: number;
   @Input() user!: UserDetailsDTO;
+  @Output() deleted = new EventEmitter<boolean>();
   owned: boolean = false;
 
   service!: InformationService;
@@ -65,6 +66,7 @@ export class InformationComponent {
 
     this.itineraryService.removePlace(this.fromItinerary, id).subscribe({
       next: () => {
+        this.deleted.emit(true);
         this.router.navigate(['/details/itinerary/', this.fromItinerary]);
       },
       error: (error) => {
