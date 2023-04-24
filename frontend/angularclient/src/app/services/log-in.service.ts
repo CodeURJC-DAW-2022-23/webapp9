@@ -51,7 +51,7 @@ export class LogInService {
   }
 
   getImage(user: User): string {
-		return user.image ? `/api/users/${user.id}/image` : '/assets/images/no_image.png';
+		return user.image ? `/api/users/${user.id}/image?${Date.now()}` : '/assets/images/no_image.png';
 	}
 
   reload() {

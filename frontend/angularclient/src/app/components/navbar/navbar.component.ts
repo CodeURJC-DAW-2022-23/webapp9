@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationSkipped, NavigationStart, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { LogInService } from 'src/app/services/log-in.service';
 import { UserService } from 'src/app/services/user.service';
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   user?: User;
   name: string = "";
   isSearch: boolean = false;
@@ -27,7 +27,15 @@ export class NavbarComponent {
 
     this.router.events.subscribe(
       (event) => {
-        if (event instanceof NavigationStart) {
+        if (event instanceof NavigationSkipped && event.url.startsWith("/profile")) {
+          this.userService.getMe().subscribe(
+            (data) => {
+              this.user = data.user;
+              this.image = this.userService.getImage(this.user.id);
+              this.admin = this.user.roles.indexOf('ADMIN') !== -1;
+            }
+          )
+        } else if (event instanceof NavigationStart) {
           this.isSearch = event.url.startsWith("/search");
           this.error = event.url.startsWith("/error");
           this.userService.getMe().subscribe(
@@ -43,7 +51,8 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.name = this.nameInput.nativeElement.value;
-    this.loginService.reload;
+    if ((this.user = this.loginService.currentUser()) != undefined) this.image = this.userService.getImage(this.user.id);
+    this.loginService.reload();
   }
 
   profileImage() {

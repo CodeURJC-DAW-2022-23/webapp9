@@ -46,7 +46,7 @@ export class UserService {
   }
 
 	getImage(userId: number): string {
-		return `${BASE_URL}/${userId}/image`;
+		return `${BASE_URL}/${userId}/image?${Date.now()}`;
 	}
 
 }
