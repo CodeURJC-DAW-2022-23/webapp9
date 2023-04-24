@@ -12,7 +12,7 @@ const userItiUrl = '/api/users/me/itineraries';
 })
 export class ItinerariesService {
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   getItineraries(): Observable<Page> {
     return this.httpClient.get<Page>(baseUrl);
@@ -22,8 +22,8 @@ export class ItinerariesService {
     return this.httpClient.delete(baseUrl + "/" + id);
   }
 
-  getUserItineraries(): Observable<Page> {
-    return this.httpClient.get<Page>(userItiUrl);
+  getUserItineraries(page: number) {
+    return this.httpClient.get(userItiUrl + '/?page=' + page).pipe() as Observable<Page>;
   }
 
   getImage(itinerary: Itinerary): string {
