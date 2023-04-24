@@ -22,11 +22,12 @@ export class MyitinerariesComponent implements OnInit {
   isEditing: boolean = false;
   user: User | undefined;
 
-  @ViewChild('userFile') userFile: any;
+  @ViewChild('editFile') editFile: any;
+  @ViewChild('addFile') addFile: any;
   imgError: boolean = false;
   loader: boolean = false;
 
-  constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) {   }
+  constructor(private router: Router, private logInService: LogInService, private itineraryService: ItinerariesService, private userService: UserService) { }
 
   ngOnInit() {
     this.userService.getMe().subscribe({
@@ -63,19 +64,19 @@ export class MyitinerariesComponent implements OnInit {
   onSubmit() {
     const name = (<HTMLInputElement>document.getElementById('nameField')).value;
     const description = (<HTMLInputElement>document.getElementById('descriptionField')).value;
-    const publicValue  = (<HTMLInputElement>document.getElementById('publicValue')).checked;
-  
+    const publicValue = (<HTMLInputElement>document.getElementById('publicValue')).checked;
+
     const newItinerary: any = {};
     newItinerary.name = name.trim();
     newItinerary.description = description.trim();
     newItinerary.publicValue = publicValue.valueOf();
-  
+
     if (this.logInService.isLogged()) {
       this.userService.addUserItinerary(JSON.stringify(newItinerary)).subscribe({
         next: (response: any) => {
-          window.location.reload();
+          //window.location.reload();
           this.id = response.id;
-          const img = this.userFile.nativeElement.file[0];
+          const img = this.addFile.nativeElement.files[0];
           if (img) {
             let formData = new FormData();
             formData.append("imageFile", img);
@@ -85,6 +86,8 @@ export class MyitinerariesComponent implements OnInit {
               }, error: (err) => {
                 if (err.status != 200) {
                   window.location.href = "/error/" + err.status;
+                  window.location.reload();
+                } else {
                   window.location.reload();
                 }
               }
@@ -131,10 +134,10 @@ export class MyitinerariesComponent implements OnInit {
 
     if (this.logInService.isLogged()) this.userService.editUserItinerary(this.id, JSON.stringify(newItinerary)).subscribe({
       next: (response: any) => {
-        window.location.reload();
+        //window.location.reload();
         console.log("response was:");
         console.log(response);
-        const img = this.userFile.nativeElement.file[0];
+        const img = this.editFile.nativeElement.files[0];
         this.isEditing = false;
         if (img) {
           let formData = new FormData();
@@ -145,7 +148,12 @@ export class MyitinerariesComponent implements OnInit {
               window.location.reload();
             },
             error: (err) => {
-              if (err.status != 200) this.router.navigate(['/error/' + err.status]);
+              if (err.status != 200) {
+                window.location.href = "/error/" + err.status;
+                window.location.reload();
+              } else {
+                window.location.reload();
+              }
             }
           });
         }

@@ -27,10 +27,10 @@ export class ItinerariesService {
   }
 
   getImage(itinerary: Itinerary): string {
-		return itinerary.image ? `${baseUrl}/${itinerary.id}/image` : '/assets/images/no_image.png';
-	}
+    return itinerary.image ? `${baseUrl}/${itinerary.id}/image` : '/assets/images/no_image.png';
+  }
 
   setItineraryImage(id: number, data: FormData) {
-    return this.httpClient.post(baseUrl + '/image/' + id, data);
+    return this.httpClient.put(baseUrl + '/' + id + '/image', data)
   }
 }

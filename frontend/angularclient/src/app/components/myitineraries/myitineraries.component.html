@@ -1,121 +1,131 @@
-<div class="container p-4" >
-    <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
-        <h3 class="text-center mb-3" *ngIf="!this.isEditing">My Itineraries</h3>
-        <div class="card m-3" id="new-itinerary-form" *ngIf="!this.isEditing">
-            <form action="/myItineraries/add" method="post" class="card-body g-0 text-black bg-light row" enctype="multipart/form-data">
-                <h5 class="mb-3">Add new Itinerary</h5>
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrepend4">Name</span>
-                    <input type="text" id="nameField" class="form-control" name='name' aria-describedby="inputGroupPrepend" required>
-                </div>
-
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrepend5">Description</span>
-                    <input type="text" id="descriptionField" class="form-control" name='description' aria-describedby="inputGroupPrepend" required>
-                </div>
-
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrependImg">Image</span>
-                    <input type="file" class="form-control" #userFile name='imageFile' accept=".jpg, .jpeg, .png" required>
-                    <span class="input-group-text" id="inputGroupPrepend6">Make itinerary private
-                    <input class="form-check-input" id="publicValue" type="checkbox" value="" name="isPrivate">
-                    </span>
-                </div>
-
-                <form (ngSubmit)="onSubmit()" method="post">
-                    <input type="submit" value="Create new itinerary" class="btn btn-primary"/>
-                  </form>
-                  
-
-            </form>
+<div class="container p-4">
+  <section class="p-4 mb-4 bg-secondary rounded-3 text-dark" id="info-item-bg">
+    <h3 class="text-center mb-3" *ngIf="!this.isEditing">My Itineraries</h3>
+    <div class="card m-3" id="new-itinerary-form" *ngIf="!this.isEditing">
+      <form action="/myItineraries/add" method="post" class="card-body g-0 text-black bg-light row"
+        enctype="multipart/form-data">
+        <h5 class="mb-3">Add new Itinerary</h5>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend4">Name</span>
+          <input type="text" id="nameField" class="form-control" name='name' aria-describedby="inputGroupPrepend"
+            required>
         </div>
 
-        <h3 class="text-center mb-3" *ngIf="this.isEditing">Edit Itinerary</h3>
-        <div class="card m-3" id="edit-itinerary-form" *ngIf="this.isEditing">
-            <form method="post" class="card-body g-0 text-black bg-light row" enctype="multipart/form-data">
-                <h5 class="mb-3">Editing itinerary {{this.id}}</h5>
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrepend4">Name</span>
-                    <input type="text" id="editNameField" [value]="this.name" class="form-control" name='name' aria-describedby="inputGroupPrepend" required/>
-                </div>
-
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrepend5">Description</span>
-                    <input type="text" id="editDescriptionField" [value]="this.description" class="form-control" name='description' aria-describedby="inputGroupPrepend" required/>
-                </div>
-
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrependImg">Image</span>
-                    <input type="file" class="form-control" #userFile name='imageFile' accept=".jpg, .jpeg, .png" required/>
-                    <span class="input-group-text" id="inputGroupPrepend6">Make itinerary private
-                    <input class="form-check-input" id="editPrivacyField" [value]="!this.isPublic" type="checkbox" value="" name="isPrivate"/>
-                    </span>
-                </div>
-
-                <form (ngSubmit)="onEdit()" method="post">
-                    <input type="submit" value="Confirm changes to itinerary" class="btn btn-primary"/>
-                </form>
-            </form>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend5">Description</span>
+          <input type="text" id="descriptionField" class="form-control" name='description'
+            aria-describedby="inputGroupPrepend" required>
         </div>
 
-        <div *ngIf="!this.isEditing">
-        <section class="" id="myItineraries" *ngFor="let i of this.items">
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrependImg">Image</span>
+          <input type="file" class="form-control" #addFile name='imageFile' accept=".jpg, .jpeg, .png" required>
+          <span class="input-group-text" id="inputGroupPrepend6">Make itinerary private
+            <input class="form-check-input" id="publicValue" type="checkbox" value="" name="isPrivate">
+          </span>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" method="post">
+          <input type="submit" value="Create new itinerary" class="btn btn-primary" />
+        </form>
+
+
+      </form>
+    </div>
+
+    <h3 class="text-center mb-3" *ngIf="this.isEditing">Edit Itinerary</h3>
+    <div class="card m-3" id="edit-itinerary-form" *ngIf="this.isEditing">
+      <form method="post" class="card-body g-0 text-black bg-light row" enctype="multipart/form-data">
+        <h5 class="mb-3">Editing itinerary {{this.id}}</h5>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend4">Name</span>
+          <input type="text" id="editNameField" [value]="this.name" class="form-control" name='name'
+            aria-describedby="inputGroupPrepend" required />
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend5">Description</span>
+          <input type="text" id="editDescriptionField" [value]="this.description" class="form-control"
+            name='description' aria-describedby="inputGroupPrepend" required />
+        </div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrependImg">Image</span>
+          <input type="file" class="form-control" #editFile name='imageFile' accept=".jpg, .jpeg, .png" required />
+          <span class="input-group-text" id="inputGroupPrepend6">Make itinerary private
+            <input class="form-check-input" id="editPrivacyField" [value]="!this.isPublic" type="checkbox" value=""
+              name="isPrivate" />
+          </span>
+        </div>
+
+        <form (ngSubmit)="onEdit()" method="post">
+          <input type="submit" value="Confirm changes to itinerary" class="btn btn-primary" />
+        </form>
+      </form>
+    </div>
+
+    <div *ngIf="!this.isEditing">
+      <section class="" id="myItineraries" *ngFor="let i of this.items">
         <div class="card m-3" id="item-1">
-            <div class="card-body g-0 text-black bg-light">
-                <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
-                     alt="{{i.flag}}">
-                <div class="d-flex mb-3">
-                    
-                    <div class="float-end me-3" *ngIf="!i.public">
-                        <button  type="button" class="btn btn-dark" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock float-start" viewBox="0 0 16 16">
-                                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    
-                    <div>
-                        <h5 class="card-title">{{i.name}}</h5>
-                        <p class="card-text">{{i.description}}<small class="text-muted"></small></p>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-primary float-end ms-2" routerLink="/details/itinerary/{{i.id}}">
-                    More details
-                </button>
-                <!-- Edit button -->
-                <form (ngSubmit)="editItinerary(i.id, i.name, i.description, i.public)" method="post">
-                <button type="submit" class="btn btn-outline-secondary float-end ms-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                         class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path
-                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                        <path fill-rule="evenodd"
-                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                    </svg>
-                </button>
-                </form>
+          <div class="card-body g-0 text-black bg-light">
+            <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="rounded float-end item-flag"
+              alt="{{i.flag}}">
+            <div class="d-flex mb-3">
 
-                <!-- Delete Button -->
-                <form (ngSubmit)="deleteItinerary(i.id)" method="post">
-                <button type="submit" class="btn btn-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                    </svg>
+              <div class="float-end me-3" *ngIf="!i.public">
+                <button type="button" class="btn btn-dark" disabled>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-lock float-start" viewBox="0 0 16 16">
+                    <path
+                      d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+                  </svg>
                 </button>
-                </form>
-                
-            </div>
-        </div>
-        </section>
+              </div>
 
-            <div class="align-items-center" id="information-spinner" *ngIf="loader">
-                <strong>Loading...</strong>
-                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+              <div>
+                <h5 class="card-title">{{i.name}}</h5>
+                <p class="card-text">{{i.description}}<small class="text-muted"></small></p>
+              </div>
             </div>
-            
-            <button (click)="loadMore()" class="btn btn-primary" id="btn-more-information">
-                Load more
+            <button type="button" class="btn btn-primary float-end ms-2" routerLink="/details/itinerary/{{i.id}}">
+              More details
             </button>
-            </div>        
-    </section>
+            <!-- Edit button -->
+            <form (ngSubmit)="editItinerary(i.id, i.name, i.description, i.public)" method="post">
+              <button type="submit" class="btn btn-outline-secondary float-end ms-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                  class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                  <path fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                </svg>
+              </button>
+            </form>
+
+            <!-- Delete Button -->
+            <form (ngSubmit)="deleteItinerary(i.id)" method="post">
+              <button type="submit" class="btn btn-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                </svg>
+              </button>
+            </form>
+
+          </div>
+        </div>
+      </section>
+
+      <div class="align-items-center" id="information-spinner" *ngIf="loader">
+        <strong>Loading...</strong>
+        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+      </div>
+
+      <button (click)="loadMore()" class="btn btn-primary" id="btn-more-information">
+        Load more
+      </button>
+    </div>
+  </section>
 </div>
