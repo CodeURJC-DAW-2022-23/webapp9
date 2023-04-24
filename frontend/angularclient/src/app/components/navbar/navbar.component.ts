@@ -1,4 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { NavigationStart, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { LogInService } from 'src/app/services/log-in.service';
 
@@ -11,8 +13,19 @@ import { LogInService } from 'src/app/services/log-in.service';
 export class NavbarComponent {
   user!: User;
   name: string = "";
+  isSearch: boolean = false;
+
   @ViewChild('nameInput') nameInput!: ElementRef;
-  constructor(public loginService: LogInService) {
+  
+  constructor(private router: Router,
+    public loginService: LogInService) {
+
+    this.router.events.subscribe(
+      (event) => {
+        if (event instanceof NavigationStart) {
+          this.isSearch = event.url.startsWith("/search")
+        }
+      });
   }
 
   ngOnInit() {
@@ -25,5 +38,8 @@ export class NavbarComponent {
     return this.loginService.getImage(this.user);
   }
 
+  search(f: NgForm) {
+    window.location.href = `/search?name=${f.value.name}&type=itinerary&sort=id&order=DESC&page=0`;
+  }
 
 }
