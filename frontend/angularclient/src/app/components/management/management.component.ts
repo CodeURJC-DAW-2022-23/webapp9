@@ -38,16 +38,36 @@ export class ManagementComponent {
     private router: Router
   ) {
 
-    activatedRouter.url.subscribe((data) => {
-      this.type = data[1].path;
-      if (data[1].path === 'itinerary') {
-        this.service = this.itineraryService;
-      } else if (data[1].path === 'place') {
-        this.service = this.placeService;
-      } else if (data[1].path === 'destination') {
-        this.service = this.destinationService;
-      } else if (data[1].path === 'user') {
-        this.userService = this.usrService;
+    activatedRouter.url.subscribe({
+      next: (data) => {
+        console.log(this.type, data[1].path, this.type == data[1].path)
+        if (this.type != data[1].path) {this.items = []; this.users = []; this.page = 0}
+        this.type = data[1].path;
+        if (data[1].path === 'itinerary') {
+          this.service = this.itineraryService;
+        } else if (data[1].path === 'place') {
+          this.service = this.placeService;
+        } else if (data[1].path === 'destination') {
+          this.service = this.destinationService;
+        } else if (data[1].path === 'user') {
+          this.userService = this.usrService;
+        }
+    
+        if (this.type != 'user') {
+          this.service.getList(this.page).subscribe((response) => {
+            response.content.forEach(item => {
+              this.items.push(item);
+            });
+          });
+        }
+    
+        if (this.type == 'user') {
+          this.userService.getList(this.page).subscribe((response) => {
+            response.content.forEach(user => {
+              this.users.push(user);
+            });
+          });
+        }
       }
     });
     this.uService = this.usService;
@@ -55,30 +75,14 @@ export class ManagementComponent {
 
   ngOnInit(): void {
     this.checkUser();
-
-    if (this.type != 'user') {
-      this.service.getList(this.page).subscribe((response) => {
-        response.content.forEach(item => {
-          this.items.push(item);
-        });
-      });
-    }
-
-    if (this.type == 'user') {
-      this.userService.getList(this.page).subscribe((response) => {
-        response.content.forEach(user => {
-          this.users.push(user);
-        });
-      });
-    }
   }
 
-  checkUser(){
+  checkUser() {
     this.uService.getMe().subscribe({
-      next: (data) =>  {
+      next: (data) => {
         this.currentUser = data;
         this.admin = this.currentUser.user.roles.indexOf('ADMIN') !== -1;
-        if (this.admin == false){
+        if (this.admin == false) {
           this.router.navigate(['/error/403']);
         }
       },
@@ -87,18 +91,18 @@ export class ManagementComponent {
   }
 
   changeFunc(value: string) {
-    window.location.replace("/management/" + value);
+    this.router.navigate(['/management/' + value]);
   }
 
   deleteItem(id: number) {
     this.service.deleteItem(id).subscribe(() => {
-      this.router.navigate(['/management/'+this.type])
+      this.reloadData();
     });
   }
 
   deleteUser(id: number) {
     this.userService.deleteUser(id).subscribe(() => {
-      this.router.navigate(["/management/", this.type])
+      this.reloadData();
     });
   }
 
@@ -106,32 +110,71 @@ export class ManagementComponent {
     this.loader = true;
     this.page += 1;
     if (this.type != 'user') {
-      this.service.getList(this.page).subscribe(
-        response => {
+      this.service.getList(this.page).subscribe({
+        next: (response) => {
           response.content.forEach(item => {
             this.items.push(item);
           });
           this.loader = false;
         },
-        error => {
+        error: (error) => {
           console.log(error);
           this.loader = false;
         }
-      )
+      })
     } else {
-      this.userService.getList(this.page).subscribe(
-        response => {
+      this.userService.getList(this.page).subscribe({
+        next: (response) => {
           response.content.forEach(user => {
             this.users.push(user);
           });
           this.loader = false;
         },
-        error => {
+        error: (error) => {
           console.log(error);
           this.loader = false;
         }
-      )
+      })
+    }
+  }
+
+  reloadData() {
+    
+    if (this.type != 'user') {
+      this.items = [];
+      for (let i = 0; i <= this.page; i++) {
+        this.service.getList(this.page).subscribe({
+          next: (response) => {
+            response.content.forEach(item => {
+              this.items.push(item);
+            });
+            this.loader = false;
+          },
+          error: (error) => {
+            console.log(error);
+            this.loader = false;
+          }
+        })
+      }
     }
 
+    if (this.type == 'user') {
+      this.users = [];
+      for (let i = 0; i <= this.page; i++) {
+        this.userService.getList(this.page).subscribe({
+          next: (response) => {
+            response.content.forEach(user => {
+              this.users.push(user);
+            });
+            this.loader = false;
+          },
+          error: (error) => {
+            console.log(error);
+            this.loader = false;
+          }
+        })
+      }
+    }
   }
+
 }
