@@ -18,7 +18,7 @@ export class MyitinerariesComponent implements OnInit {
   name: String = "";
   description: String = "";
   page: number = 0;
-  isPublic: boolean | undefined = undefined;
+  publicValue: boolean | undefined = undefined;
   isEditing: boolean = false;
   user: User | undefined;
 
@@ -59,6 +59,7 @@ export class MyitinerariesComponent implements OnInit {
       })
     });
     this.loader = false;
+    console.log(this.publicValue)
   }
 
   onSubmit() {
@@ -98,12 +99,13 @@ export class MyitinerariesComponent implements OnInit {
     }
   }
 
-  editItinerary(id: number, name: String, description: String, isPublic: boolean) {
+  editItinerary(id: number, name: String, description: String, publicValue: boolean) {
     this.isEditing = true;
     this.id = id;
     this.name = name;
     this.description = description;
-    this.isPublic = isPublic;
+    this.publicValue = publicValue;
+    console.log(this.publicValue);
   }
 
   deleteItinerary(id: number) {
@@ -125,16 +127,18 @@ export class MyitinerariesComponent implements OnInit {
   onEdit() {
     const name = (<HTMLInputElement>document.getElementById('editNameField')).value;
     const description = (<HTMLInputElement>document.getElementById('editDescriptionField')).value;
-    const isPrivate = (<HTMLInputElement>document.getElementById('editPrivacyField')).checked;
+    const publicValue = (<HTMLInputElement>document.getElementById('publicValue')).checked;
 
     const newItinerary: any = {};
     newItinerary.name = name.trim();
     newItinerary.description = description.trim();
-    newItinerary.isPrivate = isPrivate.valueOf();
+    newItinerary.publicValue = publicValue.valueOf();
+
+    this.publicValue = publicValue.valueOf();
 
     if (this.logInService.isLogged()) this.userService.editUserItinerary(this.id, JSON.stringify(newItinerary)).subscribe({
       next: (response: any) => {
-        //window.location.reload();
+        window.location.reload();
         console.log("response was:");
         console.log(response);
         const img = this.editFile.nativeElement.files[0];
@@ -159,7 +163,7 @@ export class MyitinerariesComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error("Error when making new itinerary; " + JSON.stringify(err));
+        console.error("Error when editing itinerary; " + JSON.stringify(err));
       }
     });
   }
