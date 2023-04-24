@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Information } from 'src/app/models/information.model';
 import { Page } from 'src/app/models/rest/page.model';
 import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
@@ -34,19 +34,38 @@ export class ManagementComponent {
     private placeService: PlaceMngService,
     private destinationService: DestinationMngService,
     private usrService: UserMngService,
-    private usService: UserService
+    private usService: UserService,
+    private router: Router
   ) {
 
-    activatedRouter.url.subscribe((data) => {
-      this.type = data[1].path;
-      if (data[1].path === 'itinerary') {
-        this.service = this.itineraryService;
-      } else if (data[1].path === 'place') {
-        this.service = this.placeService;
-      } else if (data[1].path === 'destination') {
-        this.service = this.destinationService;
-      } else if (data[1].path === 'user') {
-        this.userService = this.usrService;
+    activatedRouter.url.subscribe({
+      next: (data) => {
+        this.type = data[1].path;
+        if (data[1].path === 'itinerary') {
+          this.service = this.itineraryService;
+        } else if (data[1].path === 'place') {
+          this.service = this.placeService;
+        } else if (data[1].path === 'destination') {
+          this.service = this.destinationService;
+        } else if (data[1].path === 'user') {
+          this.userService = this.usrService;
+        }
+
+        if (this.type != 'user') {
+          this.service.getList(this.page).subscribe((response) => {
+            response.content.forEach(item => {
+              this.items.push(item);
+            });
+          });
+        }
+
+        if (this.type == 'user') {
+          this.userService.getList(this.page).subscribe((response) => {
+            response.content.forEach(user => {
+              this.users.push(user);
+            });
+          });
+        }
       }
     });
     this.uService = this.usService;
@@ -54,50 +73,37 @@ export class ManagementComponent {
 
   ngOnInit(): void {
     this.checkUser();
-
-    if (this.type != 'user') {
-      this.service.getList(this.page).subscribe((response) => {
-        response.content.forEach(item => {
-          this.items.push(item);
-        });
-      });
-    }
-
-    if (this.type == 'user') {
-      this.userService.getList(this.page).subscribe((response) => {
-        response.content.forEach(user => {
-          this.users.push(user);
-        });
-      });
-    }
   }
 
-  checkUser(){
+  checkUser() {
     this.uService.getMe().subscribe({
-      next: (data) =>  {
+      next: (data) => {
         this.currentUser = data;
         this.admin = this.currentUser.user.roles.indexOf('ADMIN') !== -1;
-        if (this.admin == false){
-          window.location.href = "/error/403"
+        if (this.admin == false) {
+          this.router.navigate(['/error/403']);
         }
       },
-      error: () => window.location.href = "/logIn"
+      error: () => this.router.navigate(["/logIn"])
     })
   }
 
   changeFunc(value: string) {
-    window.location.replace("/management/" + value);
+    this.items = [];
+    this.users = [];
+    this.page = 0;
+    this.router.navigate(['/management/' + value]);
   }
 
   deleteItem(id: number) {
     this.service.deleteItem(id).subscribe(() => {
-      window.location.href = `/management/${this.type}`
+      this.reloadData();
     });
   }
 
   deleteUser(id: number) {
     this.userService.deleteUser(id).subscribe(() => {
-      window.location.href = `/management/${this.type}`
+      this.reloadData();
     });
   }
 
@@ -105,33 +111,67 @@ export class ManagementComponent {
     this.loader = true;
     this.page += 1;
     if (this.type != 'user') {
-      this.service.getList(this.page).subscribe(
-        response => {
+      this.service.getList(this.page).subscribe({
+        next: (response) => {
           response.content.forEach(item => {
             this.items.push(item);
           });
           this.loader = false;
         },
-        error => {
-          console.log(error);
+        error: (error) => {
           this.loader = false;
         }
-      )
+      })
     } else {
-      this.userService.getList(this.page).subscribe(
-        response => {
+      this.userService.getList(this.page).subscribe({
+        next: (response) => {
           response.content.forEach(user => {
             this.users.push(user);
           });
           this.loader = false;
         },
-        error => {
-          console.log(error);
+        error: (error) => {
           this.loader = false;
         }
-      )
+      })
+    }
+  }
+
+  reloadData() {
+
+    if (this.type != 'user') {
+      this.items = [];
+      for (let i = 0; i <= this.page; i++) {
+        this.service.getList(this.page).subscribe({
+          next: (response) => {
+            response.content.forEach(item => {
+              this.items.push(item);
+            });
+            this.loader = false;
+          },
+          error: (error) => {
+            this.loader = false;
+          }
+        })
+      }
     }
 
+    if (this.type == 'user') {
+      this.users = [];
+      for (let i = 0; i <= this.page; i++) {
+        this.userService.getList(this.page).subscribe({
+          next: (response) => {
+            response.content.forEach(user => {
+              this.users.push(user);
+            });
+            this.loader = false;
+          },
+          error: (error) => {
+            this.loader = false;
+          }
+        })
+      }
+    }
   }
 
   isPublic(i: Information) {
@@ -139,4 +179,5 @@ export class ManagementComponent {
     if (this.type=='itinerary' && "public" in i) return i.public;
     else return false;
   }
+
 }

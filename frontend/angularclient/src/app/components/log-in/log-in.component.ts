@@ -26,7 +26,7 @@ export class LogInComponent {
   logIn() {
     this.loginService.logIn(this.username, this.password).subscribe( data => {
       this.loginService.logged = true;
-      window.location.href = ` `
+      this.router.navigate(['/']);
     });
   }
 

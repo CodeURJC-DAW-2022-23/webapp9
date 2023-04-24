@@ -5,7 +5,7 @@
             <h5 class="card-title">{{ information.name }}</h5>
             <p class="card-text"><small class="text-muted">{{ information.type }}</small></p>
         </div>
-        <a href="/details/{{information.typeLowercase}}/{{information.id}}" class="btn btn-primary me-2">See more</a>
+        <a [routerLink]="'/details/'+information.typeLowercase+'/'+information.id" class="btn btn-primary me-2">See more</a>
 
         <button type="button" class="btn btn-danger" (click)="removeFromItinerary(information.id)" *ngIf="owned">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">

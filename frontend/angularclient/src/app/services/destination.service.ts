@@ -7,6 +7,7 @@ import { Destination } from '../models/destination.model';
 import { Graphic } from '../models/graphic.modul';
 
 import { InformationService } from './information.service';
+import { Place } from '../models/place.model';
 
 const baseUrl = '/api/destinations';
 
@@ -47,10 +48,9 @@ export class DestinationService implements InformationService {
 	getImage(destination: Destination): string {
 		return destination.image ? `${baseUrl}/${destination.id}/image` : '/assets/images/no_image.png';
 	}
-  
-  loadMoreInformation(id: number, page: number = 0): Observable<Destination> {
-    return this.httpClient.get<Destination>(`${baseUrl}/${id}?placesPage=${page}`);
-  }
 
+  loadMoreInformation(id: number, page: number = 0): Observable<Page<Place>> {
+    return this.httpClient.get<Page<Place>>(`${baseUrl}/${id}/places?placesPage=${page}`);
+  }
 
 }

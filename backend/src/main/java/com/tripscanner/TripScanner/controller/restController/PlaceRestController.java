@@ -20,6 +20,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
@@ -84,9 +86,14 @@ public class PlaceRestController {
             )
     })
     @GetMapping("/{id}")
-    public ResponseEntity<PlaceDetailsDTO> place(@Parameter(description="place id") @PathVariable int id,
+    public ResponseEntity<PlaceDetailsDTO> place(HttpServletRequest request,
+                                                 @Parameter(description="place id") @PathVariable int id,
                                                  @Parameter(description="itineraries page number") @RequestParam(defaultValue = "0") int page) {
         Optional<Place> optionalPlace = placeService.findById(id);
+        Principal principalUser = request.getUserPrincipal();
+        String username;
+        if (principalUser == null) username = "";
+        else username = principalUser.getName();
 
         if (optionalPlace.isPresent()) {
             Place place = optionalPlace.get();
@@ -95,7 +102,7 @@ public class PlaceRestController {
             placeService.save(place);
 
             PlaceDetailsDTO placeDetailsDTO = new PlaceDetailsDTO(place,
-                    itineraryService.findFromPlace(place.getId(), PageRequest.of(page, 10)));
+                    itineraryService.findFromPlace(place.getId(), username, PageRequest.of(page, 10)));
 
             return ResponseEntity.ok(placeDetailsDTO);
         }
