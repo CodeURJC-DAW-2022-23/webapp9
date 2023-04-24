@@ -14,6 +14,8 @@ import { UserDetailsDTO } from 'src/app/models/rest/user-details-dto.model';
 import { Page } from 'src/app/models/rest/page.model';
 import { Review } from 'src/app/models/review.model';
 import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Place } from 'src/app/models/place.model';
 
 @Component({
   selector: 'app-detail',
@@ -138,6 +140,9 @@ export class DetailComponent {
         else if ("itineraries" in response) response.itineraries.content.forEach((information: Information) => {
           this.information.related.push(information);
         });
+        else if (this.information.typeLowercase == "destination") response.content.forEach((information: Information) => {
+          this.information.related.push(information);
+        });
         this.infoLoader = false;
       },
       error: (error) => {
@@ -199,7 +204,7 @@ export class DetailComponent {
       this.itineraryService.loadMoreReviews(this.information.id, this.reviewsPage).subscribe({
         next: (response) => {
           console.log(response);
-  
+
           response.content.forEach((review: Review) => {
             this.information.reviews.push(review);
           });
