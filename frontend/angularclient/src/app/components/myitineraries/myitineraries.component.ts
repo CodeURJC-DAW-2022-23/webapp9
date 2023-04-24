@@ -59,18 +59,21 @@ export class MyitinerariesComponent implements OnInit {
       })
     });
     this.loader = false;
-    console.log(this.publicValue)
+    console.log("value of box is" + this.publicValue);
   }
 
   onSubmit() {
     const name = (<HTMLInputElement>document.getElementById('nameField')).value;
     const description = (<HTMLInputElement>document.getElementById('descriptionField')).value;
-    const publicValue = (<HTMLInputElement>document.getElementById('publicValue')).checked;
+    const publicValue = (<HTMLInputElement>document.getElementById('publicValue')).checked.valueOf();
 
+
+    this.publicValue = publicValue;
     const newItinerary: any = {};
     newItinerary.name = name.trim();
     newItinerary.description = description.trim();
-    newItinerary.publicValue = publicValue.valueOf();
+    if (publicValue) newItinerary.publicValue = false;
+    else newItinerary.publicValue = true;
 
     if (this.logInService.isLogged()) {
       this.userService.addUserItinerary(JSON.stringify(newItinerary)).subscribe({
@@ -132,7 +135,8 @@ export class MyitinerariesComponent implements OnInit {
     const newItinerary: any = {};
     newItinerary.name = name.trim();
     newItinerary.description = description.trim();
-    newItinerary.publicValue = publicValue.valueOf();
+    if (publicValue) newItinerary.publicValue = false;
+    else newItinerary.publicValue = true;
 
     this.publicValue = publicValue.valueOf();
 
