@@ -187,9 +187,28 @@ export class DetailComponent {
       score: f.value.score,
       user: this.user.user.username
     }).subscribe({
-      next: () => this.router.navigate(['/details/itinerary/', id]),
+      next: () => this.reloadReviews(),
       error: (error) => this.router.navigate(['/error/', error.status])
     });
+  }
+
+  reloadReviews() {
+    this.information.reviews = [];
+
+    for (let i = 0; i <= this.reviewsPage; i++) {
+      this.itineraryService.loadMoreReviews(this.information.id, this.reviewsPage).subscribe({
+        next: (response) => {
+          console.log(response);
+  
+          response.content.forEach((review: Review) => {
+            this.information.reviews.push(review);
+          });
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      })
+    }
   }
 
 }
