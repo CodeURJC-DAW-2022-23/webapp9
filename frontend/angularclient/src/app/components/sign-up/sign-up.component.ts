@@ -41,7 +41,6 @@ export class SignUpComponent {
   signUp() {
     this.service.signUp(this.username, this.firstName, this.lastName, this.email, this.nationality, this.password).subscribe(
       data => {
-        console.log(data);
         this.uploadImage(this.username, this.password);
       });
   }
@@ -51,11 +50,9 @@ export class SignUpComponent {
     this.loginService.logIn(username, password).subscribe({
       next: () => {
         const image = this.file.nativeElement.files[0];
-        console.log(image)
         if (image) {
           let formData = new FormData();
           formData.append("imageFile", image);
-          console.log(formData);
           this.service.downloadImage(formData).subscribe(
             { next: () => {
               this.logout();

@@ -133,7 +133,6 @@ export class DetailComponent {
     this.infoPage += 1;
     this.service.loadMoreInformation(this.information.id, this.infoPage).subscribe({
       next: (response) => {
-        console.log(response)
         if ("places" in response) response.places.content.forEach((information: Information) => {
           this.information.related.push(information);
         });
@@ -146,7 +145,6 @@ export class DetailComponent {
         this.infoLoader = false;
       },
       error: (error) => {
-        console.log(error);
         this.infoLoader = false;
       }
     })
@@ -157,7 +155,6 @@ export class DetailComponent {
     this.reviewsPage += 1;
     this.itineraryService.loadMoreReviews(this.information.id, this.reviewsPage).subscribe({
       next: (response) => {
-        console.log(response);
 
         response.content.forEach((review: Review) => {
           this.information.reviews.push(review);
@@ -165,7 +162,6 @@ export class DetailComponent {
         this.reviewsLoader = false;
       },
       error: (error) => {
-        console.log(error);
         this.reviewsLoader = false;
       }
     })
@@ -203,14 +199,10 @@ export class DetailComponent {
     for (let i = 0; i <= this.reviewsPage; i++) {
       this.itineraryService.loadMoreReviews(this.information.id, i).subscribe({
         next: (response) => {
-          console.log(response);
 
           response.content.forEach((review: Review) => {
             this.information.reviews.push(review);
           });
-        },
-        error: (error) => {
-          console.log(error);
         }
       })
     }

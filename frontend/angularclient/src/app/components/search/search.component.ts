@@ -28,7 +28,7 @@ export class SearchComponent {
     private destinationService: DestinationService,
     private itineraryService: ItineraryService,
     private placeService: PlaceService,
-    private router: Router) { 
+    private router: Router) {
       this.activatedRoute.queryParams.subscribe((params: Params) => {
         this.name = params['name'] ? params['name'] : "";
         this.type = params['type'] ? params['type'] : "itinerary";
@@ -47,9 +47,6 @@ export class SearchComponent {
         this.service.search(this.name, this.type, this.sort, this.order, this.page).subscribe({
           next: (response: Page<Information>) => {
             response.content.forEach(i => this.items.push(i));
-          },
-          error: (error) => {
-            console.error(error);
           }
         })
       });
@@ -84,7 +81,6 @@ export class SearchComponent {
         this.loader = false;
       },
       error => {
-        console.log(error);
         this.loader = false;
       }
     )

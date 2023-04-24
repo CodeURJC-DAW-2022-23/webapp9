@@ -89,8 +89,8 @@ export class ManagementComponent {
   }
 
   changeFunc(value: string) {
-    this.items = []; 
-    this.users = []; 
+    this.items = [];
+    this.users = [];
     this.page = 0;
     this.router.navigate(['/management/' + value]);
   }
@@ -119,7 +119,6 @@ export class ManagementComponent {
           this.loader = false;
         },
         error: (error) => {
-          console.log(error);
           this.loader = false;
         }
       })
@@ -132,7 +131,6 @@ export class ManagementComponent {
           this.loader = false;
         },
         error: (error) => {
-          console.log(error);
           this.loader = false;
         }
       })
@@ -152,7 +150,6 @@ export class ManagementComponent {
             this.loader = false;
           },
           error: (error) => {
-            console.log(error);
             this.loader = false;
           }
         })
@@ -170,7 +167,6 @@ export class ManagementComponent {
             this.loader = false;
           },
           error: (error) => {
-            console.log(error);
             this.loader = false;
           }
         })
@@ -183,5 +179,5 @@ export class ManagementComponent {
     if (this.type=='itinerary' && "public" in i) return i.public;
     else return false;
   }
-  
+
 }
