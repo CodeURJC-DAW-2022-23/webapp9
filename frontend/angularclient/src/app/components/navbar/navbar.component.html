@@ -8,7 +8,7 @@
             <div>
 
                 <form class="form-inline float-end m-3" *ngIf="loginService.isLogged()">
-                    <img [src]="image"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3" routerLink="/profile">
+                    <img [src]="this.image"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3" routerLink="/profile">
                 </form>
 
                 <form class="form-inline float-end m-3" *ngIf="!loginService.isLogged()">

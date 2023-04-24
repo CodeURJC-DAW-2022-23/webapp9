@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   user?: User;
   name: string = "";
   isSearch: boolean = false;
@@ -43,7 +43,7 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.name = this.nameInput.nativeElement.value;
-    this.loginService.reload;
+    this.loginService.reload();
   }
 
   profileImage() {
