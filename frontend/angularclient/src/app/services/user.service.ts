@@ -18,10 +18,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   setUserImage(image: FormData) {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
-  
-    return this.httpClient.put(baseUrl + '/image', image, { headers });
+    return this.httpClient.put(baseUrl + '/image', image);
   }
 
   updateUserData(data: string) {

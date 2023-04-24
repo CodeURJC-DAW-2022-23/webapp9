@@ -90,7 +90,12 @@ export class ProfileComponent implements OnInit{
     if (img) {
       let formData = new FormData();
       formData.append("imageFile", img);
-      this.userService.setUserImage(formData).subscribe();
+      this.userService.setUserImage(formData).subscribe({
+        next: (response: any) => {   },
+        error: (err) => {
+          if (err.status != 200) this.router.navigate(['/error/' + err.status]);
+        }
+      });
     }
 
     if (this.logInService.isLogged()) this.userService.updateUserData(JSON.stringify(updatedValues)).subscribe({
