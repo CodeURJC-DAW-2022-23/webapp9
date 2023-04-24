@@ -16,7 +16,7 @@ export class NavbarComponent {
   isSearch: boolean = false;
 
   @ViewChild('nameInput') nameInput!: ElementRef;
-
+  
   constructor(private router: Router,
     public loginService: LogInService) {
 
@@ -30,6 +30,7 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.name = this.nameInput.nativeElement.value;
+    this.loginService.reload;
   }
 
   profileImage() {
