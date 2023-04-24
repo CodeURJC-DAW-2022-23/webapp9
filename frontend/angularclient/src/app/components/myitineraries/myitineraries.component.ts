@@ -58,6 +58,7 @@ export class MyitinerariesComponent implements OnInit {
       })
     });
     this.loader = false;
+    this.page = page;
   }
 
   onSubmit() {
