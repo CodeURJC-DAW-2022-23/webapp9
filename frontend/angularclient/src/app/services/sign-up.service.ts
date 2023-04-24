@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
+import { Observable, Observer } from 'rxjs';
 
 const BASE_URL = '/api/users'
 
@@ -20,6 +21,6 @@ export class SignUpService {
 	}
 
   downloadImage(formData: FormData){
-    return this.httpClient.put(BASE_URL + '/me/image', FormData)
+    return this.httpClient.put(BASE_URL + '/me/image', formData)
   }
 }

@@ -6,7 +6,7 @@
                     alt="Placeholder logo" widht="80px" height="80px"></a>
 
             <div>
-            
+
                 <form class="form-inline float-end m-3" *ngIf="loginService.isLogged()">
                     <img [src]="profileImage()"  alt="Placeholder userImage" widht="80px" height="80px" class="rounded ms-3 ">
                 </form>
@@ -16,7 +16,7 @@
                         In</button>
                 </form>
 
-                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() && !loginService.isAdmin()">
+                <form class="form-inline float-end my-3 ms-3" *ngIf="loginService.isLogged() || loginService.isAdmin()">
                     <button type="button" class="btn btn-outline-secondary" routerLink="">My
                         itineraries</button>
                 </form>
