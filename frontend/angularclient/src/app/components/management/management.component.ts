@@ -133,4 +133,9 @@ export class ManagementComponent {
     }
 
   }
+
+  isPublic(i: Information) {
+    if ("public" in i) return i.public;
+    else return false;
+  }
 }
