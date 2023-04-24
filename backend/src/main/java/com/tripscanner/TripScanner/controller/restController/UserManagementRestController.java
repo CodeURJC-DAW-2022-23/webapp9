@@ -184,6 +184,8 @@ public class UserManagementRestController {
             newUser.setId(id);
             newUser.setReviews(user.get().getReviews());
             newUser.setItineraries(user.get().getItineraries());
+            newUser.setImageFile(user.get().getImageFile());
+            newUser.setImage(true);
 
             userService.save(newUser);
             return ResponseEntity.ok(user.get());

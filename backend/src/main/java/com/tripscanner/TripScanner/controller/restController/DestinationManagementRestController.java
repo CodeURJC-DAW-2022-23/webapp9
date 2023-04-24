@@ -2,6 +2,7 @@ package com.tripscanner.TripScanner.controller.restController;
 
 
 import com.tripscanner.TripScanner.model.Destination;
+import com.tripscanner.TripScanner.model.Itinerary;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.service.DestinationService;
 import com.tripscanner.TripScanner.service.ItineraryService;
@@ -126,15 +127,17 @@ public class DestinationManagementRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Destination> editDestination(@Parameter(description = "edited destination") @PathVariable long id, @RequestBody Destination newDestination) throws SQLException {
-        Optional<Destination> destination = destinationService.findById(id);
-        if (destination.isPresent()) {
-            if (newDestination.getImageFile() != null) {
-                newDestination.setImageFile(BlobProxy.generateProxy(destination.get().getImageFile().getBinaryStream(), destination.get().getImageFile().length()));
-            }
-            newDestination.setId(id);
-            newDestination.setViews(destination.get().getViews());
-            destinationService.save(newDestination);
-            return ResponseEntity.ok(destination.get());
+            Optional<Destination> destination = destinationService.findById(id);
+
+            if (destination.isPresent()) {
+                if (newDestination.getName() != null) destination.get().setName(newDestination.getName());
+                if (newDestination.getDescription() != null) destination.get().setDescription(newDestination.getDescription());
+                if (newDestination.getFlagCode() != null) {
+                    destination.get().setFlagCode(newDestination.getFlagCode());
+                }
+                destination.get().setId(id);
+                destinationService.save(destination.get());
+                return new ResponseEntity(HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
         }

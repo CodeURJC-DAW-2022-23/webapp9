@@ -84,12 +84,12 @@ export class AddEditMngComponent {
     }
   }
 
-  checkUser(){
+  checkUser() {
     this.uService.getMe().subscribe({
-      next: (data) =>  {
+      next: (data) => {
         this.currentUser = data;
         this.admin = this.currentUser.user.roles.indexOf('ADMIN') !== -1;
-        if (this.admin == false){
+        if (this.admin == false) {
           this.router.navigate(['/error/403']);
         }
       },
@@ -158,20 +158,21 @@ export class AddEditMngComponent {
     } else if (this.mode == "edit") {
       this.destinationService.editItem(this.id, this.itemNameInput.nativeElement.value, this.itemDescriptionInput.nativeElement.value, this.itemFlagCodeInput.nativeElement.value).subscribe({
         next: (data) => {
-          const image = this.destinationFile.nativeElement.files[0];
-          if (image) {
-            let formData = new FormData();
-            formData.append("imageFile", image);
-            this.destinationService.editImage(this.id, formData).subscribe({
-              next: () => this.redirect(),
-              error: (error) => {
-                if (error.status == 200) {
-                  this.redirect()
-                } else {
-                  this.router.navigate(['/error/', error.status])
-                }
-              },
-            })
+          this.redirect();
+            const image = this.destinationFile.nativeElement.files[0];
+            if (image) {
+              let formData = new FormData();
+              formData.append("imageFile", image);
+              this.destinationService.editImage(this.id, formData).subscribe({
+                next: () => this.redirect(),
+                error: (error) => {
+                  if (error.status == 200) {
+                    this.redirect()
+                  } else {
+                    this.router.navigate(['/error/', error.status])
+                  }
+                },
+              })
           }
         },
         error: (error) => {
@@ -208,6 +209,7 @@ export class AddEditMngComponent {
     } else if (this.mode == "edit") {
       this.itineraryService.editItem(this.id, this.itemNameInputIt.nativeElement.value, this.itemDescriptionInputIt.nativeElement.value, this.itemUserInput.nativeElement.value).subscribe({
         next: (data) => {
+          this.redirect();
           const image = this.itineraryFile.nativeElement.files[0];
           if (image) {
             let formData = new FormData();
@@ -255,6 +257,7 @@ export class AddEditMngComponent {
         }
       })
     } else if (this.mode == "edit") {
+      this.redirect();
       this.placeService.editItem(this.id, this.itemNameInputPl.nativeElement.value, this.itemDescriptionInputPl.nativeElement.value, this.itemDestinationInput.nativeElement.value).subscribe({
         next: (data) => {
           const image = this.placeFile.nativeElement.files[0];
@@ -304,6 +307,7 @@ export class AddEditMngComponent {
         }
       })
     } else if (this.mode == "edit") {
+      this.redirect();
       this.userService.editUser(this.id, this.usernameInput.nativeElement.value, this.firstNameInput.nativeElement.value, this.lastNameInput.nativeElement.value, this.userEmailInput.nativeElement.value, this.nationalityInput.nativeElement.value).subscribe({
         next: (data) => {
           const image = this.userFile.nativeElement.files[0];

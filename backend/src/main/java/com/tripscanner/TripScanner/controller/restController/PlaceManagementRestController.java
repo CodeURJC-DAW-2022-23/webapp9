@@ -1,5 +1,6 @@
 package com.tripscanner.TripScanner.controller.restController;
 
+import com.tripscanner.TripScanner.model.Destination;
 import com.tripscanner.TripScanner.model.Place;
 import com.tripscanner.TripScanner.model.rest.PlaceDTO;
 import com.tripscanner.TripScanner.service.DestinationService;
@@ -135,12 +136,18 @@ public class PlaceManagementRestController {
             @PathVariable long id,
             @Parameter(description="place's new information")
             @RequestBody PlaceDTO newPlaceDTO) throws SQLException {
-        Optional<Place> place = placeService.findById(id);
         Place newPlace = new Place(newPlaceDTO.getName(), newPlaceDTO.getDescription(), destinationService.findByName(newPlaceDTO.getDestination()).get());
-        if (place.isPresent()) {
-            newPlace.setId(id);
-            placeService.save(newPlace);
-            return ResponseEntity.ok(place.get());
+        Optional<Place> place = placeService.findById(id);
+
+            if (place.isPresent()) {
+                if (newPlace.getName() != null) place.get().setName(newPlace.getName());
+                if (newPlace.getDescription() != null) place.get().setDescription(newPlace.getDescription());
+                if (newPlace.getDestination() != null) {
+                    place.get().setDestination(newPlace.getDestination());
+                }
+                place.get().setId(id);
+                placeService.save(place.get());
+                return new ResponseEntity(HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
         }
