@@ -139,6 +139,9 @@ export class MyitinerariesComponent implements OnInit {
             next: (response: any) => {
               this.isEditing = false;
               window.location.reload();
+            },
+            error: (err) => {
+              if (err.status != 200) this.router.navigate(['/error/' + err.status])
             }
           });
         }
