@@ -422,6 +422,17 @@ New classes and templates diagram has been created with Angular componenets, tem
 
 ### Deployment instructions
 
+In this section we will explain the steps that we have taken to achieve the deployment of our app on a URJC virtual machine.
+
+1. We connected to the machine via SSH using the following command: ```ssh -i appWeb-09 vmuser@10.100.139.31```
+2. We installed Docker and Docker Compose on said machine. Since the machine's operating system is Ubuntu 22.04, we followed the instructions provided on the [Docker docs website](https://docs.docker.com/engine/install/ubuntu/) for that operating system.
+3. We cloned our app repository using the following GIT command: ```git clone https://github.com/CodeURJC-DAW-2022-23/webapp9```
+4. We finally deployed our application by using the docker-compose.yml file and, in order for the app to keep running after closing the SSH connection, we ran it in background by using the following command: ```docker compose up -d```
+
+In order to connect to our app, these are the links that can be used: 
+  - https://10.100.139.31:8443
+  - https://10.100.139.31:8443/new
+
 
 ### Showcase video
 
