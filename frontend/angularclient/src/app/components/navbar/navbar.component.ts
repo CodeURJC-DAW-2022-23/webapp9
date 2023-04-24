@@ -43,6 +43,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.name = this.nameInput.nativeElement.value;
+    if ((this.user = this.loginService.currentUser()) != undefined) this.image = this.userService.getImage(this.user.id);
     this.loginService.reload();
   }
 
