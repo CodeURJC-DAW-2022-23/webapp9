@@ -489,19 +489,19 @@ Here, each member of the team shows what they have contributed to during the dev
         - [error.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/error/error.component.ts)
 
 3. [Anna Trofimova](https://github.com/anna-trofimova)
-    - **Description of tasks:** ... .
+    - **Description of tasks:** I have been in charge of creating initial angular project with first components and services. Also I have created home page, chart information, navbar, logIn and signUp functionality. Also I recorded a video and made a diagram.
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Added:home page elements](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/f30cac620a3062a74539170599159d88e474444c)
+        - [Added: chart most visited destinations](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/903ec03718b4dad425afe69dfadd0f784c196449)
+        - [Added: signUp function](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/40f8061b60e7c651e2f1c66fc0dc7b39a76b8aee)
+        - [Added: logIn functionality](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/42cc0f8e90b6b73fed8ce7c017d1cc426e342edc)
+        - [Fixed: isAdmin function and user`s pic](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/e9f5200586d0219070db294e2fd8fc3d3529f22e)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [log-in.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/frontend/angularclient/src/app/components/log-in/log-in.component.ts)
+        - [sign-up.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/frontend/angularclient/src/app/components/sign-up/sign-up.component.ts)
+        - [navbar.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/frontend/angularclient/src/app/components/navbar/navbar.component.ts)
+        - [home.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/frontend/angularclient/src/app/components/home/home.component.ts)
+        - [log-in.service.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/dev/frontend/angularclient/src/app/services/log-in.service.ts)
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
     - **Description of tasks:** I've been tasked with the development of the myItineraries page, wich include creating and editing a registered user itineraries, as well as the profile page, wich also included editing and loging out. Lastly, I've been in charge of generating the new docker image containing both the springboot application and the angular SPA.
