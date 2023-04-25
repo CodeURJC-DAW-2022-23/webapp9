@@ -459,19 +459,19 @@ Here, each member of the team shows what they have contributed to during the dev
         - [search.component.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/search/search.component.html)
 
 2. [Ivan Penedo Ventosa](https://github.com/xIvqn)
-    - **Description of tasks:** ... .
+    - **Description of tasks:** I have been in charge of developing the details section of the Angular application, including details, information and review controllers. Apart from that, I have been working on the search section of the application with my partner Adaya applying the pair programming technique. Also, I have improved the previous TypeScript models and services; as well as reviewing code, pull requests and lending a hand to other members when they required any help, such as fixing the navigation and reloading components after changes on model. Finally, I have also realized the deployment of the webapp with my partner Adaya, since we couldn't deploy it on Railway in the 3rd stage.
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Feat: Load more buttons](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/39e79c3ed0a2303de364b17996a4fdb2b5c7e721)
+        - [Feat: Add Review to itinerary](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/1bc8860a043f96fe564577a8d892fe5bcd4d17f4)
+        - [Fix: Reload section when deleting a Place from an Itinerary](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/156bfef9deafb5505bb0b8631479e451416ed735)
+        - [Fix: Reload information/users on management](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/aacc39765b44d39047cbab64f54da3ed91778110)
+        - [Feat: Error component](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/01cf1ab1cb5294f61ffa7c3f91171eed394cf941)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [detail.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/detail/detail.component.ts)
+        - [search.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/search/search.component.ts)
+        - [information.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/information/information.component.ts)
+        - [review.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/review/review.component.ts)
+        - [error.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/error/error.component.ts)
 
 3. [Anna Trofimova](https://github.com/anna-trofimova)
     - **Description of tasks:** ... .
