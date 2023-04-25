@@ -489,19 +489,19 @@ Here, each member of the team shows what they have contributed to during the dev
         - [NAME](URL)
 
 4. [Marcos Ferrer Zalve](https://github.com/LovetheFrogs)
-    - **Description of tasks:** ... .
+    - **Description of tasks:** I've been tasked with the development of the myItineraries page, wich include creating and editing a registered user itineraries, as well as the profile page, wich also included editing and loging out. Lastly, I've been in charge of generating the new docker image containing both the springboot application and the angular SPA.
     - **5 biggest commits:** These commits are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Feature: Added profile page](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/7e9a2e9836f718785a05c5d244870f9e6f874e24)
+        - [Feature: Added profile component](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/b0b29027daf878da56f30907b126127a0ece33c8)
+        - [Feature: Added myItineraries page](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/949c7191760e849f021f876cff66e07f347be4cc)
+        - [Feature: Added user service](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/ee2e2c6d512c191371d7ea63c79f987ef0c98ebd)
+        - [Feature: Docker image](https://github.com/CodeURJC-DAW-2022-23/webapp9/commit/20ec53d55cada4344b61a63b81f336022bdc6407)
     - **5 files with most participation:** These files are:
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
-        - [NAME](URL)
+        - [Dockerfile](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/docker/Dockerfile)
+        - [myItineraries.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/myitineraries/myitineraries.component.ts)
+        - [profile.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/profile/profile.component.ts)
+        - [myItineraries.component.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/myitineraries/myitineraries.component.html)
+        - [profile.component.html](https://github.com/CodeURJC-DAW-2022-23/webapp9/blob/main/frontend/angularclient/src/app/components/profile/profile.component.html)
         
 
 [Back to top](#top)
