@@ -413,6 +413,17 @@ Here, each member of the team shows what they have contributed to during the dev
 
 ### Development Environment Instructions
 
+Follow the steps to set up your environment to develop the Angular application:
+
+1. Open a terminal.
+2. Clone this repository using `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9.git`.
+3. Go to the angular project folder using `cd frontend/angularclient/`.
+4. Initialize the node project using `npm i`.
+5. Install Angular CLI using `npm i -g @angular/cli`.
+6. Run the angular application on development mode using `ng serve --proxy-config proxy.conf.json`.
+7. Now you've got the Angular applciation running on `https://localhost:4200`.
+
+For the Angular application to work properly, make sure you have the API and the MySQL database up and running on its specified ports. See documentation above for help. 
 
 ### Classes and templates diagram (SPA)
 New classes and templates diagram has been created with Angular componenets, templates and services. 
@@ -424,14 +435,18 @@ New classes and templates diagram has been created with Angular componenets, tem
 
 In this section we will explain the steps that we have taken to achieve the deployment of our app on a URJC virtual machine.
 
-1. We connected to the machine via SSH using the following command: ```ssh -i appWeb-09 vmuser@10.100.139.31```
+1. We connected to the machine via SSH using the following command: `ssh -i appWeb-09 vmuser@10.100.139.31`
 2. We installed Docker and Docker Compose on said machine. Since the machine's operating system is Ubuntu 22.04, we followed the instructions provided on the [Docker docs website](https://docs.docker.com/engine/install/ubuntu/) for that operating system.
-3. We cloned our app repository using the following GIT command: ```git clone https://github.com/CodeURJC-DAW-2022-23/webapp9```
-4. We finally deployed our application by using the docker-compose.yml file and, in order for the app to keep running after closing the SSH connection, we ran it in background by using the following command: ```docker compose up -d```
+3. We cloned our app repository using the following GIT command: `git clone https://github.com/CodeURJC-DAW-2022-23/webapp9`
+4. We finally deployed our application by using the docker-compose.yml file and, in order for the app to keep running after closing the SSH connection, we ran it in background by using the following command: `docker compose up -d`
 
 In order to connect to our app, these are the links that can be used: 
   - https://10.100.139.31:8443
   - https://10.100.139.31:8443/new
+
+Notes:
+* The `appWeb-09` file might need execute permissions for step 1. Use `chmod 600 appWep-09` to change them on a Unix terminal.
+* Both web application and virtual machine are only accessible through the private URJC network.
 
 
 ### Showcase video
